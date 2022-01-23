@@ -1,11 +1,9 @@
 import Head from "next/head";
-import Amplify from "aws-amplify";
-import awsExports from "../aws-exports";
+import { withAuthenticator } from '@aws-amplify/ui-react';
 import BudgetCard from "../components/BudgetCard";
 import Layout from "../components/Layout";
-Amplify.configure(awsExports);
 
-export default function Home() {
+function Home({ signOut, user }) {
   return (
     <div>
       <Head>
@@ -14,9 +12,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout>
+      <Layout userName={user.username}>
         <BudgetCard />
+        <button onClick={signOut}>Sign out</button>
       </Layout>
     </div>
   );
 }
+
+export default withAuthenticator(Home);

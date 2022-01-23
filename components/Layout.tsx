@@ -6,11 +6,12 @@ import Typography, { Types } from "./Typography";
 type Props = {
   children: JSX.Element[] | JSX.Element;
   pageTitle?: string;
+  userName: string;
 };
 
-const Layout = ({ children, pageTitle }: Props) => {
+const Layout = ({ children, pageTitle, userName }: Props) => {
   const [loading, setLoading] = useState(false);
-  const name = "Next.js";
+
   if (loading) {
     return <Loading type={LoadingType.FULL_PAGE} />;
   }
@@ -24,7 +25,7 @@ const Layout = ({ children, pageTitle }: Props) => {
 
       {/* <Topbar /> */}
       <main className="pt-4 px-6 container">
-          <Typography type={Types.H6}>Hola {name}</Typography>
+          <Typography type={Types.H6}>Hola {userName}</Typography>
           {pageTitle && <Typography type={Types.H3}>{pageTitle}</Typography>}
           {children}
       </main>

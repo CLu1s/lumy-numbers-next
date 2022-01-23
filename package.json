@@ -8,7 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@aws-amplify/ui-react": "1.x.x",
+    "@aws-amplify/ui-react": "^2.1.9",
     "@headlessui/react": "^1.4.3",
     "@tailwindcss/forms": "^0.4.0",
     "aws-amplify": "^4.3.12",
