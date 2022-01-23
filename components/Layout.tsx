@@ -1,7 +1,6 @@
 import { useState } from "react";
-import Head from "next/head";
 import Loading, { LoadingType } from "./Loading";
-// import Topbar from "./Topbar";
+import Topbar from "./Topbar";
 import Typography, { Types } from "./Typography";
 type Props = {
   children: JSX.Element[] | JSX.Element;
@@ -17,13 +16,8 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
   }
   return (
     <div>
-      <Head>
-        <title>Lumy Numbers</title>
-        <meta name="description" content="Control de Gastos y Presupuesto" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
 
-      {/* <Topbar /> */}
+      <Topbar />
       <main className="pt-4 px-6 container">
           <Typography type={Types.H6}>Hola {userName}</Typography>
           {pageTitle && <Typography type={Types.H3}>{pageTitle}</Typography>}

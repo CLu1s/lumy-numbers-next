@@ -2,9 +2,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import formatISO from "date-fns/formatISO";
+import StaticDatePicker from "@mui/lab/StaticDatePicker";
+import TextField from "@mui/material/TextField";
 import Modal from "./Modal";
 import Input from "./Input";
-import {SingleTransaction} from "../types";
+import { SingleTransaction } from "../types";
 import Select from "./Select";
 
 type Props = {
@@ -26,14 +28,13 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
 
   const onSubmit = (data: any, e: any) => {
     e.preventDefault();
-    toast.success('Successfully toasted!')
+    toast.success("Successfully toasted!");
     console.log(data);
   };
 
   const setDateValue = (dateValue: Date | null) => {
     setDate(dateValue);
   };
-
 
   const config = {
     isOpen,
@@ -82,19 +83,27 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
             options={categories}
           />
         )}
-
-        {/* <StaticDatePicker
+        <StaticDatePicker
           label="Selecciona tu fecha"
           value={(toEdit?.date && new Date(toEdit?.date)) || date}
           onChange={setDateValue}
           renderInput={(params) => <TextField {...params} />}
-        /> */}
-
-        <input
-          className={`w-full mt-8 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm`}
-          type="submit"
-          value={toEdit ? "Actualizar" : "Guardar"}
         />
+        <div className=" my-3 sm:flex sm:flex-row-reverse lg:flex-row justify-between">
+        <input
+            className={`w-full mb-4 lg:mb-0 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm`}
+            type="submit"
+            value={toEdit ? "Actualizar" : "Guardar"}
+          />
+          <button
+            type="button"
+            className={`w-full  inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm`}
+            onClick={() => onClose(false)}
+          >
+            Cancelar
+          </button>
+          
+        </div>
       </form>
     </Modal>
   );
