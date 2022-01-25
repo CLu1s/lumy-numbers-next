@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container } from "@chakra-ui/react";
 import Loading, { LoadingType } from "./Loading";
 import Topbar from "./Topbar";
-import Typography, { Types } from "./Typography";
+import { Stack, HStack, VStack } from "@chakra-ui/react";
 import { Heading } from "@chakra-ui/react";
 type Props = {
   children: JSX.Element[] | JSX.Element;
@@ -19,12 +19,18 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
   return (
     <>
       <main>
-        <Topbar />
-        <Container>
-          <Heading as="h2">Hola {userName}</Heading>
-          {pageTitle && <Heading as="h2">{pageTitle}</Heading>}
-          {children}
-        </Container>
+        <Stack spacing={4}>
+          <Topbar />
+          <Container>
+            <Stack spacing={8}>
+              <Heading as="h2" textTransform="capitalize">
+                Hola {userName}
+              </Heading>
+              {pageTitle && <Heading as="h2">{pageTitle}</Heading>}
+              {children}
+            </Stack>
+          </Container>
+        </Stack>
       </main>
 
       <footer></footer>

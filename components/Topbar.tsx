@@ -1,4 +1,6 @@
 import { Auth } from "aws-amplify";
+import { Container, Stack, HStack, Avatar } from "@chakra-ui/react";
+import { RiUserLine } from "react-icons/ri";
 import Link from "next/link";
 import clsx from "clsx";
 
@@ -21,26 +23,25 @@ async function signOut() {
   }
 }
 
-const linkItemClass = "block px-4 py-2 text-sm text-purple-700";
-const type2class = "block px-3 py-2 rounded-md text-base font-medium";
-
-const LinkStyled = ({
-  active,
-  label,
-  href,
-  type = "default",
-}: {
-  active?: boolean;
-  label: string;
-  href: string;
-  type?: "default" | "primary" | "secondary" | "tertiary";
-}) => (
-  <Link href={href}>
-    <a className={clsx(linkItemClass, active && "bg-purple-100")}>{label}</a>
-  </Link>
-);
-
 export default function Topbar() {
-  // const photoURL = useSelector(getPhoto);
-  return <button onClick={signOut}>adios</button>;
+  return (
+    <Container
+      borderBottomWidth={1}
+      paddingY={2}
+      
+    >
+      <HStack spacing={4} justifyContent={"space-between"}>
+        <Stack isInline spacing={4}>
+          <button onClick={signOut}>adios</button>
+        </Stack>
+        <Stack isInline spacing={4}>
+          <Avatar
+          size='md'
+            bg="purple.500"
+            icon={<RiUserLine fontSize="2rem" color="white" />}
+          />
+        </Stack>
+      </HStack>
+    </Container>
+  );
 }

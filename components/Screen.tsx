@@ -12,7 +12,7 @@ const Screen = ({ children }: props) => {
       whileInView={{ x: 0 }}
       viewport={{ once: true }}
     >
-      <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="md">
+      <Box p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="3xl">
         {children}
       </Box>
     </motion.div>

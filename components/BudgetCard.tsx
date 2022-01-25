@@ -10,11 +10,9 @@ import {
   StatLabel,
   StatNumber,
   StatHelpText,
-  StatArrow,
   StatGroup,
 } from "@chakra-ui/react";
-import { Button, ButtonGroup } from "@chakra-ui/react";
-import { Center, Square, Circle } from "@chakra-ui/react";
+import { Button, Center } from "@chakra-ui/react";
 
 const fm = new FormatMoney({
   decimals: 2,
@@ -29,32 +27,19 @@ const BudgetCard = () => {
     <>
       <RecordExpense isOpen={isOpen} onClose={onClose} />
       <Screen>
-        <Heading as="h2" size="xl" color="purple.600">
-          Resumen
+        <Heading as="h2" size="md" fontWeight="600">
+          Presupuesto del mes
         </Heading>
         {!loading ? (
           <StatGroup>
             <Stat>
               <StatLabel>Disponible</StatLabel>
-              <StatNumber>
+              <StatNumber fontSize="6xl" fontWeight="700" color="purple.600">
                 {fm.from(income - spent, {
                   symbol: "$",
                 })}
               </StatNumber>
               <StatHelpText>Feb 12 - Feb 28</StatHelpText>
-            </Stat>
-
-            <Stat>
-              <StatLabel>Presupuestado</StatLabel>
-              <StatNumber>
-                {fm.from(income, {
-                  symbol: "$",
-                })}
-              </StatNumber>
-              <StatHelpText>
-                <StatArrow type="decrease" />
-                9.05%
-              </StatHelpText>
             </Stat>
           </StatGroup>
         ) : (

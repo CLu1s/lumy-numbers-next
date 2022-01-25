@@ -3,6 +3,7 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 import BudgetCard from "../components/BudgetCard";
 import Layout from "../components/Layout";
 import { Button,Box } from '@chakra-ui/react'
+import Categories from "../components/Categories";
 function Home({ signOut, user }) {
   return (
     <div>
@@ -14,6 +15,7 @@ function Home({ signOut, user }) {
 
       <Layout userName={user.username}>
         <BudgetCard />
+        <Categories />
         <Button colorScheme='blue' onClick={signOut}>Cerrar Sesión</Button>
       </Layout>
     </div>
