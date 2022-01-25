@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { FormatMoney } from "format-money-js";
-import Typography, { Types } from "./Typography";
+import { Heading } from "@chakra-ui/react";
 import Screen from "./Screen";
 import RecordExpense from "./RecordExpense";
-import Button from "./Button";
-import Loading from "./Loading";
+import { Spinner } from "@chakra-ui/react";
+import { useDisclosure, Box } from "@chakra-ui/react";
+import {
+  Stat,
+  StatLabel,
+  StatNumber,
+  StatHelpText,
+  StatArrow,
+  StatGroup,
+} from "@chakra-ui/react";
+import { Button, ButtonGroup } from "@chakra-ui/react";
+import { Center, Square, Circle } from "@chakra-ui/react";
 
 const fm = new FormatMoney({
   decimals: 2,
@@ -13,34 +23,50 @@ const fm = new FormatMoney({
 const BudgetCard = () => {
   const income = 500;
   const spent = 300;
-  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <RecordExpense isOpen={open} onClose={setOpen} />
+      <RecordExpense isOpen={isOpen} onClose={onClose} />
       <Screen>
-        <Typography type={Types.H6} className="m-auto text-center">
-          Disponible
-        </Typography>
-        <div className="flex flex-col justify-center text-center font-headline text-purple-700 text-5xl font-semibold mt-3.5">
-          {!loading ? (
-            fm.from(income - spent, {
-              symbol: "$",
-            })
-          ) : (
-            <Loading />
-          )}
-        </div>
-        <p className="text-gray-500 text-center mt-3.5">
-          Presupuestado:{" "}
-          {fm.from(income, {
-            symbol: "$",
-          })}
-        </p>
-        <div className="flex w-full mt-10">
-          <Button onClick={() => setOpen(true)}>Registrar Gasto</Button>
-        </div>
+        <Heading as="h2" size="xl" color="purple.600">
+          Resumen
+        </Heading>
+        {!loading ? (
+          <StatGroup>
+            <Stat>
+              <StatLabel>Disponible</StatLabel>
+              <StatNumber>
+                {fm.from(income - spent, {
+                  symbol: "$",
+                })}
+              </StatNumber>
+              <StatHelpText>Feb 12 - Feb 28</StatHelpText>
+            </Stat>
+
+            <Stat>
+              <StatLabel>Presupuestado</StatLabel>
+              <StatNumber>
+                {fm.from(income, {
+                  symbol: "$",
+                })}
+              </StatNumber>
+              <StatHelpText>
+                <StatArrow type="decrease" />
+                9.05%
+              </StatHelpText>
+            </Stat>
+          </StatGroup>
+        ) : (
+          <Spinner />
+        )}
+        <Box mt="4">
+          <Center w="100%" color="white">
+            <Button onClick={onOpen} colorScheme="blue" variant="outline">
+              Registrar Gasto
+            </Button>
+          </Center>
+        </Box>
       </Screen>
     </>
   );

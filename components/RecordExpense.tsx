@@ -5,13 +5,13 @@ import formatISO from "date-fns/formatISO";
 import StaticDatePicker from "@mui/lab/StaticDatePicker";
 import TextField from "@mui/material/TextField";
 import Modal from "./Modal";
-import Input from "./Input";
+import { Input } from "@chakra-ui/react";
 import { SingleTransaction } from "../types";
 import Select from "./Select";
 
 type Props = {
   isOpen: boolean;
-  onClose: (val: boolean) => void;
+  onClose: () => void;
   toEdit?: SingleTransaction;
 };
 
@@ -50,7 +50,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     step: "0.01",
     placeholder: "0.00",
     min: 0,
-    ...register("amount", { required: true }),
+
     defaultValue: toEdit?.amount,
   };
 
@@ -67,11 +67,11 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
         {/* register your input into the hook by invoking the "register" function */}
 
+        <Input {...register("amount", { required: true })} />
         {errors.description && <span>Este Campo es Requerido</span>}
-        <Input {...montoProps} />
-        {errors.amount && <span>Este Campo es Requerido</span>}
         {/* include validation with required or other standard HTML validation rules */}
-        <Input {...descriptionProps} />
+        <Input {...register("description", { required: true })} />
+        {errors.amount && <span>Este Campo es Requerido</span>}
         {/* errors will return when field validation fails  */}
 
         {/* errors will return when field validation fails  */}
@@ -83,14 +83,14 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
             options={categories}
           />
         )}
-        <StaticDatePicker
+        {/* <StaticDatePicker
           label="Selecciona tu fecha"
           value={(toEdit?.date && new Date(toEdit?.date)) || date}
           onChange={setDateValue}
           renderInput={(params) => <TextField {...params} />}
-        />
+        /> */}
         <div className=" my-3 sm:flex sm:flex-row-reverse lg:flex-row justify-between">
-        <input
+          <input
             className={`w-full mb-4 lg:mb-0 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm`}
             type="submit"
             value={toEdit ? "Actualizar" : "Guardar"}
@@ -98,11 +98,10 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
           <button
             type="button"
             className={`w-full  inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm`}
-            onClick={() => onClose(false)}
+            onClick={onClose}
           >
             Cancelar
           </button>
-          
         </div>
       </form>
     </Modal>
