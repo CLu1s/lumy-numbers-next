@@ -2,9 +2,8 @@ import Head from "next/head";
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import BudgetCard from "../components/BudgetCard";
 import Layout from "../components/Layout";
-import { Button,Box } from '@chakra-ui/react'
 import Categories from "../components/Categories";
-function Home({ signOut, user }) {
+function Home({ user }) {
   return (
     <div>
       <Head>
@@ -13,10 +12,9 @@ function Home({ signOut, user }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout userName={user.username}>
+      <Layout userName={user?.username || ""}>
         <BudgetCard />
         <Categories />
-        <Button colorScheme='blue' onClick={signOut}>Cerrar Sesión</Button>
       </Layout>
     </div>
   );
