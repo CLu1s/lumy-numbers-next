@@ -20,6 +20,7 @@ type Props = {
   actionButtonText?: string;
   actionColor?: string;
   onClose: () => void;
+  onSubmit: () => void;
 };
 
 export default function ModalComponent({
@@ -27,6 +28,7 @@ export default function ModalComponent({
   title,
   isOpen,
   onClose,
+  onSubmit,
 }: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -38,9 +40,9 @@ export default function ModalComponent({
 
         <ModalFooter>
           <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Close
+            Cancelar
           </Button>
-          <Button variant="ghost">Secondary Action</Button>
+          <Button variant="ghost" onClick={onSubmit}>Guardar</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

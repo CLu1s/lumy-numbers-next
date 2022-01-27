@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import formatISO from "date-fns/formatISO";
-import StaticDatePicker from "@mui/lab/StaticDatePicker";
-import TextField from "@mui/material/TextField";
 import Modal from "./Modal";
-import { Input } from "@chakra-ui/react";
+import { Box, Button, Input, VStack } from "@chakra-ui/react";
 import { SingleTransaction } from "../types";
 import Select from "./Select";
+import esLocale from "date-fns/locale/es";
+import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+registerLocale("es", esLocale);
 
 type Props = {
   isOpen: boolean;
@@ -35,75 +38,66 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const setDateValue = (dateValue: Date | null) => {
     setDate(dateValue);
   };
+  const handleClose = () => {
+    reset();
+    onClose();
+  };
 
   const config = {
     isOpen,
     title: toEdit ? "Actualizar Gasto" : "Ingresar Nuevo Gasto",
-    onClose,
+    onClose: handleClose,
     cancelButtonText: "Cancel",
+    onSubmit: handleSubmit(onSubmit),
   };
-
-  const montoProps = {
-    label: "Monto",
-    prefix: "$",
-    type: "number",
-    step: "0.01",
-    placeholder: "0.00",
-    min: 0,
-
-    defaultValue: toEdit?.amount,
-  };
-
-  const descriptionProps = {
-    label: "Descripción",
-    defaultValue: toEdit?.description,
-    ...register("description", { required: true }),
-  };
+  const ExampleCustomInput = forwardRef(({ value, onClick }, ref:any) => (
+    <Button onClick={onClick} ref={ref} width="full">
+      {value}
+    </Button>
+  ));
+  ExampleCustomInput.displayName = "ExampleCustomInput";
   return (
     <Modal {...config}>
-      <p className="text-sm text-gray-500">
-        Ingresa el monto y la descripción del gasto
-      </p>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-        {/* register your input into the hook by invoking the "register" function */}
+      <VStack spacing={4}>
+        <p className="text-sm text-gray-500">
+          Ingresa el monto y la descripción del gasto
+        </p>
+        <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
+          <Box width="100%">
+            <VStack spacing={4} w="full">
+              <Input
+                placeholder="Cantidad"
+                {...register("amount", { required: true })}
+              />
+              {errors.description && <span>Este Campo es Requerido</span>}
+              {/* include validation with required or other standard HTML validation rules */}
+              <Input
+                placeholder="Descripción"
+                {...register("description", { required: true })}
+              />
+              {errors.amount && <span>Este Campo es Requerido</span>}
+              {/* errors will return when field validation fails  */}
 
-        <Input {...register("amount", { required: true })} />
-        {errors.description && <span>Este Campo es Requerido</span>}
-        {/* include validation with required or other standard HTML validation rules */}
-        <Input {...register("description", { required: true })} />
-        {errors.amount && <span>Este Campo es Requerido</span>}
-        {/* errors will return when field validation fails  */}
-
-        {/* errors will return when field validation fails  */}
-        {selected && (
-          <Select
-            label="Categoría"
-            selected={selected}
-            setSelected={setSelected}
-            options={categories}
-          />
-        )}
-        {/* <StaticDatePicker
-          label="Selecciona tu fecha"
-          value={(toEdit?.date && new Date(toEdit?.date)) || date}
-          onChange={setDateValue}
-          renderInput={(params) => <TextField {...params} />}
-        /> */}
-        <div className=" my-3 sm:flex sm:flex-row-reverse lg:flex-row justify-between">
-          <input
-            className={`w-full mb-4 lg:mb-0 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm`}
-            type="submit"
-            value={toEdit ? "Actualizar" : "Guardar"}
-          />
-          <button
-            type="button"
-            className={`w-full  inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm`}
-            onClick={onClose}
-          >
-            Cancelar
-          </button>
-        </div>
-      </form>
+              {/* errors will return when field validation fails  */}
+              {/* {selected && (
+                <Select
+                  label="Categoría"
+                  selected={selected}
+                  setSelected={setSelected}
+                  options={categories}
+                />
+              )} */}
+              <DatePicker
+                dateFormat="dd/MM/yyyy"
+                selected={date}
+                onChange={(date) => setDate(date)}
+                locale="es"
+                customInput={<ExampleCustomInput />}
+              />
+            </VStack>
+          </Box>
+        </form>
+      </VStack>
     </Modal>
   );
 };

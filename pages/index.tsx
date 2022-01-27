@@ -1,8 +1,9 @@
 import Head from "next/head";
-import { withAuthenticator } from '@aws-amplify/ui-react';
+import { withAuthenticator } from "@aws-amplify/ui-react";
 import BudgetCard from "../components/BudgetCard";
 import Layout from "../components/Layout";
 import Categories from "../components/Categories";
+import { Stack } from "@chakra-ui/react";
 function Home({ user }) {
   return (
     <div>
@@ -13,8 +14,10 @@ function Home({ user }) {
       </Head>
 
       <Layout userName={user?.username || ""}>
-        <BudgetCard />
-        <Categories />
+        <Stack spacing={8}>
+          <BudgetCard />
+          <Categories />
+        </Stack>
       </Layout>
     </div>
   );
