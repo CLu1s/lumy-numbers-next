@@ -5,6 +5,8 @@ import Screen from "./Screen";
 import RecordExpense from "./RecordExpense";
 import { Spinner } from "@chakra-ui/react";
 import { useDisclosure, Box } from "@chakra-ui/react";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import {
   Stat,
   StatLabel,
@@ -13,6 +15,7 @@ import {
   StatGroup,
 } from "@chakra-ui/react";
 import { Button, Center } from "@chakra-ui/react";
+import money from "../utils/money";
 
 const fm = new FormatMoney({
   decimals: 2,
@@ -35,11 +38,13 @@ const BudgetCard = () => {
             <Stat>
               <StatLabel>Disponible</StatLabel>
               <StatNumber fontSize="6xl" fontWeight="700" color="purple.600">
-                {fm.from(income - spent, {
-                  symbol: "$",
-                })}
+                {money(income - spent)}
               </StatNumber>
-              <StatHelpText>Feb 12 - Feb 28</StatHelpText>
+              <StatHelpText textTransform="capitalize">
+                {format(new Date(), "LLLL-YYY", {
+                  locale: es,
+                })}
+              </StatHelpText>
             </Stat>
           </StatGroup>
         ) : (

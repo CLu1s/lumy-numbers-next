@@ -15,7 +15,7 @@ const Screen = ({ children }: props) => {
         width: "100%",
       }}
     >
-      <Box width="full" p={5} shadow="md" borderWidth="1px" flex="1" borderRadius="3xl">
+      <Box width="full" p={5} shadow="sm" borderWidth="1px" bg="white" flex="1" borderRadius="3xl">
         {children}
       </Box>
     </motion.div>

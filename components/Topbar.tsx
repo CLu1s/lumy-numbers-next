@@ -13,19 +13,6 @@ import { RiUserLine, RiNotification2Line } from "react-icons/ri";
 import Link from "next/link";
 import Drawer from "./Drawer";
 
-const navigation = [
-  { name: "Dashboard", href: "/", current: false },
-  { name: "Transacciones", href: "/transacciones", current: false },
-  {
-    name: "Configurar Presupuesto",
-    href: "/configurarPresupuesto",
-    current: false,
-  },
-  { name: "Compartir Link", href: "/compartir", current: false },
-];
-
-
-
 export default function Topbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();

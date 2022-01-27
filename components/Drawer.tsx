@@ -8,9 +8,11 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
+  Stack,
   Button,
 } from "@chakra-ui/react";
 import MenuItem from "./MenuItem";
+import { menuList } from "../config/menu";
 
 type Props = {
   isOpen: boolean;
@@ -37,10 +39,14 @@ const DrawerMenu = React.forwardRef(
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Create your account</DrawerHeader>
+          <DrawerHeader>Menú</DrawerHeader>
 
           <DrawerBody>
-            <MenuItem />
+            <Stack spacing={4}>
+              {menuList.map((item) => (
+                <MenuItem key={item.id} {...item} />
+              ))}
+            </Stack>
           </DrawerBody>
 
           <DrawerFooter>

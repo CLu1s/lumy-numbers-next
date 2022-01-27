@@ -31,13 +31,13 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
           <Sidebar />
           <Stack width="full">
             <Topbar />
-            <Stack spacing={4}>
-              <Heading as="h2" textTransform="capitalize">
+            <Stack spacing={4} padding={4}>
+              <Heading as="h2" size="md" textTransform="capitalize">
                 Hola {userName}
               </Heading>
 
               {pageTitle && <Heading as="h2">{pageTitle}</Heading>}
-              <Box padding={4}>{children}</Box>
+              <Box>{children}</Box>
             </Stack>
           </Stack>
         </Stack>

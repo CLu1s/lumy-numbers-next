@@ -1,9 +1,9 @@
 import Head from "next/head";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import BudgetCard from "../components/BudgetCard";
 import Layout from "../components/Layout";
-import Categories from "../components/Categories";
 import { Stack } from "@chakra-ui/react";
+import Table from "../components/Table";
+import Screen from "../components/Screen";
 function Home({ user }) {
   return (
     <div>
@@ -13,10 +13,11 @@ function Home({ user }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout userName={user?.username || ""} pageTitle="Excelente Día">
+      <Layout userName={user?.username || ""} pageTitle="Transacciones del mes">
         <Stack spacing={8}>
-          <BudgetCard />
-          <Categories />
+          <Screen>
+            <Table />
+          </Screen>
         </Stack>
       </Layout>
     </div>

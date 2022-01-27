@@ -8,16 +8,17 @@ import {
   VStack,
   Heading,
 } from "@chakra-ui/react";
+import { menuList } from "../config/menu";
 import MenuItem from "./MenuItem";
 
 const Sidebsar = () => {
-    async function signOut() {
-        try {
-          await Auth.signOut();
-        } catch (error) {
-          console.log("error signing out: ", error);
-        }
-      }
+  async function signOut() {
+    try {
+      await Auth.signOut();
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  }
   return (
     <Box
       width={"260px"}
@@ -37,7 +38,9 @@ const Sidebsar = () => {
           </Heading>
         </Center>
         <VStack spacing={4} width={"100%"} paddingLeft={4}>
-          <MenuItem />
+          {menuList.map((item) => (
+            <MenuItem key={item.id} {...item} />
+          ))}
         </VStack>
         <VStack spacing={4} width={"100%"} paddingLeft={4}>
           <Button colorScheme="blue" onClick={signOut}>

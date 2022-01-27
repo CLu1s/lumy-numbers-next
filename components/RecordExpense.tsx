@@ -50,11 +50,13 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     cancelButtonText: "Cancel",
     onSubmit: handleSubmit(onSubmit),
   };
-  const ExampleCustomInput = forwardRef(({ value, onClick }, ref:any) => (
-    <Button onClick={onClick} ref={ref} width="full">
-      {value}
-    </Button>
-  ));
+  const ExampleCustomInput = forwardRef(
+    ({ value, onClick }: { value: any; onClick: () => void }, ref: any) => (
+      <Button onClick={onClick} ref={ref} width="full">
+        {value}
+      </Button>
+    )
+  );
   ExampleCustomInput.displayName = "ExampleCustomInput";
   return (
     <Modal {...config}>

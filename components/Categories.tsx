@@ -23,7 +23,7 @@ const Categories = () => {
     () => [
       {
         id: 1,
-        icon: <HiOutlineHome />,
+        icon: <HiOutlineHome fontSize='2rem' />,
         label: "Gastos Fijos",
         number:  money(Math.random() * 100000),
         progress: 40,
@@ -31,7 +31,7 @@ const Categories = () => {
       },
       {
         id: 12,
-        icon: <AiOutlineStock />,
+        icon: <AiOutlineStock fontSize='2rem' />,
         label: "Ahorro e Inversión",
         number: money(Math.random() * 100000),
         progress: 40,
@@ -39,7 +39,7 @@ const Categories = () => {
       },
       {
         id: 3,
-        icon: <BiHappyBeaming />,
+        icon: <BiHappyBeaming fontSize='2rem' />,
         label: "Gastos sin Culpa",
         number:  money(Math.random() * 100000),
         progress: 40,
