@@ -51,7 +51,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     onSubmit: handleSubmit(onSubmit),
   };
   const ExampleCustomInput = forwardRef(
-    ({ value, onClick }: { value: any; onClick: () => void }, ref: any) => (
+    ({ value, onClick }: { value?: any; onClick?: () => void }, ref: any) => (
       <Button onClick={onClick} ref={ref} width="full">
         {value}
       </Button>
@@ -94,7 +94,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
                 selected={date}
                 onChange={(date) => setDate(date)}
                 locale="es"
-                customInput={<ExampleCustomInput />}
+                customInput={ <ExampleCustomInput />}
               />
             </VStack>
           </Box>
