@@ -1,7 +1,8 @@
 import React from "react";
 import { Amplify } from "aws-amplify";
-
+import { Provider } from "react-redux";
 import { ChakraProvider } from "@chakra-ui/react";
+import store from "../store";
 import awsExports from "../aws-exports";
 import Fonts from "../styles/fonts";
 import theme from "../styles/theme";
@@ -11,7 +12,9 @@ function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <Fonts />
-      <Component {...pageProps} />
+      <Provider store={store}>
+        <Component {...pageProps} />
+      </Provider>
     </ChakraProvider>
   );
 }

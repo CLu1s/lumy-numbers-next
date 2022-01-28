@@ -2,13 +2,15 @@ import { useState, forwardRef } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import formatISO from "date-fns/formatISO";
-import Modal from "./Modal";
+import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack } from "@chakra-ui/react";
-import { SingleTransaction } from "../types";
-import Select from "./Select";
+import { SingleTransaction } from "../../types";
+import Select from "../../components/Select";
 import esLocale from "date-fns/locale/es";
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useSelector } from "react-redux";
+import { getCategories } from "../budget/selector";
 
 registerLocale("es", esLocale);
 
@@ -21,7 +23,7 @@ type Props = {
 const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const [selected, setSelected] = useState<any>();
   const [date, setDate] = useState<Date | null>(new Date());
-  const categories = ["Food", "Transport", "Entertainment"];
+  const categories = useSelector(getCategories);
   const {
     register,
     handleSubmit,
@@ -81,20 +83,20 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
               {/* errors will return when field validation fails  */}
 
               {/* errors will return when field validation fails  */}
-              {/* {selected && (
-                <Select
-                  label="Categoría"
-                  selected={selected}
-                  setSelected={setSelected}
-                  options={categories}
-                />
-              )} */}
+
+              <Select
+                label="Categoría"
+                selected={selected}
+                setSelected={setSelected}
+                options={categories}
+              />
+
               <DatePicker
                 dateFormat="dd/MM/yyyy"
                 selected={date}
                 onChange={(date) => setDate(date)}
                 locale="es"
-                customInput={ <ExampleCustomInput />}
+                customInput={<ExampleCustomInput />}
               />
             </VStack>
           </Box>

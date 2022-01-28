@@ -24,6 +24,7 @@ export default function SelectContainer({
   setSelected,
   label,
 }: SelectProps) {
+  console.log(options);
   return (
     <Select placeholder="Select option">
       {options.map((option: any) => (
