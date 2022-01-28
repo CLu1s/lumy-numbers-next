@@ -1,27 +1,10 @@
-import { useMemo } from "react";
-import Screen from "../../components/Screen";
-import {
-  Stack,
-  HStack,
-  Heading,
-  Stat,
-  StatLabel,
-  StatNumber,
-  CircularProgress,
-  CircularProgressLabel,
-  Square,
-  Wrap,
-  WrapItem,
-} from "@chakra-ui/react";
-
-import {money,icons} from "../../utils";
+import { Stack, Heading, Wrap, WrapItem } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { getBalanceByCategories } from "../../features/wallet/selector";
+import StatCard from "../../components/StatCard";
 
 const Categories = () => {
   const items = useSelector(getBalanceByCategories);
-  
-
 
   return (
     <Stack spacing={4}>
@@ -31,28 +14,7 @@ const Categories = () => {
       <Wrap>
         {items.map((item) => (
           <WrapItem minW="xs" width={["full", "xs"]} key={item.id}>
-            <Screen>
-              <HStack spacing={4}>
-                <Square
-                  size="48px"
-                  bg={item.color}
-                  color="white"
-                  borderRadius="md"
-                  fontSize="2rem"
-                >
-                  {icons(item.icon)}
-                </Square>
-                <Stat>
-                  <StatLabel>{item.name}</StatLabel>
-                  <StatNumber>{money(item.balance)}</StatNumber>
-                </Stat>
-                <CircularProgress value={item.progress} color={item.color}>
-                  <CircularProgressLabel>
-                    {item.progress}%
-                  </CircularProgressLabel>
-                </CircularProgress>
-              </HStack>
-            </Screen>
+            <StatCard number={item.balance} {...item} />
           </WrapItem>
         ))}
       </Wrap>
