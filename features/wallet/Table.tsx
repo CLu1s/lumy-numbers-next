@@ -13,36 +13,24 @@ import React from "react";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import money from "../utils/money";
+import money from "../../utils/money";
+import { useSelector } from "react-redux";
+import { getTransactionsFormatted } from "./selector";
 
 export default function DataTable() {
-  const data = React.useMemo(
-    () => [
-      {
-        id: 1,
-        description: "Compras",
-        amount: Math.random() * 10000,
-        date: "2022-05-01",
-        category: "Compras",
-      },
-      {
-        id: 2,
-        description: "Compras",
-        amount: Math.random() * 10000,
-        date: "2022-05-01",
-        category: "Compras",
-      },
-      {
-        id: 3,
-        description: "Compras",
-        amount: Math.random() * 10000,
-        date: "2022-05-01",
-        category: "Compras",
-      },
-    ],
-    []
-  );
-  const renderCells = data.map((item, index) => (
+  const transactions = useSelector(getTransactionsFormatted);
+
+  const comapare = (a, b) => {
+    if (a.date > b.date) {
+      return -1;
+    }
+    if (a.date < b.date) {
+      return 1;
+    }
+    return 0;
+  };
+
+  const renderCells = transactions.sort(comapare).map((item, index) => (
     <Box width="full" key={item.id}>
       <VStack spacing={4} align="stretch" width="full">
         <Flex justifyContent="space-between">
@@ -53,8 +41,8 @@ export default function DataTable() {
             <Text fontWeight="bold">{item.description}</Text>
           </VStack>
           <Box>
-            <Tag size="md" variant="solid" colorScheme="whatsapp">
-              {item.category}
+            <Tag size="md" variant="solid" bgColor={item.categoryColor}>
+              {item.categoryName}
             </Tag>
           </Box>
         </Flex>

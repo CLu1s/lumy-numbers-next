@@ -10,6 +10,26 @@ export const getTransactions = createSelector(
   (state: WalletState): WalletState["transactions"] => state.transactions
 );
 
+export const getTransactionsFormatted = createSelector(
+  [getTransactions, getCategories],
+  (
+    transactions: WalletState["transactions"],
+    categories: Category[]
+  ): WalletState["transactions"] => {
+    return transactions.map((transaction: WalletState["transactions"][0]) => {
+      const category = categories.find(
+        (category: Category) => category.id === transaction.categoryID
+      );
+      console.log(category);
+      return {
+        ...transaction,
+        categoryName: category ? category.name : "",
+        categoryColor: category ? category.color : ""
+      };
+    });
+  }
+);
+
 export const getBalance = createSelector(
   [getIncome, getTransactions],
   (income: number, transactions: WalletState["transactions"]): number => {
@@ -33,13 +53,16 @@ export const getBalanceByCategories = createSelector(
       const transactionsByCategory = transactions.filter(
         (transaction) => transaction.categoryID === category.id
       );
-      const balance = transactionsByCategory.reduce(
-        (acc, transaction) => acc + transaction.amount,
-        0
-      );
+      const budgetAmount = (category.percentage / 100) * income;
       const amountPercentage = (category.percentage * income) / 100;
+      const balance =
+        budgetAmount -
+        transactionsByCategory.reduce(
+          (acc, transaction) => acc + transaction.amount,
+          0
+        );
 
-      const progress = Math.round(100-(balance * 100) / amountPercentage);
+      const progress = Math.round(100 - (balance * 100) / amountPercentage);
       return {
         ...category,
         balance,

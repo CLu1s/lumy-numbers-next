@@ -1,6 +1,6 @@
 import { useState, forwardRef } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
+import { useToast } from "@chakra-ui/react";
 import formatISO from "date-fns/formatISO";
 import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack } from "@chakra-ui/react";
@@ -9,8 +9,9 @@ import Select from "../../components/Select";
 import esLocale from "date-fns/locale/es";
 import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
+import { addTransaction } from "./walletSlice";
 
 registerLocale("es", esLocale);
 
@@ -21,6 +22,8 @@ type Props = {
 };
 
 const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
+  const dispatch = useDispatch();
+  const toast = useToast();
   const [selected, setSelected] = useState<any>();
   const [date, setDate] = useState<Date | null>(new Date());
   const categories = useSelector(getCategories);
@@ -30,21 +33,27 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     reset,
     formState: { errors },
   } = useForm();
-
-  const onSubmit = (data: any, e: any) => {
-    e.preventDefault();
-    toast.success("Successfully toasted!");
-    console.log(data);
-  };
-
-  const setDateValue = (dateValue: Date | null) => {
-    setDate(dateValue);
-  };
   const handleClose = () => {
     reset();
     onClose();
   };
-
+  const onSubmit = (data: any, e: any) => {
+    e.preventDefault();
+    dispatch(
+      addTransaction({
+        ...data,
+        categoryID: selected,
+      })
+    );
+    toast({
+      title: "Gasto Registrado.",
+      description: "Se ha registrado tu gasto :D",
+      status: "success",
+      isClosable: true,
+    });
+    handleClose();
+  };
+  
   const config = {
     isOpen,
     title: toEdit ? "Actualizar Gasto" : "Ingresar Nuevo Gasto",

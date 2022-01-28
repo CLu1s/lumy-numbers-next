@@ -13,22 +13,14 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import { HiOutlineHome } from "react-icons/hi";
-import { BiHappyBeaming } from "react-icons/bi";
-import { AiOutlineStock } from "react-icons/ai";
-import money from "../../utils/money";
+
+import {money,icons} from "../../utils";
 import { useSelector } from "react-redux";
 import { getBalanceByCategories } from "../../features/wallet/selector";
 
 const Categories = () => {
   const items = useSelector(getBalanceByCategories);
-  const icons = useMemo(() => {
-    return {
-      HiOutlineHome: <HiOutlineHome />,
-      BiHappyBeaming: <BiHappyBeaming />,
-      AiOutlineStock: <AiOutlineStock />,
-    };
-  }, []);
+  
 
 
   return (
@@ -48,7 +40,7 @@ const Categories = () => {
                   borderRadius="md"
                   fontSize="2rem"
                 >
-                  {icons[item.icon]}
+                  {icons(item.icon)}
                 </Square>
                 <Stat>
                   <StatLabel>{item.name}</StatLabel>

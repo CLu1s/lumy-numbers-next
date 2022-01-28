@@ -41,9 +41,19 @@ const budgetSlice = createSlice({
           color,
           icon
         });
+      },
+      updateCategory: (state, action: PayloadAction<{ id: string, name: string, percentage: number, color: string, icon: string }>) => {
+        const { id, name, percentage, color, icon } = action.payload;
+        const category = state.categories.find(category => category.id === id);
+        if (category) {
+          category.name = name;
+          category.percentage = percentage;
+          category.color = color;
+          category.icon = icon;
+        }
       }
   },
 });
 
-export const { addCategory } = budgetSlice.actions;
+export const { addCategory,updateCategory } = budgetSlice.actions;
 export default budgetSlice.reducer;

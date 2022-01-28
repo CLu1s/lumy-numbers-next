@@ -14,8 +14,10 @@ export type Transaction = {
   id: string;
   amount: number;
   categoryID: string;
+  categoryName?: string;
+  categoryColor?: string;
   date: string;
-
+  description: string
 };
 
 export type WalletState = {
