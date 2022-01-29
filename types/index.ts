@@ -1,3 +1,15 @@
+export enum LoadingStates {
+  IDLE = "idle",
+  Loading = "loading",
+  SUCCEEDED = "succeeded",
+  FAILED = "failed",
+}
+
+export type LoadingStatus = {
+  status: LoadingStates;
+  error: string | null;
+};
+
 export type SingleTransaction = {
   id: string;
   amount: number;
@@ -17,11 +29,14 @@ export type Transaction = {
   categoryName?: string;
   categoryColor?: string;
   date: string;
-  description: string
+  description: string;
 };
 
 export type WalletState = {
   transactions: Transaction[];
+  status: LoadingStates;
+  error: string | null;
+  pokemon: string | null;
 };
 
 export type Category = {
@@ -46,3 +61,5 @@ export type BalancedCategory = {
   balance: number;
   progress: number;
 };
+
+

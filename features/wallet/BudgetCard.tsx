@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RecordExpense from "./RecordExpense";
 import { useDisclosure, Button } from "@chakra-ui/react";
 import HeroStatCard, { HeroStatFooter } from "../../components/HeroStatCard";
 import { date } from "../../utils";
+import { useSelector, useDispatch } from "react-redux";
+import { getStatus } from "./selector";
+import { fetchTransactions } from "./walletSlice";
 
 type Props = {
   balance: number;
@@ -11,6 +14,13 @@ type Props = {
 const BudgetCard = ({ balance }: Props) => {
   const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+  const status = useSelector(getStatus);
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchTransactions());
+    }
+  }, [dispatch, status]);
   return (
     <>
       <RecordExpense isOpen={isOpen} onClose={onClose} />

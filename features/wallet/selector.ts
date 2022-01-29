@@ -10,6 +10,16 @@ export const getTransactions = createSelector(
   (state: WalletState): WalletState["transactions"] => state.transactions
 );
 
+export const getStatus = createSelector(
+  [walletSelector],
+  (state: WalletState): WalletState["status"] => state.status
+);
+
+export const getPokemon = createSelector(
+  [walletSelector],
+  (state: WalletState): WalletState["pokemon"] => state.pokemon
+);
+
 export const getTransactionsFormatted = createSelector(
   [getTransactions, getCategories],
   (

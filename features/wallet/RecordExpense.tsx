@@ -10,8 +10,8 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
-import { addTransaction,fetchPosts } from "./walletSlice";
-
+import { addTransaction, addNewTransaction } from "./walletSlice";
+import { getStatus, getPokemon } from "./selector";
 
 registerLocale("es", esLocale);
 
@@ -21,15 +21,14 @@ type Props = {
   toEdit?: SingleTransaction;
 };
 
-
-
-
 const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const [selected, setSelected] = useState<any>();
   const [date, setDate] = useState<Date | null>(new Date());
   const categories = useSelector(getCategories);
+  const status = useSelector(getStatus);
+  const pokemon = useSelector(getPokemon);
   const {
     register,
     handleSubmit,
@@ -44,11 +43,13 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const onSubmit = (data: any, e: any) => {
     e.preventDefault();
     dispatch(
-      addTransaction({
+      addNewTransaction({
         ...data,
         categoryID: selected,
+        date: date,
       })
     );
+
     toast({
       title: "Gasto Registrado.",
       description: "Se ha registrado tu gasto :D",
@@ -77,7 +78,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     <Modal {...config}>
       <VStack spacing={4}>
         <p className="text-sm text-gray-500">
-          Ingresa el monto y la descripción del gasto
+          Ingresa el monto y la descripción del gasto {pokemon}
         </p>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
