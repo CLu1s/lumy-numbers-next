@@ -1,17 +1,17 @@
-import { useState, forwardRef } from "react";
+import React, { useState, forwardRef } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/react";
-import formatISO from "date-fns/formatISO";
 import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack } from "@chakra-ui/react";
 import { SingleTransaction } from "../../types";
 import Select from "../../components/Select";
 import esLocale from "date-fns/locale/es";
-import DatePicker, { registerLocale, setDefaultLocale } from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
-import { addTransaction } from "./walletSlice";
+import { addTransaction,fetchPosts } from "./walletSlice";
+
 
 registerLocale("es", esLocale);
 
@@ -20,6 +20,9 @@ type Props = {
   onClose: () => void;
   toEdit?: SingleTransaction;
 };
+
+
+
 
 const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
@@ -37,6 +40,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     reset();
     onClose();
   };
+
   const onSubmit = (data: any, e: any) => {
     e.preventDefault();
     dispatch(
@@ -53,7 +57,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     });
     handleClose();
   };
-  
+
   const config = {
     isOpen,
     title: toEdit ? "Actualizar Gasto" : "Ingresar Nuevo Gasto",
@@ -83,16 +87,11 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
                 {...register("amount", { required: true })}
               />
               {errors.description && <span>Este Campo es Requerido</span>}
-              {/* include validation with required or other standard HTML validation rules */}
               <Input
                 placeholder="Descripción"
                 {...register("description", { required: true })}
               />
               {errors.amount && <span>Este Campo es Requerido</span>}
-              {/* errors will return when field validation fails  */}
-
-              {/* errors will return when field validation fails  */}
-
               <Select
                 label="Categoría"
                 selected={selected}

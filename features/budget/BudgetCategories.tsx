@@ -8,74 +8,100 @@ import Screen from "../../components/Screen";
 import { updateCategory } from "./budgetSlice";
 import { Category } from "../../types";
 
+const sanitizer = (state: Category[]): Category[] => {
+  return state.reduce((acc, cur) => {
+    if (cur.id !== "rest") {
+      return [...acc, cur];
+    }
+    return acc;
+  }, []);
+};
+
+function reducer(state: Category[], action) {
+  const { percentage, id } = action;
+  const filterState = sanitizer(state);
+  const newState = filterState.map((item) =>
+    item.id === id ? { ...item, percentage } : item
+  );
+  const rest = newState.reduce((acc, item) => acc + item.percentage, 0);
+  if (rest > 100) {
+    return state;
+  }
+  if (rest < 100) {
+    const index = newState.findIndex((item) => item.id === "rest");
+
+    if (index !== -1) {
+      newState[index].percentage = 100 - rest;
+    } else {
+      newState.push({
+        id: "rest",
+        name: "Resto",
+        percentage: 100 - rest,
+        color: "yellow.500",
+        icon: "AiOutlineWarning",
+      });
+    }
+  }
+  return newState;
+}
+
 const BudgetCategories = () => {
   const categories = useSelector(getCategories);
   const income = useSelector(getIncome);
   const dispatch = useDispatch();
   const toast = useToast();
   const [state, setState] = useReducer(reducer, categories);
-  const manageSliderChange = (e: number, id: string) => {
+
+  React.useEffect(() => {
+    
+  }, []);
+
+  const manageSliderChange = (
+    newPercentage: number,
+    id: string,
+    percentage: number
+  ) => {
     const category = categories.find((c) => c.id === id);
-    dispatch(updateCategory({ ...category, percentage: e }));
-    toast({
-      title: "Guardado.",
-      description: "Tu cambio ha sido guardado.",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
-  };
-  const debounceSliderChange = _debounce((e: number, id: string) => {
-    const filterState = state.reduce((acc, cur) => {
-      if (cur.id !== "rest") {
-        return [...acc, cur];
+    const filterState = sanitizer(state);
+    const rest = filterState.reduce((acc, item) => {
+      if (item.id !== id) {
+        return acc + item.percentage;
       }
       return acc;
-    }, []);
-    const rest = filterState.reduce((acc, item) => acc + item.percentage, 0);
+    }, 0);
 
-    if (rest === 100) {
-      manageSliderChange(e, id);
+    console.log("rest", {
+      newPercentage,
+      old: category.percentage,
+      rest,
+      percentage,
+    });
+    if (newPercentage + rest <= 100) {
+      dispatch(updateCategory({ ...category, percentage: newPercentage }));
+      toast({
+        title: "Guardado.",
+        description: "Tu cambio ha sido guardado.",
+        status: "success",
+        duration: 1000,
+        isClosable: true,
+      });
     } else {
-      console.log("nope");
+      dispatch(updateCategory({ ...category, percentage: 100 - rest }));
+      toast({
+        title: "Guardado.",
+        description: "Tu cambio ha sido guardado con el maxímo permitido.",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
     }
-  }, 1000);
-  function reducer(state: Category[], action) {
-    const { percentage, id } = action;
-    const filterState = state.reduce((acc, cur) => {
-      if (cur.id !== "rest") {
-        return [...acc, cur];
-      }
-      return acc;
-    }, []);
-    const newState = filterState.map((item) => {
-      if (item.id === id) {
-        return { ...item, percentage };
-      }
-      return item;
-    });
-    const rest = newState.reduce((acc, item) => acc + item.percentage, 0);
-    if (rest > 100) {
-      return state;
-    }
-    if (rest < 100) {
-      console.log(rest);
-
-      const index = newState.findIndex((item) => item.id === "rest");
-      if (index !== -1) {
-        newState[index].percentage = 100 - rest;
-      } else {
-        newState.push({
-          id: "rest",
-          name: "Resto",
-          percentage: 100 - rest,
-          color: "yellow.500",
-          icon: "AiOutlineWarning",
-        });
-      }
-    }
-    return newState;
-  }
+  };
+  const debounceSliderChange = _debounce(
+    (e: number, id: string, percentage: number) => {
+      manageSliderChange(e, id, percentage);
+    },
+    1000
+  );
 
   return (
     <Screen title="Distribución del Presupuesto">
@@ -89,7 +115,9 @@ const BudgetCategories = () => {
               progress={item.percentage}
               key={item.id}
               onChange={(e) => setState({ percentage: e, id: item.id })}
-              onChangeEnd={(e) => debounceSliderChange(e, item.id)}
+              onChangeEnd={(e) =>
+                debounceSliderChange(e, item.id, item.percentage)
+              }
             />
           </WrapItem>
         ))}

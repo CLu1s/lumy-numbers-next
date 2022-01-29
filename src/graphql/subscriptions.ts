@@ -35,3 +35,48 @@ export const onDeleteTodo = /* GraphQL */ `
     }
   }
 `;
+export const onCreateTransaction = /* GraphQL */ `
+  subscription OnCreateTransaction {
+    onCreateTransaction {
+      id
+      amount
+      categoryID
+      categoryName
+      categoryColor
+      date
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTransaction = /* GraphQL */ `
+  subscription OnUpdateTransaction {
+    onUpdateTransaction {
+      id
+      amount
+      categoryID
+      categoryName
+      categoryColor
+      date
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTransaction = /* GraphQL */ `
+  subscription OnDeleteTransaction {
+    onDeleteTransaction {
+      id
+      amount
+      categoryID
+      categoryName
+      categoryColor
+      date
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;

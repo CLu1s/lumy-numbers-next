@@ -75,6 +75,67 @@ export type DeleteTodoInput = {
   id: string,
 };
 
+export type CreateTransactionInput = {
+  id?: string | null,
+  amount?: number | null,
+  categoryID?: string | null,
+  categoryName?: string | null,
+  categoryColor?: string | null,
+  date?: string | null,
+  description?: string | null,
+};
+
+export type ModelTransactionConditionInput = {
+  amount?: ModelIntInput | null,
+  categoryID?: ModelStringInput | null,
+  categoryName?: ModelStringInput | null,
+  categoryColor?: ModelStringInput | null,
+  date?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelTransactionConditionInput | null > | null,
+  or?: Array< ModelTransactionConditionInput | null > | null,
+  not?: ModelTransactionConditionInput | null,
+};
+
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type Transaction = {
+  __typename: "Transaction",
+  id: string,
+  amount?: number | null,
+  categoryID?: string | null,
+  categoryName?: string | null,
+  categoryColor?: string | null,
+  date?: string | null,
+  description?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateTransactionInput = {
+  id: string,
+  amount?: number | null,
+  categoryID?: string | null,
+  categoryName?: string | null,
+  categoryColor?: string | null,
+  date?: string | null,
+  description?: string | null,
+};
+
+export type DeleteTransactionInput = {
+  id: string,
+};
+
 export type ModelTodoFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -103,6 +164,25 @@ export type ModelIDInput = {
 export type ModelTodoConnection = {
   __typename: "ModelTodoConnection",
   items:  Array<Todo | null >,
+  nextToken?: string | null,
+};
+
+export type ModelTransactionFilterInput = {
+  id?: ModelIDInput | null,
+  amount?: ModelIntInput | null,
+  categoryID?: ModelStringInput | null,
+  categoryName?: ModelStringInput | null,
+  categoryColor?: ModelStringInput | null,
+  date?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelTransactionFilterInput | null > | null,
+  or?: Array< ModelTransactionFilterInput | null > | null,
+  not?: ModelTransactionFilterInput | null,
+};
+
+export type ModelTransactionConnection = {
+  __typename: "ModelTransactionConnection",
+  items:  Array<Transaction | null >,
   nextToken?: string | null,
 };
 
@@ -154,6 +234,66 @@ export type DeleteTodoMutation = {
   } | null,
 };
 
+export type CreateTransactionMutationVariables = {
+  input: CreateTransactionInput,
+  condition?: ModelTransactionConditionInput | null,
+};
+
+export type CreateTransactionMutation = {
+  createTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    amount?: number | null,
+    categoryID?: string | null,
+    categoryName?: string | null,
+    categoryColor?: string | null,
+    date?: string | null,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateTransactionMutationVariables = {
+  input: UpdateTransactionInput,
+  condition?: ModelTransactionConditionInput | null,
+};
+
+export type UpdateTransactionMutation = {
+  updateTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    amount?: number | null,
+    categoryID?: string | null,
+    categoryName?: string | null,
+    categoryColor?: string | null,
+    date?: string | null,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteTransactionMutationVariables = {
+  input: DeleteTransactionInput,
+  condition?: ModelTransactionConditionInput | null,
+};
+
+export type DeleteTransactionMutation = {
+  deleteTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    amount?: number | null,
+    categoryID?: string | null,
+    categoryName?: string | null,
+    categoryColor?: string | null,
+    date?: string | null,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetTodoQueryVariables = {
   id: string,
 };
@@ -190,6 +330,50 @@ export type ListTodosQuery = {
   } | null,
 };
 
+export type GetTransactionQueryVariables = {
+  id: string,
+};
+
+export type GetTransactionQuery = {
+  getTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    amount?: number | null,
+    categoryID?: string | null,
+    categoryName?: string | null,
+    categoryColor?: string | null,
+    date?: string | null,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListTransactionsQueryVariables = {
+  filter?: ModelTransactionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListTransactionsQuery = {
+  listTransactions?:  {
+    __typename: "ModelTransactionConnection",
+    items:  Array< {
+      __typename: "Transaction",
+      id: string,
+      amount?: number | null,
+      categoryID?: string | null,
+      categoryName?: string | null,
+      categoryColor?: string | null,
+      date?: string | null,
+      description?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type OnCreateTodoSubscription = {
   onCreateTodo?:  {
     __typename: "Todo",
@@ -217,6 +401,51 @@ export type OnDeleteTodoSubscription = {
     __typename: "Todo",
     id: string,
     name: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateTransactionSubscription = {
+  onCreateTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    amount?: number | null,
+    categoryID?: string | null,
+    categoryName?: string | null,
+    categoryColor?: string | null,
+    date?: string | null,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateTransactionSubscription = {
+  onUpdateTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    amount?: number | null,
+    categoryID?: string | null,
+    categoryName?: string | null,
+    categoryColor?: string | null,
+    date?: string | null,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteTransactionSubscription = {
+  onDeleteTransaction?:  {
+    __typename: "Transaction",
+    id: string,
+    amount?: number | null,
+    categoryID?: string | null,
+    categoryName?: string | null,
+    categoryColor?: string | null,
+    date?: string | null,
     description?: string | null,
     createdAt: string,
     updatedAt: string,

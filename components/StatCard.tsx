@@ -50,7 +50,7 @@ const StatCard = ({
         </Square>
         <Stat>
           <StatLabel>{name}</StatLabel>
-          <StatNumber style={{width:"135px"}}>{money(number)}</StatNumber>
+          <StatNumber style={{width:"100%", minWidth:"135px"}}>{money(number)}</StatNumber>
         </Stat>
         <CircularProgress value={progress} color={color}>
           <CircularProgressLabel>{progress}%</CircularProgressLabel>
