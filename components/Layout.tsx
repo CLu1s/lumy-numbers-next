@@ -1,15 +1,7 @@
 import { useState } from "react";
-import Loading, { LoadingType } from "./Loading";
+import Loading from "./Loading";
 import Topbar from "./Topbar";
-import {
-  Box,
-  Button,
-  Container,
-  Stack,
-  Center,
-  VStack,
-  Heading,
-} from "@chakra-ui/react";
+import { Box, Stack, Heading } from "@chakra-ui/react";
 
 import Sidebar from "./Sidebar";
 type Props = {
@@ -22,7 +14,7 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
   const [loading, setLoading] = useState(false);
 
   if (loading) {
-    return <Loading type={LoadingType.FULL_PAGE} />;
+    return <Loading />;
   }
   return (
     <>

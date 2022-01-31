@@ -12,7 +12,6 @@ type Props = {
 };
 
 const BudgetCard = ({ balance }: Props) => {
-  const [loading, setLoading] = useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const status = useSelector(getStatus);
@@ -29,6 +28,7 @@ const BudgetCard = ({ balance }: Props) => {
         statLabel="Disponible"
         helpText={date(new Date(), "LLLL-YYY")}
         amount={balance}
+        loading={status === "loading"}
       >
         <HeroStatFooter>
           <Button onClick={onOpen} colorScheme="blue" variant="outline">

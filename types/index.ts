@@ -62,4 +62,14 @@ export type BalancedCategory = {
   progress: number;
 };
 
+export type FixedCost = {
+  id: string;
+  name: string;
+  type: string;
+  amount: number;
+  description?: string;
+};
 
+export type FixedCostState = {
+  items: FixedCost[];
+};

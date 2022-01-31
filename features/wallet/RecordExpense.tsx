@@ -10,8 +10,8 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
-import { addTransaction, addNewTransaction } from "./walletSlice";
-import { getStatus, getPokemon } from "./selector";
+import { addNewTransaction } from "./walletSlice";
+import { getStatus } from "./selector";
 
 registerLocale("es", esLocale);
 
@@ -28,7 +28,6 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const [date, setDate] = useState<Date | null>(new Date());
   const categories = useSelector(getCategories);
   const status = useSelector(getStatus);
-  const pokemon = useSelector(getPokemon);
   const {
     register,
     handleSubmit,
@@ -78,7 +77,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     <Modal {...config}>
       <VStack spacing={4}>
         <p className="text-sm text-gray-500">
-          Ingresa el monto y la descripción del gasto {pokemon}
+          Ingresa el monto y la descripción del gasto
         </p>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">

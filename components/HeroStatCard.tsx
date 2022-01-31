@@ -6,9 +6,9 @@ import {
   Box,
   Heading,
   Center,
-  Spinner,
 } from "@chakra-ui/react";
 import Screen from "./Screen";
+import Loading from "./Loading";	
 import { money } from "../utils";
 
 type FooterProps = {
@@ -30,6 +30,7 @@ type Props = {
   amount: number;
   statLabel?: string;
   helpText?: string;
+  loading?: boolean;
   children?: React.ReactNode;
 };
 
@@ -39,8 +40,8 @@ const HeroStatCard = ({
   amount,
   helpText,
   children,
+  loading,
 }: Props) => {
-  const loading = false;
   return (
     <Screen title={title}>
       {!loading ? (
@@ -56,7 +57,7 @@ const HeroStatCard = ({
           <StatHelpText textTransform="capitalize">{helpText}</StatHelpText>
         </Stat>
       ) : (
-        <Spinner />
+        <Loading />
       )}
       {children}
     </Screen>

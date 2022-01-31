@@ -1,27 +1,12 @@
-import SyncLoader from "react-spinners/SyncLoader";
-import clsx from "clsx";
-export enum LoadingType {
-  FULL_PAGE = "FULL_PAGE",
-  INLINE = "INLINE",
-}
+import { Box, Center, Spinner } from "@chakra-ui/react";
 
-type Props = {
-  type?: LoadingType;
-};
-
-const Loading = ({ type = LoadingType.INLINE }: Props) => {
+const Loading = () => {
   return (
-    <div
-      className={clsx(
-        "flex flex-col justify-center w-full h-full",
-        type === LoadingType.FULL_PAGE && "h-screen",
-        type === LoadingType.INLINE && "h-full mt-4"
-      )}
-    >
-      <div className="flex justify-center items-center">
-        <SyncLoader size={15} color={"#9734ea"} loading={true} />
-      </div>
-    </div>
+    <Box>
+      <Center>
+        <Spinner color="purple.500" size='xl'/>
+      </Center>
+    </Box>
   );
 };
 

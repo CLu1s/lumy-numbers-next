@@ -14,7 +14,7 @@ export const fetchTransactions = createAsyncThunk(
   "wallet/fetchTransactions",
   async () => {
     const response = await API.graphql(graphqlOperation(listTransactions));
-    return response.data.listTransactions.items;
+    return response;
   }
 );
 
@@ -55,7 +55,7 @@ const walletSlice = createSlice({
       state.status = LoadingStates.Loading;
     },
     [fetchTransactions.fulfilled.type]: (state, action) => {
-      state.transactions = action.payload;
+      state.transactions = action.payload.data.listTransactions.items;
       state.status = LoadingStates.SUCCEEDED;
     },
     [fetchTransactions.rejected.type]: (state, action) => {

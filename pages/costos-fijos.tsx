@@ -2,9 +2,9 @@ import Head from "next/head";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import Layout from "../components/Layout";
 import { Stack } from "@chakra-ui/react";
-import Table from "../features/wallet/Table";
+import Table from "../features/fixedCost/ItemsList";
 import Screen from "../components/Screen";
-function Transacciones({ user }) {
+function CostosFijos({ user }) {
   return (
     <div>
       <Head>
@@ -13,7 +13,7 @@ function Transacciones({ user }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout userName={user?.username || ""} pageTitle="Transacciones del mes">
+      <Layout userName={user?.username || ""} pageTitle="Costos Fijos">
         <Stack spacing={8}>
           <Screen>
             <Table />
@@ -24,4 +24,4 @@ function Transacciones({ user }) {
   );
 }
 
-export default withAuthenticator(Transacciones);
+export default withAuthenticator(CostosFijos);
