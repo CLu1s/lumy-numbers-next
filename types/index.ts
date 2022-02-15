@@ -1,6 +1,8 @@
+import { listIncomes } from "../src/graphql/queries";
+
 export enum LoadingStates {
   IDLE = "idle",
-  Loading = "loading",
+  LOADING = "loading",
   SUCCEEDED = "succeeded",
   FAILED = "failed",
 }
@@ -36,7 +38,19 @@ export type WalletState = {
   transactions: Transaction[];
   status: LoadingStates;
   error: string | null;
-  pokemon: string | null;
+};
+
+export type Bucket = {
+  id: string;
+  name: string;
+  listIncomes: Income[];
+};
+
+export type BucketState = {
+  userName: string | null;
+  status: LoadingStatus;
+  bucket: Bucket | null;
+  error: string | null;
 };
 
 export type Category = {
@@ -47,9 +61,17 @@ export type Category = {
   percentage: number;
 };
 
+export type Income = {
+  id: string;
+  amount: number;
+  date: string;
+  description: string;
+};
+
 export type BudgetState = {
-  income: number;
+  incomes: Income[];
   categories: Category[];
+  status: LoadingStates;
 };
 
 export type BalancedCategory = {

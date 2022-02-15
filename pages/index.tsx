@@ -4,12 +4,8 @@ import BudgetCard from "../features/wallet/BudgetCard";
 import Layout from "../components/Layout";
 import Categories from "../features/wallet/Categories";
 import { Stack } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
-import {getBalance} from "../features/wallet/selector"
 
 function Home({ user }) {
-  const dispatch = useDispatch();
-  const balance = useSelector(getBalance);
   return (
     <div>
       <Head>
@@ -20,7 +16,7 @@ function Home({ user }) {
 
       <Layout userName={user?.username || ""} pageTitle="Excelente Día">
         <Stack spacing={8}>
-          <BudgetCard balance={balance} />
+          <BudgetCard />
           <Categories />
         </Stack>
       </Layout>

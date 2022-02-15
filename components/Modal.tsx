@@ -1,4 +1,3 @@
-import { Fragment, useRef } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -17,7 +16,7 @@ type Props = {
   cancelButton?: boolean;
   cancelButtonText?: string;
   action?: () => void;
-  actionButtonText?: string;
+  onSubmitButtonText?: string;
   actionColor?: string;
   onClose: () => void;
   onSubmit: () => void;
@@ -27,6 +26,7 @@ export default function ModalComponent({
   children,
   title,
   isOpen,
+  onSubmitButtonText,
   onClose,
   onSubmit,
 }: Props) {
@@ -42,7 +42,9 @@ export default function ModalComponent({
           <Button colorScheme="blue" mr={3} onClick={onClose}>
             Cancelar
           </Button>
-          <Button variant="ghost" onClick={onSubmit}>Guardar</Button>
+          <Button variant="ghost" onClick={onSubmit}>
+            {onSubmitButtonText ? onSubmitButtonText : "Guardar"}
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

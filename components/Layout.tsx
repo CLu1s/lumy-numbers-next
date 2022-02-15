@@ -2,6 +2,7 @@ import { useState } from "react";
 import Loading from "./Loading";
 import Topbar from "./Topbar";
 import { Box, Stack, Heading } from "@chakra-ui/react";
+import CheckBucket from "../features/bucket/CheckBucket";
 
 import Sidebar from "./Sidebar";
 type Props = {
@@ -20,6 +21,7 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
     <>
       <main>
         <Stack spacing={[0, 8]} direction="row">
+        <CheckBucket userName={userName} />
           <Sidebar />
           <Stack width="full">
             <Topbar />

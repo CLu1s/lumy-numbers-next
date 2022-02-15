@@ -6,14 +6,13 @@ import { date } from "../../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { getStatus } from "./selector";
 import { fetchTransactions } from "./walletSlice";
+import {getBalance} from "./selector"
 
-type Props = {
-  balance: number;
-};
 
-const BudgetCard = ({ balance }: Props) => {
+const BudgetCard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
+  const balance = useSelector(getBalance);
   const status = useSelector(getStatus);
   useEffect(() => {
     if (status === "idle") {

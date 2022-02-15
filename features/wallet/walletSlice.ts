@@ -7,7 +7,6 @@ const initialState: WalletState = {
   transactions: [],
   status: LoadingStates.IDLE,
   error: null,
-  pokemon: null,
 };
 
 export const fetchTransactions = createAsyncThunk(
@@ -52,7 +51,7 @@ const walletSlice = createSlice({
   },
   extraReducers: {
     [fetchTransactions.pending.type]: (state) => {
-      state.status = LoadingStates.Loading;
+      state.status = LoadingStates.LOADING;
     },
     [fetchTransactions.fulfilled.type]: (state, action) => {
       state.transactions = action.payload.data.listTransactions.items;
@@ -63,7 +62,7 @@ const walletSlice = createSlice({
       state.status = LoadingStates.FAILED;
     },
     [addNewTransaction.pending.type]: (state) => {
-      state.status = LoadingStates.Loading;
+      state.status = LoadingStates.LOADING;
     },
     [addNewTransaction.fulfilled.type]: (state, action) => {
       state.transactions.push(action.payload.data.createTransaction);

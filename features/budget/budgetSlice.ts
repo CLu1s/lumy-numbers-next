@@ -1,8 +1,24 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BudgetState } from "../../types";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { API, graphqlOperation } from "aws-amplify";
+import { BudgetState, LoadingStates } from "../../types";
+import { userByUserName } from "../../src/graphql/queries";
 
 const initialState: BudgetState = {
-  income: 90000,
+  status: LoadingStates.IDLE,
+  incomes: [
+    {
+      id: "1",
+      amount: 60557.28,
+      date: "2020-01-01",
+      description: "Salary 1",
+    },
+    {
+      id: "2",
+      amount: 9148.3,
+      date: "2020-01-01",
+      description: "Salary 2",
+    },
+  ],
   categories: [
     {
       id: "1",
@@ -28,32 +44,52 @@ const initialState: BudgetState = {
   ],
 };
 
+
+
 const budgetSlice = createSlice({
   name: "budget",
   initialState,
   reducers: {
-      addCategory: (state, action: PayloadAction<{ name: string, percentage: number, color: string, icon: string }>) => {
-        const { name, percentage, color, icon } = action.payload;
-        state.categories.push({
-          id: Math.random().toString(),
-          name,
-          percentage,
-          color,
-          icon
-        });
-      },
-      updateCategory: (state, action: PayloadAction<{ id: string, name: string, percentage: number, color: string, icon: string }>) => {
-        const { id, name, percentage, color, icon } = action.payload;
-        const category = state.categories.find(category => category.id === id);
-        if (category) {
-          category.name = name;
-          category.percentage = percentage;
-          category.color = color;
-          category.icon = icon;
-        }
+    addCategory: (
+      state,
+      action: PayloadAction<{
+        name: string;
+        percentage: number;
+        color: string;
+        icon: string;
+      }>
+    ) => {
+      const { name, percentage, color, icon } = action.payload;
+      state.categories.push({
+        id: Math.random().toString(),
+        name,
+        percentage,
+        color,
+        icon,
+      });
+    },
+    updateCategory: (
+      state,
+      action: PayloadAction<{
+        id: string;
+        name: string;
+        percentage: number;
+        color: string;
+        icon: string;
+      }>
+    ) => {
+      const { id, name, percentage, color, icon } = action.payload;
+      const category = state.categories.find((category) => category.id === id);
+      if (category) {
+        category.name = name;
+        category.percentage = percentage;
+        category.color = color;
+        category.icon = icon;
       }
+    },
   },
+  
 });
 
-export const { addCategory,updateCategory } = budgetSlice.actions;
+export const { addCategory, updateCategory } = budgetSlice.actions;
 export default budgetSlice.reducer;

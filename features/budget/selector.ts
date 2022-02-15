@@ -11,5 +11,5 @@ export const getCategories = createSelector(
 
 export const getIncome = createSelector(
   [budgetSelector],
-  (state: BudgetState): number => state.income
+  (state: BudgetState): number => state.incomes.reduce((acc, curr) => acc + curr.amount, 0)
 );

@@ -2,18 +2,18 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateTodoInput = {
+export type CreateUserInput = {
   id?: string | null,
-  name: string,
-  description?: string | null,
+  userName: string,
+  bucketID: string,
 };
 
-export type ModelTodoConditionInput = {
-  name?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  and?: Array< ModelTodoConditionInput | null > | null,
-  or?: Array< ModelTodoConditionInput | null > | null,
-  not?: ModelTodoConditionInput | null,
+export type ModelUserConditionInput = {
+  userName?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -56,22 +56,134 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type Todo = {
-  __typename: "Todo",
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export type User = {
+  __typename: "User",
   id: string,
-  name: string,
-  description?: string | null,
+  userName: string,
+  bucketID: string,
   createdAt: string,
   updatedAt: string,
 };
 
-export type UpdateTodoInput = {
+export type UpdateUserInput = {
   id: string,
-  name?: string | null,
-  description?: string | null,
+  userName?: string | null,
+  bucketID?: string | null,
 };
 
-export type DeleteTodoInput = {
+export type DeleteUserInput = {
+  id: string,
+};
+
+export type CreateBucketInput = {
+  id?: string | null,
+  name?: string | null,
+};
+
+export type ModelBucketConditionInput = {
+  name?: ModelStringInput | null,
+  and?: Array< ModelBucketConditionInput | null > | null,
+  or?: Array< ModelBucketConditionInput | null > | null,
+  not?: ModelBucketConditionInput | null,
+};
+
+export type Bucket = {
+  __typename: "Bucket",
+  id: string,
+  name?: string | null,
+  collaborators?: ModelUserConnection | null,
+  incomes?: ModelIncomeConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection",
+  items:  Array<User | null >,
+  nextToken?: string | null,
+};
+
+export type ModelIncomeConnection = {
+  __typename: "ModelIncomeConnection",
+  items:  Array<Income | null >,
+  nextToken?: string | null,
+};
+
+export type Income = {
+  __typename: "Income",
+  id: string,
+  amount: number,
+  date: string,
+  description?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  bucketIncomesId?: string | null,
+};
+
+export type UpdateBucketInput = {
+  id: string,
+  name?: string | null,
+};
+
+export type DeleteBucketInput = {
+  id: string,
+};
+
+export type CreateIncomeInput = {
+  id?: string | null,
+  amount: number,
+  date: string,
+  description?: string | null,
+  bucketIncomesId?: string | null,
+};
+
+export type ModelIncomeConditionInput = {
+  amount?: ModelFloatInput | null,
+  date?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelIncomeConditionInput | null > | null,
+  or?: Array< ModelIncomeConditionInput | null > | null,
+  not?: ModelIncomeConditionInput | null,
+  bucketIncomesId?: ModelIDInput | null,
+};
+
+export type ModelFloatInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type UpdateIncomeInput = {
+  id: string,
+  amount?: number | null,
+  date?: string | null,
+  description?: string | null,
+  bucketIncomesId?: string | null,
+};
+
+export type DeleteIncomeInput = {
   id: string,
 };
 
@@ -136,35 +248,38 @@ export type DeleteTransactionInput = {
   id: string,
 };
 
-export type ModelTodoFilterInput = {
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
+  userName?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
+};
+
+export type ModelBucketFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  and?: Array< ModelTodoFilterInput | null > | null,
-  or?: Array< ModelTodoFilterInput | null > | null,
-  not?: ModelTodoFilterInput | null,
+  and?: Array< ModelBucketFilterInput | null > | null,
+  or?: Array< ModelBucketFilterInput | null > | null,
+  not?: ModelBucketFilterInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
-export type ModelTodoConnection = {
-  __typename: "ModelTodoConnection",
-  items:  Array<Todo | null >,
+export type ModelBucketConnection = {
+  __typename: "ModelBucketConnection",
+  items:  Array<Bucket | null >,
   nextToken?: string | null,
+};
+
+export type ModelIncomeFilterInput = {
+  id?: ModelIDInput | null,
+  amount?: ModelFloatInput | null,
+  date?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelIncomeFilterInput | null > | null,
+  or?: Array< ModelIncomeFilterInput | null > | null,
+  not?: ModelIncomeFilterInput | null,
+  bucketIncomesId?: ModelIDInput | null,
 };
 
 export type ModelTransactionFilterInput = {
@@ -186,51 +301,244 @@ export type ModelTransactionConnection = {
   nextToken?: string | null,
 };
 
-export type CreateTodoMutationVariables = {
-  input: CreateTodoInput,
-  condition?: ModelTodoConditionInput | null,
+export type ModelIDKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
 };
 
-export type CreateTodoMutation = {
-  createTodo?:  {
-    __typename: "Todo",
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
+export type CreateUserMutationVariables = {
+  input: CreateUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type CreateUserMutation = {
+  createUser?:  {
+    __typename: "User",
     id: string,
-    name: string,
-    description?: string | null,
+    userName: string,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateTodoMutationVariables = {
-  input: UpdateTodoInput,
-  condition?: ModelTodoConditionInput | null,
+export type UpdateUserMutationVariables = {
+  input: UpdateUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type UpdateTodoMutation = {
-  updateTodo?:  {
-    __typename: "Todo",
+export type UpdateUserMutation = {
+  updateUser?:  {
+    __typename: "User",
     id: string,
-    name: string,
-    description?: string | null,
+    userName: string,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteTodoMutationVariables = {
-  input: DeleteTodoInput,
-  condition?: ModelTodoConditionInput | null,
+export type DeleteUserMutationVariables = {
+  input: DeleteUserInput,
+  condition?: ModelUserConditionInput | null,
 };
 
-export type DeleteTodoMutation = {
-  deleteTodo?:  {
-    __typename: "Todo",
+export type DeleteUserMutation = {
+  deleteUser?:  {
+    __typename: "User",
     id: string,
-    name: string,
+    userName: string,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateBucketMutationVariables = {
+  input: CreateBucketInput,
+  condition?: ModelBucketConditionInput | null,
+};
+
+export type CreateBucketMutation = {
+  createBucket?:  {
+    __typename: "Bucket",
+    id: string,
+    name?: string | null,
+    collaborators?:  {
+      __typename: "ModelUserConnection",
+      items:  Array< {
+        __typename: "User",
+        id: string,
+        userName: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    incomes?:  {
+      __typename: "ModelIncomeConnection",
+      items:  Array< {
+        __typename: "Income",
+        id: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        bucketIncomesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateBucketMutationVariables = {
+  input: UpdateBucketInput,
+  condition?: ModelBucketConditionInput | null,
+};
+
+export type UpdateBucketMutation = {
+  updateBucket?:  {
+    __typename: "Bucket",
+    id: string,
+    name?: string | null,
+    collaborators?:  {
+      __typename: "ModelUserConnection",
+      items:  Array< {
+        __typename: "User",
+        id: string,
+        userName: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    incomes?:  {
+      __typename: "ModelIncomeConnection",
+      items:  Array< {
+        __typename: "Income",
+        id: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        bucketIncomesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteBucketMutationVariables = {
+  input: DeleteBucketInput,
+  condition?: ModelBucketConditionInput | null,
+};
+
+export type DeleteBucketMutation = {
+  deleteBucket?:  {
+    __typename: "Bucket",
+    id: string,
+    name?: string | null,
+    collaborators?:  {
+      __typename: "ModelUserConnection",
+      items:  Array< {
+        __typename: "User",
+        id: string,
+        userName: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    incomes?:  {
+      __typename: "ModelIncomeConnection",
+      items:  Array< {
+        __typename: "Income",
+        id: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        bucketIncomesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateIncomeMutationVariables = {
+  input: CreateIncomeInput,
+  condition?: ModelIncomeConditionInput | null,
+};
+
+export type CreateIncomeMutation = {
+  createIncome?:  {
+    __typename: "Income",
+    id: string,
+    amount: number,
+    date: string,
     description?: string | null,
     createdAt: string,
     updatedAt: string,
+    bucketIncomesId?: string | null,
+  } | null,
+};
+
+export type UpdateIncomeMutationVariables = {
+  input: UpdateIncomeInput,
+  condition?: ModelIncomeConditionInput | null,
+};
+
+export type UpdateIncomeMutation = {
+  updateIncome?:  {
+    __typename: "Income",
+    id: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    bucketIncomesId?: string | null,
+  } | null,
+};
+
+export type DeleteIncomeMutationVariables = {
+  input: DeleteIncomeInput,
+  condition?: ModelIncomeConditionInput | null,
+};
+
+export type DeleteIncomeMutation = {
+  deleteIncome?:  {
+    __typename: "Income",
+    id: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    bucketIncomesId?: string | null,
   } | null,
 };
 
@@ -294,37 +602,145 @@ export type DeleteTransactionMutation = {
   } | null,
 };
 
-export type GetTodoQueryVariables = {
+export type GetUserQueryVariables = {
   id: string,
 };
 
-export type GetTodoQuery = {
-  getTodo?:  {
-    __typename: "Todo",
+export type GetUserQuery = {
+  getUser?:  {
+    __typename: "User",
     id: string,
-    name: string,
-    description?: string | null,
+    userName: string,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type ListTodosQueryVariables = {
-  filter?: ModelTodoFilterInput | null,
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListTodosQuery = {
-  listTodos?:  {
-    __typename: "ModelTodoConnection",
+export type ListUsersQuery = {
+  listUsers?:  {
+    __typename: "ModelUserConnection",
     items:  Array< {
-      __typename: "Todo",
+      __typename: "User",
       id: string,
-      name: string,
+      userName: string,
+      bucketID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetBucketQueryVariables = {
+  id: string,
+};
+
+export type GetBucketQuery = {
+  getBucket?:  {
+    __typename: "Bucket",
+    id: string,
+    name?: string | null,
+    collaborators?:  {
+      __typename: "ModelUserConnection",
+      items:  Array< {
+        __typename: "User",
+        id: string,
+        userName: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    incomes?:  {
+      __typename: "ModelIncomeConnection",
+      items:  Array< {
+        __typename: "Income",
+        id: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        bucketIncomesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListBucketsQueryVariables = {
+  filter?: ModelBucketFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListBucketsQuery = {
+  listBuckets?:  {
+    __typename: "ModelBucketConnection",
+    items:  Array< {
+      __typename: "Bucket",
+      id: string,
+      name?: string | null,
+      collaborators?:  {
+        __typename: "ModelUserConnection",
+        nextToken?: string | null,
+      } | null,
+      incomes?:  {
+        __typename: "ModelIncomeConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetIncomeQueryVariables = {
+  id: string,
+};
+
+export type GetIncomeQuery = {
+  getIncome?:  {
+    __typename: "Income",
+    id: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    bucketIncomesId?: string | null,
+  } | null,
+};
+
+export type ListIncomesQueryVariables = {
+  filter?: ModelIncomeFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListIncomesQuery = {
+  listIncomes?:  {
+    __typename: "ModelIncomeConnection",
+    items:  Array< {
+      __typename: "Income",
+      id: string,
+      amount: number,
+      date: string,
       description?: string | null,
       createdAt: string,
       updatedAt: string,
+      bucketIncomesId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -374,36 +790,207 @@ export type ListTransactionsQuery = {
   } | null,
 };
 
-export type OnCreateTodoSubscription = {
-  onCreateTodo?:  {
-    __typename: "Todo",
+export type UserByUserNameQueryVariables = {
+  userName: string,
+  id?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserByUserNameQuery = {
+  userByUserName?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      userName: string,
+      bucketID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateUserSubscription = {
+  onCreateUser?:  {
+    __typename: "User",
     id: string,
-    name: string,
-    description?: string | null,
+    userName: string,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdateTodoSubscription = {
-  onUpdateTodo?:  {
-    __typename: "Todo",
+export type OnUpdateUserSubscription = {
+  onUpdateUser?:  {
+    __typename: "User",
     id: string,
-    name: string,
-    description?: string | null,
+    userName: string,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeleteTodoSubscription = {
-  onDeleteTodo?:  {
-    __typename: "Todo",
+export type OnDeleteUserSubscription = {
+  onDeleteUser?:  {
+    __typename: "User",
     id: string,
-    name: string,
+    userName: string,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateBucketSubscription = {
+  onCreateBucket?:  {
+    __typename: "Bucket",
+    id: string,
+    name?: string | null,
+    collaborators?:  {
+      __typename: "ModelUserConnection",
+      items:  Array< {
+        __typename: "User",
+        id: string,
+        userName: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    incomes?:  {
+      __typename: "ModelIncomeConnection",
+      items:  Array< {
+        __typename: "Income",
+        id: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        bucketIncomesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateBucketSubscription = {
+  onUpdateBucket?:  {
+    __typename: "Bucket",
+    id: string,
+    name?: string | null,
+    collaborators?:  {
+      __typename: "ModelUserConnection",
+      items:  Array< {
+        __typename: "User",
+        id: string,
+        userName: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    incomes?:  {
+      __typename: "ModelIncomeConnection",
+      items:  Array< {
+        __typename: "Income",
+        id: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        bucketIncomesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteBucketSubscription = {
+  onDeleteBucket?:  {
+    __typename: "Bucket",
+    id: string,
+    name?: string | null,
+    collaborators?:  {
+      __typename: "ModelUserConnection",
+      items:  Array< {
+        __typename: "User",
+        id: string,
+        userName: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    incomes?:  {
+      __typename: "ModelIncomeConnection",
+      items:  Array< {
+        __typename: "Income",
+        id: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        bucketIncomesId?: string | null,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateIncomeSubscription = {
+  onCreateIncome?:  {
+    __typename: "Income",
+    id: string,
+    amount: number,
+    date: string,
     description?: string | null,
     createdAt: string,
     updatedAt: string,
+    bucketIncomesId?: string | null,
+  } | null,
+};
+
+export type OnUpdateIncomeSubscription = {
+  onUpdateIncome?:  {
+    __typename: "Income",
+    id: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    bucketIncomesId?: string | null,
+  } | null,
+};
+
+export type OnDeleteIncomeSubscription = {
+  onDeleteIncome?:  {
+    __typename: "Income",
+    id: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    bucketIncomesId?: string | null,
   } | null,
 };
 

@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { ChakraProvider } from "@chakra-ui/react";
 import store from "../store";
 import awsExports from "../aws-exports";
+import '@aws-amplify/ui-react/styles.css';
 import Fonts from "../styles/fonts";
 import theme from "../styles/theme";
 Amplify.configure({ ...awsExports, ssr: true });
