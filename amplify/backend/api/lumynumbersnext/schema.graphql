@@ -4,6 +4,12 @@ input AMPLIFY {
   globalAuthRule: AuthRule = { allow: public }
 } # FOR TESTING ONLY!
 
+type Todo @model {
+  id: ID!
+  name: String!
+  description: String
+}
+
 type User @model {
   id: ID!
   userName: String! @index(name: "byUserName", queryField: "userByUserName", sortKeyFields: ["id"])
@@ -14,6 +20,7 @@ type Bucket @model {
   id: ID!
   name: String  
   collaborators: [User] @hasMany(indexName: "byBucket", fields: ["id"])
+  transactionsByDate: [Transaction] @hasMany(indexName: "byBucketByDate", fields: ["id"])
   incomes: [Income] @hasMany
 }
 
@@ -27,10 +34,11 @@ type Income @model{
 
 type Transaction @model {
   id: ID!
+  bucketID: ID! @index(name: "byBucketByDate", sortKeyFields: ["date"])
   amount: Int
   categoryID: String
   categoryName: String
   categoryColor: String
-  date: String
+  date: String!
   description: String
 }

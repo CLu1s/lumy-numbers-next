@@ -36,7 +36,6 @@ const CheckBucket = ({ userName }: Props) => {
 
   useEffect(() => {
     if (status === "succeeded") {
-      console.log({ bucket });
       setIsOpen(!bucket);
     }
   }, [status, bucket]);
@@ -48,13 +47,11 @@ const CheckBucket = ({ userName }: Props) => {
     setIsOpen(false);
     dispatch(
       createBucket({
-        name: `bucket-${userName}`,
-        owner: userName,
-        collaborators: [userName],
+        name: userName,
       })
     );
   };
-  console.log(status);
+
   return (
     <Modal
       isOpen={isOpen}

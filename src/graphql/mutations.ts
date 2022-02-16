@@ -2,6 +2,48 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createTodo = /* GraphQL */ `
+  mutation CreateTodo(
+    $input: CreateTodoInput!
+    $condition: ModelTodoConditionInput
+  ) {
+    createTodo(input: $input, condition: $condition) {
+      id
+      name
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateTodo = /* GraphQL */ `
+  mutation UpdateTodo(
+    $input: UpdateTodoInput!
+    $condition: ModelTodoConditionInput
+  ) {
+    updateTodo(input: $input, condition: $condition) {
+      id
+      name
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteTodo = /* GraphQL */ `
+  mutation DeleteTodo(
+    $input: DeleteTodoInput!
+    $condition: ModelTodoConditionInput
+  ) {
+    deleteTodo(input: $input, condition: $condition) {
+      id
+      name
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -62,6 +104,21 @@ export const createBucket = /* GraphQL */ `
         }
         nextToken
       }
+      ordersByDate {
+        items {
+          id
+          bucketID
+          amount
+          categoryID
+          categoryName
+          categoryColor
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       incomes {
         items {
           id
@@ -97,6 +154,21 @@ export const updateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      ordersByDate {
+        items {
+          id
+          bucketID
+          amount
+          categoryID
+          categoryName
+          categoryColor
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       incomes {
         items {
           id
@@ -127,6 +199,21 @@ export const deleteBucket = /* GraphQL */ `
           id
           userName
           bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      ordersByDate {
+        items {
+          id
+          bucketID
+          amount
+          categoryID
+          categoryName
+          categoryColor
+          date
+          description
           createdAt
           updatedAt
         }
@@ -204,6 +291,7 @@ export const createTransaction = /* GraphQL */ `
   ) {
     createTransaction(input: $input, condition: $condition) {
       id
+      bucketID
       amount
       categoryID
       categoryName
@@ -222,6 +310,7 @@ export const updateTransaction = /* GraphQL */ `
   ) {
     updateTransaction(input: $input, condition: $condition) {
       id
+      bucketID
       amount
       categoryID
       categoryName
@@ -240,6 +329,7 @@ export const deleteTransaction = /* GraphQL */ `
   ) {
     deleteTransaction(input: $input, condition: $condition) {
       id
+      bucketID
       amount
       categoryID
       categoryName

@@ -2,6 +2,39 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateTodo = /* GraphQL */ `
+  subscription OnCreateTodo {
+    onCreateTodo {
+      id
+      name
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTodo = /* GraphQL */ `
+  subscription OnUpdateTodo {
+    onUpdateTodo {
+      id
+      name
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTodo = /* GraphQL */ `
+  subscription OnDeleteTodo {
+    onDeleteTodo {
+      id
+      name
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
@@ -50,6 +83,21 @@ export const onCreateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      ordersByDate {
+        items {
+          id
+          bucketID
+          amount
+          categoryID
+          categoryName
+          categoryColor
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       incomes {
         items {
           id
@@ -82,6 +130,21 @@ export const onUpdateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      ordersByDate {
+        items {
+          id
+          bucketID
+          amount
+          categoryID
+          categoryName
+          categoryColor
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       incomes {
         items {
           id
@@ -109,6 +172,21 @@ export const onDeleteBucket = /* GraphQL */ `
           id
           userName
           bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      ordersByDate {
+        items {
+          id
+          bucketID
+          amount
+          categoryID
+          categoryName
+          categoryColor
+          date
+          description
           createdAt
           updatedAt
         }
@@ -174,6 +252,7 @@ export const onCreateTransaction = /* GraphQL */ `
   subscription OnCreateTransaction {
     onCreateTransaction {
       id
+      bucketID
       amount
       categoryID
       categoryName
@@ -189,6 +268,7 @@ export const onUpdateTransaction = /* GraphQL */ `
   subscription OnUpdateTransaction {
     onUpdateTransaction {
       id
+      bucketID
       amount
       categoryID
       categoryName
@@ -204,6 +284,7 @@ export const onDeleteTransaction = /* GraphQL */ `
   subscription OnDeleteTransaction {
     onDeleteTransaction {
       id
+      bucketID
       amount
       categoryID
       categoryName

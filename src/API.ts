@@ -2,18 +2,18 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateUserInput = {
+export type CreateTodoInput = {
   id?: string | null,
-  userName: string,
-  bucketID: string,
+  name: string,
+  description?: string | null,
 };
 
-export type ModelUserConditionInput = {
-  userName?: ModelStringInput | null,
-  bucketID?: ModelIDInput | null,
-  and?: Array< ModelUserConditionInput | null > | null,
-  or?: Array< ModelUserConditionInput | null > | null,
-  not?: ModelUserConditionInput | null,
+export type ModelTodoConditionInput = {
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelTodoConditionInput | null > | null,
+  or?: Array< ModelTodoConditionInput | null > | null,
+  not?: ModelTodoConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -54,6 +54,39 @@ export type ModelSizeInput = {
   ge?: number | null,
   gt?: number | null,
   between?: Array< number | null > | null,
+};
+
+export type Todo = {
+  __typename: "Todo",
+  id: string,
+  name: string,
+  description?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateTodoInput = {
+  id: string,
+  name?: string | null,
+  description?: string | null,
+};
+
+export type DeleteTodoInput = {
+  id: string,
+};
+
+export type CreateUserInput = {
+  id?: string | null,
+  userName: string,
+  bucketID: string,
+};
+
+export type ModelUserConditionInput = {
+  userName?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
 };
 
 export type ModelIDInput = {
@@ -108,6 +141,7 @@ export type Bucket = {
   id: string,
   name?: string | null,
   collaborators?: ModelUserConnection | null,
+  ordersByDate?: ModelTransactionConnection | null,
   incomes?: ModelIncomeConnection | null,
   createdAt: string,
   updatedAt: string,
@@ -117,6 +151,26 @@ export type ModelUserConnection = {
   __typename: "ModelUserConnection",
   items:  Array<User | null >,
   nextToken?: string | null,
+};
+
+export type ModelTransactionConnection = {
+  __typename: "ModelTransactionConnection",
+  items:  Array<Transaction | null >,
+  nextToken?: string | null,
+};
+
+export type Transaction = {
+  __typename: "Transaction",
+  id: string,
+  bucketID: string,
+  amount?: number | null,
+  categoryID?: string | null,
+  categoryName?: string | null,
+  categoryColor?: string | null,
+  date: string,
+  description?: string | null,
+  createdAt: string,
+  updatedAt: string,
 };
 
 export type ModelIncomeConnection = {
@@ -189,15 +243,17 @@ export type DeleteIncomeInput = {
 
 export type CreateTransactionInput = {
   id?: string | null,
+  bucketID: string,
   amount?: number | null,
   categoryID?: string | null,
   categoryName?: string | null,
   categoryColor?: string | null,
-  date?: string | null,
+  date: string,
   description?: string | null,
 };
 
 export type ModelTransactionConditionInput = {
+  bucketID?: ModelIDInput | null,
   amount?: ModelIntInput | null,
   categoryID?: ModelStringInput | null,
   categoryName?: ModelStringInput | null,
@@ -221,21 +277,9 @@ export type ModelIntInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
-export type Transaction = {
-  __typename: "Transaction",
-  id: string,
-  amount?: number | null,
-  categoryID?: string | null,
-  categoryName?: string | null,
-  categoryColor?: string | null,
-  date?: string | null,
-  description?: string | null,
-  createdAt: string,
-  updatedAt: string,
-};
-
 export type UpdateTransactionInput = {
   id: string,
+  bucketID?: string | null,
   amount?: number | null,
   categoryID?: string | null,
   categoryName?: string | null,
@@ -246,6 +290,21 @@ export type UpdateTransactionInput = {
 
 export type DeleteTransactionInput = {
   id: string,
+};
+
+export type ModelTodoFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelTodoFilterInput | null > | null,
+  or?: Array< ModelTodoFilterInput | null > | null,
+  not?: ModelTodoFilterInput | null,
+};
+
+export type ModelTodoConnection = {
+  __typename: "ModelTodoConnection",
+  items:  Array<Todo | null >,
+  nextToken?: string | null,
 };
 
 export type ModelUserFilterInput = {
@@ -284,6 +343,7 @@ export type ModelIncomeFilterInput = {
 
 export type ModelTransactionFilterInput = {
   id?: ModelIDInput | null,
+  bucketID?: ModelIDInput | null,
   amount?: ModelIntInput | null,
   categoryID?: ModelStringInput | null,
   categoryName?: ModelStringInput | null,
@@ -293,12 +353,6 @@ export type ModelTransactionFilterInput = {
   and?: Array< ModelTransactionFilterInput | null > | null,
   or?: Array< ModelTransactionFilterInput | null > | null,
   not?: ModelTransactionFilterInput | null,
-};
-
-export type ModelTransactionConnection = {
-  __typename: "ModelTransactionConnection",
-  items:  Array<Transaction | null >,
-  nextToken?: string | null,
 };
 
 export type ModelIDKeyConditionInput = {
@@ -316,6 +370,54 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
+
+export type CreateTodoMutationVariables = {
+  input: CreateTodoInput,
+  condition?: ModelTodoConditionInput | null,
+};
+
+export type CreateTodoMutation = {
+  createTodo?:  {
+    __typename: "Todo",
+    id: string,
+    name: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateTodoMutationVariables = {
+  input: UpdateTodoInput,
+  condition?: ModelTodoConditionInput | null,
+};
+
+export type UpdateTodoMutation = {
+  updateTodo?:  {
+    __typename: "Todo",
+    id: string,
+    name: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteTodoMutationVariables = {
+  input: DeleteTodoInput,
+  condition?: ModelTodoConditionInput | null,
+};
+
+export type DeleteTodoMutation = {
+  deleteTodo?:  {
+    __typename: "Todo",
+    id: string,
+    name: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
 
 export type CreateUserMutationVariables = {
   input: CreateUserInput,
@@ -387,6 +489,23 @@ export type CreateBucketMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    ordersByDate?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        bucketID: string,
+        amount?: number | null,
+        categoryID?: string | null,
+        categoryName?: string | null,
+        categoryColor?: string | null,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     incomes?:  {
       __typename: "ModelIncomeConnection",
       items:  Array< {
@@ -428,6 +547,23 @@ export type UpdateBucketMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    ordersByDate?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        bucketID: string,
+        amount?: number | null,
+        categoryID?: string | null,
+        categoryName?: string | null,
+        categoryColor?: string | null,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     incomes?:  {
       __typename: "ModelIncomeConnection",
       items:  Array< {
@@ -464,6 +600,23 @@ export type DeleteBucketMutation = {
         id: string,
         userName: string,
         bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    ordersByDate?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        bucketID: string,
+        amount?: number | null,
+        categoryID?: string | null,
+        categoryName?: string | null,
+        categoryColor?: string | null,
+        date: string,
+        description?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -551,11 +704,12 @@ export type CreateTransactionMutation = {
   createTransaction?:  {
     __typename: "Transaction",
     id: string,
+    bucketID: string,
     amount?: number | null,
     categoryID?: string | null,
     categoryName?: string | null,
     categoryColor?: string | null,
-    date?: string | null,
+    date: string,
     description?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -571,11 +725,12 @@ export type UpdateTransactionMutation = {
   updateTransaction?:  {
     __typename: "Transaction",
     id: string,
+    bucketID: string,
     amount?: number | null,
     categoryID?: string | null,
     categoryName?: string | null,
     categoryColor?: string | null,
-    date?: string | null,
+    date: string,
     description?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -591,14 +746,51 @@ export type DeleteTransactionMutation = {
   deleteTransaction?:  {
     __typename: "Transaction",
     id: string,
+    bucketID: string,
     amount?: number | null,
     categoryID?: string | null,
     categoryName?: string | null,
     categoryColor?: string | null,
-    date?: string | null,
+    date: string,
     description?: string | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type GetTodoQueryVariables = {
+  id: string,
+};
+
+export type GetTodoQuery = {
+  getTodo?:  {
+    __typename: "Todo",
+    id: string,
+    name: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListTodosQueryVariables = {
+  filter?: ModelTodoFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListTodosQuery = {
+  listTodos?:  {
+    __typename: "ModelTodoConnection",
+    items:  Array< {
+      __typename: "Todo",
+      id: string,
+      name: string,
+      description?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -659,6 +851,23 @@ export type GetBucketQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    ordersByDate?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        bucketID: string,
+        amount?: number | null,
+        categoryID?: string | null,
+        categoryName?: string | null,
+        categoryColor?: string | null,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     incomes?:  {
       __typename: "ModelIncomeConnection",
       items:  Array< {
@@ -693,6 +902,10 @@ export type ListBucketsQuery = {
       name?: string | null,
       collaborators?:  {
         __typename: "ModelUserConnection",
+        nextToken?: string | null,
+      } | null,
+      ordersByDate?:  {
+        __typename: "ModelTransactionConnection",
         nextToken?: string | null,
       } | null,
       incomes?:  {
@@ -754,11 +967,12 @@ export type GetTransactionQuery = {
   getTransaction?:  {
     __typename: "Transaction",
     id: string,
+    bucketID: string,
     amount?: number | null,
     categoryID?: string | null,
     categoryName?: string | null,
     categoryColor?: string | null,
-    date?: string | null,
+    date: string,
     description?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -777,11 +991,12 @@ export type ListTransactionsQuery = {
     items:  Array< {
       __typename: "Transaction",
       id: string,
+      bucketID: string,
       amount?: number | null,
       categoryID?: string | null,
       categoryName?: string | null,
       categoryColor?: string | null,
-      date?: string | null,
+      date: string,
       description?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -811,6 +1026,39 @@ export type UserByUserNameQuery = {
       updatedAt: string,
     } | null >,
     nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateTodoSubscription = {
+  onCreateTodo?:  {
+    __typename: "Todo",
+    id: string,
+    name: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateTodoSubscription = {
+  onUpdateTodo?:  {
+    __typename: "Todo",
+    id: string,
+    name: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteTodoSubscription = {
+  onDeleteTodo?:  {
+    __typename: "Todo",
+    id: string,
+    name: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -864,6 +1112,23 @@ export type OnCreateBucketSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    ordersByDate?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        bucketID: string,
+        amount?: number | null,
+        categoryID?: string | null,
+        categoryName?: string | null,
+        categoryColor?: string | null,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     incomes?:  {
       __typename: "ModelIncomeConnection",
       items:  Array< {
@@ -900,6 +1165,23 @@ export type OnUpdateBucketSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    ordersByDate?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        bucketID: string,
+        amount?: number | null,
+        categoryID?: string | null,
+        categoryName?: string | null,
+        categoryColor?: string | null,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     incomes?:  {
       __typename: "ModelIncomeConnection",
       items:  Array< {
@@ -931,6 +1213,23 @@ export type OnDeleteBucketSubscription = {
         id: string,
         userName: string,
         bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    ordersByDate?:  {
+      __typename: "ModelTransactionConnection",
+      items:  Array< {
+        __typename: "Transaction",
+        id: string,
+        bucketID: string,
+        amount?: number | null,
+        categoryID?: string | null,
+        categoryName?: string | null,
+        categoryColor?: string | null,
+        date: string,
+        description?: string | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -998,11 +1297,12 @@ export type OnCreateTransactionSubscription = {
   onCreateTransaction?:  {
     __typename: "Transaction",
     id: string,
+    bucketID: string,
     amount?: number | null,
     categoryID?: string | null,
     categoryName?: string | null,
     categoryColor?: string | null,
-    date?: string | null,
+    date: string,
     description?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1013,11 +1313,12 @@ export type OnUpdateTransactionSubscription = {
   onUpdateTransaction?:  {
     __typename: "Transaction",
     id: string,
+    bucketID: string,
     amount?: number | null,
     categoryID?: string | null,
     categoryName?: string | null,
     categoryColor?: string | null,
-    date?: string | null,
+    date: string,
     description?: string | null,
     createdAt: string,
     updatedAt: string,
@@ -1028,11 +1329,12 @@ export type OnDeleteTransactionSubscription = {
   onDeleteTransaction?:  {
     __typename: "Transaction",
     id: string,
+    bucketID: string,
     amount?: number | null,
     categoryID?: string | null,
     categoryName?: string | null,
     categoryColor?: string | null,
-    date?: string | null,
+    date: string,
     description?: string | null,
     createdAt: string,
     updatedAt: string,

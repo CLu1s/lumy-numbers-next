@@ -22,7 +22,6 @@ export const fetchBucket = createAsyncThunk(
     const response = await API.graphql(
       graphqlOperation(userByUserName, { userName })
     );
-    console.log("response", response);
     return { response, userName };
   }
 );
@@ -30,10 +29,19 @@ export const fetchBucket = createAsyncThunk(
 export const createBucket = createAsyncThunk(
   "budget/createBucket",
   async (input: any) => {
-    const bucket = await API.graphql(
+    const bucket = (await API.graphql(
       graphqlOperation(createBucketMutation, { input })
+    )) as any;
+
+    const { id } = bucket.data.createBucket;
+
+    const userInput = {
+      userName: input.name,
+      bucketID: id,
+    };
+    await API.graphql(
+      graphqlOperation(createUser, { input: userInput })
     );
-    const user = await API.graphql(graphqlOperation(createUser, { input }));
     return bucket;
   }
 );
@@ -51,9 +59,9 @@ const bucketSlice = createSlice({
       state.userName = action.payload.userName;
       state.bucket = action.payload.response.data.userByUserName.items[0];
     },
-    [fetchBucket.rejected.type]: (state) => {
+    [fetchBucket.rejected.type]: (state,action) => {
       state.status.status = LoadingStates.FAILED;
-      state.status.error = "Error fetching bucket";
+      state.status.error = action.payload.error;
     },
     [createBucket.pending.type]: (state) => {
       state.status.status = LoadingStates.LOADING;
@@ -62,9 +70,9 @@ const bucketSlice = createSlice({
       state.status.status = LoadingStates.SUCCEEDED;
       state.bucket = action.payload.data.createBucket;
     },
-    [createBucket.rejected.type]: (state) => {
+    [createBucket.rejected.type]: (state,action) => {
       state.status.status = LoadingStates.FAILED;
-      state.status.error = "Error creating bucket";
+      state.status.error = action.payload.error;
     },
   },
 });

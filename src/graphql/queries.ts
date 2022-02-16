@@ -2,6 +2,35 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getTodo = /* GraphQL */ `
+  query GetTodo($id: ID!) {
+    getTodo(id: $id) {
+      id
+      name
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTodos = /* GraphQL */ `
+  query ListTodos(
+    $filter: ModelTodoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -46,6 +75,21 @@ export const getBucket = /* GraphQL */ `
         }
         nextToken
       }
+      ordersByDate {
+        items {
+          id
+          bucketID
+          amount
+          categoryID
+          categoryName
+          categoryColor
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       incomes {
         items {
           id
@@ -74,6 +118,9 @@ export const listBuckets = /* GraphQL */ `
         id
         name
         collaborators {
+          nextToken
+        }
+        ordersByDate {
           nextToken
         }
         incomes {
@@ -123,6 +170,7 @@ export const getTransaction = /* GraphQL */ `
   query GetTransaction($id: ID!) {
     getTransaction(id: $id) {
       id
+      bucketID
       amount
       categoryID
       categoryName
@@ -143,6 +191,7 @@ export const listTransactions = /* GraphQL */ `
     listTransactions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        bucketID
         amount
         categoryID
         categoryName
