@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import { BucketState, LoadingStates } from "../../types";
 import { userByUserName } from "../../src/graphql/queries";
@@ -39,9 +39,7 @@ export const createBucket = createAsyncThunk(
       userName: input.name,
       bucketID: id,
     };
-    await API.graphql(
-      graphqlOperation(createUser, { input: userInput })
-    );
+    await API.graphql(graphqlOperation(createUser, { input: userInput }));
     return bucket;
   }
 );
@@ -59,7 +57,7 @@ const bucketSlice = createSlice({
       state.userName = action.payload.userName;
       state.bucket = action.payload.response.data.userByUserName.items[0];
     },
-    [fetchBucket.rejected.type]: (state,action) => {
+    [fetchBucket.rejected.type]: (state, action) => {
       state.status.status = LoadingStates.FAILED;
       state.status.error = action.payload.error;
     },
@@ -70,7 +68,7 @@ const bucketSlice = createSlice({
       state.status.status = LoadingStates.SUCCEEDED;
       state.bucket = action.payload.data.createBucket;
     },
-    [createBucket.rejected.type]: (state,action) => {
+    [createBucket.rejected.type]: (state, action) => {
       state.status.status = LoadingStates.FAILED;
       state.status.error = action.payload.error;
     },

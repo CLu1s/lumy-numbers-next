@@ -73,6 +73,7 @@ export type BudgetState = {
   incomes: Income[];
   categories: Category[];
   status: LoadingStates;
+  error: null | string;
 };
 
 export type BalancedCategory = {

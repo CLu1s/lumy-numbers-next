@@ -15,7 +15,7 @@ type Bucket @model {
   name: String  
   collaborators: [User] @hasMany(indexName: "byBucket", fields: ["id"])
   transactionsByDate: [Transaction] @hasMany(indexName: "byBucketByDate", fields: ["id"])
-  incomes: [Income] @hasMany
+  incomes: [Income]  @hasMany(indexName: "byBucket", fields: ["id"])
 }
 
 
@@ -24,6 +24,7 @@ type Income @model{
   amount: Float!
   date: String!
   description: String
+  bucketID: ID! @index(name: "byBucket", sortKeyFields: ["id"])
 }
 
 type Transaction @model {

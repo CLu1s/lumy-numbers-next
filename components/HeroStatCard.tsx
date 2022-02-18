@@ -8,7 +8,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import Screen from "./Screen";
-import Loading from "./Loading";	
+import Loading from "./Loading";
 import { money } from "../utils";
 
 type FooterProps = {
@@ -16,13 +16,10 @@ type FooterProps = {
 };
 
 export const HeroStatFooter = ({ children }: FooterProps) => {
-  return (
-    <Box mt="4">
-      <Center w="100%" color="white">
-        {children}
-      </Center>
-    </Box>
-  );
+  return <Box mt="4">{children}</Box>;
+};
+export const HeroStatBody = ({ children }: FooterProps) => {
+  return <Box mt="2">{children}</Box>;
 };
 
 type Props = {

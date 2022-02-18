@@ -1,24 +1,12 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import { BudgetState, LoadingStates } from "../../types";
-import { userByUserName } from "../../src/graphql/queries";
+import { createIncome } from "../../src/graphql/mutations";
 
 const initialState: BudgetState = {
   status: LoadingStates.IDLE,
-  incomes: [
-    {
-      id: "1",
-      amount: 60557.28,
-      date: "2020-01-01",
-      description: "Salary 1",
-    },
-    {
-      id: "2",
-      amount: 9148.3,
-      date: "2020-01-01",
-      description: "Salary 2",
-    },
-  ],
+  error: null,
+  incomes: [],
   categories: [
     {
       id: "1",
@@ -44,7 +32,47 @@ const initialState: BudgetState = {
   ],
 };
 
+export const createNewIncome = createAsyncThunk(
+  "budget/createNewIncome",
+  async (input: BudgetState["incomes"]) => {
+    try {
+      const response = await API.graphql(
+        graphqlOperation(createIncome, { input })
+      );
+      return response;
+    } catch (error) {
+      return error;
+    }
+  }
+);
 
+export const fetchIncomes = createAsyncThunk(
+  "budget/fetchIncomes",
+  async (bucketId: string) => {
+    const response = await API.graphql(
+      graphqlOperation(
+        `query GetBucket($id: ID!) {
+            getBucket(id: $id) {
+              incomes {
+                items {
+                  id
+                  amount
+                  date
+                  description
+                createdAt
+                updatedAt
+                bucketID
+              }
+              nextToken
+            }
+          }
+        }`,
+        { id: bucketId }
+      )
+    );
+    return response;
+  }
+);
 
 const budgetSlice = createSlice({
   name: "budget",
@@ -88,7 +116,31 @@ const budgetSlice = createSlice({
       }
     },
   },
-  
+  extraReducers: {
+    [createNewIncome.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [createNewIncome.fulfilled.type]: (state, action) => {
+      state.status = LoadingStates.IDLE;
+      state.incomes.push(action.payload.data.createIncome);
+    },
+    [createNewIncome.rejected.type]: (state, action) => {
+      state.status = LoadingStates.FAILED;
+      state.error = action.payload.message;
+    },
+    [fetchIncomes.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [fetchIncomes.fulfilled.type]: (state, action) => {
+      state.status = LoadingStates.SUCCEEDED;
+      state.incomes = action.payload.data.getBucket.incomes.items;
+    },
+    [fetchIncomes.rejected.type]: (state, action) => {
+      state.status = LoadingStates.FAILED;
+      console.log(action.payload);
+      state.error = action.payload;
+    },
+  },
 });
 
 export const { addCategory, updateCategory } = budgetSlice.actions;

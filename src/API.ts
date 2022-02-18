@@ -152,9 +152,9 @@ export type Income = {
   amount: number,
   date: string,
   description?: string | null,
+  bucketID: string,
   createdAt: string,
   updatedAt: string,
-  bucketIncomesId?: string | null,
 };
 
 export type UpdateBucketInput = {
@@ -171,17 +171,17 @@ export type CreateIncomeInput = {
   amount: number,
   date: string,
   description?: string | null,
-  bucketIncomesId?: string | null,
+  bucketID: string,
 };
 
 export type ModelIncomeConditionInput = {
   amount?: ModelFloatInput | null,
   date?: ModelStringInput | null,
   description?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
   and?: Array< ModelIncomeConditionInput | null > | null,
   or?: Array< ModelIncomeConditionInput | null > | null,
   not?: ModelIncomeConditionInput | null,
-  bucketIncomesId?: ModelIDInput | null,
 };
 
 export type ModelFloatInput = {
@@ -201,7 +201,7 @@ export type UpdateIncomeInput = {
   amount?: number | null,
   date?: string | null,
   description?: string | null,
-  bucketIncomesId?: string | null,
+  bucketID?: string | null,
 };
 
 export type DeleteIncomeInput = {
@@ -287,10 +287,10 @@ export type ModelIncomeFilterInput = {
   amount?: ModelFloatInput | null,
   date?: ModelStringInput | null,
   description?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
   and?: Array< ModelIncomeFilterInput | null > | null,
   or?: Array< ModelIncomeFilterInput | null > | null,
   not?: ModelIncomeFilterInput | null,
-  bucketIncomesId?: ModelIDInput | null,
 };
 
 export type ModelTransactionFilterInput = {
@@ -418,9 +418,9 @@ export type CreateBucketMutation = {
         amount: number,
         date: string,
         description?: string | null,
+        bucketID: string,
         createdAt: string,
         updatedAt: string,
-        bucketIncomesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -476,9 +476,9 @@ export type UpdateBucketMutation = {
         amount: number,
         date: string,
         description?: string | null,
+        bucketID: string,
         createdAt: string,
         updatedAt: string,
-        bucketIncomesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -534,9 +534,9 @@ export type DeleteBucketMutation = {
         amount: number,
         date: string,
         description?: string | null,
+        bucketID: string,
         createdAt: string,
         updatedAt: string,
-        bucketIncomesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -557,9 +557,9 @@ export type CreateIncomeMutation = {
     amount: number,
     date: string,
     description?: string | null,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
-    bucketIncomesId?: string | null,
   } | null,
 };
 
@@ -575,9 +575,9 @@ export type UpdateIncomeMutation = {
     amount: number,
     date: string,
     description?: string | null,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
-    bucketIncomesId?: string | null,
   } | null,
 };
 
@@ -593,9 +593,9 @@ export type DeleteIncomeMutation = {
     amount: number,
     date: string,
     description?: string | null,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
-    bucketIncomesId?: string | null,
   } | null,
 };
 
@@ -744,9 +744,9 @@ export type GetBucketQuery = {
         amount: number,
         date: string,
         description?: string | null,
+        bucketID: string,
         createdAt: string,
         updatedAt: string,
-        bucketIncomesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -798,9 +798,9 @@ export type GetIncomeQuery = {
     amount: number,
     date: string,
     description?: string | null,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
-    bucketIncomesId?: string | null,
   } | null,
 };
 
@@ -819,9 +819,9 @@ export type ListIncomesQuery = {
       amount: number,
       date: string,
       description?: string | null,
+      bucketID: string,
       createdAt: string,
       updatedAt: string,
-      bucketIncomesId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -972,9 +972,9 @@ export type OnCreateBucketSubscription = {
         amount: number,
         date: string,
         description?: string | null,
+        bucketID: string,
         createdAt: string,
         updatedAt: string,
-        bucketIncomesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1025,9 +1025,9 @@ export type OnUpdateBucketSubscription = {
         amount: number,
         date: string,
         description?: string | null,
+        bucketID: string,
         createdAt: string,
         updatedAt: string,
-        bucketIncomesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1078,9 +1078,9 @@ export type OnDeleteBucketSubscription = {
         amount: number,
         date: string,
         description?: string | null,
+        bucketID: string,
         createdAt: string,
         updatedAt: string,
-        bucketIncomesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1096,9 +1096,9 @@ export type OnCreateIncomeSubscription = {
     amount: number,
     date: string,
     description?: string | null,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
-    bucketIncomesId?: string | null,
   } | null,
 };
 
@@ -1109,9 +1109,9 @@ export type OnUpdateIncomeSubscription = {
     amount: number,
     date: string,
     description?: string | null,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
-    bucketIncomesId?: string | null,
   } | null,
 };
 
@@ -1122,9 +1122,9 @@ export type OnDeleteIncomeSubscription = {
     amount: number,
     date: string,
     description?: string | null,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
-    bucketIncomesId?: string | null,
   } | null,
 };
 

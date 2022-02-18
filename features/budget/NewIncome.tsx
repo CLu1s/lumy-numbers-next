@@ -1,3 +1,4 @@
+
 import React, { useState, forwardRef } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/react";
@@ -9,8 +10,8 @@ import esLocale from "date-fns/locale/es";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getCategories } from "../budget/selector";
-import { addNewTransaction } from "./walletSlice";
+import { getCategories } from "./selector";
+import { createNewIncome as addNewTransaction } from "./budgetSlice";
 import { getStatus } from "./selector";
 import { getBucket } from "../bucket/selector";
 
@@ -22,7 +23,7 @@ type Props = {
   toEdit?: SingleTransaction;
 };
 
-const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
+const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const [selected, setSelected] = useState<any>();
@@ -47,7 +48,6 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
       addNewTransaction({
         ...data,
         bucketID: bucket.bucketID,
-        categoryID: selected,
         date: date,
       })
     );
@@ -63,7 +63,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
 
   const config = {
     isOpen,
-    title: toEdit ? "Actualizar Gasto" : "Ingresar Nuevo Gasto",
+    title: toEdit ? "Actualizar Gasto" : "Ingresar Nuevo Ingreso",
     onClose: handleClose,
     cancelButtonText: "Cancel",
     onSubmit: handleSubmit(onSubmit),
@@ -80,7 +80,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     <Modal {...config}>
       <VStack spacing={4}>
         <p className="text-sm text-gray-500">
-          Ingresa el monto y la descripción del gasto
+          Ingresa el monto y la descripción del Ingreso
         </p>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
@@ -95,13 +95,6 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
                 {...register("description", { required: true })}
               />
               {errors.amount && <span>Este Campo es Requerido</span>}
-              <Select
-                label="Categoría"
-                selected={selected}
-                setSelected={setSelected}
-                options={categories}
-              />
-
               <DatePicker
                 dateFormat="dd/MM/yyyy"
                 selected={date}
@@ -117,4 +110,4 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   );
 };
 
-export default RecordExpense;
+export default NewIncome;

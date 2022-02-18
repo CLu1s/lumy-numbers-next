@@ -11,5 +11,21 @@ export const getCategories = createSelector(
 
 export const getIncome = createSelector(
   [budgetSelector],
-  (state: BudgetState): number => state.incomes.reduce((acc, curr) => acc + curr.amount, 0)
+  (state: BudgetState): number =>
+    state.incomes.reduce((acc, curr) => acc + curr.amount, 0)
+);
+
+export const getListOfIncomes = createSelector(
+  [budgetSelector],
+  (state: BudgetState): BudgetState["incomes"] => state.incomes
+);
+
+export const getStatus = createSelector(
+  [budgetSelector],
+  (
+    state: BudgetState
+  ): { status: BudgetState["status"]; error: BudgetState["error"] } => ({
+    status: state.status,
+    error: state.error,
+  })
 );

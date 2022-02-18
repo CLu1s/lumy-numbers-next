@@ -25,7 +25,6 @@ export const getTransactionsFormatted = createSelector(
       const category = categories.find(
         (category: Category) => category.id === transaction.categoryID
       );
-      console.log(category);
       return {
         ...transaction,
         categoryName: category ? category.name : "",

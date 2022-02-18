@@ -71,9 +71,9 @@ export const onCreateBucket = /* GraphQL */ `
           amount
           date
           description
+          bucketID
           createdAt
           updatedAt
-          bucketIncomesId
         }
         nextToken
       }
@@ -118,9 +118,9 @@ export const onUpdateBucket = /* GraphQL */ `
           amount
           date
           description
+          bucketID
           createdAt
           updatedAt
-          bucketIncomesId
         }
         nextToken
       }
@@ -165,9 +165,9 @@ export const onDeleteBucket = /* GraphQL */ `
           amount
           date
           description
+          bucketID
           createdAt
           updatedAt
-          bucketIncomesId
         }
         nextToken
       }
@@ -183,9 +183,9 @@ export const onCreateIncome = /* GraphQL */ `
       amount
       date
       description
+      bucketID
       createdAt
       updatedAt
-      bucketIncomesId
     }
   }
 `;
@@ -196,9 +196,9 @@ export const onUpdateIncome = /* GraphQL */ `
       amount
       date
       description
+      bucketID
       createdAt
       updatedAt
-      bucketIncomesId
     }
   }
 `;
@@ -209,9 +209,9 @@ export const onDeleteIncome = /* GraphQL */ `
       amount
       date
       description
+      bucketID
       createdAt
       updatedAt
-      bucketIncomesId
     }
   }
 `;

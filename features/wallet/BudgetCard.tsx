@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import RecordExpense from "./RecordExpense";
 import { useDisclosure, Button } from "@chakra-ui/react";
-import HeroStatCard, { HeroStatFooter } from "../../components/HeroStatCard";
+import HeroStatCard, {
+  HeroStatFooter,
+} from "../../components/HeroStatCard";
 import { date } from "../../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { getStatus } from "./selector";

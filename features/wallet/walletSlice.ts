@@ -12,7 +12,8 @@ const initialState: WalletState = {
 export const fetchTransactions = createAsyncThunk(
   "wallet/fetchTransactions",
   async (bucketID: String) => {
-    const response = await API.graphql(graphqlOperation(getBucket, { id: bucketID }));
+    const response = await API.graphql(graphqlOperation(getBucket, { id: bucketID
+    }));
     return response;
   }
 );

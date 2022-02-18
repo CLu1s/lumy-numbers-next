@@ -67,9 +67,9 @@ export const getBucket = /* GraphQL */ `
           amount
           date
           description
+          bucketID
           createdAt
           updatedAt
-          bucketIncomesId
         }
         nextToken
       }
@@ -111,9 +111,9 @@ export const getIncome = /* GraphQL */ `
       amount
       date
       description
+      bucketID
       createdAt
       updatedAt
-      bucketIncomesId
     }
   }
 `;
@@ -129,9 +129,9 @@ export const listIncomes = /* GraphQL */ `
         amount
         date
         description
+        bucketID
         createdAt
         updatedAt
-        bucketIncomesId
       }
       nextToken
     }

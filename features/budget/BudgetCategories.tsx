@@ -70,12 +70,6 @@ const BudgetCategories = () => {
       return acc;
     }, 0);
 
-    console.log("rest", {
-      newPercentage,
-      old: category.percentage,
-      rest,
-      percentage,
-    });
     if (newPercentage + rest <= 100) {
       dispatch(updateCategory({ ...category, percentage: newPercentage }));
       toast({
