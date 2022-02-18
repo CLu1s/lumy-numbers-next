@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import { createTransaction } from "../../src/graphql/mutations";
-import { listTransactions } from "../../src/graphql/queries";
+import { getBucket } from "../../src/graphql/queries";
 import { WalletState, LoadingStates } from "../../types";
 const initialState: WalletState = {
   transactions: [],
@@ -11,8 +11,8 @@ const initialState: WalletState = {
 
 export const fetchTransactions = createAsyncThunk(
   "wallet/fetchTransactions",
-  async () => {
-    const response = await API.graphql(graphqlOperation(listTransactions));
+  async (bucketID: String) => {
+    const response = await API.graphql(graphqlOperation(getBucket, { id: bucketID }));
     return response;
   }
 );
@@ -54,7 +54,7 @@ const walletSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [fetchTransactions.fulfilled.type]: (state, action) => {
-      state.transactions = action.payload.data.listTransactions.items;
+      state.transactions = action.payload.data.getBucket.transactionsByDate.items;
       state.status = LoadingStates.SUCCEEDED;
     },
     [fetchTransactions.rejected.type]: (state, action) => {

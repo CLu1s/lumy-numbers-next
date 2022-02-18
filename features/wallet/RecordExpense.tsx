@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
 import { addNewTransaction } from "./walletSlice";
 import { getStatus } from "./selector";
+import { getBucket } from "../bucket/selector";
 
 registerLocale("es", esLocale);
 
@@ -28,6 +29,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const [date, setDate] = useState<Date | null>(new Date());
   const categories = useSelector(getCategories);
   const status = useSelector(getStatus);
+  const bucket = useSelector(getBucket);
   const {
     register,
     handleSubmit,
@@ -38,17 +40,19 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     reset();
     onClose();
   };
+  console.log({ bucket });
 
   const onSubmit = (data: any, e: any) => {
     e.preventDefault();
     dispatch(
       addNewTransaction({
         ...data,
+        bucketID: bucket.bucketID,
         categoryID: selected,
         date: date,
       })
     );
-
+// TOO: add handling of errors
     toast({
       title: "Gasto Registrado.",
       description: "Se ha registrado tu gasto :D",

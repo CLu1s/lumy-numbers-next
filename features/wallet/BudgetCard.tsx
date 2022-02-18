@@ -6,19 +6,20 @@ import { date } from "../../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { getStatus } from "./selector";
 import { fetchTransactions } from "./walletSlice";
-import {getBalance} from "./selector"
-
+import { getBalance } from "./selector";
+import { getBucket } from "../bucket/selector";
 
 const BudgetCard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const dispatch = useDispatch();
   const balance = useSelector(getBalance);
   const status = useSelector(getStatus);
+  const bucket = useSelector(getBucket);
   useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchTransactions());
+    if (status === "idle" && bucket?.bucketID) {
+      dispatch(fetchTransactions(bucket.bucketID));
     }
-  }, [dispatch, status]);
+  }, [dispatch, status, bucket]);
   return (
     <>
       <RecordExpense isOpen={isOpen} onClose={onClose} />

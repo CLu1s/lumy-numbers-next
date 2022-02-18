@@ -2,39 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTodo = /* GraphQL */ `
-  subscription OnCreateTodo {
-    onCreateTodo {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateTodo = /* GraphQL */ `
-  subscription OnUpdateTodo {
-    onUpdateTodo {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteTodo = /* GraphQL */ `
-  subscription OnDeleteTodo {
-    onDeleteTodo {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
@@ -83,7 +50,7 @@ export const onCreateBucket = /* GraphQL */ `
         }
         nextToken
       }
-      ordersByDate {
+      transactionsByDate {
         items {
           id
           bucketID
@@ -130,7 +97,7 @@ export const onUpdateBucket = /* GraphQL */ `
         }
         nextToken
       }
-      ordersByDate {
+      transactionsByDate {
         items {
           id
           bucketID
@@ -177,7 +144,7 @@ export const onDeleteBucket = /* GraphQL */ `
         }
         nextToken
       }
-      ordersByDate {
+      transactionsByDate {
         items {
           id
           bucketID
