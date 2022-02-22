@@ -108,6 +108,7 @@ const budgetSlice = createSlice({
         percentage,
         color,
         icon,
+        bucketID:""
       });
     },
   },

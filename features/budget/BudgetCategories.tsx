@@ -44,6 +44,9 @@ function reducer(state: Category[], action) {
         percentage: 100 - rest,
         color: "yellow.500",
         icon: "AiOutlineWarning",
+        bucketID: "rest",
+        updatedAt: new Date().toISOString(),
+        createdAt: new Date().toDateString(),
       });
     }
   }
