@@ -2,7 +2,7 @@ import React from "react";
 import { Heading, Text, Tag, Center } from "@chakra-ui/react";
 import { money, date } from "../../utils/";
 import { useSelector } from "react-redux";
-import { getTransactionsFormatted } from "./selector";
+import { getTransactionsFormatted, getStatus } from "./selector";
 import Table, {
   Header,
   HeaderTop,
@@ -10,6 +10,7 @@ import Table, {
   Body,
   Cell,
 } from "../../components/Table";
+import Loading from "../../components/Loading";
 
 const compare = (a, b) => {
   if (a.date > b.date) {
@@ -23,6 +24,7 @@ const compare = (a, b) => {
 
 export default function DataTable() {
   const transactions = useSelector(getTransactionsFormatted);
+  const status = useSelector(getStatus);
 
   const renderCells = transactions.sort(compare).map((item) => (
     <Cell key={item.id}>
@@ -47,7 +49,11 @@ export default function DataTable() {
       </Body>
     </Cell>
   ));
-  console.log(transactions);
+
+  if (status === "loading") {
+    return <Loading />;
+  }
+
   return (
     <Table>
       {renderCells.length > 0 ? (
