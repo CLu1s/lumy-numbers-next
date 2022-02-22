@@ -1,8 +1,8 @@
-import { useState } from "react";
-import Loading from "./Loading";
 import Topbar from "./Topbar";
 import { Box, Stack, Heading } from "@chakra-ui/react";
+import useBaseInfo from "../hooks/useBaseInfo";
 import CheckBucket from "../features/bucket/CheckBucket";
+import CheckcIncomes from "../features/budget/CheckIncomes";
 
 import Sidebar from "./Sidebar";
 type Props = {
@@ -12,16 +12,12 @@ type Props = {
 };
 
 const Layout = ({ children, pageTitle, userName }: Props) => {
-  const [loading, setLoading] = useState(false);
-
-  if (loading) {
-    return <Loading />;
-  }
+  useBaseInfo(userName);
   return (
     <>
       <main>
         <Stack spacing={[0, 8]} direction="row">
-        <CheckBucket userName={userName} />
+          <CheckBucket userName={userName} />
           <Sidebar />
           <Stack width="full">
             <Topbar />

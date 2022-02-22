@@ -65,8 +65,7 @@ export const getBalanceByCategories = createSelector(
           (acc, transaction) => acc + transaction.amount,
           0
         );
-
-      const progress = Math.round(100 - (balance * 100) / amountPercentage);
+      const progress = Math.round((balance * 100) / amountPercentage);
       return {
         ...category,
         balance,

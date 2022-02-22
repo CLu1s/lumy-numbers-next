@@ -1,15 +1,5 @@
-import {
-  Box,
-  VStack,
-  StackDivider,
-  Heading,
-  Text,
-  Tag,
-  Flex,
-  HStack,
-} from "@chakra-ui/react";
 import React from "react";
-import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
+import { Heading, Text, Tag, Center } from "@chakra-ui/react";
 import { money, date } from "../../utils/";
 import { useSelector } from "react-redux";
 import { getTransactionsFormatted } from "./selector";
@@ -34,10 +24,10 @@ const compare = (a, b) => {
 export default function DataTable() {
   const transactions = useSelector(getTransactionsFormatted);
 
-  const renderCells = transactions.sort(compare).map((item, index) => (
+  const renderCells = transactions.sort(compare).map((item) => (
     <Cell key={item.id}>
       <Header>
-        <HeaderTop >
+        <HeaderTop>
           <Heading as="h6" size="xs" textColor="gray.400">
             Descripción
           </Heading>
@@ -57,6 +47,18 @@ export default function DataTable() {
       </Body>
     </Cell>
   ));
-
-  return <Table>{renderCells}</Table>;
+  console.log(transactions);
+  return (
+    <Table>
+      {renderCells.length > 0 ? (
+        renderCells
+      ) : (
+        <Center>
+          <Heading as="h6" size="xs" textColor="gray.400">
+            No hay registros
+          </Heading>
+        </Center>
+      )}
+    </Table>
+  );
 }

@@ -73,6 +73,19 @@ export const getBucket = /* GraphQL */ `
         }
         nextToken
       }
+      categories {
+        items {
+          id
+          icon
+          name
+          percentage
+          color
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -95,6 +108,9 @@ export const listBuckets = /* GraphQL */ `
           nextToken
         }
         incomes {
+          nextToken
+        }
+        categories {
           nextToken
         }
         createdAt
@@ -169,6 +185,41 @@ export const listTransactions = /* GraphQL */ `
         categoryColor
         date
         description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCategory = /* GraphQL */ `
+  query GetCategory($id: ID!) {
+    getCategory(id: $id) {
+      id
+      icon
+      name
+      percentage
+      color
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCategories = /* GraphQL */ `
+  query ListCategories(
+    $filter: ModelCategoryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCategories(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        icon
+        name
+        percentage
+        color
+        bucketID
         createdAt
         updatedAt
       }

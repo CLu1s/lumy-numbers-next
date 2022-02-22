@@ -77,6 +77,19 @@ export const onCreateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      categories {
+        items {
+          id
+          icon
+          name
+          percentage
+          color
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -124,6 +137,19 @@ export const onUpdateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      categories {
+        items {
+          id
+          icon
+          name
+          percentage
+          color
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -165,6 +191,19 @@ export const onDeleteBucket = /* GraphQL */ `
           amount
           date
           description
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      categories {
+        items {
+          id
+          icon
+          name
+          percentage
+          color
           bucketID
           createdAt
           updatedAt
@@ -258,6 +297,48 @@ export const onDeleteTransaction = /* GraphQL */ `
       categoryColor
       date
       description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateCategory = /* GraphQL */ `
+  subscription OnCreateCategory {
+    onCreateCategory {
+      id
+      icon
+      name
+      percentage
+      color
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCategory = /* GraphQL */ `
+  subscription OnUpdateCategory {
+    onUpdateCategory {
+      id
+      icon
+      name
+      percentage
+      color
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCategory = /* GraphQL */ `
+  subscription OnDeleteCategory {
+    onDeleteCategory {
+      id
+      icon
+      name
+      percentage
+      color
+      bucketID
       createdAt
       updatedAt
     }

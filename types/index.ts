@@ -60,6 +60,9 @@ export type Category = {
   color: string;
   icon: string;
   percentage: number;
+  bucketID: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Income = {

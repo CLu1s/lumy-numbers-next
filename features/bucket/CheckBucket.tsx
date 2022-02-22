@@ -5,6 +5,7 @@ import { fetchBucket, createBucket } from "./bucketSlice";
 import Modal from "../../components/Modal";
 import { Input, Text, useToast } from "@chakra-ui/react";
 import Loading from "../../components/Loading";
+import useBaseInfo from "../../hooks/useBaseInfo";
 type Props = {
   userName: string;
 };
@@ -16,11 +17,6 @@ const CheckBucket = ({ userName }: Props) => {
   const { status, error } = useSelector(getStatus);
   const bucket = useSelector(getBucket);
   const toast = useToast();
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchBucket(userName));
-    }
-  }, [dispatch, status, userName]);
 
   useEffect(() => {
     if (status === "failed") {

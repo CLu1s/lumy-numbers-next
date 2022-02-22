@@ -110,6 +110,7 @@ export type Bucket = {
   collaborators?: ModelUserConnection | null,
   transactionsByDate?: ModelTransactionConnection | null,
   incomes?: ModelIncomeConnection | null,
+  categories?: ModelCategoryConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -152,6 +153,24 @@ export type Income = {
   amount: number,
   date: string,
   description?: string | null,
+  bucketID: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelCategoryConnection = {
+  __typename: "ModelCategoryConnection",
+  items:  Array<Category | null >,
+  nextToken?: string | null,
+};
+
+export type Category = {
+  __typename: "Category",
+  id: string,
+  icon: string,
+  name: string,
+  percentage: number,
+  color: string,
   bucketID: string,
   createdAt: string,
   updatedAt: string,
@@ -259,6 +278,39 @@ export type DeleteTransactionInput = {
   id: string,
 };
 
+export type CreateCategoryInput = {
+  id?: string | null,
+  icon: string,
+  name: string,
+  percentage: number,
+  color: string,
+  bucketID: string,
+};
+
+export type ModelCategoryConditionInput = {
+  icon?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  percentage?: ModelIntInput | null,
+  color?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  and?: Array< ModelCategoryConditionInput | null > | null,
+  or?: Array< ModelCategoryConditionInput | null > | null,
+  not?: ModelCategoryConditionInput | null,
+};
+
+export type UpdateCategoryInput = {
+  id: string,
+  icon?: string | null,
+  name?: string | null,
+  percentage?: number | null,
+  color?: string | null,
+  bucketID?: string | null,
+};
+
+export type DeleteCategoryInput = {
+  id: string,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   userName?: ModelStringInput | null,
@@ -305,6 +357,18 @@ export type ModelTransactionFilterInput = {
   and?: Array< ModelTransactionFilterInput | null > | null,
   or?: Array< ModelTransactionFilterInput | null > | null,
   not?: ModelTransactionFilterInput | null,
+};
+
+export type ModelCategoryFilterInput = {
+  id?: ModelIDInput | null,
+  icon?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  percentage?: ModelIntInput | null,
+  color?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  and?: Array< ModelCategoryFilterInput | null > | null,
+  or?: Array< ModelCategoryFilterInput | null > | null,
+  not?: ModelCategoryFilterInput | null,
 };
 
 export type ModelIDKeyConditionInput = {
@@ -424,6 +488,21 @@ export type CreateBucketMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    categories?:  {
+      __typename: "ModelCategoryConnection",
+      items:  Array< {
+        __typename: "Category",
+        id: string,
+        icon: string,
+        name: string,
+        percentage: number,
+        color: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -482,6 +561,21 @@ export type UpdateBucketMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    categories?:  {
+      __typename: "ModelCategoryConnection",
+      items:  Array< {
+        __typename: "Category",
+        id: string,
+        icon: string,
+        name: string,
+        percentage: number,
+        color: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -534,6 +628,21 @@ export type DeleteBucketMutation = {
         amount: number,
         date: string,
         description?: string | null,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    categories?:  {
+      __typename: "ModelCategoryConnection",
+      items:  Array< {
+        __typename: "Category",
+        id: string,
+        icon: string,
+        name: string,
+        percentage: number,
+        color: string,
         bucketID: string,
         createdAt: string,
         updatedAt: string,
@@ -662,6 +771,63 @@ export type DeleteTransactionMutation = {
   } | null,
 };
 
+export type CreateCategoryMutationVariables = {
+  input: CreateCategoryInput,
+  condition?: ModelCategoryConditionInput | null,
+};
+
+export type CreateCategoryMutation = {
+  createCategory?:  {
+    __typename: "Category",
+    id: string,
+    icon: string,
+    name: string,
+    percentage: number,
+    color: string,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCategoryMutationVariables = {
+  input: UpdateCategoryInput,
+  condition?: ModelCategoryConditionInput | null,
+};
+
+export type UpdateCategoryMutation = {
+  updateCategory?:  {
+    __typename: "Category",
+    id: string,
+    icon: string,
+    name: string,
+    percentage: number,
+    color: string,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCategoryMutationVariables = {
+  input: DeleteCategoryInput,
+  condition?: ModelCategoryConditionInput | null,
+};
+
+export type DeleteCategoryMutation = {
+  deleteCategory?:  {
+    __typename: "Category",
+    id: string,
+    icon: string,
+    name: string,
+    percentage: number,
+    color: string,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   id: string,
 };
@@ -750,6 +916,21 @@ export type GetBucketQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    categories?:  {
+      __typename: "ModelCategoryConnection",
+      items:  Array< {
+        __typename: "Category",
+        id: string,
+        icon: string,
+        name: string,
+        percentage: number,
+        color: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -778,6 +959,10 @@ export type ListBucketsQuery = {
       } | null,
       incomes?:  {
         __typename: "ModelIncomeConnection",
+        nextToken?: string | null,
+      } | null,
+      categories?:  {
+        __typename: "ModelCategoryConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -866,6 +1051,48 @@ export type ListTransactionsQuery = {
       categoryColor?: string | null,
       date: string,
       description?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetCategoryQueryVariables = {
+  id: string,
+};
+
+export type GetCategoryQuery = {
+  getCategory?:  {
+    __typename: "Category",
+    id: string,
+    icon: string,
+    name: string,
+    percentage: number,
+    color: string,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCategoriesQueryVariables = {
+  filter?: ModelCategoryFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCategoriesQuery = {
+  listCategories?:  {
+    __typename: "ModelCategoryConnection",
+    items:  Array< {
+      __typename: "Category",
+      id: string,
+      icon: string,
+      name: string,
+      percentage: number,
+      color: string,
+      bucketID: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -978,6 +1205,21 @@ export type OnCreateBucketSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    categories?:  {
+      __typename: "ModelCategoryConnection",
+      items:  Array< {
+        __typename: "Category",
+        id: string,
+        icon: string,
+        name: string,
+        percentage: number,
+        color: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1031,6 +1273,21 @@ export type OnUpdateBucketSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    categories?:  {
+      __typename: "ModelCategoryConnection",
+      items:  Array< {
+        __typename: "Category",
+        id: string,
+        icon: string,
+        name: string,
+        percentage: number,
+        color: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1078,6 +1335,21 @@ export type OnDeleteBucketSubscription = {
         amount: number,
         date: string,
         description?: string | null,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    categories?:  {
+      __typename: "ModelCategoryConnection",
+      items:  Array< {
+        __typename: "Category",
+        id: string,
+        icon: string,
+        name: string,
+        percentage: number,
+        color: string,
         bucketID: string,
         createdAt: string,
         updatedAt: string,
@@ -1171,6 +1443,48 @@ export type OnDeleteTransactionSubscription = {
     categoryColor?: string | null,
     date: string,
     description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCategorySubscription = {
+  onCreateCategory?:  {
+    __typename: "Category",
+    id: string,
+    icon: string,
+    name: string,
+    percentage: number,
+    color: string,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCategorySubscription = {
+  onUpdateCategory?:  {
+    __typename: "Category",
+    id: string,
+    icon: string,
+    name: string,
+    percentage: number,
+    color: string,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCategorySubscription = {
+  onDeleteCategory?:  {
+    __typename: "Category",
+    id: string,
+    icon: string,
+    name: string,
+    percentage: number,
+    color: string,
+    bucketID: string,
     createdAt: string,
     updatedAt: string,
   } | null,

@@ -89,6 +89,19 @@ export const createBucket = /* GraphQL */ `
         }
         nextToken
       }
+      categories {
+        items {
+          id
+          icon
+          name
+          percentage
+          color
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -139,6 +152,19 @@ export const updateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      categories {
+        items {
+          id
+          icon
+          name
+          percentage
+          color
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -183,6 +209,19 @@ export const deleteBucket = /* GraphQL */ `
           amount
           date
           description
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      categories {
+        items {
+          id
+          icon
+          name
+          percentage
+          color
           bucketID
           createdAt
           updatedAt
@@ -294,6 +333,57 @@ export const deleteTransaction = /* GraphQL */ `
       categoryColor
       date
       description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createCategory = /* GraphQL */ `
+  mutation CreateCategory(
+    $input: CreateCategoryInput!
+    $condition: ModelCategoryConditionInput
+  ) {
+    createCategory(input: $input, condition: $condition) {
+      id
+      icon
+      name
+      percentage
+      color
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateCategory = /* GraphQL */ `
+  mutation UpdateCategory(
+    $input: UpdateCategoryInput!
+    $condition: ModelCategoryConditionInput
+  ) {
+    updateCategory(input: $input, condition: $condition) {
+      id
+      icon
+      name
+      percentage
+      color
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteCategory = /* GraphQL */ `
+  mutation DeleteCategory(
+    $input: DeleteCategoryInput!
+    $condition: ModelCategoryConditionInput
+  ) {
+    deleteCategory(input: $input, condition: $condition) {
+      id
+      icon
+      name
+      percentage
+      color
+      bucketID
       createdAt
       updatedAt
     }

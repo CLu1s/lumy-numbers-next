@@ -4,6 +4,7 @@ import BudgetCard from "../features/wallet/BudgetCard";
 import Layout from "../components/Layout";
 import Categories from "../features/wallet/Categories";
 import { Stack } from "@chakra-ui/react";
+import CheckcIncomes from "../features/budget/CheckIncomes";
 
 function Home({ user }) {
   return (
@@ -15,6 +16,7 @@ function Home({ user }) {
       </Head>
 
       <Layout userName={user?.username || ""} pageTitle="Excelente Día">
+      <CheckcIncomes />
         <Stack spacing={8}>
           <BudgetCard />
           <Categories />

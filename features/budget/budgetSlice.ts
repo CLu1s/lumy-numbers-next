@@ -1,48 +1,25 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
-import { BudgetState, LoadingStates } from "../../types";
-import { createIncome } from "../../src/graphql/mutations";
+import { BudgetState, Category, LoadingStates } from "../../types";
+import {
+  createIncome,
+  updateCategory as updateCategoryMutation,
+} from "../../src/graphql/mutations";
 
 const initialState: BudgetState = {
   status: LoadingStates.IDLE,
   error: null,
   incomes: [],
-  categories: [
-    {
-      id: "1",
-      icon: "HiOutlineHome",
-      name: "Gastos Fijos",
-      percentage: 50,
-      color: "green.500",
-    },
-    {
-      id: "2",
-      icon: "AiOutlineStock",
-      name: "Ahorro e Inversión",
-      percentage: 30,
-      color: "purple.500",
-    },
-    {
-      id: "3",
-      icon: "BiHappyBeaming",
-      name: "Gastos sin Culpa",
-      percentage: 20,
-      color: "blue.500",
-    },
-  ],
+  categories: [],
 };
 
 export const createNewIncome = createAsyncThunk(
   "budget/createNewIncome",
   async (input: BudgetState["incomes"]) => {
-    try {
-      const response = await API.graphql(
-        graphqlOperation(createIncome, { input })
-      );
-      return response;
-    } catch (error) {
-      return error;
-    }
+    const response = await API.graphql(
+      graphqlOperation(createIncome, { input })
+    );
+    return response;
   }
 );
 
@@ -74,6 +51,43 @@ export const fetchIncomes = createAsyncThunk(
   }
 );
 
+export const updateCategory = createAsyncThunk(
+  "budget/updateCategory",
+  async (input: Category) => {
+    const { createdAt, updatedAt, ...rest } = input;
+
+    return await API.graphql(
+      graphqlOperation(updateCategoryMutation, { input: rest })
+    );
+  }
+);
+
+export const fetchCategories = createAsyncThunk(
+  "budget/fetchCategories",
+  async (bucketId: string) => {
+    const response = await API.graphql(
+      graphqlOperation(
+        `query GetBucket($id: ID!) {
+            getBucket(id: $id) {
+              categories {
+                items {
+                  id
+                  icon
+                  name
+                  percentage
+                  color
+                }
+                nextToken
+              }
+            }
+          }`,
+        { id: bucketId }
+      )
+    );
+    return response;
+  }
+);
+
 const budgetSlice = createSlice({
   name: "budget",
   initialState,
@@ -95,25 +109,6 @@ const budgetSlice = createSlice({
         color,
         icon,
       });
-    },
-    updateCategory: (
-      state,
-      action: PayloadAction<{
-        id: string;
-        name: string;
-        percentage: number;
-        color: string;
-        icon: string;
-      }>
-    ) => {
-      const { id, name, percentage, color, icon } = action.payload;
-      const category = state.categories.find((category) => category.id === id);
-      if (category) {
-        category.name = name;
-        category.percentage = percentage;
-        category.color = color;
-        category.icon = icon;
-      }
     },
   },
   extraReducers: {
@@ -140,8 +135,31 @@ const budgetSlice = createSlice({
       console.log(action.payload);
       state.error = action.payload;
     },
+    [fetchCategories.rejected.type]: (state) => {
+      state.status = LoadingStates.FAILED;
+      state.error = "Error Cargando las Categorias";
+    },
+    [fetchCategories.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [fetchCategories.fulfilled.type]: (state, action) => {
+      state.status = LoadingStates.SUCCEEDED;
+      state.categories = action.payload.data.getBucket.categories.items;
+    },
+    [updateCategory.fulfilled.type]: (state, action) => {
+      const { id, ...rest } = action.payload.data.updateCategory;
+      const index = state.categories.findIndex((item) => item.id === id);
+      state.categories[index] = { id, ...state.categories[id], ...rest };
+    },
+    [updateCategory.rejected.type]: (state, action) => {
+      state.status = LoadingStates.FAILED;
+      state.error = action.payload;
+    },
+    [updateCategory.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
   },
 });
 
-export const { addCategory, updateCategory } = budgetSlice.actions;
+export const { addCategory } = budgetSlice.actions;
 export default budgetSlice.reducer;

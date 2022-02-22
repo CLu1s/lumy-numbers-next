@@ -5,7 +5,30 @@ import { userByUserName } from "../../src/graphql/queries";
 import {
   createBucket as createBucketMutation,
   createUser,
+  createCategory,
 } from "../../src/graphql/mutations";
+
+const CATEGORIES = [
+  {
+    icon: "HiOutlineHome",
+    name: "Gastos Fijos",
+    percentage: 50,
+    color: "green.500",
+  },
+  {
+    icon: "AiOutlineStock",
+    name: "Ahorro e Inversión",
+    percentage: 30,
+    color: "purple.500",
+  },
+  {
+    icon: "BiHappyBeaming",
+    name: "Gastos sin Culpa",
+    percentage: 20,
+    color: "blue.500",
+  },
+];
+
 const initialState: BucketState = {
   userName: null,
   bucket: null,
@@ -40,6 +63,17 @@ export const createBucket = createAsyncThunk(
       bucketID: id,
     };
     await API.graphql(graphqlOperation(createUser, { input: userInput }));
+    const promises = CATEGORIES.map((category) =>
+      API.graphql(
+        graphqlOperation(createCategory, {
+          input: {
+            ...category,
+            bucketID: id,
+          },
+        })
+      )
+    );
+    await Promise.all(promises);
     return bucket;
   }
 );
@@ -59,7 +93,7 @@ const bucketSlice = createSlice({
     },
     [fetchBucket.rejected.type]: (state, action) => {
       state.status.status = LoadingStates.FAILED;
-      state.status.error = action.payload.error;
+      state.status.error = "Hubo un error al cargar el contenedor";
     },
     [createBucket.pending.type]: (state) => {
       state.status.status = LoadingStates.LOADING;
