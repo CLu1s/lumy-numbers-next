@@ -12,7 +12,7 @@ type OptionsType = {
 };
 
 type SelectProps = {
-  selected: any;
+  defaultValue: any;
   setSelected: (val: any) => void;
   options: OptionsType[] | string[];
   label?: string;
@@ -20,12 +20,12 @@ type SelectProps = {
 
 export default function SelectContainer({
   options,
-  selected,
+  defaultValue,
   setSelected,
   label,
 }: SelectProps) {
   return (
-    <Select placeholder="Select option" onChange={(e)=> setSelected(e.target.value)}>
+    <Select placeholder="Select option" onChange={(e)=> setSelected(e.target.value)} defaultValue={defaultValue}>
       {options.map((option: any) => (
         <option key={option.id} value={option.id}>
           {option.label || option.name}

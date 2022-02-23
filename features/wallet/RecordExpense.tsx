@@ -10,9 +10,10 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
-import { addNewTransaction } from "./walletSlice";
+import { addNewTransaction, updateTransaction } from "./walletSlice";
 import { getStatus } from "./selector";
 import { getBucket } from "../bucket/selector";
+import parseISO from "date-fns/parseISO";
 
 registerLocale("es", esLocale);
 
@@ -26,7 +27,9 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const [selected, setSelected] = useState<any>();
-  const [date, setDate] = useState<Date | null>(new Date());
+  const [date, setDate] = useState<Date | null>(
+    toEdit ? parseISO(toEdit.date) : new Date()
+  );
   const categories = useSelector(getCategories);
   const status = useSelector(getStatus);
   const bucket = useSelector(getBucket);
@@ -43,15 +46,25 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
 
   const onSubmit = (data: any, e: any) => {
     e.preventDefault();
-    dispatch(
-      addNewTransaction({
-        ...data,
-        bucketID: bucket.bucketID,
-        categoryID: selected,
-        date: date,
-      })
-    );
-// TOO: add handling of errors
+    if (toEdit) {
+      dispatch(
+        updateTransaction({
+          ...toEdit,
+          ...data,
+          date: date?.toISOString(),
+        })
+      );
+    } else {
+      dispatch(
+        addNewTransaction({
+          ...data,
+          bucketID: bucket.bucketID,
+          categoryID: selected,
+          date: date,
+        })
+      );
+    }
+    // TOO: add handling of errors
     toast({
       title: "Gasto Registrado.",
       description: "Se ha registrado tu gasto :D",
@@ -86,20 +99,22 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
           <Box width="100%">
             <VStack spacing={4} w="full">
               <Input
+                defaultValue={toEdit ? toEdit.amount : ""}
                 placeholder="Cantidad"
                 {...register("amount", { required: true })}
               />
               {errors.description && <span>Este Campo es Requerido</span>}
               <Input
+                defaultValue={toEdit ? toEdit.description : ""}
                 placeholder="Descripción"
                 {...register("description", { required: true })}
               />
               {errors.amount && <span>Este Campo es Requerido</span>}
               <Select
                 label="Categoría"
-                selected={selected}
                 setSelected={setSelected}
                 options={categories}
+                defaultValue={toEdit ? toEdit.categoryID : ""}
               />
 
               <DatePicker

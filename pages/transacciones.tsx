@@ -2,7 +2,7 @@ import Head from "next/head";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import Layout from "../components/Layout";
 import { Stack } from "@chakra-ui/react";
-import Table from "../features/wallet/Table";
+import Table from "../features/wallet/Transactions";
 import Screen from "../components/Screen";
 function Transacciones({ user }) {
   return (

@@ -19,7 +19,7 @@ const BudgetCard = () => {
         statLabel="Disponible"
         helpText={date(new Date(), "LLLL-YYY")}
         amount={balance}
-        loading={status === "loading"}
+        loading={status === "idle"}
       >
         <HeroStatFooter>
           <Button onClick={onOpen} colorScheme="blue" variant="outline">

@@ -4,6 +4,7 @@ import {
   StackDivider,
   Flex,
   HStack,
+  Button,
 } from "@chakra-ui/react";
 
 export const HeaderTop = ({ children, ...props }) => (
@@ -12,7 +13,7 @@ export const HeaderTop = ({ children, ...props }) => (
   </VStack>
 );
 
-export const Body = ({ children, ...props }) => (
+export const Body = ({ children }) => (
   <Flex
     justifyContent="center"
     border="1px"
@@ -30,11 +31,13 @@ export const Header = ({ children }) => (
   <Flex justifyContent="space-between">{children}</Flex>
 );
 
-export const Cell = ({ children, ...props }) => (
+export const Cell = ({ children, onClick }) => (
   <Box width="full">
-    <VStack spacing={4} align="stretch" width="full">
-      {children}
-    </VStack>
+    <button style={{ width: "100%" }} onClick={onClick}>
+      <VStack spacing={4} align="stretch" width="full">
+        {children}
+      </VStack>
+    </button>
   </Box>
 );
 

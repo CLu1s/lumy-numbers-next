@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
-import { createTransaction } from "../../src/graphql/mutations";
+import { createTransaction,updateTransaction as updateTransactionMutation } from "../../src/graphql/mutations";
 import { getBucket } from "../../src/graphql/queries";
 import { WalletState, LoadingStates } from "../../types";
 const initialState: WalletState = {
@@ -25,6 +25,21 @@ export const addNewTransaction = createAsyncThunk(
       graphqlOperation(createTransaction, { input: transaction })
     );
     return response;
+  }
+);
+
+export const updateTransaction = createAsyncThunk(
+  "wallet/updateTransaction",
+  async (transaction: WalletState["transactions"][0]) => {
+    try{
+      const { createdAt, updatedAt, ...input } = transaction;
+      const response = await API.graphql(
+        graphqlOperation(updateTransactionMutation, { input })
+        );
+        return response;
+      }catch(error){
+        console.log(error);
+      }
   }
 );
 
@@ -70,6 +85,21 @@ const walletSlice = createSlice({
       state.status = LoadingStates.SUCCEEDED;
     },
     [addNewTransaction.rejected.type]: (state, action) => {
+      state.error = action.payload;
+      state.status = LoadingStates.FAILED;
+    },
+    [updateTransaction.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [updateTransaction.fulfilled.type]: (state, action) => {
+      state.transactions = state.transactions.map((transaction) =>
+        transaction.id === action.payload.data.updateTransaction.id
+          ? action.payload.data.updateTransaction
+          : transaction
+      );
+      state.status = LoadingStates.SUCCEEDED;
+    },
+    [updateTransaction.rejected.type]: (state, action) => {
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     }

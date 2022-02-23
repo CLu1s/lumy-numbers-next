@@ -32,6 +32,8 @@ export type Transaction = {
   categoryColor?: string;
   date: string;
   description: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type WalletState = {
@@ -70,6 +72,8 @@ export type Income = {
   amount: number;
   date: string;
   description: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type BudgetState = {
