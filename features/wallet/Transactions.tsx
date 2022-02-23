@@ -7,6 +7,7 @@ import {
   Select,
   Stack,
   useDisclosure,
+  Box,
 } from "@chakra-ui/react";
 import _orderBy from "lodash/orderBy";
 import { money, date } from "../../utils";
@@ -81,17 +82,19 @@ export default function DataTable() {
     <>
       <RecordExpense isOpen={isOpen} onClose={onClose} toEdit={elementToEdit} />
       <Stack spacing={8}>
-        <Select onChange={(e) => changeSort(e.target.value)}>
-          <option value="date">Fecha</option>
-          <option value="categoryName">Categoría</option>
+        <Stack spacing={4}>
+          <Select onChange={(e) => changeSort(e.target.value)}>
+            <option value="date">Fecha</option>
+            <option value="categoryName">Categoría</option>
 
-          <option value="description">Descripcion</option>
-          <option value="amount">Monto</option>
-        </Select>
-        <Select onChange={(e) => changeOrder(e.target.value as Order)}>
-          <option value={Order.DESC}>Descendente</option>
-          <option value={Order.ASC}>Ascendente</option>
-        </Select>
+            <option value="description">Descripcion</option>
+            <option value="amount">Monto</option>
+          </Select>
+          <Select onChange={(e) => changeOrder(e.target.value as Order)}>
+            <option value={Order.DESC}>Descendente</option>
+            <option value={Order.ASC}>Ascendente</option>
+          </Select>
+        </Stack>
         <Table>
           {renderCells.length > 0 ? (
             renderCells

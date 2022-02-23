@@ -24,7 +24,7 @@ export const menuList: MenuItem[] = [
   },
   {
     id: 3,
-    label: "Presupusto",
+    label: "Presupuesto",
     path: "/presupuesto",
     icon: <ImStatsBars />,
   },

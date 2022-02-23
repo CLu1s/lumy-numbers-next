@@ -3,8 +3,10 @@ import { withAuthenticator } from "@aws-amplify/ui-react";
 import BudgetCard from "../features/wallet/BudgetCard";
 import Layout from "../components/Layout";
 import Categories from "../features/wallet/Categories";
-import { Stack } from "@chakra-ui/react";
+import { Box, Stack, Wrap, WrapItem } from "@chakra-ui/react";
 import CheckcIncomes from "../features/budget/CheckIncomes";
+import Screen from "../components/Screen";
+import Transactions from "../features/wallet/Transactions";
 
 function Home({ user }) {
   return (
@@ -16,10 +18,19 @@ function Home({ user }) {
       </Head>
 
       <Layout userName={user?.username || ""} pageTitle="Excelente Día">
-      <CheckcIncomes />
+        <CheckcIncomes />
         <Stack spacing={8}>
           <BudgetCard />
-          <Categories />
+          <Wrap spacing={8}>
+            <WrapItem>
+              <Categories />
+            </WrapItem>
+            <WrapItem w={{ base: "100%", xl: "50%" }}>
+              <Screen title="Transacciones">
+                <Transactions />
+              </Screen>
+            </WrapItem>
+          </Wrap>
         </Stack>
       </Layout>
     </div>
