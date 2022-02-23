@@ -31,7 +31,7 @@ export const Header = ({ children }) => (
   <Flex justifyContent="space-between">{children}</Flex>
 );
 
-export const Cell = ({ children, onClick }) => (
+export const Cell = ({ children, onClick }:{children:JSX.Element|JSX.Element[], onClick?:()=>void}) => (
   <Box width="full">
     <button style={{ width: "100%" }} onClick={onClick}>
       <VStack spacing={4} align="stretch" width="full">
