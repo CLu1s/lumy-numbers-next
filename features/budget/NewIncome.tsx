@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "./selector";
 import { createNewIncome as addNewTransaction } from "./budgetSlice";
 import { getStatus } from "./selector";
-import { getBucket } from "../bucket/selector";
+import { getBucketID } from "../bucket/selector";
 
 registerLocale("es", esLocale);
 
@@ -30,7 +30,7 @@ const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
   const [date, setDate] = useState<Date | null>(new Date());
   const categories = useSelector(getCategories);
   const status = useSelector(getStatus);
-  const bucket = useSelector(getBucket);
+  const bucketID = useSelector(getBucketID);
   const {
     register,
     handleSubmit,
@@ -47,7 +47,7 @@ const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
     dispatch(
       addNewTransaction({
         ...data,
-        bucketID: bucket.bucketID,
+        bucketID,
         date: date,
       })
     );

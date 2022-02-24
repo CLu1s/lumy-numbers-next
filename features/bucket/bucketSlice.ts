@@ -50,24 +50,35 @@ export const fetchBucket = createAsyncThunk(
     const user = (await API.graphql(
       graphqlOperation(userByUserName, { userName })
     )) as any;
-    const { bucketID } = user.data.userByUserName.items[0];
-    const bucketResult = (await API.graphql(
-      graphqlOperation(getBucket, { id: bucketID })
-    )) as any;
-    const bucket = bucketResult.data.getBucket;
-    return { bucket, userName };
+    const [item] = user.data.userByUserName.items;
+    if (item) {
+      const { bucketID } = item;
+      const bucketResult = (await API.graphql(
+        graphqlOperation(getBucket, { id: bucketID })
+      )) as any;
+      const bucket = bucketResult.data.getBucket;
+      return { bucket, userName };
+    }
+    return { bucket: null, userName };
   }
 );
 
+type PropCreateBucket = {
+  name: string;
+  code: string;
+};
+
 export const createBucket = createAsyncThunk(
   "budget/createBucket",
-  async (input: any) => {
-    const { code } = input;
+  async (input: PropCreateBucket) => {
+    const { code, name } = input;
     const formatInput = {
-      ...input,
+      name,
       nanoid: nanoid(10),
     };
     let bucket;
+    let id;
+    let item = null;
     if (!code) {
       bucket = (await API.graphql(
         graphqlOperation(createBucketMutation, { input: formatInput })
@@ -78,9 +89,13 @@ export const createBucket = createAsyncThunk(
       )) as any;
     }
     const { createBucket, bucketByNanoid } = bucket.data;
-    const { items } = bucketByNanoid || createBucket;
-    const [item] = items;
-    const { id } = item;
+    if (bucketByNanoid) {
+      const { items } = bucketByNanoid || createBucket;
+      item = items[0];
+      id = item.id;
+    } else {
+      id = createBucket.id;
+    }
 
     const userInput = {
       userName: input.name,
@@ -100,7 +115,7 @@ export const createBucket = createAsyncThunk(
       );
       await Promise.all(promises);
     }
-    return item;
+    return item || createBucket;
   }
 );
 
@@ -119,7 +134,8 @@ const bucketSlice = createSlice({
     },
     [fetchBucket.rejected.type]: (state, action) => {
       state.status.status = LoadingStates.FAILED;
-      state.status.error = "Hubo un error al cargar el contenedor";
+      state.status.error =
+        action.error.message || "Hubo un error al cargar el contenedor";
     },
     [createBucket.pending.type]: (state) => {
       state.status.status = LoadingStates.LOADING;
