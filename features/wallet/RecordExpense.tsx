@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
 import { addNewTransaction, updateTransaction } from "./walletSlice";
 import { getStatus } from "./selector";
-import { getBucket } from "../bucket/selector";
+import { getBucket,getBucketID } from "../bucket/selector";
 import parseISO from "date-fns/parseISO";
 
 registerLocale("es", esLocale);
@@ -32,7 +32,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   );
   const categories = useSelector(getCategories);
   const status = useSelector(getStatus);
-  const bucket = useSelector(getBucket);
+  const bucketID = useSelector(getBucketID);
   const {
     register,
     handleSubmit,
@@ -58,7 +58,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
       dispatch(
         addNewTransaction({
           ...data,
-          bucketID: bucket.bucketID,
+          bucketID,
           categoryID: selected,
           date: date,
         })

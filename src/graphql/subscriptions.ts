@@ -40,6 +40,7 @@ export const onCreateBucket = /* GraphQL */ `
     onCreateBucket {
       id
       name
+      nanoid
       collaborators {
         items {
           id
@@ -100,6 +101,7 @@ export const onUpdateBucket = /* GraphQL */ `
     onUpdateBucket {
       id
       name
+      nanoid
       collaborators {
         items {
           id
@@ -160,6 +162,7 @@ export const onDeleteBucket = /* GraphQL */ `
     onDeleteBucket {
       id
       name
+      nanoid
       collaborators {
         items {
           id

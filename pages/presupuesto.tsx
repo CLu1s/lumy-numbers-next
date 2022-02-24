@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import { Stack } from "@chakra-ui/react";
 import IncomeCard from "../features/budget/IncomeCard";
 import BudgetCategories from "../features/budget/BudgetCategories";
+import ShareBucket from "../features/bucket/ShareBucket";
 
 function Home({ user }) {
   return (
@@ -18,6 +19,7 @@ function Home({ user }) {
         <Stack spacing={8}>
           <IncomeCard />
           <BudgetCategories />
+          <ShareBucket />
         </Stack>
       </Layout>
     </div>

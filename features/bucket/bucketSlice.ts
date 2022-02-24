@@ -1,7 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import { BucketState, LoadingStates } from "../../types";
-import { userByUserName } from "../../src/graphql/queries";
+import {
+  getBucket,
+  userByUserName,
+  bucketByNanoid as bucketByNanoidQuery,
+} from "../../src/graphql/queries";
+import { nanoid } from "nanoid";
 import {
   createBucket as createBucketMutation,
   createUser,
@@ -42,39 +47,60 @@ const initialState: BucketState = {
 export const fetchBucket = createAsyncThunk(
   "budget/fetchBucket",
   async (userName: string) => {
-    const response = await API.graphql(
+    const user = (await API.graphql(
       graphqlOperation(userByUserName, { userName })
-    );
-    return { response, userName };
+    )) as any;
+    const { bucketID } = user.data.userByUserName.items[0];
+    const bucketResult = (await API.graphql(
+      graphqlOperation(getBucket, { id: bucketID })
+    )) as any;
+    const bucket = bucketResult.data.getBucket;
+    return { bucket, userName };
   }
 );
 
 export const createBucket = createAsyncThunk(
   "budget/createBucket",
   async (input: any) => {
-    const bucket = (await API.graphql(
-      graphqlOperation(createBucketMutation, { input })
-    )) as any;
-
-    const { id } = bucket.data.createBucket;
+    const { code } = input;
+    const formatInput = {
+      ...input,
+      nanoid: nanoid(10),
+    };
+    let bucket;
+    if (!code) {
+      bucket = (await API.graphql(
+        graphqlOperation(createBucketMutation, { input: formatInput })
+      )) as any;
+    } else {
+      bucket = (await API.graphql(
+        graphqlOperation(bucketByNanoidQuery, { nanoid: code })
+      )) as any;
+    }
+    const { createBucket, bucketByNanoid } = bucket.data;
+    const { items } = bucketByNanoid || createBucket;
+    const [item] = items;
+    const { id } = item;
 
     const userInput = {
       userName: input.name,
       bucketID: id,
     };
     await API.graphql(graphqlOperation(createUser, { input: userInput }));
-    const promises = CATEGORIES.map((category) =>
-      API.graphql(
-        graphqlOperation(createCategory, {
-          input: {
-            ...category,
-            bucketID: id,
-          },
-        })
-      )
-    );
-    await Promise.all(promises);
-    return bucket;
+    if (!code) {
+      const promises = CATEGORIES.map((category) =>
+        API.graphql(
+          graphqlOperation(createCategory, {
+            input: {
+              ...category,
+              bucketID: id,
+            },
+          })
+        )
+      );
+      await Promise.all(promises);
+    }
+    return item;
   }
 );
 
@@ -89,7 +115,7 @@ const bucketSlice = createSlice({
     [fetchBucket.fulfilled.type]: (state, action) => {
       state.status.status = LoadingStates.SUCCEEDED;
       state.userName = action.payload.userName;
-      state.bucket = action.payload.response.data.userByUserName.items[0];
+      state.bucket = action.payload.bucket;
     },
     [fetchBucket.rejected.type]: (state, action) => {
       state.status.status = LoadingStates.FAILED;
@@ -100,11 +126,11 @@ const bucketSlice = createSlice({
     },
     [createBucket.fulfilled.type]: (state, action) => {
       state.status.status = LoadingStates.SUCCEEDED;
-      state.bucket = action.payload.data.createBucket;
+      state.bucket = action.payload;
     },
     [createBucket.rejected.type]: (state, action) => {
       state.status.status = LoadingStates.FAILED;
-      state.status.error = action.payload.error;
+      state.status.error = action.error.message;
     },
   },
 });

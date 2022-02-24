@@ -41,10 +41,14 @@ const CheckBucket = ({ userName }: Props) => {
   };
   const onSubmit = () => {
     setIsOpen(false);
+    console.log(code);
     dispatch(
-      createBucket({
-        name: userName,
-      })
+      createBucket(
+        {
+          name: userName,
+          code,
+        },
+      )
     );
   };
 

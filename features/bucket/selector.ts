@@ -13,3 +13,13 @@ export const getBucket = createSelector(
   [bucketSelector],
   (state: BucketState): BucketState["bucket"] => state.bucket
 );
+
+export const getBucketID = createSelector(
+  [bucketSelector],
+  (state: BucketState): string => state.bucket?.id ?? ""
+);
+
+export const getNanoID = createSelector(
+  [bucketSelector],
+  (state: BucketState): string => state.bucket?.nanoid
+);

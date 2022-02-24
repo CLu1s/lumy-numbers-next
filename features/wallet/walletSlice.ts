@@ -74,7 +74,7 @@ const walletSlice = createSlice({
       state.status = LoadingStates.SUCCEEDED;
     },
     [fetchTransactions.rejected.type]: (state, action) => {
-      state.error = action.payload;
+      state.error = action.error.message;
       state.status = LoadingStates.FAILED;
     },
     [addNewTransaction.pending.type]: (state) => {

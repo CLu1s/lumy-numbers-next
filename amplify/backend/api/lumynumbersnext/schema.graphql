@@ -16,7 +16,8 @@ type User @model {
 
 type Bucket @model {
   id: ID!
-  name: String
+  name: String! @index(name: "byName", queryField: "bucketByName", sortKeyFields: ["id"])
+  nanoid: String! @index(name: "byNanoid", queryField: "bucketByNanoid", sortKeyFields: ["id"])
   collaborators: [User] @hasMany(indexName: "byBucket", fields: ["id"])
   transactionsByDate: [Transaction]
     @hasMany(indexName: "byBucketByDate", fields: ["id"])

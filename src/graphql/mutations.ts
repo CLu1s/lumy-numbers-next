@@ -52,6 +52,7 @@ export const createBucket = /* GraphQL */ `
     createBucket(input: $input, condition: $condition) {
       id
       name
+      nanoid
       collaborators {
         items {
           id
@@ -115,6 +116,7 @@ export const updateBucket = /* GraphQL */ `
     updateBucket(input: $input, condition: $condition) {
       id
       name
+      nanoid
       collaborators {
         items {
           id
@@ -178,6 +180,7 @@ export const deleteBucket = /* GraphQL */ `
     deleteBucket(input: $input, condition: $condition) {
       id
       name
+      nanoid
       collaborators {
         items {
           id

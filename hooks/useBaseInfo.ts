@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getStatus as getBucketStatus,
-  getBucket,
+  getBucketID,
 } from "../features/bucket/selector";
 import { fetchBucket } from "../features/bucket/bucketSlice";
 import { fetchTransactions } from "../features/wallet/walletSlice";
@@ -13,7 +13,7 @@ const useBaseInfo = (userName?: string) => {
   const [name, setName] = useState<string>("");
   const dispatch = useDispatch();
   const bucketStatus = useSelector(getBucketStatus);
-  const bucket = useSelector(getBucket);
+  const bucketID = useSelector(getBucketID);
   const budgetStatus = useSelector(getBudgetStatus);
 
   useEffect(() => {
@@ -29,12 +29,12 @@ const useBaseInfo = (userName?: string) => {
   }, [dispatch, bucketStatus, name]);
 
   useEffect(() => {
-    if (budgetStatus.status === "idle" && bucket?.bucketID) {
-      dispatch(fetchTransactions(bucket.bucketID));
-      dispatch(fetchIncomes(bucket.bucketID));
-      dispatch(fetchCategories(bucket.bucketID));
+    if (budgetStatus.status === "idle" && bucketID) {
+      dispatch(fetchTransactions(bucketID));
+      dispatch(fetchIncomes(bucketID));
+      dispatch(fetchCategories(bucketID));
     }
-  }, [dispatch, budgetStatus, bucket]);
+  }, [dispatch, budgetStatus, bucketID]);
 
   return;
 };

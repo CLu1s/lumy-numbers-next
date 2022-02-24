@@ -93,11 +93,13 @@ export type DeleteUserInput = {
 
 export type CreateBucketInput = {
   id?: string | null,
-  name?: string | null,
+  name: string,
+  nanoid: string,
 };
 
 export type ModelBucketConditionInput = {
   name?: ModelStringInput | null,
+  nanoid?: ModelStringInput | null,
   and?: Array< ModelBucketConditionInput | null > | null,
   or?: Array< ModelBucketConditionInput | null > | null,
   not?: ModelBucketConditionInput | null,
@@ -106,7 +108,8 @@ export type ModelBucketConditionInput = {
 export type Bucket = {
   __typename: "Bucket",
   id: string,
-  name?: string | null,
+  name: string,
+  nanoid: string,
   collaborators?: ModelUserConnection | null,
   transactionsByDate?: ModelTransactionConnection | null,
   incomes?: ModelIncomeConnection | null,
@@ -179,6 +182,7 @@ export type Category = {
 export type UpdateBucketInput = {
   id: string,
   name?: string | null,
+  nanoid?: string | null,
 };
 
 export type DeleteBucketInput = {
@@ -323,6 +327,7 @@ export type ModelUserFilterInput = {
 export type ModelBucketFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
+  nanoid?: ModelStringInput | null,
   and?: Array< ModelBucketFilterInput | null > | null,
   or?: Array< ModelBucketFilterInput | null > | null,
   not?: ModelBucketFilterInput | null,
@@ -444,7 +449,8 @@ export type CreateBucketMutation = {
   createBucket?:  {
     __typename: "Bucket",
     id: string,
-    name?: string | null,
+    name: string,
+    nanoid: string,
     collaborators?:  {
       __typename: "ModelUserConnection",
       items:  Array< {
@@ -517,7 +523,8 @@ export type UpdateBucketMutation = {
   updateBucket?:  {
     __typename: "Bucket",
     id: string,
-    name?: string | null,
+    name: string,
+    nanoid: string,
     collaborators?:  {
       __typename: "ModelUserConnection",
       items:  Array< {
@@ -590,7 +597,8 @@ export type DeleteBucketMutation = {
   deleteBucket?:  {
     __typename: "Bucket",
     id: string,
-    name?: string | null,
+    name: string,
+    nanoid: string,
     collaborators?:  {
       __typename: "ModelUserConnection",
       items:  Array< {
@@ -872,7 +880,8 @@ export type GetBucketQuery = {
   getBucket?:  {
     __typename: "Bucket",
     id: string,
-    name?: string | null,
+    name: string,
+    nanoid: string,
     collaborators?:  {
       __typename: "ModelUserConnection",
       items:  Array< {
@@ -948,7 +957,8 @@ export type ListBucketsQuery = {
     items:  Array< {
       __typename: "Bucket",
       id: string,
-      name?: string | null,
+      name: string,
+      nanoid: string,
       collaborators?:  {
         __typename: "ModelUserConnection",
         nextToken?: string | null,
@@ -1124,6 +1134,86 @@ export type UserByUserNameQuery = {
   } | null,
 };
 
+export type BucketByNameQueryVariables = {
+  name: string,
+  id?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelBucketFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type BucketByNameQuery = {
+  bucketByName?:  {
+    __typename: "ModelBucketConnection",
+    items:  Array< {
+      __typename: "Bucket",
+      id: string,
+      name: string,
+      nanoid: string,
+      collaborators?:  {
+        __typename: "ModelUserConnection",
+        nextToken?: string | null,
+      } | null,
+      transactionsByDate?:  {
+        __typename: "ModelTransactionConnection",
+        nextToken?: string | null,
+      } | null,
+      incomes?:  {
+        __typename: "ModelIncomeConnection",
+        nextToken?: string | null,
+      } | null,
+      categories?:  {
+        __typename: "ModelCategoryConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type BucketByNanoidQueryVariables = {
+  nanoid: string,
+  id?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelBucketFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type BucketByNanoidQuery = {
+  bucketByNanoid?:  {
+    __typename: "ModelBucketConnection",
+    items:  Array< {
+      __typename: "Bucket",
+      id: string,
+      name: string,
+      nanoid: string,
+      collaborators?:  {
+        __typename: "ModelUserConnection",
+        nextToken?: string | null,
+      } | null,
+      transactionsByDate?:  {
+        __typename: "ModelTransactionConnection",
+        nextToken?: string | null,
+      } | null,
+      incomes?:  {
+        __typename: "ModelIncomeConnection",
+        nextToken?: string | null,
+      } | null,
+      categories?:  {
+        __typename: "ModelCategoryConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type OnCreateUserSubscription = {
   onCreateUser?:  {
     __typename: "User",
@@ -1161,7 +1251,8 @@ export type OnCreateBucketSubscription = {
   onCreateBucket?:  {
     __typename: "Bucket",
     id: string,
-    name?: string | null,
+    name: string,
+    nanoid: string,
     collaborators?:  {
       __typename: "ModelUserConnection",
       items:  Array< {
@@ -1229,7 +1320,8 @@ export type OnUpdateBucketSubscription = {
   onUpdateBucket?:  {
     __typename: "Bucket",
     id: string,
-    name?: string | null,
+    name: string,
+    nanoid: string,
     collaborators?:  {
       __typename: "ModelUserConnection",
       items:  Array< {
@@ -1297,7 +1389,8 @@ export type OnDeleteBucketSubscription = {
   onDeleteBucket?:  {
     __typename: "Bucket",
     id: string,
-    name?: string | null,
+    name: string,
+    nanoid: string,
     collaborators?:  {
       __typename: "ModelUserConnection",
       items:  Array< {

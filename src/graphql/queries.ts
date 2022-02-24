@@ -36,6 +36,7 @@ export const getBucket = /* GraphQL */ `
     getBucket(id: $id) {
       id
       name
+      nanoid
       collaborators {
         items {
           id
@@ -101,6 +102,7 @@ export const listBuckets = /* GraphQL */ `
       items {
         id
         name
+        nanoid
         collaborators {
           nextToken
         }
@@ -248,6 +250,86 @@ export const userByUserName = /* GraphQL */ `
         id
         userName
         bucketID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const bucketByName = /* GraphQL */ `
+  query BucketByName(
+    $name: String!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelBucketFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    bucketByName(
+      name: $name
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        nanoid
+        collaborators {
+          nextToken
+        }
+        transactionsByDate {
+          nextToken
+        }
+        incomes {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const bucketByNanoid = /* GraphQL */ `
+  query BucketByNanoid(
+    $nanoid: String!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelBucketFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    bucketByNanoid(
+      nanoid: $nanoid
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        nanoid
+        collaborators {
+          nextToken
+        }
+        transactionsByDate {
+          nextToken
+        }
+        incomes {
+          nextToken
+        }
+        categories {
+          nextToken
+        }
         createdAt
         updatedAt
       }

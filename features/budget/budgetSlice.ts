@@ -122,7 +122,7 @@ const budgetSlice = createSlice({
     },
     [createNewIncome.rejected.type]: (state, action) => {
       state.status = LoadingStates.FAILED;
-      state.error = action.payload.message;
+      state.error = "Hubo un error al crear el ingreso";
     },
     [fetchIncomes.pending.type]: (state) => {
       state.status = LoadingStates.LOADING;
