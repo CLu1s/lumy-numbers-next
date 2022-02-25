@@ -36,7 +36,7 @@ type Income @model {
 type Transaction @model {
   id: ID!
   bucketID: ID! @index(name: "byBucketByDate", sortKeyFields: ["date"])
-  amount: Int
+  amount: Float!
   categoryID: String
   categoryName: String
   categoryColor: String
