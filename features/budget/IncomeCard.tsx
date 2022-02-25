@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HeroStatCard, {
   HeroStatBody,
   HeroStatFooter,
@@ -15,8 +15,6 @@ import {
   Divider,
   useDisclosure,
 } from "@chakra-ui/react";
-import { fetchIncomes } from "./budgetSlice";
-import { getStatus } from "./selector";
 import { money } from "../../utils";
 import { getBucket } from "../bucket/selector";
 import NewIncome from "./NewIncome";
@@ -26,28 +24,37 @@ const IncomeCard = () => {
   const bucket = useSelector(getBucket);
   const income = useSelector(getIncome);
   const listOfIncomes = useSelector(getListOfIncomes);
-  const { status, error } = useSelector(getStatus);
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  useEffect(() => {
-    if (status === "idle" && bucket?.bucketID) {
-      dispatch(fetchIncomes(bucket.bucketID));
-    }
-  }, [dispatch, status, bucket]);
+  const [elementToEdit, setElementToEdit] = useState<any>(null);
 
   const list = listOfIncomes.map((income) => (
     <Stack key={income.id}>
-      <Stat size="sm">
-        <StatLabel>{income.description}</StatLabel>
-        <StatNumber>{money(income.amount)}</StatNumber>
-      </Stat>
+      <button
+        style={{ textAlign: "left" }}
+        onClick={() => {
+          setElementToEdit(income);
+          onOpen();
+        }}
+      >
+        <Stat size="sm">
+          <StatLabel>{income.description}</StatLabel>
+          <StatNumber>{money(income.amount)}</StatNumber>
+        </Stat>
+      </button>
       <Divider />
     </Stack>
   ));
-
+  const manageOnClose = () => {
+    elementToEdit && setElementToEdit(null);
+    onClose();
+  };
   return (
     <>
-      <NewIncome isOpen={isOpen} onClose={onClose} />
+      <NewIncome
+        isOpen={isOpen}
+        onClose={manageOnClose}
+        toEdit={elementToEdit}
+      />
       <HeroStatCard
         title=" Ingresos del Mes"
         statLabel={date(new Date(), "LLLL-YYY")}

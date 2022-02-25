@@ -78,9 +78,17 @@ export default function DataTable() {
   const changeSort = (value: string) => {
     setSort(value);
   };
+  const manageOnClose = () => {
+    elementToEdit && setElementToEdit(null);
+    onClose();
+  };
   return (
     <>
-      <RecordExpense isOpen={isOpen} onClose={onClose} toEdit={elementToEdit} />
+      <RecordExpense
+        isOpen={isOpen}
+        onClose={manageOnClose}
+        toEdit={elementToEdit}
+      />
       <Stack spacing={8}>
         <Stack spacing={4}>
           <Select onChange={(e) => changeSort(e.target.value)}>

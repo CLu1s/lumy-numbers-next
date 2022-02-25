@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
-import { BudgetState, Category, LoadingStates } from "../../types";
+import { BudgetState, Income, Category, LoadingStates } from "../../types";
 import startOfMonth from "date-fns/startOfMonth";
 import endOfMonth from "date-fns/endOfMonth";
 import sub from "date-fns/sub";
@@ -8,6 +8,7 @@ import format from "date-fns/format";
 import {
   createIncome,
   updateCategory as updateCategoryMutation,
+  updateIncome as updateIncomeMutation,
 } from "../../src/graphql/mutations";
 
 const initialState: BudgetState = {
@@ -22,6 +23,17 @@ export const createNewIncome = createAsyncThunk(
   async (input: BudgetState["incomes"]) => {
     const response = await API.graphql(
       graphqlOperation(createIncome, { input })
+    );
+    return response;
+  }
+);
+
+export const updateIcome = createAsyncThunk(
+  "budget/updateIncome",
+  async (icome: Income) => {
+    const { createdAt, updatedAt, ...input } = icome;
+    const response = await API.graphql(
+      graphqlOperation(updateIncomeMutation, { input })
     );
     return response;
   }
@@ -190,6 +202,19 @@ const budgetSlice = createSlice({
       state.error = action.payload;
     },
     [updateCategory.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [updateIcome.fulfilled.type]: (state, action) => {
+      const { id, ...rest } = action.payload.data.updateIncome;
+      const index = state.incomes.findIndex((item) => item.id === id);
+      state.incomes[index] = { id, ...state.incomes[id], ...rest };
+    },
+    [updateIcome.rejected.type]: (state, action) => {
+      state.status = LoadingStates.FAILED;
+      console.log(action);
+      state.error = action.error?.message || "Error al actualizar el ingreso";
+    },
+    [updateIcome.pending.type]: (state) => {
       state.status = LoadingStates.LOADING;
     },
   },

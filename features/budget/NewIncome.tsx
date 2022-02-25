@@ -1,18 +1,17 @@
-
-import React, { useState, forwardRef } from "react";
+import React, { useState, forwardRef, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack } from "@chakra-ui/react";
-import { SingleTransaction } from "../../types";
-import Select from "../../components/Select";
+import { Income } from "../../types";
 import esLocale from "date-fns/locale/es";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "./selector";
-import { createNewIncome as addNewTransaction } from "./budgetSlice";
+import { createNewIncome, updateIcome } from "./budgetSlice";
 import { getStatus } from "./selector";
+import parseISO from "date-fns/parseISO";
 import { getBucketID } from "../bucket/selector";
 
 registerLocale("es", esLocale);
@@ -20,14 +19,16 @@ registerLocale("es", esLocale);
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  toEdit?: SingleTransaction;
+  toEdit?: Income;
 };
 
 const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
   const toast = useToast();
   const [selected, setSelected] = useState<any>();
-  const [date, setDate] = useState<Date | null>(new Date());
+  const [date, setDate] = useState<Date | null>(
+    toEdit ? parseISO(toEdit.date) : new Date()
+  );
   const categories = useSelector(getCategories);
   const status = useSelector(getStatus);
   const bucketID = useSelector(getBucketID);
@@ -37,21 +38,31 @@ const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
     reset,
     formState: { errors },
   } = useForm();
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     reset();
     onClose();
-  };
+  }, [reset, onClose]);
 
   const onSubmit = (data: any, e: any) => {
     e.preventDefault();
-    dispatch(
-      addNewTransaction({
-        ...data,
-        bucketID,
-        date: date,
-      })
-    );
-// TOO: add handling of errors
+    if (!toEdit) {
+      dispatch(
+        createNewIncome({
+          ...data,
+          bucketID,
+          date: date,
+        })
+      );
+    } else {
+      dispatch(
+        updateIcome({
+          ...toEdit,
+          ...data,
+          date: date?.toISOString(),
+        })
+      );
+    }
+    // TOO: add handling of errors
     toast({
       title: "Gasto Registrado.",
       description: "Se ha registrado tu gasto :D",
@@ -63,7 +74,7 @@ const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
 
   const config = {
     isOpen,
-    title: toEdit ? "Actualizar Gasto" : "Ingresar Nuevo Ingreso",
+    title: toEdit ? "Actualizar Ingreso" : "Nuevo Ingreso",
     onClose: handleClose,
     cancelButtonText: "Cancel",
     onSubmit: handleSubmit(onSubmit),
@@ -87,10 +98,12 @@ const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
             <VStack spacing={4} w="full">
               <Input
                 placeholder="Cantidad"
+                defaultValue={toEdit?.amount}
                 {...register("amount", { required: true })}
               />
               {errors.description && <span>Este Campo es Requerido</span>}
               <Input
+                defaultValue={toEdit?.description}
                 placeholder="Descripción"
                 {...register("description", { required: true })}
               />
