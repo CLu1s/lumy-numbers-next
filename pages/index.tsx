@@ -22,10 +22,10 @@ function Home({ user }) {
         <Stack spacing={8}>
           <BudgetCard />
           <Wrap spacing={8}>
-            <WrapItem>
+            <WrapItem w={{ base: "100%", lg: "45%" }}>
               <Categories />
             </WrapItem>
-            <WrapItem w={{ base: "100%", xl: "50%" }}>
+            <WrapItem w={{ base: "100%", xl: "45%" }}>
               <Screen title="Transacciones">
                 <Transactions />
               </Screen>
