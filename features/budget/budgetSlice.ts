@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import { BudgetState, Category, LoadingStates } from "../../types";
+import startOfMonth from "date-fns/startOfMonth";
+import endOfMonth from "date-fns/endOfMonth";
+import sub from "date-fns/sub";
+import format from "date-fns/format";
 import {
   createIncome,
   updateCategory as updateCategoryMutation,
@@ -23,31 +27,60 @@ export const createNewIncome = createAsyncThunk(
   }
 );
 
+const localFetchIncome = async (id: string, init: string, end: string) =>
+  API.graphql(
+    graphqlOperation(
+      `query GetBucket($id: ID!,$init: String!, $end: String!) {
+          getBucket(id: $id) {
+            incomes(date: {
+              between: [ $init, $end ]
+            }) {
+              items {
+                id
+                amount
+                date
+                description
+              createdAt
+              updatedAt
+              bucketID
+            }
+            nextToken
+          }
+        }
+      }`,
+      { id, init, end }
+    )
+  );
+
 export const fetchIncomes = createAsyncThunk(
   "budget/fetchIncomes",
   async (bucketId: string) => {
-    const response = await API.graphql(
-      graphqlOperation(
-        `query GetBucket($id: ID!) {
-            getBucket(id: $id) {
-              incomes {
-                items {
-                  id
-                  amount
-                  date
-                  description
-                createdAt
-                updatedAt
-                bucketID
-              }
-              nextToken
-            }
-          }
-        }`,
-        { id: bucketId }
-      )
-    );
-    return response;
+    const actualDate = new Date();
+    const firstDate = startOfMonth(actualDate);
+    const lastDate = endOfMonth(actualDate);
+    const init = format(firstDate, "yyyy-MM-dd");
+    const end = format(lastDate, "yyyy-MM-dd");
+    let newIncomes = [];
+    const currentIcomes = (await localFetchIncome(bucketId, init, end)) as any;
+    const incomes = currentIcomes.data.getBucket.incomes.items;
+    if (incomes.length === 0) {
+      const initLastMonth = format(sub(firstDate, { months: 1 }), "yyyy-MM-dd");
+      const endLastMonth = format(sub(lastDate, { months: 1 }), "yyyy-MM-dd");
+      const lastMonthIncomes = (await localFetchIncome(
+        bucketId,
+        initLastMonth,
+        endLastMonth
+      )) as any;
+
+      const oldIncomes = lastMonthIncomes.data.getBucket.incomes.items;
+      const promises = oldIncomes.map((income) => {
+        const { id, updatedAt, createdAt, ...input } = income;
+        input.date = startOfMonth(actualDate);
+        return API.graphql(graphqlOperation(createIncome, { input }));
+      });
+      newIncomes = await Promise.all(promises);
+    }
+    return currentIcomes || newIncomes;
   }
 );
 
@@ -108,7 +141,7 @@ const budgetSlice = createSlice({
         percentage,
         color,
         icon,
-        bucketID:""
+        bucketID: "",
       });
     },
   },

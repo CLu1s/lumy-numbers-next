@@ -33,7 +33,7 @@ const StatCard = ({
   progress,
   slider,
   onChange,
-  onChangeEnd
+  onChangeEnd,
 }: Props) => {
   const loading = false;
   return (
@@ -50,10 +50,15 @@ const StatCard = ({
         </Square>
         <Stat>
           <StatLabel>{name}</StatLabel>
-          <StatNumber style={{width:"100%", minWidth:"135px"}}>{money(number)}</StatNumber>
+          <StatNumber
+            style={{ width: "100%", minWidth: "135px" }}
+            color={`${number < 1 ? "red.600" : "black"}`}
+          >
+            {money(number)}
+          </StatNumber>
         </Stat>
-        <CircularProgress value={progress} color={color}>
-          <CircularProgressLabel>{progress}%</CircularProgressLabel>
+        <CircularProgress value={progress > 0 ? progress : 0} color={color}>
+          <CircularProgressLabel>{progress > 0 ? progress : 0}%</CircularProgressLabel>
         </CircularProgress>
       </HStack>
       {slider && (

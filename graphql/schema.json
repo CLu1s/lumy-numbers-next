@@ -1335,11 +1335,11 @@
           "name" : "incomes",
           "description" : null,
           "args" : [ {
-            "name" : "id",
+            "name" : "date",
             "description" : null,
             "type" : {
               "kind" : "INPUT_OBJECT",
-              "name" : "ModelIDKeyConditionInput",
+              "name" : "ModelStringKeyConditionInput",
               "ofType" : null
             },
             "defaultValue" : null

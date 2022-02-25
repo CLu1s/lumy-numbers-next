@@ -9,6 +9,7 @@ import { updateCategory } from "./budgetSlice";
 import { getStatus } from "./selector";
 import { Category } from "../../types";
 import Loading from "../../components/Loading";
+import { VscAdd } from "react-icons/vsc";
 const sanitizer = (state: Category[]): Category[] => {
   return state.reduce((acc, cur) => {
     if (cur.id !== "rest") {
@@ -113,7 +114,7 @@ const BudgetCategories = () => {
       {status !== "idle" ? (
         <Wrap>
           {state.map((item: Category) => (
-            <WrapItem key={item.id}>
+            <WrapItem key={item.id} width="full" maxW="365px">
               <StatCard
                 {...item}
                 number={(item.percentage / 100) * income}
@@ -132,6 +133,13 @@ const BudgetCategories = () => {
               />
             </WrapItem>
           ))}
+          {/* <WrapItem width="full" maxW="365px" minH="123px">
+            <Screen>
+              <Center h="full" w="full" color="gray.400">
+                <VscAdd />
+              </Center>
+            </Screen>
+          </WrapItem> */}
         </Wrap>
       ) : (
         <Loading />

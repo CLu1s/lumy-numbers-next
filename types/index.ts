@@ -42,12 +42,24 @@ export type WalletState = {
   error: string | null;
 };
 
+export type User = {
+  id: string;
+  userName: string;
+  bucketID: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type Bucket = {
   id: string;
   name: string;
   bucketID: string;
   nanoid: string;
   listIncomes: Income[];
+  collaborators: {
+    items: User[];
+    nextToken: string | null;
+  };
 };
 
 export type BucketState = {

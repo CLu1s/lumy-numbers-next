@@ -14,10 +14,12 @@ const Screen = ({ title, children }: props) => {
       viewport={{ once: true }}
       style={{
         width: "100%",
+        height: "100%",
       }}
     >
       <Box
         width="full"
+        height="full"
         p={5}
         shadow="sm"
         borderWidth="1px"
@@ -25,7 +27,7 @@ const Screen = ({ title, children }: props) => {
         flex="1"
         borderRadius="3xl"
       >
-        <Stack>
+        <Stack spacing={6}>
           {title && (
             <Heading as="h2" size="md" fontWeight="600">
               {title}

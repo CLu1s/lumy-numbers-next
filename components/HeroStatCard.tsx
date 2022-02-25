@@ -47,7 +47,7 @@ const HeroStatCard = ({
           <StatNumber
             fontSize={["5xl", "6xl"]}
             fontWeight="700"
-            color="purple.600"
+            color={`${amount < 1 ? "red" : "purple"}.600`}
           >
             {money(amount)}
           </StatNumber>

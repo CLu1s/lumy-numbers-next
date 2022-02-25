@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { BucketState } from "../../types";
+import { BucketState, User } from "../../types";
 import { RootState } from "../../store/reducers";
 
 const bucketSelector = (state: RootState): BucketState => state.bucket;
@@ -12,6 +12,11 @@ export const getStatus = createSelector(
 export const getBucket = createSelector(
   [bucketSelector],
   (state: BucketState): BucketState["bucket"] => state.bucket
+);
+
+export const getCollaborators = createSelector(
+  [bucketSelector],
+  (state: BucketState): User[] => state.bucket?.collaborators.items ?? []
 );
 
 export const getBucketID = createSelector(

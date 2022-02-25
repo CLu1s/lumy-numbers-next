@@ -30,7 +30,7 @@ type Income @model {
   amount: Float!
   date: String!
   description: String
-  bucketID: ID! @index(name: "byBucket", sortKeyFields: ["id"])
+  bucketID: ID! @index(name: "byBucket", sortKeyFields: ["date"])
 }
 
 type Transaction @model {
