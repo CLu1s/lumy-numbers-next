@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useToast } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
 import { Box, Button, Input } from "@chakra-ui/react";
 import { Category } from "../../types";
@@ -14,6 +14,7 @@ import {
   MenuItemOption,
   MenuOptionGroup,
   MenuDivider,
+  Spacer
 } from "@chakra-ui/react";
 import icons, { iconKeys } from "../../utils/icons";
 
@@ -114,48 +115,54 @@ const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
           Ingresa el monto y la descripción del Ingreso
         </p>
 
-        <Box width="100%">
+        <Box width="100%" >
           <Box spacing={4} w="full">
             <Input
               placeholder="Nombre de la Categoría"
               defaultValue={name}
               onChange={(e) => setName(e.target.value)}
             />
-
-            <Menu>
-              <MenuButton as={Button}>{icons(icon as string)}</MenuButton>
-              <MenuList minWidth="240px">
-                <MenuOptionGroup
-                  defaultValue={toEdit?.icon}
-                  title="Icono"
-                  type="radio"
-                  onChange={(e) => setIcon(e as string)}
-                >
-                  {iconOptions}
-                </MenuOptionGroup>
-                <MenuDivider />
-              </MenuList>
-            </Menu>
-            <Menu>
-              <MenuButton as={Button} backgroundColor={color} color="white">
-                Color
-              </MenuButton>
-              <MenuList minWidth="240px">
-                <MenuOptionGroup
-                  defaultValue="asc"
-                  title="Color"
-                  type="radio"
-                  onChange={(e) => setColor(e as string)}
-                >
-                  {availableColors.map((color) => (
-                    <MenuItemOption key={color} value={color}>
-                      <Box width="full" height="18px" backgroundColor={color} />
-                    </MenuItemOption>
-                  ))}
-                </MenuOptionGroup>
-                <MenuDivider />
-              </MenuList>
-            </Menu>
+            <Flex  marginTop="4" >
+              <Menu>
+                <MenuButton as={Button}>{icons(icon as string)}</MenuButton>
+                <MenuList >
+                  <MenuOptionGroup
+                    defaultValue={toEdit?.icon}
+                    title="Icono"
+                    type="radio"
+                    onChange={(e) => setIcon(e as string)}
+                  >
+                    {iconOptions}
+                  </MenuOptionGroup>
+                  <MenuDivider />
+                </MenuList>
+              </Menu>
+              <Spacer />
+              <Menu>
+                <MenuButton as={Button} backgroundColor={color} color="white">
+                  Color
+                </MenuButton>
+                <MenuList minWidth="240px">
+                  <MenuOptionGroup
+                    defaultValue="asc"
+                    title="Color"
+                    type="radio"
+                    onChange={(e) => setColor(e as string)}
+                  >
+                    {availableColors.map((color) => (
+                      <MenuItemOption key={color} value={color}>
+                        <Box
+                          width="full"
+                          height="18px"
+                          backgroundColor={color}
+                        />
+                      </MenuItemOption>
+                    ))}
+                  </MenuOptionGroup>
+                  <MenuDivider />
+                </MenuList>
+              </Menu>
+            </Flex>
           </Box>
         </Box>
       </Box>
