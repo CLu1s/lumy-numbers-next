@@ -1,5 +1,13 @@
-import React, { useReducer } from "react";
-import { Wrap, WrapItem, useToast, Center } from "@chakra-ui/react";
+import React, { useReducer, useState } from "react";
+import {
+  Wrap,
+  WrapItem,
+  useToast,
+  useDisclosure,
+  Text,
+  Flex,
+  Button,
+} from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories, getIncome } from "./selector";
 import _debounce from "lodash/debounce";
@@ -10,6 +18,7 @@ import { getStatus } from "./selector";
 import { Category } from "../../types";
 import Loading from "../../components/Loading";
 import { VscAdd } from "react-icons/vsc";
+import EditCategory from "./EditCategory";
 const sanitizer = (state: Category[]): Category[] => {
   return state.reduce((acc, cur) => {
     if (cur.id !== "rest") {
@@ -59,6 +68,9 @@ const BudgetCategories = () => {
   const categories = useSelector(getCategories);
   const income = useSelector(getIncome);
   const [state, setState] = useReducer(reducer, categories);
+  const [elementToEdit, setElementToEdit] = useState<any>(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const { status } = useSelector(getStatus);
   const toast = useToast();
 
@@ -110,41 +122,62 @@ const BudgetCategories = () => {
   );
 
   return (
-    <Screen title="Distribución del Presupuesto">
-      {status !== "idle" ? (
-        <Wrap>
-          {state.map((item: Category) => (
-            <WrapItem key={item.id} width="full" maxW="365px">
-              <StatCard
-                {...item}
-                number={(item.percentage / 100) * income}
-                slider={item.id !== "rest"}
-                progress={item.percentage}
-                key={item.id}
-                onChange={(e) =>
-                  setState({
-                    type: "update",
-                    payload: { percentage: e, id: item.id },
-                  })
-                }
-                onChangeEnd={(e) =>
-                  debounceSliderChange(e, item.id, item.percentage)
-                }
-              />
+    <>
+      <EditCategory isOpen={isOpen} onClose={onClose} toEdit={elementToEdit} />
+
+      <Screen title="Distribución del Presupuesto">
+        {status !== "idle" ? (
+          <Wrap>
+            {state.map((item: Category) => (
+              <WrapItem key={item.id} width="full" maxW="365px">
+                <StatCard
+                  {...item}
+                  editable
+                  onEdit={() => {
+                    setElementToEdit(item);
+                    onOpen();
+                  }}
+                  number={(item.percentage / 100) * income}
+                  slider={item.id !== "rest"}
+                  progress={item.percentage}
+                  key={item.id}
+                  onChange={(e) =>
+                    setState({
+                      type: "update",
+                      payload: { percentage: e, id: item.id },
+                    })
+                  }
+                  onChangeEnd={(e) =>
+                    debounceSliderChange(e, item.id, item.percentage)
+                  }
+                />
+              </WrapItem>
+            ))}
+            <WrapItem width="full" maxW="365px" minH="123px">
+              <Screen>
+                <Button
+                  w="full"
+                  h="90px"
+                  color="gray.400"
+                  colorScheme="whiteAlpha"
+                  onClick={() => {
+                    setElementToEdit(null);
+                    onOpen();
+                  }}
+                >
+                  <Flex direction="column" align="center" justify="center">
+                    <VscAdd />
+                    <Text>Nuevo</Text>
+                  </Flex>
+                </Button>
+              </Screen>
             </WrapItem>
-          ))}
-          {/* <WrapItem width="full" maxW="365px" minH="123px">
-            <Screen>
-              <Center h="full" w="full" color="gray.400">
-                <VscAdd />
-              </Center>
-            </Screen>
-          </WrapItem> */}
-        </Wrap>
-      ) : (
-        <Loading />
-      )}
-    </Screen>
+          </Wrap>
+        ) : (
+          <Loading />
+        )}
+      </Screen>
+    </>
   );
 };
 

@@ -16,12 +16,12 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { money } from "../../utils";
-import { getBucket } from "../bucket/selector";
+import { getStatus } from "../bucket/selector";
 import NewIncome from "./NewIncome";
 
 const IncomeCard = () => {
   const dispatch = useDispatch();
-  const bucket = useSelector(getBucket);
+  const status = useSelector(getStatus);
   const income = useSelector(getIncome);
   const listOfIncomes = useSelector(getListOfIncomes);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -59,6 +59,7 @@ const IncomeCard = () => {
         title=" Ingresos del Mes"
         statLabel={date(new Date(), "LLLL-YYY")}
         amount={income}
+        loading={status.status !== "succeeded"}
       >
         <HeroStatBody>{list}</HeroStatBody>
         <HeroStatFooter>

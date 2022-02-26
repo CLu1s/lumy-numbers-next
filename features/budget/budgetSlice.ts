@@ -7,6 +7,7 @@ import sub from "date-fns/sub";
 import format from "date-fns/format";
 import {
   createIncome,
+  createCategory as createCategoryMutation,
   updateCategory as updateCategoryMutation,
   updateIncome as updateIncomeMutation,
 } from "../../src/graphql/mutations";
@@ -106,6 +107,20 @@ export const updateCategory = createAsyncThunk(
     );
   }
 );
+export const createCategory = createAsyncThunk(
+  "budget/createCategory",
+  async (input: Category) => {
+    const { id, ...rest } = input;
+    console.log(rest);
+    try {
+      return await API.graphql(
+        graphqlOperation(createCategoryMutation, { input:rest })
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
 
 export const fetchCategories = createAsyncThunk(
   "budget/fetchCategories",
@@ -202,6 +217,18 @@ const budgetSlice = createSlice({
       state.error = action.payload;
     },
     [updateCategory.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [createCategory.fulfilled.type]: (state, action) => {
+      const { id, ...rest } = action.payload.data.createCategory;
+      state.categories.push({ id, ...rest });
+      state.status = LoadingStates.SUCCEEDED;
+    },
+    [createCategory.rejected.type]: (state, action) => {
+      state.status = LoadingStates.FAILED;
+      state.error = action.payload;
+    },
+    [createCategory.pending.type]: (state) => {
       state.status = LoadingStates.LOADING;
     },
     [updateIcome.fulfilled.type]: (state, action) => {

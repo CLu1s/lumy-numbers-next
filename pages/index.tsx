@@ -22,7 +22,7 @@ function Home({ user }) {
         <Stack spacing={8}>
           <BudgetCard />
           <Wrap spacing={8}>
-            <WrapItem w={{ base: "100%", lg: "45%" }}>
+            <WrapItem w={{ base: "100%", xl: "45%" }}>
               <Categories />
             </WrapItem>
             <WrapItem w={{ base: "100%", xl: "45%" }}>

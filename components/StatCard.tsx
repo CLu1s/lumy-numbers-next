@@ -10,9 +10,11 @@ import {
   SliderTrack,
   SliderFilledTrack,
   SliderThumb,
+  Button,
 } from "@chakra-ui/react";
 import Screen from "./Screen";
 import { money, icons } from "../utils";
+import { FiEdit } from "react-icons/fi";
 
 type Props = {
   color: string;
@@ -22,7 +24,9 @@ type Props = {
   name: string;
   onChange?: (e: number) => void;
   onChangeEnd?: (e: number) => void;
+  onEdit?: (e: any) => void;
   slider?: boolean;
+  editable?: boolean;
 };
 
 const StatCard = ({
@@ -32,8 +36,10 @@ const StatCard = ({
   number,
   progress,
   slider,
+  editable,
   onChange,
   onChangeEnd,
+  onEdit,
 }: Props) => {
   const loading = false;
   return (
@@ -57,8 +63,21 @@ const StatCard = ({
             {money(number)}
           </StatNumber>
         </Stat>
+        {editable && (
+          <Button
+            float="right"
+            padding="0"
+            // marginRight="4"
+            bg="white"
+            onClick={onEdit}
+          >
+            <FiEdit />
+          </Button>
+        )}
         <CircularProgress value={progress > 0 ? progress : 0} color={color}>
-          <CircularProgressLabel>{progress > 0 ? progress : 0}%</CircularProgressLabel>
+          <CircularProgressLabel>
+            {progress > 0 ? progress : 0}%
+          </CircularProgressLabel>
         </CircularProgress>
       </HStack>
       {slider && (
