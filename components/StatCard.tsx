@@ -59,7 +59,7 @@ const StatCard = ({
           <StatLabel>{name}</StatLabel>
           <StatNumber
             style={{ width: "100%", minWidth: "130px" }}
-            color={`${number < 1 ? "red.600" : "black"}`}
+            color={`${number < 0 ? "red.600" : "black"}`}
           >
             {money(number)}
           </StatNumber>

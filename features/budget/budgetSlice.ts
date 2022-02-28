@@ -5,6 +5,7 @@ import startOfMonth from "date-fns/startOfMonth";
 import endOfMonth from "date-fns/endOfMonth";
 import sub from "date-fns/sub";
 import format from "date-fns/format";
+import add from "date-fns/add";
 import {
   createIncome,
   createCategory as createCategoryMutation,
@@ -70,7 +71,7 @@ export const fetchIncomes = createAsyncThunk(
   async (bucketId: string) => {
     const actualDate = new Date();
     const firstDate = startOfMonth(actualDate);
-    const lastDate = endOfMonth(actualDate);
+    const lastDate = add(endOfMonth(actualDate), { days: 1 });
     const init = format(firstDate, "yyyy-MM-dd");
     const end = format(lastDate, "yyyy-MM-dd");
     let newIncomes = [];
@@ -114,7 +115,7 @@ export const createCategory = createAsyncThunk(
     console.log(rest);
     try {
       return await API.graphql(
-        graphqlOperation(createCategoryMutation, { input:rest })
+        graphqlOperation(createCategoryMutation, { input: rest })
       );
     } catch (e) {
       console.log(e);

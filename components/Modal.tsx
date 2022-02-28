@@ -39,10 +39,10 @@ export default function ModalComponent({
         <ModalBody>{children}</ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
+          <Button variant="ghost"  mr={3} onClick={onClose}>
             Cancelar
           </Button>
-          <Button variant="ghost" onClick={onSubmit}>
+          <Button colorScheme="blue" onClick={onSubmit}>
             {onSubmitButtonText ? onSubmitButtonText : "Guardar"}
           </Button>
         </ModalFooter>
