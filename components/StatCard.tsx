@@ -44,7 +44,8 @@ const StatCard = ({
   const loading = false;
   return (
     <Screen>
-      <HStack spacing={4}>
+      
+      <HStack spacing={2}>
         <Square
           size="48px"
           bg={color}
@@ -57,12 +58,18 @@ const StatCard = ({
         <Stat>
           <StatLabel>{name}</StatLabel>
           <StatNumber
-            style={{ width: "100%", minWidth: "135px" }}
+            style={{ width: "100%", minWidth: "130px" }}
             color={`${number < 1 ? "red.600" : "black"}`}
           >
             {money(number)}
           </StatNumber>
         </Stat>
+        
+        <CircularProgress value={progress > 0 ? progress : 0} color={color}>
+          <CircularProgressLabel>
+            {progress > 0 ? progress : 0}%
+          </CircularProgressLabel>
+        </CircularProgress>
         {editable && (
           <Button
             float="right"
@@ -74,24 +81,20 @@ const StatCard = ({
             <FiEdit />
           </Button>
         )}
-        <CircularProgress value={progress > 0 ? progress : 0} color={color}>
-          <CircularProgressLabel>
-            {progress > 0 ? progress : 0}%
-          </CircularProgressLabel>
-        </CircularProgress>
       </HStack>
       {slider && (
         <Slider
+        marginTop={4}
           aria-label="slider-ex-2"
           colorScheme={color.split(".")[0]}
           defaultValue={progress}
           onChange={(e) => onChange(e)}
           onChangeEnd={(e) => onChangeEnd(e)}
         >
-          <SliderTrack>
+          <SliderTrack >
             <SliderFilledTrack />
           </SliderTrack>
-          <SliderThumb />
+          <SliderThumb  boxSize={6} />
         </Slider>
       )}
     </Screen>
