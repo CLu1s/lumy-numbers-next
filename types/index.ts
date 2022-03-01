@@ -67,6 +67,7 @@ export type BucketState = {
   status: LoadingStatus;
   bucket: Bucket | null;
   error: string | null;
+  lastFetched: Date | null;
 };
 
 export type Category = {

@@ -42,6 +42,7 @@ const initialState: BucketState = {
     error: null,
   },
   error: null,
+  lastFetched: null,
 };
 
 export const fetchBucket = createAsyncThunk(
@@ -122,7 +123,11 @@ export const createBucket = createAsyncThunk(
 const bucketSlice = createSlice({
   name: "bucket",
   initialState,
-  reducers: {},
+  reducers: {
+    setLastFetched: (state, action) => {
+      state.lastFetched = action.payload;
+    }
+  },
   extraReducers: {
     [fetchBucket.pending.type]: (state) => {
       state.status.status = LoadingStates.LOADING;
@@ -151,5 +156,5 @@ const bucketSlice = createSlice({
   },
 });
 
-// export const { addCategory, updateCategory } = bucketSlice.actions;
+export const { setLastFetched } = bucketSlice.actions;
 export default bucketSlice.reducer;

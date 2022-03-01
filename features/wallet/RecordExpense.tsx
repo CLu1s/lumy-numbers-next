@@ -50,6 +50,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
         updateTransaction({
           ...toEdit,
           ...data,
+          categoryID: selected,
           date: date?.toISOString(),
         })
       );

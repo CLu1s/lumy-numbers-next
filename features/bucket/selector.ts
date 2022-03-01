@@ -28,3 +28,8 @@ export const getNanoID = createSelector(
   [bucketSelector],
   (state: BucketState): string => state.bucket?.nanoid
 );
+
+export const getLastFetched = createSelector(
+  [bucketSelector],
+  (state: BucketState): Date | null => state.lastFetched
+);

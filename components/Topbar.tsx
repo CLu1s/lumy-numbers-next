@@ -33,7 +33,7 @@ export default function Topbar() {
           </Button>
         </Stack>
         <Stack isInline spacing={4}>
-          <Avatar
+          {/* <Avatar
             size="md"
             bg="transparent"
             icon={<RiNotification2Line fontSize="2rem"  />}
@@ -43,7 +43,7 @@ export default function Topbar() {
               bg="tomato"
               boxSize="1.25em"
             />
-          </Avatar>
+          </Avatar> */}
           <Avatar
             size="md"
             bg="purple.500"

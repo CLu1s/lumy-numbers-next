@@ -13,7 +13,7 @@ import { getCategories, getIncome } from "./selector";
 import _debounce from "lodash/debounce";
 import StatCard from "../../components/StatCard";
 import Screen from "../../components/Screen";
-import { updateCategory } from "./budgetSlice";
+import { updateCategory, updateCategoryTemp } from "./budgetSlice";
 import { getStatus } from "./selector";
 import { Category } from "../../types";
 import Loading from "../../components/Loading";
@@ -28,46 +28,11 @@ const sanitizer = (state: Category[]): Category[] => {
   }, []);
 };
 
-function reducer(state: Category[], action) {
-  if (action.type !== "update") {
-    return action.payload;
-  }
-
-  const { percentage, id } = action.payload;
-  const filterState = sanitizer(state);
-  const newState = filterState.map((item) =>
-    item.id === id ? { ...item, percentage } : item
-  );
-  const rest = newState.reduce((acc, item) => acc + item.percentage, 0);
-  if (rest > 100) {
-    return state;
-  }
-  if (rest < 100) {
-    const index = newState.findIndex((item) => item.id === "rest");
-
-    if (index !== -1) {
-      newState[index].percentage = 100 - rest;
-    } else {
-      newState.push({
-        id: "rest",
-        name: "Resto",
-        percentage: 100 - rest,
-        color: "yellow.500",
-        icon: "AiOutlineWarning",
-        bucketID: "rest",
-        updatedAt: new Date().toISOString(),
-        createdAt: new Date().toDateString(),
-      });
-    }
-  }
-  return newState;
-}
-
 const BudgetCategories = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
   const income = useSelector(getIncome);
-  const [state, setState] = useReducer(reducer, categories);
+  const [state, setState] = useState(categories);
   const [elementToEdit, setElementToEdit] = useState<any>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -75,10 +40,8 @@ const BudgetCategories = () => {
   const toast = useToast();
 
   React.useEffect(() => {
-    if (state.length === 0) {
-      setState({ type: "populate", payload: categories });
-    }
-  }, [categories, state.length]);
+    setState(categories);
+  }, [categories]);
 
   const manageSliderChange = (
     newPercentage: number,
@@ -86,7 +49,7 @@ const BudgetCategories = () => {
     percentage: number
   ) => {
     const category = categories.find((c) => c.id === id);
-    const filterState = sanitizer(state);
+    const filterState = sanitizer(categories);
     const rest = filterState.reduce((acc, item) => {
       if (item.id !== id) {
         return acc + item.percentage;
@@ -125,7 +88,7 @@ const BudgetCategories = () => {
     <>
       <EditCategory isOpen={isOpen} onClose={onClose} toEdit={elementToEdit} />
 
-      <Screen title="Distribución del Presupuesto">
+      <Screen title="Distribución del Presupuesto" >
         {status !== "idle" ? (
           <Wrap>
             {state.map((item: Category) => (
@@ -141,12 +104,13 @@ const BudgetCategories = () => {
                   slider={item.id !== "rest"}
                   progress={item.percentage}
                   key={item.id}
-                  onChange={(e) =>
-                    setState({
-                      type: "update",
-                      payload: { percentage: e, id: item.id },
-                    })
-                  }
+                  onChange={(e) => {
+                    const index = categories.findIndex((c) => c.id === item.id);
+                    const newState = [...categories];
+                    newState[index] = { ...item, percentage: e };
+                    setState(newState);
+                    dispatch(updateCategoryTemp(newState[index]));
+                  }}
                   onChangeEnd={(e) =>
                     debounceSliderChange(e, item.id, item.percentage)
                   }

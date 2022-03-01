@@ -164,6 +164,17 @@ const budgetSlice = createSlice({
   name: "budget",
   initialState,
   reducers: {
+    updateCategoryTemp: (state, action: PayloadAction<Category>) => {
+      const { id, ...rest } = action.payload;
+      const category = state.categories.find((c) => c.id === id);
+      if (category) {
+        category.name = rest.name;
+        category.icon = rest.icon;
+        category.color = rest.color;
+        category.percentage = rest.percentage;
+      }
+
+    },
     addCategory: (
       state,
       action: PayloadAction<{
@@ -223,6 +234,7 @@ const budgetSlice = createSlice({
       const { id, ...rest } = action.payload.data.updateCategory;
       const index = state.categories.findIndex((item) => item.id === id);
       state.categories[index] = { id, ...state.categories[id], ...rest };
+      state.status = LoadingStates.SUCCEEDED;
     },
     [updateCategory.rejected.type]: (state, action) => {
       state.status = LoadingStates.FAILED;
@@ -272,5 +284,5 @@ const budgetSlice = createSlice({
   },
 });
 
-export const { addCategory } = budgetSlice.actions;
+export const { addCategory,updateCategoryTemp } = budgetSlice.actions;
 export default budgetSlice.reducer;

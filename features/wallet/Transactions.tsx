@@ -9,6 +9,7 @@ import {
   useDisclosure,
   Button,
   Box,
+  HStack,
 } from "@chakra-ui/react";
 import _orderBy from "lodash/orderBy";
 import { money, date } from "../../utils";
@@ -62,7 +63,7 @@ export default function DataTable() {
           <Tag size="md" variant="solid" bgColor={item.categoryColor}>
             {item.categoryName}
           </Tag>
-          <Box>
+          <HStack>
             <Button bg="white" onClick={() => manageOpen(item)}>
               <FiEdit />
             </Button>
@@ -76,7 +77,7 @@ export default function DataTable() {
             >
               <FiTrash2 />
             </Button>
-          </Box>
+          </HStack>
         </HeaderBottom>
       </Header>
 
