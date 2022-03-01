@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
 import { addNewTransaction, updateTransaction } from "./walletSlice";
 import { getStatus } from "./selector";
-import { getBucket,getBucketID } from "../bucket/selector";
+import { getBucketID } from "../bucket/selector";
 import parseISO from "date-fns/parseISO";
 
 registerLocale("es", esLocale);
@@ -28,10 +28,9 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const toast = useToast();
   const [selected, setSelected] = useState<any>();
   const [date, setDate] = useState<Date | null>(
-    toEdit ? parseISO(toEdit.date) : new Date()
+    toEdit ? new Date(parseISO(toEdit.date)) : new Date()
   );
   const categories = useSelector(getCategories);
-  const status = useSelector(getStatus);
   const bucketID = useSelector(getBucketID);
   const {
     register,

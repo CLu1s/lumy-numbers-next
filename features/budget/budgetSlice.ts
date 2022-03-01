@@ -11,6 +11,7 @@ import {
   createCategory as createCategoryMutation,
   updateCategory as updateCategoryMutation,
   updateIncome as updateIncomeMutation,
+  deleteIncome as deleteIncomeMutation,
 } from "../../src/graphql/mutations";
 
 const initialState: BudgetState = {
@@ -95,6 +96,16 @@ export const fetchIncomes = createAsyncThunk(
       newIncomes = await Promise.all(promises);
     }
     return currentIcomes || newIncomes;
+  }
+);
+
+export const deleteIncome = createAsyncThunk(
+  "budget/deleteIncome",
+  async (id: string) => {
+    const response = await API.graphql(
+      graphqlOperation(deleteIncomeMutation, { input: { id } })
+    );
+    return response;
   }
 );
 
@@ -243,6 +254,19 @@ const budgetSlice = createSlice({
       state.error = action.error?.message || "Error al actualizar el ingreso";
     },
     [updateIcome.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [deleteIncome.fulfilled.type]: (state, action) => {
+      const index = state.incomes.findIndex(
+        (item) => item.id === action.payload.data.deleteIncome.id
+      );
+      state.incomes.splice(index, 1);
+    },
+    [deleteIncome.rejected.type]: (state, action) => {
+      state.status = LoadingStates.FAILED;
+      state.error = "Error deleting income";
+    },
+    [deleteIncome.pending.type]: (state) => {
       state.status = LoadingStates.LOADING;
     },
   },

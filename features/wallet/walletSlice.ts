@@ -1,7 +1,14 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
-import { createTransaction,updateTransaction as updateTransactionMutation } from "../../src/graphql/mutations";
-import { getBucket } from "../../src/graphql/queries";
+import {
+  createTransaction,
+  updateTransaction as updateTransactionMutation,
+  deleteTransaction as deleteTransactionMutation,
+} from "../../src/graphql/mutations";
+import startOfMonth from "date-fns/startOfMonth";
+import endOfMonth from "date-fns/endOfMonth";
+import format from "date-fns/format";
+import add from "date-fns/add";
 import { WalletState, LoadingStates } from "../../types";
 const initialState: WalletState = {
   transactions: [],
@@ -9,11 +16,43 @@ const initialState: WalletState = {
   error: null,
 };
 
+const localFetchTransactions = async (id: string, init: string, end: string) =>
+  API.graphql(
+    graphqlOperation(
+      `query GetBucket($id: ID!,$init: String!, $end: String!) {
+          getBucket(id: $id) {
+            transactionsByDate(date: {
+              between: [ $init, $end ]
+            }) {
+              items {
+                id
+                bucketID
+                amount
+                categoryID
+                categoryName
+                categoryColor
+                date
+                description
+                createdAt
+                updatedAt
+              }
+              nextToken
+          }
+        }
+      }`,
+      { id, init, end }
+    )
+  );
+
 export const fetchTransactions = createAsyncThunk(
   "wallet/fetchTransactions",
-  async (bucketID: String) => {
-    const response = await API.graphql(graphqlOperation(getBucket, { id: bucketID
-    }));
+  async (bucketID: string) => {
+    const actualDate = new Date();
+    const firstDate = startOfMonth(actualDate);
+    const lastDate = add(endOfMonth(actualDate), { days: 1 });
+    const init = format(firstDate, "yyyy-MM-dd");
+    const end = format(lastDate, "yyyy-MM-dd");
+    const response = localFetchTransactions(bucketID, init, end);
     return response;
   }
 );
@@ -31,15 +70,25 @@ export const addNewTransaction = createAsyncThunk(
 export const updateTransaction = createAsyncThunk(
   "wallet/updateTransaction",
   async (transaction: WalletState["transactions"][0]) => {
-    try{
+    try {
       const { createdAt, updatedAt, ...input } = transaction;
       const response = await API.graphql(
         graphqlOperation(updateTransactionMutation, { input })
-        );
-        return response;
-      }catch(error){
-        console.log(error);
-      }
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
+
+export const deleteTransaction = createAsyncThunk(
+  "wallet/deleteTransaction",
+  async (id: string) => {
+    const response = await API.graphql(
+      graphqlOperation(deleteTransactionMutation, { input: { id } })
+    );
+    return response;
   }
 );
 
@@ -70,7 +119,9 @@ const walletSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [fetchTransactions.fulfilled.type]: (state, action) => {
-      state.transactions = action.payload.data.getBucket.transactionsByDate.items;
+      console.log(action);
+      state.transactions =
+        action.payload.data.getBucket.transactionsByDate.items;
       state.status = LoadingStates.SUCCEEDED;
     },
     [fetchTransactions.rejected.type]: (state, action) => {
@@ -102,7 +153,17 @@ const walletSlice = createSlice({
     [updateTransaction.rejected.type]: (state, action) => {
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
-    }
+    },
+    [deleteTransaction.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [deleteTransaction.fulfilled.type]: (state, action) => {
+      state.transactions = state.transactions.filter(
+        (transaction) =>
+          transaction.id !== action.payload.data.deleteTransaction.id
+      );
+      state.status = LoadingStates.SUCCEEDED;
+    },
   },
 });
 

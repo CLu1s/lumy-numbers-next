@@ -27,7 +27,7 @@ const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
   const toast = useToast();
   const [selected, setSelected] = useState<any>();
   const [date, setDate] = useState<Date | null>(
-    toEdit ? parseISO(toEdit.date) : new Date()
+    toEdit ? new Date(parseISO(toEdit.date)) : new Date()
   );
   const categories = useSelector(getCategories);
   const status = useSelector(getStatus);
