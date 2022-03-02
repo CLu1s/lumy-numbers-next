@@ -10,18 +10,13 @@ import {
   Button,
   Box,
   HStack,
+  VStack,
+  Divider,
 } from "@chakra-ui/react";
 import _orderBy from "lodash/orderBy";
-import { money, date } from "../../utils";
+import { money, date, icons } from "../../utils";
 import { useSelector, useDispatch } from "react-redux";
-import { getTransactionsFormatted, getStatus } from "./selector";
-import Table, {
-  Header,
-  HeaderTop,
-  HeaderBottom,
-  Body,
-  Cell,
-} from "../../components/Table";
+import { getLastTransactions, getStatus } from "./selector";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { Transaction } from "../../types";
 import Loading from "../../components/Loading";
@@ -33,8 +28,8 @@ enum Order {
   DESC = "desc",
 }
 
-export default function DataTable() {
-  const transactions = useSelector(getTransactionsFormatted);
+export default function LastsTransactions() {
+  const transactions = useSelector(getLastTransactions);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -56,53 +51,26 @@ export default function DataTable() {
   };
 
   const renderCells = sortedTransactions.map((item) => (
-    <Cell key={item.id}>
-      <Header>
-        <HeaderTop>
-          <Text fontWeight="bold">{money(item.amount)}</Text>
-        </HeaderTop>
-        <HeaderBottom>
-          <Tag size="md" variant="solid" bgColor={item.category?.color}>
-            {item.category?.name}
-          </Tag>
-          <HStack>
-            <Button bg="white" onClick={() => manageOpen(item)}>
-              <FiEdit />
-            </Button>
-            <Button
-              bg="white"
-              onClick={() => {
-                setDeleteId(item.id);
-                setAlertDialogIsOpen(true);
-              }}
-              color="red.500"
-            >
-              <FiTrash2 />
-            </Button>
-          </HStack>
-        </HeaderBottom>
-      </Header>
-
-      <Body>
+    <HStack key={item.id} spacing="4" alignItems="flex-start">
+      <VStack color={item.category?.color} fontSize="2xl" spacing={0} >
+        {icons(item.category?.icon)}
+        <Box height="12" width="2px" backgroundColor="gray.200" />
+      </VStack>
+      <Stack spacing={0}>
+        <Text fontWeight="bold">{`${money(item.amount)}, ${
+          item.description
+        }`}</Text>
         <Text textColor="gray.500" textTransform="capitalize">
           {date(new Date(item.date), "dd - LLLL")}
         </Text>
-        <Text fontWeight="medium">{item.description}</Text>
-        {/* <Text fontWeight="medium">American Express</Text> */}
-      </Body>
-    </Cell>
+      </Stack>
+    </HStack>
   ));
 
   if (status === "idle") {
     return <Loading />;
   }
-  const changeOrder = (value: Order) => {
-    setOrder(value);
-  };
 
-  const changeSort = (value: string) => {
-    setSort(value);
-  };
   const manageOnClose = () => {
     elementToEdit && setElementToEdit(null);
     onClose();
@@ -128,31 +96,17 @@ export default function DataTable() {
         onClose={manageOnClose}
         toEdit={elementToEdit}
       />
-      <Stack spacing={8}>
-        <Stack spacing={4}>
-          <Select onChange={(e) => changeSort(e.target.value)}>
-            <option value="date">Fecha</option>
-            <option value="categoryName">Categoría</option>
 
-            <option value="description">Descripcion</option>
-            <option value="amount">Monto</option>
-          </Select>
-          <Select onChange={(e) => changeOrder(e.target.value as Order)}>
-            <option value={Order.DESC}>Descendente</option>
-            <option value={Order.ASC}>Ascendente</option>
-          </Select>
-        </Stack>
-        <Table>
-          {renderCells.length > 0 ? (
-            renderCells
-          ) : (
-            <Center>
-              <Heading as="h6" size="xs" textColor="gray.400">
-                No hay registros
-              </Heading>
-            </Center>
-          )}
-        </Table>
+      <Stack spacing={2}>
+        {renderCells.length > 0 ? (
+          renderCells
+        ) : (
+          <Center>
+            <Heading as="h6" size="xs" textColor="gray.400">
+              No hay registros
+            </Heading>
+          </Center>
+        )}
       </Stack>
     </>
   );

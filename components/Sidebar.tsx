@@ -24,7 +24,7 @@ const Sidebsar = () => {
       width={"260px"}
       paddingTop="2"
       paddingx="4"
-      display={["none", "block"]}
+      display={{ base: "none", xl: "block" }}
     >
       <VStack spacing={8} width={"100%"}>
         <Center height="full">

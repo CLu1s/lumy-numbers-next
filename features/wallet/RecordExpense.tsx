@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useToast } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack } from "@chakra-ui/react";
-import { SingleTransaction } from "../../types";
+import { Transaction } from "../../types";
 import Select from "../../components/Select";
 import esLocale from "date-fns/locale/es";
 import DatePicker, { registerLocale } from "react-datepicker";
@@ -20,7 +20,7 @@ registerLocale("es", esLocale);
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  toEdit?: SingleTransaction;
+  toEdit?: Transaction;
 };
 
 const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {

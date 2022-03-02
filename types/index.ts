@@ -26,12 +26,12 @@ export type SingleTransaction = {
 
 export type Transaction = {
   id: string;
+  bucketID: string;
   amount: number;
   categoryID: string;
-  categoryName?: string;
-  categoryColor?: string;
   date: string;
   description: string;
+  category?: Category;
   createdAt?: string;
   updatedAt?: string;
 };

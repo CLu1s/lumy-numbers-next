@@ -6,7 +6,7 @@ import Categories from "../features/wallet/Categories";
 import { Box, Stack, Wrap, WrapItem } from "@chakra-ui/react";
 import CheckcIncomes from "../features/budget/CheckIncomes";
 import Screen from "../components/Screen";
-import Transactions from "../features/wallet/Transactions";
+import LastsTransactions from "../features/wallet/LastsTransactions";
 
 function Home({ user }) {
   return (
@@ -21,13 +21,13 @@ function Home({ user }) {
         <CheckcIncomes />
         <Stack spacing={8}>
           <BudgetCard />
-          <Wrap spacing={8}>
-            <WrapItem w={{ base: "100%", xl: "45%" }}>
+          <Wrap spacing={4}>
+            <WrapItem maxW={{ base: "100%", lg: "50%" }}>
               <Categories />
             </WrapItem>
-            <WrapItem w={{ base: "100%", xl: "45%" }}>
-              <Screen title="Transacciones">
-                <Transactions />
+            <WrapItem maxW={{ base: "100%", lg: "46%" }} w="100%">
+              <Screen title="Transacciones Recientes">
+                <LastsTransactions />
               </Screen>
             </WrapItem>
           </Wrap>

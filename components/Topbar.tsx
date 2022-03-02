@@ -27,7 +27,7 @@ export default function Topbar() {
             colorScheme="teal"
             variant="ghost"
             onClick={onOpen}
-            display={["block","none"]}
+            display={{ base: "block", xl: "none" }}
           >
             <RiMenuFill fontSize={"1.5rem"} />
           </Button>

@@ -2,6 +2,7 @@ import { createSelector } from "reselect";
 import { WalletState, BalancedCategory, Category } from "../../types";
 import { RootState } from "../../store/reducers";
 import { getCategories, getIncome } from "../budget/selector";
+import _orderBy from "lodash/orderBy";
 
 const walletSelector = (state: RootState): WalletState => state.wallet;
 
@@ -15,23 +16,38 @@ export const getStatus = createSelector(
   (state: WalletState): WalletState["status"] => state.status
 );
 
-export const getTransactionsFormatted = createSelector(
+const formatTransactions = (
+  transactions: WalletState["transactions"],
+  categories: Category[]
+) => {
+  return transactions.map((transaction: WalletState["transactions"][0]) => {
+    const category = categories.find(
+      (category: Category) => category.id === transaction.categoryID
+    );
+    return {
+      ...transaction,
+      category: category,
+    };
+  });
+};
+
+export const getLastTransactions = createSelector(
   [getTransactions, getCategories],
   (
     transactions: WalletState["transactions"],
     categories: Category[]
   ): WalletState["transactions"] => {
-    return transactions.map((transaction: WalletState["transactions"][0]) => {
-      const category = categories.find(
-        (category: Category) => category.id === transaction.categoryID
-      );
-      return {
-        ...transaction,
-        categoryName: category ? category.name : "",
-        categoryColor: category ? category.color : ""
-      };
-    });
+    const t = _orderBy(transactions, ["date"], ["desc"]);
+    return formatTransactions(t.slice(0, 6), categories);
   }
+);
+
+export const getTransactionsFormatted = createSelector(
+  [getTransactions, getCategories],
+  (
+    transactions: WalletState["transactions"],
+    categories: Category[]
+  ): WalletState["transactions"] => formatTransactions(transactions, categories)
 );
 
 export const getBalance = createSelector(

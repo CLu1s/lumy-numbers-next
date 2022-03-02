@@ -13,7 +13,7 @@ const Categories = () => {
       </Heading>
       <Wrap>
         {items.map((item) => (
-          <WrapItem minW="xs" width={["full", "xs"]} key={item.id}>
+          <WrapItem minW="xs" width={{base:"full", xl:"xs"}} key={item.id}>
             <StatCard number={item.balance} {...item} />
           </WrapItem>
         ))}
