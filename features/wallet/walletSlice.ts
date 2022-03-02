@@ -71,7 +71,7 @@ export const updateTransaction = createAsyncThunk(
   "wallet/updateTransaction",
   async (transaction: WalletState["transactions"][0]) => {
     try {
-      const { createdAt, updatedAt, ...input } = transaction;
+      const { createdAt, updatedAt,category, ...input } = transaction;
       const response = await API.graphql(
         graphqlOperation(updateTransactionMutation, { input })
       );

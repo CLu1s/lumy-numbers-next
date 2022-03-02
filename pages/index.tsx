@@ -1,9 +1,10 @@
 import Head from "next/head";
+import Link from 'next/link'
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import BudgetCard from "../features/wallet/BudgetCard";
 import Layout from "../components/Layout";
 import Categories from "../features/wallet/Categories";
-import { Box, Stack, Wrap, WrapItem } from "@chakra-ui/react";
+import { Stack, Wrap, WrapItem, Link as ChakraLink } from "@chakra-ui/react";
 import CheckcIncomes from "../features/budget/CheckIncomes";
 import Screen from "../components/Screen";
 import LastsTransactions from "../features/wallet/LastsTransactions";
@@ -28,6 +29,11 @@ function Home({ user }) {
             <WrapItem maxW={{ base: "100%", lg: "46%" }} w="100%">
               <Screen title="Transacciones Recientes">
                 <LastsTransactions />
+                <Link href="/transacciones" passHref>
+                  <ChakraLink color="teal.500">
+                    Ver todas las transacciones
+                  </ChakraLink>
+                </Link>
               </Screen>
             </WrapItem>
           </Wrap>
