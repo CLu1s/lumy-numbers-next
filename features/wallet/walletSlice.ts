@@ -95,25 +95,7 @@ export const deleteTransaction = createAsyncThunk(
 const walletSlice = createSlice({
   name: "wallet",
   initialState,
-  reducers: {
-    addTransaction: (
-      state,
-      action: PayloadAction<{
-        amount: string;
-        description: string;
-        categoryID: string;
-      }>
-    ) => {
-      const { amount, description, categoryID } = action.payload;
-      state.transactions.push({
-        id: (Math.random() * 1000).toString(),
-        amount: parseFloat(amount),
-        description,
-        categoryID: categoryID,
-        date: new Date().toISOString(),
-      });
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchTransactions.pending.type]: (state) => {
       state.status = LoadingStates.LOADING;
@@ -167,5 +149,5 @@ const walletSlice = createSlice({
   },
 });
 
-export const { addTransaction } = walletSlice.actions;
+// export const { addTransaction } = walletSlice.actions;
 export default walletSlice.reducer;
