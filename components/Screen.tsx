@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
-import { Box, Stack, Heading } from "@chakra-ui/react";
+import { Box, Stack, Heading, Text } from "@chakra-ui/react";
 type props = {
   title?: string;
+  description?: string | React.ReactNode;
   children: React.ReactNode;
   className?: string;
 };
 
-const Screen = ({ title, children }: props) => {
+const Screen = ({ title, description, children }: props) => {
   return (
     <motion.div
       initial={{ x: -100 }}
@@ -29,9 +30,12 @@ const Screen = ({ title, children }: props) => {
       >
         <Stack spacing={6}>
           {title && (
-            <Heading as="h2" size="md" fontWeight="600">
-              {title}
-            </Heading>
+            <Box>
+              <Heading as="h2" size="md" fontWeight="600">
+                {title}
+              </Heading>
+              {description && <Text>{description}</Text>}
+            </Box>
           )}
           <Box>{children}</Box>
         </Stack>

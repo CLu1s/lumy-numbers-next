@@ -7,7 +7,7 @@ import Table, {
   HeaderBottom,
   Body,
   Cell,
-} from "../../components/Table";
+} from "../../components/TableCards";
 import money from "../../utils/money";
 import { getItems } from "./selector";
 

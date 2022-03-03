@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Heading,
   Text,
@@ -15,13 +15,14 @@ import _orderBy from "lodash/orderBy";
 import { money, date } from "../../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { getTransactionsFormatted, getStatus } from "./selector";
-import Table, {
+import TableCards, {
   Header,
   HeaderTop,
   HeaderBottom,
   Body,
   Cell,
-} from "../../components/Table";
+} from "../../components/TableCards";
+import Table from "../../components/Table";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { Transaction } from "../../types";
 import Loading from "../../components/Loading";
@@ -55,6 +56,60 @@ export default function DataTable() {
     onOpen();
   };
 
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: "Fecha",
+        accessor: "date",
+        Cell: ({ cell: { value } }) => (
+          <Text> {date(new Date(value), "dd - LLLL")}</Text>
+        ),
+      },
+
+      {
+        Header: "Descripción",
+        accessor: "description",
+      },
+      {
+        Header: "Categoría",
+        accessor: "category",
+        Cell: ({ cell: { value } }) => (
+          <Tag size="md" variant="solid" bgColor={value.color}>
+            {value ? value.name : "Sin categoría"}
+          </Tag>
+        ),
+      },
+      {
+        Header: "Monto",
+        accessor: "amount",
+        Cell: ({ cell: { value } }) => <Text>{money(value)}</Text>,
+      },
+      {
+        id: "edit",
+        accessor: (row) => row,
+        Cell: ({ cell: { value } }) => (
+          <HStack>
+            <Button bg="white" onClick={() => manageOpen(value)}>
+              <FiEdit />
+            </Button>
+            <Button
+              bg="white"
+              onClick={() => {
+                setDeleteId(value.id);
+                setAlertDialogIsOpen(true);
+              }}
+              color="red.500"
+            >
+              <FiTrash2 />
+            </Button>
+          </HStack>
+        ),
+      },
+    ],
+
+    []
+  );
+
   const renderCells = sortedTransactions.map((item) => (
     <Cell key={item.id}>
       <Header>
@@ -63,7 +118,7 @@ export default function DataTable() {
         </HeaderTop>
         <HeaderBottom>
           <Tag size="md" variant="solid" bgColor={item.category?.color}>
-            {item.category?.name}
+            {item.category?.name ? item.category?.name : "Sin categoría"}
           </Tag>
           <HStack>
             <Button bg="white" onClick={() => manageOpen(item)}>
@@ -129,7 +184,7 @@ export default function DataTable() {
         toEdit={elementToEdit}
       />
       <Stack spacing={8}>
-        <Stack spacing={4}>
+        <Stack spacing={4} display={{ base: "flex", lg: "none" }}>
           <Select onChange={(e) => changeSort(e.target.value)}>
             <option value="date">Fecha</option>
             <option value="categoryName">Categoría</option>
@@ -142,9 +197,14 @@ export default function DataTable() {
             <option value={Order.ASC}>Ascendente</option>
           </Select>
         </Stack>
-        <Table>
+        <TableCards>
           {renderCells.length > 0 ? (
-            renderCells
+            <>
+              <Box display={{ base: "none", lg: "block" }}>
+                <Table columns={columns} data={transactions} />
+              </Box>
+              <Box display={{ base: "block", lg: "none" }}>{renderCells}</Box>
+            </>
           ) : (
             <Center>
               <Heading as="h6" size="xs" textColor="gray.400">
@@ -152,7 +212,7 @@ export default function DataTable() {
               </Heading>
             </Center>
           )}
-        </Table>
+        </TableCards>
       </Stack>
     </>
   );

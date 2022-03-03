@@ -30,7 +30,7 @@ export const menuList: MenuItem[] = [
   },
   // {
   //   id: 4,
-  //   label: "Costos fijos",
+  //   label: "Mis Gastos fijos",
   //   path: "/costos-fijos",
   //   icon: <RiBook2Fill />,
   // },

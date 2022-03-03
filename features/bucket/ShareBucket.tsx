@@ -11,8 +11,12 @@ const ShareBucket = () => {
       <Stack spacing={6}>
         <Box>
           <Heading as="h6" size="sm">
-            Codigo del Contenedor:{" "}
+            Codigo del Contenedor
           </Heading>
+          <Text fontSize="sm">
+            Copia y comparte este código para añadir a un colaborador a este
+            contenedor
+          </Text>
           <Text fontSize="md" fontWeight="bold" color="purple.500">
             {nanoID}
           </Text>

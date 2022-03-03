@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^2.2.0",
+    "@chakra-ui/icons": "^1.1.7",
     "@chakra-ui/react": "^1.7.4",
     "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.7.1",

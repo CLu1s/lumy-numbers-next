@@ -1,4 +1,3 @@
-import { listIncomes } from "../src/graphql/queries";
 
 export enum LoadingStates {
   IDLE = "idle",

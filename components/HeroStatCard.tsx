@@ -4,8 +4,6 @@ import {
   StatNumber,
   StatHelpText,
   Box,
-  Heading,
-  Center,
 } from "@chakra-ui/react";
 import Screen from "./Screen";
 import Loading from "./Loading";
@@ -29,6 +27,7 @@ type Props = {
   helpText?: string;
   loading?: boolean;
   children?: React.ReactNode;
+  description?: string;
 };
 
 const HeroStatCard = ({
@@ -38,9 +37,10 @@ const HeroStatCard = ({
   helpText,
   children,
   loading,
+  description,
 }: Props) => {
   return (
-    <Screen title={title}>
+    <Screen title={title} description={description}>
       {!loading ? (
         <Stat>
           <StatLabel textTransform="capitalize">{statLabel}</StatLabel>
@@ -51,7 +51,9 @@ const HeroStatCard = ({
           >
             {money(amount)}
           </StatNumber>
-          <StatHelpText textTransform="capitalize">{helpText}</StatHelpText>
+          {helpText && (
+            <StatHelpText textTransform="capitalize">{helpText}</StatHelpText>
+          )}
         </Stat>
       ) : (
         <Loading />

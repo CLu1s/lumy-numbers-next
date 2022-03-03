@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from "react";
 import { useForm } from "react-hook-form";
-import { useToast } from "@chakra-ui/react";
+import { Heading, Text, useToast } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack } from "@chakra-ui/react";
 import { Transaction } from "../../types";
@@ -92,9 +92,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   return (
     <Modal {...config}>
       <VStack spacing={4}>
-        <p className="text-sm text-gray-500">
-          Ingresa el monto y la descripción del gasto
-        </p>
+        <Text>Introduce la cantidad y la descripción del gasto.</Text>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
             <VStack spacing={4} w="full">
@@ -119,7 +117,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
 
               <DatePicker
                 dateFormat="dd/MM/yyyy"
-                selected={ toEdit ? new Date(parseISO(toEdit.date)) : new Date()}
+                selected={toEdit ? new Date(parseISO(toEdit.date)) : new Date()}
                 onChange={(date) => setDate(date)}
                 locale="es"
                 customInput={<ExampleCustomInput />}

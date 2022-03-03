@@ -90,6 +90,7 @@ const IncomeCard = () => {
       />
       <HeroStatCard
         title=" Ingresos del Mes"
+        description="La suma de todos los ingresos registrados en este mes y los ingresos registrados hasta el momento."
         statLabel={date(new Date(), "LLLL-YYY")}
         amount={income}
         loading={status.status !== "succeeded"}

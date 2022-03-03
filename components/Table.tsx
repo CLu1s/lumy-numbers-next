@@ -1,57 +1,66 @@
-import {
-  Box,
-  VStack,
-  StackDivider,
-  Flex,
-  HStack,
-} from "@chakra-ui/react";
+import React from "react";
+import { Table, Thead, Tbody, Tr, Th, Td, chakra, Box } from "@chakra-ui/react";
+import { TriangleDownIcon, TriangleUpIcon } from "@chakra-ui/icons";
+import { useTable, useSortBy } from "react-table";
 
-export const HeaderTop = ({ children, ...props }) => (
-  <VStack spacing={1} align="stretch">
-    {children}
-  </VStack>
-);
-
-export const Body = ({ children }) => (
-  <Flex
-    justifyContent="center"
-    border="1px"
-    borderRadius="lg"
-    borderColor="gray.200"
-    padding={2}
-  >
-    <HStack spacing={6}>{children}</HStack>
-  </Flex>
-);
-
-export const HeaderBottom = ({ children, ...props }) => <HStack spacing={4}>{children}</HStack>;
-
-export const Header = ({ children }) => (
-  <Flex justifyContent="space-between">{children}</Flex>
-);
-
-export const Cell = ({
-  children,
-}: {
-  children: JSX.Element | JSX.Element[];
-}) => (
-  <Box width="full">
-    <VStack spacing={4} align="stretch" width="full">
-      {children}
-    </VStack>
-  </Box>
-);
-
-const Table = ({ children }) => {
-  return (
-    <VStack
-      divider={<StackDivider borderColor="gray.200" />}
-      spacing={4}
-      align="stretch"
-    >
-      {children}
-    </VStack>
-  );
+type Column = {
+  Header?: string;
+  accessor: string | ((row: any) => any);
+  Cell?: React.FC<{ cell: any }>;
+};
+type TableProps = {
+  columns: Column[];
+  data: any[];
 };
 
-export default Table;
+export default function TableRender({ columns, data }: TableProps) {
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable({ columns, data }, useSortBy);
+
+  return (
+    <Box borderWidth="thin" borderRadius="lg" padding="2">
+      <Table {...getTableProps()} variant="simple">
+        <Thead>
+          {headerGroups.map((headerGroup) => (
+            <Tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <Th
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  isNumeric={column.isNumeric}
+                >
+                  {column.render("Header")}
+                  <chakra.span pl="4">
+                    {column.isSorted ? (
+                      column.isSortedDesc ? (
+                        <TriangleDownIcon aria-label="sorted descending" />
+                      ) : (
+                        <TriangleUpIcon aria-label="sorted ascending" />
+                      )
+                    ) : null}
+                  </chakra.span>
+                </Th>
+              ))}
+            </Tr>
+          ))}
+        </Thead>
+        <Tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <Tr {...row.getRowProps()}>
+                {row.cells.map((cell) => (
+                  <Td
+                    {...cell.getCellProps()}
+                    isNumeric={cell.column.isNumeric}
+                  >
+                    {cell.render("Cell")}
+                  </Td>
+                ))}
+              </Tr>
+            );
+          })}
+        </Tbody>
+      </Table>
+    </Box>
+  );
+}

@@ -88,7 +88,22 @@ const BudgetCategories = () => {
     <>
       <EditCategory isOpen={isOpen} onClose={onClose} toEdit={elementToEdit} />
 
-      <Screen title="Distribución del Presupuesto" >
+      <Screen
+        title="Distribución del Presupuesto"
+        description={
+          <>
+            <Text>
+              El porcentage que no asignes se reflejara en una categoría
+              especial llamada Resto. Esta solo indica la cantidad que te hace
+              falta por asignar y no podras asignarle transacciones
+            </Text>
+            <Text>
+              La suma del total no puede ser mayor al 100%. Los porcentages se
+              actualizan con el maximo disponible
+            </Text>
+          </>
+        }
+      >
         {status !== "idle" ? (
           <Wrap>
             {state.map((item: Category) => (

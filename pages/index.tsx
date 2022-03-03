@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Link from 'next/link'
+import Link from "next/link";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import BudgetCard from "../features/wallet/BudgetCard";
 import Layout from "../components/Layout";
@@ -24,7 +24,12 @@ function Home({ user }) {
           <BudgetCard />
           <Wrap spacing={4}>
             <WrapItem maxW={{ base: "100%", lg: "50%" }}>
-              <Categories />
+              <Screen
+                title="Categorías"
+                description="Cada categoría muestra el total disponible en tu presupuesto con la cantidad y porcentaje que le queda."
+              >
+                <Categories />
+              </Screen>
             </WrapItem>
             <WrapItem maxW={{ base: "100%", lg: "46%" }} w="100%">
               <Screen title="Transacciones Recientes">
