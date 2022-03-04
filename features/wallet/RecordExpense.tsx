@@ -117,7 +117,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
 
               <DatePicker
                 dateFormat="dd/MM/yyyy"
-                selected={toEdit ? new Date(parseISO(toEdit.date)) : new Date()}
+                selected={date}
                 onChange={(date) => setDate(date)}
                 locale="es"
                 customInput={<ExampleCustomInput />}
