@@ -34,7 +34,12 @@ const Screen = ({ title, description, children }: props) => {
               <Heading as="h2" size="md" fontWeight="600">
                 {title}
               </Heading>
-              {description && <Text>{description}</Text>}
+              {description &&
+                (typeof description === "string" ? (
+                  <Text>{description}</Text>
+                ) : (
+                  description
+                ))}
             </Box>
           )}
           <Box>{children}</Box>

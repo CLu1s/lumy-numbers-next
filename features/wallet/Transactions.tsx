@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import {
   Heading,
   Text,
@@ -29,6 +29,8 @@ import Loading from "../../components/Loading";
 import RecordExpense from "./RecordExpense";
 import AlertDialog from "../../components/AlertDialog";
 import { deleteTransaction } from "./walletSlice";
+import TransactionMini from "../../components/TransactionMini";
+
 enum Order {
   ASC = "asc",
   DESC = "desc",
@@ -51,9 +53,14 @@ export default function DataTable() {
     setSortedTransactions(_orderBy(transactions, [sort], [order]));
   }, [transactions, sort, order]);
 
-  const manageOpen = (item: any) => {
+  const manageOpen = useCallback((item: any) => {
     setElementToEdit(item);
     onOpen();
+  }, [onOpen]);
+
+  const handleDelete = (id) => {
+    setDeleteId(id);
+    setAlertDialogIsOpen(true);
   };
 
   const columns = React.useMemo(
@@ -74,7 +81,7 @@ export default function DataTable() {
         Header: "Categoría",
         accessor: "category",
         Cell: ({ cell: { value } }) => (
-          <Tag size="md" variant="solid" bgColor={value.color}>
+          <Tag size="md" variant="solid" bgColor={value?.color ?? "gray.400"}>
             {value ? value.name : "Sin categoría"}
           </Tag>
         ),
@@ -94,10 +101,7 @@ export default function DataTable() {
             </Button>
             <Button
               bg="white"
-              onClick={() => {
-                setDeleteId(value.id);
-                setAlertDialogIsOpen(true);
-              }}
+              onClick={() => handleDelete(value.id)}
               color="red.500"
             >
               <FiTrash2 />
@@ -107,46 +111,8 @@ export default function DataTable() {
       },
     ],
 
-    []
+    [manageOpen]
   );
-
-  const renderCells = sortedTransactions.map((item) => (
-    <Cell key={item.id}>
-      <Header>
-        <HeaderTop>
-          <Text fontWeight="bold">{money(item.amount)}</Text>
-        </HeaderTop>
-        <HeaderBottom>
-          <Tag size="md" variant="solid" bgColor={item.category?.color}>
-            {item.category?.name ? item.category?.name : "Sin categoría"}
-          </Tag>
-          <HStack>
-            <Button bg="white" onClick={() => manageOpen(item)}>
-              <FiEdit />
-            </Button>
-            <Button
-              bg="white"
-              onClick={() => {
-                setDeleteId(item.id);
-                setAlertDialogIsOpen(true);
-              }}
-              color="red.500"
-            >
-              <FiTrash2 />
-            </Button>
-          </HStack>
-        </HeaderBottom>
-      </Header>
-
-      <Body>
-        <Text textColor="gray.500" textTransform="capitalize">
-          {date(new Date(item.date), "dd - LLLL")}
-        </Text>
-        <Text fontWeight="medium">{item.description}</Text>
-        {/* <Text fontWeight="medium">American Express</Text> */}
-      </Body>
-    </Cell>
-  ));
 
   if (status === "idle") {
     return <Loading />;
@@ -198,12 +164,21 @@ export default function DataTable() {
           </Select>
         </Stack>
         <TableCards>
-          {renderCells.length > 0 ? (
+          {sortedTransactions.length > 0 ? (
             <>
               <Box display={{ base: "none", lg: "block" }}>
                 <Table columns={columns} data={transactions} />
               </Box>
-              <Box display={{ base: "block", lg: "none" }}>{renderCells}</Box>
+              <Box display={{ base: "block", lg: "none" }}>
+                <TransactionMini
+                  transactions={sortedTransactions}
+                  editable
+                  onEdit={manageOpen}
+                  onDelete={(id) => {
+                    handleDelete(id);
+                  }}
+                />
+              </Box>
             </>
           ) : (
             <Center>
