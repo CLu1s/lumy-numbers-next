@@ -16,8 +16,8 @@ import { Transaction } from "../types";
 type Props = {
   transactions: Transaction[];
   editable?: boolean;
-  onEdit: (item: Transaction) => void;
-  onDelete: (id: string) => void;
+  onEdit?: (item: Transaction) => void;
+  onDelete?: (id: string) => void;
 };
 
 export default function TransactionMini({
