@@ -35,7 +35,7 @@ const formatTransactions = (
 const compareTransactions = (transactions: WalletState["transactions"]) => {
   const transactionsClone = [...transactions];
     return transactionsClone.sort((a, b) => {
-      return compareDates( new Date(b.date),new Date(a.date));
+      return compareDates( new Date(a.date),new Date(b.date));
     });
 };
 
@@ -46,7 +46,7 @@ export const getLastTransactions = createSelector(
     categories: Category[]
   ): WalletState["transactions"] => {
     const t = compareTransactions(transactions);
-    return formatTransactions(t.slice(0, 6), categories);
+    return formatTransactions(t.reverse().slice(0, 6), categories);
   }
 );
 

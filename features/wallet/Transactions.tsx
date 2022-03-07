@@ -186,7 +186,7 @@ export default function DataTable() {
           {sortedTransactions.length > 0 ? (
             <>
               <Box display={{ base: "none", lg: "block" }}>
-                <Table columns={columns} data={transactions} />
+                <Table columns={columns} data={sortedTransactions} />
               </Box>
               <Box display={{ base: "block", lg: "none" }}>
                 <TransactionMini
