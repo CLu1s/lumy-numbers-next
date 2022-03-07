@@ -3,6 +3,7 @@ import { WalletState, BalancedCategory, Category } from "../../types";
 import { RootState } from "../../store/reducers";
 import { getCategories, getIncome } from "../budget/selector";
 import _orderBy from "lodash/orderBy";
+import { compareDates } from "../../utils/dates";
 
 const walletSelector = (state: RootState): WalletState => state.wallet;
 
@@ -31,13 +32,20 @@ const formatTransactions = (
   });
 };
 
+const compareTransactions = (transactions: WalletState["transactions"]) => {
+  const transactionsClone = [...transactions];
+    return transactionsClone.sort((a, b) => {
+      return compareDates( new Date(b.date),new Date(a.date));
+    });
+};
+
 export const getLastTransactions = createSelector(
   [getTransactions, getCategories],
   (
     transactions: WalletState["transactions"],
     categories: Category[]
   ): WalletState["transactions"] => {
-    const t = _orderBy(transactions, ["date"], ["desc"]);
+    const t = compareTransactions(transactions);
     return formatTransactions(t.slice(0, 6), categories);
   }
 );
@@ -47,7 +55,7 @@ export const getTransactionsFormatted = createSelector(
   (
     transactions: WalletState["transactions"],
     categories: Category[]
-  ): WalletState["transactions"] => formatTransactions(transactions, categories)
+  ): WalletState["transactions"] => formatTransactions( compareTransactions(transactions), categories)
 );
 
 export const getBalance = createSelector(

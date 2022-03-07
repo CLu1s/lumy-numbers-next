@@ -30,11 +30,23 @@ import RecordExpense from "./RecordExpense";
 import AlertDialog from "../../components/AlertDialog";
 import { deleteTransaction } from "./walletSlice";
 import TransactionMini from "../../components/TransactionMini";
+import { compareDates } from "../../utils";
 
 enum Order {
   ASC = "asc",
   DESC = "desc",
 }
+
+const compareTransactions = (transactions: Transaction[], order: Order) => {
+  const transactionsClone = [...transactions];
+  const t = transactionsClone.sort((a, b) => {
+    return compareDates(new Date(a.date), new Date(b.date));
+  });
+  if (order === Order.DESC) {
+    return t.reverse();
+  }
+  return t;
+};
 
 export default function DataTable() {
   const transactions = useSelector(getTransactionsFormatted);
@@ -42,7 +54,7 @@ export default function DataTable() {
   const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [sort, setSort] = useState("date");
-  const [order, setOrder] = useState<boolean | Order>(Order.DESC);
+  const [order, setOrder] = useState<Order>(Order.DESC);
   const [elementToEdit, setElementToEdit] = useState<Transaction>(null);
   const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
     []
@@ -50,13 +62,20 @@ export default function DataTable() {
   const status = useSelector(getStatus);
   const dispatch = useDispatch();
   useEffect(() => {
-    setSortedTransactions(_orderBy(transactions, [sort], [order]));
+    if (sort === "date") {
+      setSortedTransactions(compareTransactions(transactions, order));
+    } else {
+      setSortedTransactions(_orderBy(transactions, [sort], [order]));
+    }
   }, [transactions, sort, order]);
 
-  const manageOpen = useCallback((item: any) => {
-    setElementToEdit(item);
-    onOpen();
-  }, [onOpen]);
+  const manageOpen = useCallback(
+    (item: any) => {
+      setElementToEdit(item);
+      onOpen();
+    },
+    [onOpen]
+  );
 
   const handleDelete = (id) => {
     setDeleteId(id);
