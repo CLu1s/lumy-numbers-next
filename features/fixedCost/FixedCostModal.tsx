@@ -10,7 +10,7 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
-import { addFixedCost } from "./fixedCostSlice";
+import { addFixedCost, updateFixedCost } from "./fixedCostSlice";
 import { getBucketID } from "../bucket/selector";
 import parseISO from "date-fns/parseISO";
 
@@ -41,7 +41,7 @@ const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
     e.preventDefault();
     if (toEdit) {
       dispatch(
-        addFixedCost({
+        updateFixedCost({
           ...toEdit,
           ...data,
         })

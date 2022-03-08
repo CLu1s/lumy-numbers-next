@@ -1,8 +1,19 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
-import { updateBucket, createFixedCost } from "../../src/graphql/mutations";
+import {
+  updateBucket,
+  createFixedCost,
+  updateFixedCost as updateFixedCostMutation,
+  deleteFixedCost as deleteFixedCostMutation,
+  createTransaction,
+} from "../../src/graphql/mutations";
 import { fixedCostByBucket } from "../../src/graphql/queries";
-import { FixedCostState, LoadingStates } from "../../types";
+import {
+  FixedCostState,
+  LoadingStates,
+  FixedCost,
+  Transaction,
+} from "../../types";
 const initialState: FixedCostState = {
   items: [],
   category: null,
@@ -49,29 +60,38 @@ export const addFixedCost = createAsyncThunk(
     return response;
   }
 );
+export const updateFixedCost = createAsyncThunk(
+  "fixedCost/updateFixedCost",
+  async (element: any) => {
+    const { createdAt, updatedAt, category, ...input } = element;
+
+    const response = await API.graphql(
+      graphqlOperation(updateFixedCostMutation, { input })
+    );
+    return response;
+  }
+);
+
+type paidFixedCostProps = {
+  element: FixedCost;
+  bucketID: string;
+  categoryID: string;
+};
+
+export const deleteFixedCost = createAsyncThunk(
+  "fixedCost/deleteFixedCost",
+  async (id: string) => {
+    const response = await API.graphql(
+      graphqlOperation(deleteFixedCostMutation, { input: { id } })
+    );
+    return response;
+  }
+);
 
 const fixedCostSlice = createSlice({
   name: "fixedCost",
   initialState,
-  reducers: {
-    updateFixedCost: (
-      state,
-      action: PayloadAction<{
-        id: string;
-        amount: number;
-        description: string;
-        status: string;
-      }>
-    ) => {
-      const { id, ...rest } = action.payload;
-      const item = state.items.find((item) => item.id === id);
-      if (item) {
-        item.amount = rest.amount;
-        item.description = rest.description;
-        item.status = rest.status;
-      }
-    },
-  },
+  reducers: {},
   extraReducers: {
     [addCategoryID.pending.type]: (state) => {
       state.status = LoadingStates.LOADING;
@@ -106,8 +126,36 @@ const fixedCostSlice = createSlice({
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },
+    [updateFixedCost.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [updateFixedCost.fulfilled.type]: (state, action) => {
+      state.items = state.items.map((item) =>
+        item.id === action.payload.data.updateFixedCost.id
+          ? action.payload.data.updateFixedCost
+          : item
+      );
+      state.status = LoadingStates.SUCCEEDED;
+    },
+    [updateFixedCost.rejected.type]: (state, action) => {
+      state.error = action.payload;
+      state.status = LoadingStates.FAILED;
+    },
+    [deleteFixedCost.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [deleteFixedCost.fulfilled.type]: (state, action) => {
+      state.items = state.items.filter(
+        (item) => item.id !== action.payload.data.deleteFixedCost.id
+      );
+      state.status = LoadingStates.SUCCEEDED;
+    },
+    [deleteFixedCost.rejected.type]: (state, action) => {
+      state.error = action.payload;
+      state.status = LoadingStates.FAILED;
+    },
   },
 });
 
-export const { updateFixedCost } = fixedCostSlice.actions;
+// export const { updateFixedCost } = fixedCostSlice.actions;
 export default fixedCostSlice.reducer;

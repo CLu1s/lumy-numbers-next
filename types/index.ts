@@ -112,7 +112,9 @@ export type FixedCost = {
   status: string;
   type: string;
   amount: number;
-  description?: string;
+  description: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type FixedCostState = {

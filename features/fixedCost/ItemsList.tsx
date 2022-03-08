@@ -1,6 +1,8 @@
-import { Heading, Text, Tag } from "@chakra-ui/react";
 import React from "react";
+import { Heading, Text, Tag, HStack, Button } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
+
 import Table, {
   Header,
   HeaderTop,
@@ -10,27 +12,50 @@ import Table, {
 } from "../../components/TableCards";
 import money from "../../utils/money";
 import { getItems } from "./selector";
+import { FixedCost } from "../../types";
 
-export default function DataTable() {
-  const transactions = useSelector(getItems);
+type Props = {
+  items: FixedCost[];
+  handleDelete: (id: string) => void;
+  manageOpen: (item: FixedCost) => void;
+  managePaid: (item: FixedCost) => void;
+};
 
-  const renderCells = transactions.map((item, index) => (
+export default function DataTable({
+  items,
+  handleDelete,
+  manageOpen,
+  managePaid,
+}: Props) {
+  const renderCells = items.map((item, index) => (
     <Cell key={item.id}>
       <Header>
-        <HeaderTop >
+        <HeaderTop>
           <Heading as="h6" size="xs" textColor="gray.400">
             Descripción
           </Heading>
           <Text fontWeight="bold">{item.description}</Text>
         </HeaderTop>
         <HeaderBottom>
-          <Tag
-            size="md"
-            variant="solid"
-            bgColor={item.type === "monthly" ? "orange" : "teal"}
-          >
-            {item.type}
-          </Tag>
+          <HStack>
+            {item.status !== "paid" ? (
+              <Button colorScheme="teal" size="sm" onClick={() => managePaid(item)}>
+                Pagar
+              </Button>
+            ) : (
+              <Tag colorScheme="purple">Pagado</Tag>
+            )}
+            <Button bg="white" onClick={() => manageOpen(item)}>
+              <FiEdit />
+            </Button>
+            <Button
+              bg="white"
+              onClick={() => handleDelete(item.id)}
+              color="red.500"
+            >
+              <FiTrash2 />
+            </Button>
+          </HStack>
         </HeaderBottom>
       </Header>
       <Body>
