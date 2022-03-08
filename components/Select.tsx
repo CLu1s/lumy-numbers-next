@@ -12,7 +12,7 @@ type OptionsType = {
 };
 
 type SelectProps = {
-  defaultValue: any;
+  defaultValue?: any;
   setSelected: (val: any) => void;
   options: OptionsType[] | string[];
   label?: string;

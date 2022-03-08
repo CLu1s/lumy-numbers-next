@@ -2,8 +2,8 @@ import Head from "next/head";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import Layout from "../components/Layout";
 import { Stack } from "@chakra-ui/react";
-import Table from "../features/fixedCost/ItemsList";
-import Screen from "../components/Screen";
+import Container from "../features/fixedCost/Container";
+
 function CostosFijos({ user }) {
   return (
     <div>
@@ -15,9 +15,7 @@ function CostosFijos({ user }) {
 
       <Layout userName={user?.username || ""} pageTitle="Costos Fijos">
         <Stack spacing={8}>
-          <Screen>
-            <Table />
-          </Screen>
+          <Container />
         </Stack>
       </Layout>
     </div>

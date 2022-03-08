@@ -7,7 +7,7 @@ import { useTable, useSortBy } from "react-table";
 type Column = {
   Header?: string;
   accessor: string | ((row: any) => any);
-  Cell?: React.FC<{ cell: any }>;
+  Cell?: any;
 };
 type TableProps = {
   columns: Column[];

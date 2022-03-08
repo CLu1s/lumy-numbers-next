@@ -8,6 +8,7 @@ const initialState: FixedCostState = {
   category: null,
   categoryID: null,
   status: LoadingStates.IDLE,
+  error: null,
 };
 
 type addCategoryIDProps = {
@@ -53,25 +54,6 @@ const fixedCostSlice = createSlice({
   name: "fixedCost",
   initialState,
   reducers: {
-    addFixedCostOLD: (
-      state,
-      action: PayloadAction<{
-        name?: string;
-        type?: string;
-        amount: number;
-        description: string;
-      }>
-    ) => {
-      const { name, type, amount, description } = action.payload;
-      state.items.push({
-        id: Math.random().toString(),
-        name,
-        type,
-        amount,
-        description,
-        status: "pending",
-      });
-    },
     updateFixedCost: (
       state,
       action: PayloadAction<{

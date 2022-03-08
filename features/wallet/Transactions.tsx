@@ -15,13 +15,7 @@ import _orderBy from "lodash/orderBy";
 import { money, date } from "../../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { getTransactionsFormatted, getStatus } from "./selector";
-import TableCards, {
-  Header,
-  HeaderTop,
-  HeaderBottom,
-  Body,
-  Cell,
-} from "../../components/TableCards";
+import TableCards from "../../components/TableCards";
 import Table from "../../components/Table";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { Transaction } from "../../types";

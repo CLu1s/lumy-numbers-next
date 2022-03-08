@@ -55,6 +55,7 @@ export type Bucket = {
   bucketID: string;
   nanoid: string;
   listIncomes: Income[];
+  fixedCostCategoryID: string;
   collaborators: {
     items: User[];
     nextToken: string | null;
@@ -108,7 +109,7 @@ export type BalancedCategory = {
 
 export type FixedCost = {
   id: string;
-  name: string;
+  status: string;
   type: string;
   amount: number;
   description?: string;
@@ -116,4 +117,8 @@ export type FixedCost = {
 
 export type FixedCostState = {
   items: FixedCost[];
+  category: Category;
+  categoryID: string;
+  status: LoadingStates;
+  error: string | null;
 };
