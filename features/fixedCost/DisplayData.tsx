@@ -130,11 +130,13 @@ const DisplayData = (props: any) => {
         toEdit={elementToEdit}
       />
       <Stack>
+        <Box>
+          <Button marginBottom="4" colorScheme="blue" onClick={onOpen}>
+            Nuevo Gasto Fijo
+          </Button>
+        </Box>
         {items.length > 0 ? (
           <Box>
-            <Button marginBottom="4" colorScheme="blue" onClick={onOpen}>
-              Nuevo Gasto Fijo
-            </Button>
             <Box display={{ base: "none", lg: "block" }}>
               <Table columns={columns} data={items} />
             </Box>
