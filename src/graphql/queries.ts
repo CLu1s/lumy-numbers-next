@@ -87,6 +87,20 @@ export const getBucket = /* GraphQL */ `
         }
         nextToken
       }
+      fixedCostCategoryID
+      fixedCost {
+        items {
+          id
+          amount
+          type
+          status
+          description
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -113,6 +127,10 @@ export const listBuckets = /* GraphQL */ `
           nextToken
         }
         categories {
+          nextToken
+        }
+        fixedCostCategoryID
+        fixedCost {
           nextToken
         }
         createdAt
@@ -229,6 +247,41 @@ export const listCategories = /* GraphQL */ `
     }
   }
 `;
+export const getFixedCost = /* GraphQL */ `
+  query GetFixedCost($id: ID!) {
+    getFixedCost(id: $id) {
+      id
+      amount
+      type
+      status
+      description
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFixedCosts = /* GraphQL */ `
+  query ListFixedCosts(
+    $filter: ModelFixedCostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFixedCosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        amount
+        type
+        status
+        description
+        bucketID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const userByUserName = /* GraphQL */ `
   query UserByUserName(
     $userName: String!
@@ -290,6 +343,10 @@ export const bucketByName = /* GraphQL */ `
         categories {
           nextToken
         }
+        fixedCostCategoryID
+        fixedCost {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -330,6 +387,41 @@ export const bucketByNanoid = /* GraphQL */ `
         categories {
           nextToken
         }
+        fixedCostCategoryID
+        fixedCost {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const fixedCostByBucket = /* GraphQL */ `
+  query FixedCostByBucket(
+    $bucketID: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelFixedCostFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    fixedCostByBucket(
+      bucketID: $bucketID
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        amount
+        type
+        status
+        description
+        bucketID
         createdAt
         updatedAt
       }

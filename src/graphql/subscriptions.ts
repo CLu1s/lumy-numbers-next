@@ -91,6 +91,20 @@ export const onCreateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      fixedCostCategoryID
+      fixedCost {
+        items {
+          id
+          amount
+          type
+          status
+          description
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -152,6 +166,20 @@ export const onUpdateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      fixedCostCategoryID
+      fixedCost {
+        items {
+          id
+          amount
+          type
+          status
+          description
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -207,6 +235,20 @@ export const onDeleteBucket = /* GraphQL */ `
           name
           percentage
           color
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      fixedCostCategoryID
+      fixedCost {
+        items {
+          id
+          amount
+          type
+          status
+          description
           bucketID
           createdAt
           updatedAt
@@ -341,6 +383,48 @@ export const onDeleteCategory = /* GraphQL */ `
       name
       percentage
       color
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateFixedCost = /* GraphQL */ `
+  subscription OnCreateFixedCost {
+    onCreateFixedCost {
+      id
+      amount
+      type
+      status
+      description
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFixedCost = /* GraphQL */ `
+  subscription OnUpdateFixedCost {
+    onUpdateFixedCost {
+      id
+      amount
+      type
+      status
+      description
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFixedCost = /* GraphQL */ `
+  subscription OnDeleteFixedCost {
+    onDeleteFixedCost {
+      id
+      amount
+      type
+      status
+      description
       bucketID
       createdAt
       updatedAt

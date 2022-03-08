@@ -25,7 +25,7 @@ export default function LastsTransactions() {
 
   return (
     <Stack spacing={2}>
-      <TransactionMini transactions={transactions} editable />
+      <TransactionMini transactions={transactions} />
     </Stack>
   );
 }

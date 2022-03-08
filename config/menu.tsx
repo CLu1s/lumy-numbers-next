@@ -28,10 +28,10 @@ export const menuList: MenuItem[] = [
     path: "/presupuesto",
     icon: <ImStatsBars />,
   },
-  // {
-  //   id: 4,
-  //   label: "Mis Gastos fijos",
-  //   path: "/costos-fijos",
-  //   icon: <RiBook2Fill />,
-  // },
+  {
+    id: 4,
+    label: "Mis Gastos fijos",
+    path: "/costos-fijos",
+    icon: <RiBook2Fill />,
+  },
 ];

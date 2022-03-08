@@ -95,11 +95,13 @@ export type CreateBucketInput = {
   id?: string | null,
   name: string,
   nanoid: string,
+  fixedCostCategoryID?: string | null,
 };
 
 export type ModelBucketConditionInput = {
   name?: ModelStringInput | null,
   nanoid?: ModelStringInput | null,
+  fixedCostCategoryID?: ModelIDInput | null,
   and?: Array< ModelBucketConditionInput | null > | null,
   or?: Array< ModelBucketConditionInput | null > | null,
   not?: ModelBucketConditionInput | null,
@@ -114,6 +116,8 @@ export type Bucket = {
   transactionsByDate?: ModelTransactionConnection | null,
   incomes?: ModelIncomeConnection | null,
   categories?: ModelCategoryConnection | null,
+  fixedCostCategoryID?: string | null,
+  fixedCost?: ModelFixedCostConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -179,10 +183,29 @@ export type Category = {
   updatedAt: string,
 };
 
+export type ModelFixedCostConnection = {
+  __typename: "ModelFixedCostConnection",
+  items:  Array<FixedCost | null >,
+  nextToken?: string | null,
+};
+
+export type FixedCost = {
+  __typename: "FixedCost",
+  id: string,
+  amount: number,
+  type?: string | null,
+  status?: string | null,
+  description?: string | null,
+  bucketID: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
 export type UpdateBucketInput = {
   id: string,
   name?: string | null,
   nanoid?: string | null,
+  fixedCostCategoryID?: string | null,
 };
 
 export type DeleteBucketInput = {
@@ -315,6 +338,39 @@ export type DeleteCategoryInput = {
   id: string,
 };
 
+export type CreateFixedCostInput = {
+  id?: string | null,
+  amount: number,
+  type?: string | null,
+  status?: string | null,
+  description?: string | null,
+  bucketID: string,
+};
+
+export type ModelFixedCostConditionInput = {
+  amount?: ModelFloatInput | null,
+  type?: ModelStringInput | null,
+  status?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  and?: Array< ModelFixedCostConditionInput | null > | null,
+  or?: Array< ModelFixedCostConditionInput | null > | null,
+  not?: ModelFixedCostConditionInput | null,
+};
+
+export type UpdateFixedCostInput = {
+  id: string,
+  amount?: number | null,
+  type?: string | null,
+  status?: string | null,
+  description?: string | null,
+  bucketID?: string | null,
+};
+
+export type DeleteFixedCostInput = {
+  id: string,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   userName?: ModelStringInput | null,
@@ -328,6 +384,7 @@ export type ModelBucketFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
   nanoid?: ModelStringInput | null,
+  fixedCostCategoryID?: ModelIDInput | null,
   and?: Array< ModelBucketFilterInput | null > | null,
   or?: Array< ModelBucketFilterInput | null > | null,
   not?: ModelBucketFilterInput | null,
@@ -374,6 +431,18 @@ export type ModelCategoryFilterInput = {
   and?: Array< ModelCategoryFilterInput | null > | null,
   or?: Array< ModelCategoryFilterInput | null > | null,
   not?: ModelCategoryFilterInput | null,
+};
+
+export type ModelFixedCostFilterInput = {
+  id?: ModelIDInput | null,
+  amount?: ModelFloatInput | null,
+  type?: ModelStringInput | null,
+  status?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  and?: Array< ModelFixedCostFilterInput | null > | null,
+  or?: Array< ModelFixedCostFilterInput | null > | null,
+  not?: ModelFixedCostFilterInput | null,
 };
 
 export type ModelIDKeyConditionInput = {
@@ -509,6 +578,22 @@ export type CreateBucketMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    fixedCostCategoryID?: string | null,
+    fixedCost?:  {
+      __typename: "ModelFixedCostConnection",
+      items:  Array< {
+        __typename: "FixedCost",
+        id: string,
+        amount: number,
+        type?: string | null,
+        status?: string | null,
+        description?: string | null,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -583,6 +668,22 @@ export type UpdateBucketMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    fixedCostCategoryID?: string | null,
+    fixedCost?:  {
+      __typename: "ModelFixedCostConnection",
+      items:  Array< {
+        __typename: "FixedCost",
+        id: string,
+        amount: number,
+        type?: string | null,
+        status?: string | null,
+        description?: string | null,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -651,6 +752,22 @@ export type DeleteBucketMutation = {
         name: string,
         percentage: number,
         color: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    fixedCostCategoryID?: string | null,
+    fixedCost?:  {
+      __typename: "ModelFixedCostConnection",
+      items:  Array< {
+        __typename: "FixedCost",
+        id: string,
+        amount: number,
+        type?: string | null,
+        status?: string | null,
+        description?: string | null,
         bucketID: string,
         createdAt: string,
         updatedAt: string,
@@ -836,6 +953,63 @@ export type DeleteCategoryMutation = {
   } | null,
 };
 
+export type CreateFixedCostMutationVariables = {
+  input: CreateFixedCostInput,
+  condition?: ModelFixedCostConditionInput | null,
+};
+
+export type CreateFixedCostMutation = {
+  createFixedCost?:  {
+    __typename: "FixedCost",
+    id: string,
+    amount: number,
+    type?: string | null,
+    status?: string | null,
+    description?: string | null,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateFixedCostMutationVariables = {
+  input: UpdateFixedCostInput,
+  condition?: ModelFixedCostConditionInput | null,
+};
+
+export type UpdateFixedCostMutation = {
+  updateFixedCost?:  {
+    __typename: "FixedCost",
+    id: string,
+    amount: number,
+    type?: string | null,
+    status?: string | null,
+    description?: string | null,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteFixedCostMutationVariables = {
+  input: DeleteFixedCostInput,
+  condition?: ModelFixedCostConditionInput | null,
+};
+
+export type DeleteFixedCostMutation = {
+  deleteFixedCost?:  {
+    __typename: "FixedCost",
+    id: string,
+    amount: number,
+    type?: string | null,
+    status?: string | null,
+    description?: string | null,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   id: string,
 };
@@ -940,6 +1114,22 @@ export type GetBucketQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    fixedCostCategoryID?: string | null,
+    fixedCost?:  {
+      __typename: "ModelFixedCostConnection",
+      items:  Array< {
+        __typename: "FixedCost",
+        id: string,
+        amount: number,
+        type?: string | null,
+        status?: string | null,
+        description?: string | null,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -973,6 +1163,11 @@ export type ListBucketsQuery = {
       } | null,
       categories?:  {
         __typename: "ModelCategoryConnection",
+        nextToken?: string | null,
+      } | null,
+      fixedCostCategoryID?: string | null,
+      fixedCost?:  {
+        __typename: "ModelFixedCostConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -1110,6 +1305,48 @@ export type ListCategoriesQuery = {
   } | null,
 };
 
+export type GetFixedCostQueryVariables = {
+  id: string,
+};
+
+export type GetFixedCostQuery = {
+  getFixedCost?:  {
+    __typename: "FixedCost",
+    id: string,
+    amount: number,
+    type?: string | null,
+    status?: string | null,
+    description?: string | null,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListFixedCostsQueryVariables = {
+  filter?: ModelFixedCostFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListFixedCostsQuery = {
+  listFixedCosts?:  {
+    __typename: "ModelFixedCostConnection",
+    items:  Array< {
+      __typename: "FixedCost",
+      id: string,
+      amount: number,
+      type?: string | null,
+      status?: string | null,
+      description?: string | null,
+      bucketID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type UserByUserNameQueryVariables = {
   userName: string,
   id?: ModelIDKeyConditionInput | null,
@@ -1167,6 +1404,11 @@ export type BucketByNameQuery = {
         __typename: "ModelCategoryConnection",
         nextToken?: string | null,
       } | null,
+      fixedCostCategoryID?: string | null,
+      fixedCost?:  {
+        __typename: "ModelFixedCostConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1207,6 +1449,38 @@ export type BucketByNanoidQuery = {
         __typename: "ModelCategoryConnection",
         nextToken?: string | null,
       } | null,
+      fixedCostCategoryID?: string | null,
+      fixedCost?:  {
+        __typename: "ModelFixedCostConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type FixedCostByBucketQueryVariables = {
+  bucketID: string,
+  id?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelFixedCostFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type FixedCostByBucketQuery = {
+  fixedCostByBucket?:  {
+    __typename: "ModelFixedCostConnection",
+    items:  Array< {
+      __typename: "FixedCost",
+      id: string,
+      amount: number,
+      type?: string | null,
+      status?: string | null,
+      description?: string | null,
+      bucketID: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1311,6 +1585,22 @@ export type OnCreateBucketSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    fixedCostCategoryID?: string | null,
+    fixedCost?:  {
+      __typename: "ModelFixedCostConnection",
+      items:  Array< {
+        __typename: "FixedCost",
+        id: string,
+        amount: number,
+        type?: string | null,
+        status?: string | null,
+        description?: string | null,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1380,6 +1670,22 @@ export type OnUpdateBucketSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    fixedCostCategoryID?: string | null,
+    fixedCost?:  {
+      __typename: "ModelFixedCostConnection",
+      items:  Array< {
+        __typename: "FixedCost",
+        id: string,
+        amount: number,
+        type?: string | null,
+        status?: string | null,
+        description?: string | null,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1443,6 +1749,22 @@ export type OnDeleteBucketSubscription = {
         name: string,
         percentage: number,
         color: string,
+        bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    fixedCostCategoryID?: string | null,
+    fixedCost?:  {
+      __typename: "ModelFixedCostConnection",
+      items:  Array< {
+        __typename: "FixedCost",
+        id: string,
+        amount: number,
+        type?: string | null,
+        status?: string | null,
+        description?: string | null,
         bucketID: string,
         createdAt: string,
         updatedAt: string,
@@ -1577,6 +1899,48 @@ export type OnDeleteCategorySubscription = {
     name: string,
     percentage: number,
     color: string,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateFixedCostSubscription = {
+  onCreateFixedCost?:  {
+    __typename: "FixedCost",
+    id: string,
+    amount: number,
+    type?: string | null,
+    status?: string | null,
+    description?: string | null,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateFixedCostSubscription = {
+  onUpdateFixedCost?:  {
+    __typename: "FixedCost",
+    id: string,
+    amount: number,
+    type?: string | null,
+    status?: string | null,
+    description?: string | null,
+    bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteFixedCostSubscription = {
+  onDeleteFixedCost?:  {
+    __typename: "FixedCost",
+    id: string,
+    amount: number,
+    type?: string | null,
+    status?: string | null,
+    description?: string | null,
     bucketID: string,
     createdAt: string,
     updatedAt: string,

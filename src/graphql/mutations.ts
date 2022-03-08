@@ -103,6 +103,20 @@ export const createBucket = /* GraphQL */ `
         }
         nextToken
       }
+      fixedCostCategoryID
+      fixedCost {
+        items {
+          id
+          amount
+          type
+          status
+          description
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -167,6 +181,20 @@ export const updateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      fixedCostCategoryID
+      fixedCost {
+        items {
+          id
+          amount
+          type
+          status
+          description
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -225,6 +253,20 @@ export const deleteBucket = /* GraphQL */ `
           name
           percentage
           color
+          bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      fixedCostCategoryID
+      fixedCost {
+        items {
+          id
+          amount
+          type
+          status
+          description
           bucketID
           createdAt
           updatedAt
@@ -386,6 +428,57 @@ export const deleteCategory = /* GraphQL */ `
       name
       percentage
       color
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createFixedCost = /* GraphQL */ `
+  mutation CreateFixedCost(
+    $input: CreateFixedCostInput!
+    $condition: ModelFixedCostConditionInput
+  ) {
+    createFixedCost(input: $input, condition: $condition) {
+      id
+      amount
+      type
+      status
+      description
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFixedCost = /* GraphQL */ `
+  mutation UpdateFixedCost(
+    $input: UpdateFixedCostInput!
+    $condition: ModelFixedCostConditionInput
+  ) {
+    updateFixedCost(input: $input, condition: $condition) {
+      id
+      amount
+      type
+      status
+      description
+      bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFixedCost = /* GraphQL */ `
+  mutation DeleteFixedCost(
+    $input: DeleteFixedCostInput!
+    $condition: ModelFixedCostConditionInput
+  ) {
+    deleteFixedCost(input: $input, condition: $condition) {
+      id
+      amount
+      type
+      status
+      description
       bucketID
       createdAt
       updatedAt
