@@ -8,6 +8,7 @@ import { Stack, Wrap, WrapItem, Link as ChakraLink } from "@chakra-ui/react";
 import CheckcIncomes from "../features/budget/CheckIncomes";
 import Screen from "../components/Screen";
 import LastsTransactions from "../features/wallet/LastsTransactions";
+import FixedCostDashboard from "../features/fixedCost/FixedCostDashboard";
 
 function Home({ user }) {
   return (
@@ -40,6 +41,9 @@ function Home({ user }) {
                   </ChakraLink>
                 </Link>
               </Screen>
+            </WrapItem>
+            <WrapItem maxW={{ base: "100%", lg: "46%" }} w="100%">
+              <FixedCostDashboard />
             </WrapItem>
           </Wrap>
         </Stack>

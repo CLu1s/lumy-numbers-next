@@ -1,10 +1,4 @@
-import {
-  Box,
-  VStack,
-  StackDivider,
-  Flex,
-  HStack,
-} from "@chakra-ui/react";
+import { Box, VStack, StackDivider, Flex, HStack } from "@chakra-ui/react";
 
 export const HeaderTop = ({ children, ...props }) => (
   <VStack spacing={1} align="stretch">
@@ -13,18 +7,16 @@ export const HeaderTop = ({ children, ...props }) => (
 );
 
 export const Body = ({ children }) => (
-  <Flex
-    justifyContent="center"
-    border="1px"
-    borderRadius="lg"
-    borderColor="gray.200"
-    padding={2}
-  >
-    <HStack spacing={6}>{children}</HStack>
+  <Flex border="1px" borderRadius="lg" borderColor="gray.200" padding={2}>
+    <HStack justifyContent="space-between" w="full" spacing={6}>
+      {children}
+    </HStack>
   </Flex>
 );
 
-export const HeaderBottom = ({ children, ...props }) => <HStack spacing={4}>{children}</HStack>;
+export const HeaderBottom = ({ children, ...props }) => (
+  <HStack spacing={4}>{children}</HStack>
+);
 
 export const Header = ({ children }) => (
   <Flex justifyContent="space-between">{children}</Flex>

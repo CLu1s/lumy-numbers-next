@@ -1,8 +1,6 @@
 import React from "react";
 import { Heading, Text, Tag, HStack, Button } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
-
 import Table, {
   Header,
   HeaderTop,
@@ -11,13 +9,12 @@ import Table, {
   Cell,
 } from "../../components/TableCards";
 import money from "../../utils/money";
-import { getItems } from "./selector";
 import { FixedCost } from "../../types";
 
 type Props = {
   items: FixedCost[];
-  handleDelete: (id: string) => void;
-  manageOpen: (item: FixedCost) => void;
+  handleDelete?: (id: string) => void;
+  manageOpen?: (item: FixedCost) => void;
   managePaid: (item: FixedCost) => void;
 };
 
@@ -38,28 +35,32 @@ export default function DataTable({
         </HeaderTop>
         <HeaderBottom>
           <HStack>
-            {item.status !== "paid" ? (
-              <Button colorScheme="teal" size="sm" onClick={() => managePaid(item)}>
-                Pagar
+            {manageOpen && (
+              <Button bg="white" onClick={() => manageOpen(item)}>
+                <FiEdit />
               </Button>
-            ) : (
-              <Tag colorScheme="purple">Pagado</Tag>
             )}
-            <Button bg="white" onClick={() => manageOpen(item)}>
-              <FiEdit />
-            </Button>
-            <Button
-              bg="white"
-              onClick={() => handleDelete(item.id)}
-              color="red.500"
-            >
-              <FiTrash2 />
-            </Button>
+            {handleDelete && (
+              <Button
+                bg="white"
+                onClick={() => handleDelete(item.id)}
+                color="red.500"
+              >
+                <FiTrash2 />
+              </Button>
+            )}
           </HStack>
         </HeaderBottom>
       </Header>
       <Body>
         <Text fontWeight="medium">{money(item.amount)}</Text>
+        {item.status !== "paid" ? (
+          <Button colorScheme="teal" size="sm" onClick={() => managePaid(item)}>
+            Pagar
+          </Button>
+        ) : (
+          <Tag colorScheme="purple">Pagado</Tag>
+        )}
       </Body>
     </Cell>
   ));
