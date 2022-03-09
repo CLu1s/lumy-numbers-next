@@ -1,9 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
-import { Box, Stack, Heading, Text } from "@chakra-ui/react";
-
-import { getStatus, getCategoryID } from "./selector";
+import { useSelector } from "react-redux";
+import { getCategoryID } from "./selector";
 import Screen from "../../components/Screen";
-import Loading from "../../components/Loading";
 import SaveCategoryID from "./SaveCategoryID";
 import DisplayData from "./DisplayData";
 

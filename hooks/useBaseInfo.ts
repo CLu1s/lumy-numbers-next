@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getStatus as getBucketStatus,
@@ -9,6 +9,7 @@ import { fetchBucket, setLastFetched } from "../features/bucket/bucketSlice";
 import { fetchTransactions } from "../features/wallet/walletSlice";
 import { getStatus as getBudgetStatus } from "../features/budget/selector";
 import { fetchIncomes, fetchCategories } from "../features/budget/budgetSlice";
+import { fetchFixedCost } from "../features/fixedCost/fixedCostSlice";
 import differenceInMinutes from "date-fns/differenceInMinutes";
 
 const useBaseInfo = (userName?: string) => {
@@ -19,12 +20,13 @@ const useBaseInfo = (userName?: string) => {
   const budgetStatus = useSelector(getBudgetStatus);
   const lastFetched = useSelector(getLastFetched);
 
-  const fetchAll = () => {
+  const fetchAll = useCallback(() => {
     dispatch(fetchTransactions(bucketID));
+    dispatch(fetchFixedCost(bucketID));
     dispatch(fetchIncomes(bucketID));
     dispatch(fetchCategories(bucketID));
     dispatch(setLastFetched(new Date()));
-  };
+  }, [dispatch, bucketID]);
   useEffect(() => {
     if (
       bucketStatus.status === "succeeded" &&
@@ -50,7 +52,7 @@ const useBaseInfo = (userName?: string) => {
     if (budgetStatus.status === "idle" && bucketID) {
       fetchAll();
     }
-  }, [dispatch, budgetStatus, bucketID]);
+  }, [dispatch, budgetStatus, bucketID, fetchAll]);
 
   return;
 };

@@ -14,7 +14,6 @@ import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Table from "../../components/Table";
 import { getItems, getCategoryID } from "./selector";
 import {
-  fetchFixedCost,
   deleteFixedCost,
   updateFixedCost,
 } from "./fixedCostSlice";
@@ -36,9 +35,6 @@ const DisplayData = (props: any) => {
   const [deleteId, setDeleteId] = useState(null);
   const [elementToEdit, setElementToEdit] = useState<any>(null);
 
-  useEffect(() => {
-    dispatch(fetchFixedCost(bucketID));
-  }, [dispatch, bucketID]);
   const manageOpen = useCallback(
     (item: any) => {
       setElementToEdit(item);
