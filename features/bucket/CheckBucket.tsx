@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getStatus, getBucket } from "./selector";
-import { fetchBucket, createBucket } from "./bucketSlice";
+import { createBucket } from "./bucketSlice";
 import Modal from "../../components/Modal";
-import { Input, Text, useToast } from "@chakra-ui/react";
+import { Input, Text } from "@chakra-ui/react";
 import Loading from "../../components/Loading";
-import useBaseInfo from "../../hooks/useBaseInfo";
 type Props = {
   userName: string;
 };
@@ -14,21 +13,8 @@ const CheckBucket = ({ userName }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [code, setCode] = useState("");
   const dispatch = useDispatch();
-  const { status, error } = useSelector(getStatus);
+  const { status } = useSelector(getStatus);
   const bucket = useSelector(getBucket);
-  const toast = useToast();
-
-  useEffect(() => {
-    if (status === "failed") {
-      toast({
-        title: "Error.",
-        description: error,
-        status: "error",
-        duration: 9000,
-        isClosable: true,
-      });
-    }
-  }, [error, status, toast]);
 
   useEffect(() => {
     if (status === "succeeded") {
@@ -43,12 +29,10 @@ const CheckBucket = ({ userName }: Props) => {
     setIsOpen(false);
     console.log(code);
     dispatch(
-      createBucket(
-        {
-          name: userName,
-          code,
-        },
-      )
+      createBucket({
+        name: userName,
+        code,
+      })
     );
   };
 

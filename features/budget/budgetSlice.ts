@@ -3,6 +3,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { BudgetState, Income, Category, LoadingStates } from "../../types";
 import startOfMonth from "date-fns/startOfMonth";
 import endOfMonth from "date-fns/endOfMonth";
+import toast from "react-hot-toast";
 import sub from "date-fns/sub";
 import format from "date-fns/format";
 import add from "date-fns/add";
@@ -173,7 +174,6 @@ const budgetSlice = createSlice({
         category.color = rest.color;
         category.percentage = rest.percentage;
       }
-
     },
     addCategory: (
       state,
@@ -204,6 +204,7 @@ const budgetSlice = createSlice({
       state.incomes.push(action.payload.data.createIncome);
     },
     [createNewIncome.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.status = LoadingStates.FAILED;
       state.error = "Hubo un error al crear el ingreso";
     },
@@ -215,11 +216,13 @@ const budgetSlice = createSlice({
       state.incomes = action.payload.data.getBucket.incomes.items;
     },
     [fetchIncomes.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.status = LoadingStates.FAILED;
       console.log(action.payload);
       state.error = action.payload;
     },
     [fetchCategories.rejected.type]: (state) => {
+      toast.error("Hubo un error!");
       state.status = LoadingStates.FAILED;
       state.error = "Error Cargando las Categorias";
     },
@@ -231,12 +234,14 @@ const budgetSlice = createSlice({
       state.categories = action.payload.data.getBucket.categories.items;
     },
     [updateCategory.fulfilled.type]: (state, action) => {
+      toast.success("Guardado correctamente!");
       const { id, ...rest } = action.payload.data.updateCategory;
       const index = state.categories.findIndex((item) => item.id === id);
       state.categories[index] = { id, ...state.categories[id], ...rest };
       state.status = LoadingStates.SUCCEEDED;
     },
     [updateCategory.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.status = LoadingStates.FAILED;
       state.error = action.payload;
     },
@@ -244,11 +249,13 @@ const budgetSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [createCategory.fulfilled.type]: (state, action) => {
+      toast.success("Guardado correctamente!");
       const { id, ...rest } = action.payload.data.createCategory;
       state.categories.push({ id, ...rest });
       state.status = LoadingStates.SUCCEEDED;
     },
     [createCategory.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.status = LoadingStates.FAILED;
       state.error = action.payload;
     },
@@ -256,11 +263,13 @@ const budgetSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [updateIcome.fulfilled.type]: (state, action) => {
+      toast.success("Guardado correctamente!");
       const { id, ...rest } = action.payload.data.updateIncome;
       const index = state.incomes.findIndex((item) => item.id === id);
       state.incomes[index] = { id, ...state.incomes[id], ...rest };
     },
     [updateIcome.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.status = LoadingStates.FAILED;
       console.log(action);
       state.error = action.error?.message || "Error al actualizar el ingreso";
@@ -269,12 +278,14 @@ const budgetSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [deleteIncome.fulfilled.type]: (state, action) => {
+      toast.success("Eliminado correctamente!");
       const index = state.incomes.findIndex(
         (item) => item.id === action.payload.data.deleteIncome.id
       );
       state.incomes.splice(index, 1);
     },
     [deleteIncome.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.status = LoadingStates.FAILED;
       state.error = "Error deleting income";
     },
@@ -284,5 +295,5 @@ const budgetSlice = createSlice({
   },
 });
 
-export const { addCategory,updateCategoryTemp } = budgetSlice.actions;
+export const { addCategory, updateCategoryTemp } = budgetSlice.actions;
 export default budgetSlice.reducer;

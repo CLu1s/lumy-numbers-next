@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
+import toast from "react-hot-toast";
 import { BucketState, LoadingStates } from "../../types";
 import {
   getBucket,
@@ -126,7 +127,7 @@ const bucketSlice = createSlice({
   reducers: {
     setLastFetched: (state, action) => {
       state.lastFetched = action.payload;
-    }
+    },
   },
   extraReducers: {
     [fetchBucket.pending.type]: (state) => {
@@ -138,6 +139,7 @@ const bucketSlice = createSlice({
       state.bucket = action.payload.bucket;
     },
     [fetchBucket.rejected.type]: (state, action) => {
+      toast.error("Hubo un error al cargar el contenedor");
       state.status.status = LoadingStates.FAILED;
       state.status.error =
         action.error.message || "Hubo un error al cargar el contenedor";
@@ -150,6 +152,7 @@ const bucketSlice = createSlice({
       state.bucket = action.payload;
     },
     [createBucket.rejected.type]: (state, action) => {
+      toast.error("Hubo un error al crear el contenedor");
       state.status.status = LoadingStates.FAILED;
       state.status.error = action.error.message;
     },

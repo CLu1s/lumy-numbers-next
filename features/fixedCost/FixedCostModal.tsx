@@ -1,18 +1,15 @@
-import React, { useState, forwardRef } from "react";
+import React, { forwardRef } from "react";
 import { useForm } from "react-hook-form";
-import { Heading, Text, useToast } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack } from "@chakra-ui/react";
 import { Transaction } from "../../types";
-import Select from "../../components/Select";
 import esLocale from "date-fns/locale/es";
-import DatePicker, { registerLocale } from "react-datepicker";
+import { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getCategories } from "../budget/selector";
 import { addFixedCost, updateFixedCost } from "./fixedCostSlice";
 import { getBucketID } from "../bucket/selector";
-import parseISO from "date-fns/parseISO";
 
 registerLocale("es", esLocale);
 
@@ -24,7 +21,6 @@ type Props = {
 
 const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
-  const toast = useToast();
   const bucketID = useSelector(getBucketID);
   const {
     register,
@@ -54,13 +50,6 @@ const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
         })
       );
     }
-    // TOO: add handling of errors
-    toast({
-      title: "Gasto Registrado.",
-      description: "Se ha registrado tu gasto :D",
-      status: "success",
-      isClosable: true,
-    });
     handleClose();
   };
 

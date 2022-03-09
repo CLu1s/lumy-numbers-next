@@ -1,19 +1,14 @@
-import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
+import toast from "react-hot-toast";
 import {
   updateBucket,
   createFixedCost,
   updateFixedCost as updateFixedCostMutation,
   deleteFixedCost as deleteFixedCostMutation,
-  createTransaction,
 } from "../../src/graphql/mutations";
 import { fixedCostByBucket } from "../../src/graphql/queries";
-import {
-  FixedCostState,
-  LoadingStates,
-  FixedCost,
-  Transaction,
-} from "../../types";
+import { FixedCostState, LoadingStates, FixedCost } from "../../types";
 const initialState: FixedCostState = {
   items: [],
   category: null,
@@ -97,10 +92,12 @@ const fixedCostSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [addCategoryID.fulfilled.type]: (state, action) => {
+      toast.success("Guardado correctamente!");
       state.categoryID = action.payload.data.updateBucket.fixedCostCategoryID;
       state.status = LoadingStates.SUCCEEDED;
     },
     [addCategoryID.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },
@@ -112,6 +109,7 @@ const fixedCostSlice = createSlice({
       state.status = LoadingStates.SUCCEEDED;
     },
     [fetchFixedCost.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },
@@ -119,10 +117,12 @@ const fixedCostSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [addFixedCost.fulfilled.type]: (state, action) => {
+      toast.success("Guardado correctamente!");
       state.items.push(action.payload.data.createFixedCost);
       state.status = LoadingStates.SUCCEEDED;
     },
     [addFixedCost.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },
@@ -130,6 +130,7 @@ const fixedCostSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [updateFixedCost.fulfilled.type]: (state, action) => {
+      toast.success("Guardado correctamente!");
       state.items = state.items.map((item) =>
         item.id === action.payload.data.updateFixedCost.id
           ? action.payload.data.updateFixedCost
@@ -138,6 +139,7 @@ const fixedCostSlice = createSlice({
       state.status = LoadingStates.SUCCEEDED;
     },
     [updateFixedCost.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },
@@ -145,12 +147,14 @@ const fixedCostSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [deleteFixedCost.fulfilled.type]: (state, action) => {
+      toast.success("Eliminado correctamente!");
       state.items = state.items.filter(
         (item) => item.id !== action.payload.data.deleteFixedCost.id
       );
       state.status = LoadingStates.SUCCEEDED;
     },
     [deleteFixedCost.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },

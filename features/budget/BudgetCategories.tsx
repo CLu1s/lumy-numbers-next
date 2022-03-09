@@ -1,8 +1,7 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import {
   Wrap,
   WrapItem,
-  useToast,
   useDisclosure,
   Text,
   Flex,
@@ -18,6 +17,7 @@ import { getStatus } from "./selector";
 import { Category } from "../../types";
 import Loading from "../../components/Loading";
 import { VscAdd } from "react-icons/vsc";
+import toast, { Toaster } from "react-hot-toast";
 import EditCategory from "./EditCategory";
 const sanitizer = (state: Category[]): Category[] => {
   return state.reduce((acc, cur) => {
@@ -37,7 +37,6 @@ const BudgetCategories = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const { status } = useSelector(getStatus);
-  const toast = useToast();
 
   React.useEffect(() => {
     setState(categories);
@@ -59,22 +58,10 @@ const BudgetCategories = () => {
 
     if (newPercentage + rest <= 100) {
       dispatch(updateCategory({ ...category, percentage: newPercentage }));
-      toast({
-        title: "Guardado.",
-        description: "Tu cambio ha sido guardado.",
-        status: "success",
-        duration: 1000,
-        isClosable: true,
-      });
+      toast("Tu cambio ha sido guardado");
     } else {
       dispatch(updateCategory({ ...category, percentage: 100 - rest }));
-      toast({
-        title: "Guardado.",
-        description: "Tu cambio ha sido guardado con el maxímo permitido.",
-        status: "success",
-        duration: 3000,
-        isClosable: true,
-      });
+      toast("Tu cambio ha sido guardado con el maxímo permitido.");
     }
   };
   const debounceSliderChange = _debounce(

@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from "react";
 import { useForm } from "react-hook-form";
-import { Heading, Text, useToast } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack } from "@chakra-ui/react";
 import { Transaction } from "../../types";
@@ -11,7 +11,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
 import { addNewTransaction, updateTransaction } from "./walletSlice";
-import { getStatus } from "./selector";
 import { getBucketID } from "../bucket/selector";
 import parseISO from "date-fns/parseISO";
 
@@ -25,7 +24,6 @@ type Props = {
 
 const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
-  const toast = useToast();
   const [selected, setSelected] = useState<any>();
   const [date, setDate] = useState<Date | null>(
     toEdit ? new Date(parseISO(toEdit.date)) : new Date()
@@ -64,13 +62,6 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
         })
       );
     }
-    // TOO: add handling of errors
-    toast({
-      title: "Gasto Registrado.",
-      description: "Se ha registrado tu gasto :D",
-      status: "success",
-      isClosable: true,
-    });
     handleClose();
   };
 

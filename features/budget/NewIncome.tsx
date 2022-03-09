@@ -1,6 +1,5 @@
 import React, { useState, forwardRef, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
-import { useToast } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack } from "@chakra-ui/react";
 import { Income } from "../../types";
@@ -24,7 +23,6 @@ type Props = {
 
 const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
-  const toast = useToast();
   const [selected, setSelected] = useState<any>();
   const [date, setDate] = useState<Date | null>(
     toEdit ? new Date(parseISO(toEdit.date)) : new Date()
@@ -62,13 +60,7 @@ const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
         })
       );
     }
-    // TOO: add handling of errors
-    toast({
-      title: "Gasto Registrado.",
-      description: "Se ha registrado tu gasto :D",
-      status: "success",
-      isClosable: true,
-    });
+
     handleClose();
   };
 

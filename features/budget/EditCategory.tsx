@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Flex, useToast } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
 import { Box, Button, Input } from "@chakra-ui/react";
 import { Category } from "../../types";
@@ -14,7 +14,7 @@ import {
   MenuItemOption,
   MenuOptionGroup,
   MenuDivider,
-  Spacer
+  Spacer,
 } from "@chakra-ui/react";
 import icons, { iconKeys } from "../../utils/icons";
 
@@ -39,7 +39,6 @@ const availableColors = [
 
 const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
-  const toast = useToast();
   const [icon, setIcon] = useState<string>(toEdit?.icon || "Select A Icon");
   const [color, setColor] = useState<string>(toEdit?.color ?? "MenuItem");
   const [name, setName] = useState<string>(toEdit?.name ?? "");
@@ -84,13 +83,6 @@ const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
         })
       );
     }
-    // TOO: add handling of errors
-    toast({
-      title: "Gasto Registrado.",
-      description: "Se ha registrado tu gasto :D",
-      status: "success",
-      isClosable: true,
-    });
     handleClose();
   };
 
@@ -115,17 +107,17 @@ const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
           Ingresa el monto y la descripción del Ingreso
         </p>
 
-        <Box width="100%" >
+        <Box width="100%">
           <Box spacing={4} w="full">
             <Input
               placeholder="Nombre de la Categoría"
               defaultValue={name}
               onChange={(e) => setName(e.target.value)}
             />
-            <Flex  marginTop="4" >
+            <Flex marginTop="4">
               <Menu>
                 <MenuButton as={Button}>{icons(icon as string)}</MenuButton>
-                <MenuList >
+                <MenuList>
                   <MenuOptionGroup
                     defaultValue={toEdit?.icon}
                     title="Icono"
