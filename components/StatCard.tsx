@@ -1,7 +1,4 @@
 import {
-  Stat,
-  StatLabel,
-  StatNumber,
   HStack,
   CircularProgress,
   CircularProgressLabel,
@@ -15,7 +12,7 @@ import {
 import Screen from "./Screen";
 import { money, icons } from "../utils";
 import { FiEdit } from "react-icons/fi";
-
+import Stats from "./Stats";
 type Props = {
   color: string;
   icon: string;
@@ -44,7 +41,6 @@ const StatCard = ({
   const loading = false;
   return (
     <Screen>
-      
       <HStack spacing={2}>
         <Square
           size="48px"
@@ -55,16 +51,8 @@ const StatCard = ({
         >
           {icons(icon)}
         </Square>
-        <Stat>
-          <StatLabel>{name}</StatLabel>
-          <StatNumber
-            style={{ width: "100%", minWidth: "130px" }}
-            color={`${number < 0 ? "red.600" : "black"}`}
-          >
-            {money(number)}
-          </StatNumber>
-        </Stat>
-        
+        <Stats name={name} amount={number} />
+
         <CircularProgress value={progress > 0 ? progress : 0} color={color}>
           <CircularProgressLabel>
             {progress > 0 ? progress : 0}%
@@ -84,17 +72,17 @@ const StatCard = ({
       </HStack>
       {slider && (
         <Slider
-        marginTop={4}
+          marginTop={4}
           aria-label="slider-ex-2"
           colorScheme={color.split(".")[0]}
           defaultValue={progress}
           onChange={(e) => onChange(e)}
           onChangeEnd={(e) => onChangeEnd(e)}
         >
-          <SliderTrack >
+          <SliderTrack>
             <SliderFilledTrack />
           </SliderTrack>
-          <SliderThumb  boxSize={6} />
+          <SliderThumb boxSize={6} />
         </Slider>
       )}
     </Screen>

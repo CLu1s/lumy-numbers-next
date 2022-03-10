@@ -19,7 +19,7 @@ export default function TableRender({ columns, data }: TableProps) {
     useTable({ columns, data }, useSortBy);
 
   return (
-    <Box borderWidth="thin" borderRadius="lg" padding="2">
+    <Box borderWidth="thin" borderRadius="lg" padding="2" overflow="auto">
       <Table {...getTableProps()} variant="simple">
         <Thead>
           {headerGroups.map((headerGroup) => (

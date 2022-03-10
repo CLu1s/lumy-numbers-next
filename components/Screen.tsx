@@ -30,7 +30,7 @@ const Screen = ({ title, description, children }: props) => {
       >
         <Stack spacing={6}>
           {title && (
-            <Box>
+            <Stack  spacing="2">
               <Heading as="h2" size="md" fontWeight="600">
                 {title}
               </Heading>
@@ -40,7 +40,7 @@ const Screen = ({ title, description, children }: props) => {
                 ) : (
                   description
                 ))}
-            </Box>
+            </Stack>
           )}
           <Box>{children}</Box>
         </Stack>

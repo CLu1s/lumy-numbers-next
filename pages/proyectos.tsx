@@ -2,14 +2,47 @@ import { useMemo } from "react";
 import Head from "next/head";
 import { VscAdd } from "react-icons/vsc";
 import { withAuthenticator } from "@aws-amplify/ui-react";
+import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Layout from "../components/Layout";
-import { Button, Text, Flex, Wrap, WrapItem } from "@chakra-ui/react";
+import {
+  Button,
+  Text,
+  Flex,
+  Wrap,
+  WrapItem,
+  Stack,
+  HStack,
+} from "@chakra-ui/react";
 import Table from "../components/Table";
 import Screen from "../components/Screen";
+import Stats from "../components/Stats";
 
-function Transacciones({ user }) {
-  const data = useMemo(
-    () => [
+const proyectos = [
+  {
+    id: 1,
+    name: "Viaje a Japon",
+    description:
+      "Esse quasi tempora est minima voluptas blanditiis. Et at et dolor vel. Voluptatibus dolores id id officia iure. Omnis in quia nostrum ipsum. Eius modi qui eligendi beatae. Rerum exercitationem nisi occaecati sapiente minima fuga fugit voluptatem consequatur.",
+    status: "En proceso",
+    date: "2020-05-01",
+    dueDate: "2020-05-10",
+    amountGoal: "150000",
+    amountActual: "24500",
+    amountPaid: "7250",
+    amountPending: "0",
+    movements: [
+      {
+        id: 1,
+        date: "2020-01-01",
+        description: "Gasto de mantenimiento",
+        amount: -100,
+      },
+      {
+        id: 1,
+        date: "2020-01-01",
+        description: "Gasto de mantenimiento",
+        amount: -100,
+      },
       {
         id: 1,
         date: "2020-01-01",
@@ -17,8 +50,58 @@ function Transacciones({ user }) {
         amount: -100,
       },
     ],
-    []
-  );
+  },
+  {
+    id: 1,
+    name: "est dignissimos facere",
+    description:
+      "Aliquam quod dolore aut optio et. Sapiente reiciendis eum tempora exercitationem minus dicta. Provident illum tempore itaque ut ex cupiditate hic. Eaque accusantium assumenda ut quos consequuntur ex perferendis expedita.",
+    status: "En proceso",
+    date: "2020-05-01",
+    dueDate: "2020-05-10",
+    amountGoal: "100",
+    amountActual: "50",
+    amountPaid: "50",
+    amountPending: "0",
+    movements: [
+      {
+        id: 1,
+        date: "2020-01-01",
+        description: "Gasto de mantenimiento",
+        amount: -100,
+      },
+    ],
+  },
+  {
+    id: 1,
+    name: "Proyecto 3",
+    description:
+      "Esse quasi tempora est minima voluptas blanditiis. Et at et dolor vel. Voluptatibus dolores id id officia iure. Omnis in quia nostrum ipsum. Eius modi qui eligendi beatae.",
+    status: "En proceso",
+    date: "2020-05-01",
+    dueDate: "2020-05-10",
+    amountGoal: "100",
+    amountActual: "50",
+    amountPaid: "50",
+    amountPending: "0",
+    movements: [
+      {
+        id: 1,
+        date: "2020-01-01",
+        description: "Gasto de mantenimiento",
+        amount: -100,
+      },
+      {
+        id: 1,
+        date: "2020-01-01",
+        description: "Gasto de mantenimiento",
+        amount: -100,
+      },
+    ],
+  },
+];
+
+function Transacciones({ user }) {
   const columns = useMemo(
     () => [
       {
@@ -33,9 +116,70 @@ function Transacciones({ user }) {
         Header: "Monto",
         accessor: "amount",
       },
+      {
+        id: "edit",
+        accessor: (row) => row,
+        Cell: ({ cell: { value } }) => (
+          <HStack>
+            <Button bg="white" onClick={() => console.log(value)}>
+              <FiEdit />
+            </Button>
+            <Button
+              bg="white"
+              onClick={() => console.log(value.id)}
+              color="red.500"
+            >
+              <FiTrash2 />
+            </Button>
+          </HStack>
+        ),
+      },
     ],
     []
   );
+
+  const renderTables = proyectos.map((proyecto) => (
+    <WrapItem
+      key={proyecto.id}
+      width="-moz-fit-content"
+      maxW={{ base: "100%", lg: "31%" }}
+    >
+      <Screen title={proyecto.name} description={proyecto.description}>
+        <Stack spacing={4}>
+          <Wrap justifyContent="space-between" spacing={4}>
+            <WrapItem>
+              <Stats name="Meta" amount={Number(proyecto.amountGoal)} />
+            </WrapItem>
+            <WrapItem>
+              <Stats
+                name="Ahorrado a la fecha"
+                amount={Number(proyecto.amountActual)}
+              />
+            </WrapItem>
+            <WrapItem>
+              <Stats
+                name="Cantidad Pendiente"
+                amount={Number(proyecto.amountPending)}
+              />
+            </WrapItem>
+            <WrapItem>
+              <Stats
+                name="Menusalidad Sugerida"
+                amount={Number(proyecto.amountPaid)}
+              />
+            </WrapItem>
+          </Wrap>
+          <HStack justifyContent="space-between" spacing={4}>
+            <Button size="md" colorScheme="blue">
+              Abonar
+            </Button>
+          </HStack>
+          <Table data={proyecto.movements} columns={columns} />
+        </Stack>
+      </Screen>
+    </WrapItem>
+  ));
+
   return (
     <div>
       <Head>
@@ -46,25 +190,10 @@ function Transacciones({ user }) {
 
       <Layout userName={user?.username || ""} pageTitle="Mis Proyectos">
         <Wrap spacing={8}>
-          <WrapItem width="-moz-fit-content" maxW={{ base: "100%", lg: "50%" }}>
-            <Screen
-              title="Viaje a Japon"
-              description="Distinctio nam eveniet distinctio totam. Voluptatem quaerat tempora fugit quae corrupti. Vel sit beatae placeat quia qui autem fugiat ex."
-            >
-              <Table data={data} columns={columns} />
-            </Screen>
-          </WrapItem>
-          <WrapItem width="-moz-fit-content" maxW={{ base: "100%", lg: "50%" }}>
-            <Screen
-              title="Casa"
-              description="Esse quasi tempora est minima voluptas blanditiis. Et at et dolor vel. Voluptatibus dolores id id officia iure. Omnis in quia nostrum ipsum. Eius modi qui eligendi beatae. Rerum exercitationem nisi occaecati sapiente minima fuga fugit voluptatem consequatur."
-            >
-              <Table data={data} columns={columns} />
-            </Screen>
-          </WrapItem>
+          {renderTables}
           <WrapItem
             width="100%"
-            maxW={{ base: "100%", lg: "541px" }}
+            maxW={{ base: "100%", lg:  "31%" }}
             minH="123px"
           >
             <Screen>
