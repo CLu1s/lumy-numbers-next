@@ -40,7 +40,13 @@ const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
     reset();
     onClose();
   }, [reset, onClose]);
-
+  useEffect(() => {
+    if (toEdit) {
+      setDate(new Date(parseISO(toEdit.date)));
+    } else {
+      setDate(new Date());
+    }
+  }, [toEdit]);
   const onSubmit = (data: any, e: any) => {
     e.preventDefault();
     if (!toEdit) {
