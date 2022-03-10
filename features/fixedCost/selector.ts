@@ -35,7 +35,7 @@ export const getItems = createSelector(
     const items = orderItems(
       state.items,
       transactions,
-      bucketState.fixedCostCategoryID
+      bucketState?.fixedCostCategoryID
     );
     return _orderBy(items, ["status"], ["desc"]);
   }
@@ -51,7 +51,7 @@ export const getPendingItems = createSelector(
     const items = orderItems(
       state.items,
       transactions,
-      bucketState.fixedCostCategoryID
+      bucketState?.fixedCostCategoryID
     );
     return items.filter((item) => item.status !== "paid");
   }
