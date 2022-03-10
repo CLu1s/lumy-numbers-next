@@ -24,7 +24,7 @@ function Home({ user }) {
         <Stack spacing={8}>
           <BudgetCard />
           <Wrap spacing={4}>
-            <WrapItem maxW={{ base: "100%", lg: "50%" }}>
+            <WrapItem maxW={{ base: "100%", lg: "50%" }}  width="-moz-fit-content">
               <Screen
                 title="Categorías"
                 description="Cada categoría muestra el total disponible en tu presupuesto con la cantidad y porcentaje que le queda."
@@ -32,7 +32,7 @@ function Home({ user }) {
                 <Categories />
               </Screen>
             </WrapItem>
-            <WrapItem maxW={{ base: "100%", lg: "46%" }} w="100%">
+            <WrapItem maxW={{ base: "100%", lg: "50%" }}  width="-moz-fit-content">
               <Screen title="Transacciones Recientes">
                 <LastsTransactions />
                 <Link href="/transacciones" passHref>
@@ -42,7 +42,7 @@ function Home({ user }) {
                 </Link>
               </Screen>
             </WrapItem>
-            <WrapItem maxW={{ base: "100%", lg: "46%" }} w="100%">
+            <WrapItem maxW={{ base: "100%", lg: "50%" }}  width="-moz-fit-content">
               <FixedCostDashboard />
             </WrapItem>
           </Wrap>

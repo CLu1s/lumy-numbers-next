@@ -1,7 +1,8 @@
 import { AiFillHome } from "react-icons/ai";
 import { MdAccountBalanceWallet } from "react-icons/md";
-import { RiBook2Fill } from "react-icons/ri";
+import { RiBook2Fill,RiHandHeartFill } from "react-icons/ri";
 import { ImStatsBars } from "react-icons/im";
+
 type MenuItem = {
   id: number;
   label: string;
@@ -30,6 +31,12 @@ export const menuList: MenuItem[] = [
   },
   {
     id: 4,
+    label: "Mis Proyectos",
+    path: "/proyectos",
+    icon: <RiHandHeartFill />,
+  },
+  {
+    id: 5,
     label: "Presupuesto",
     path: "/presupuesto",
     icon: <ImStatsBars />,
