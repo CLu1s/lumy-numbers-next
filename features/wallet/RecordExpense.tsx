@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from "react";
+import React, { useState, useEffect, forwardRef } from "react";
 import { useForm } from "react-hook-form";
 import { Text } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
@@ -30,6 +30,15 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   );
   const categories = useSelector(getCategories);
   const bucketID = useSelector(getBucketID);
+
+  useEffect(() => {
+    if (toEdit) {
+      setDate(new Date(parseISO(toEdit.date)));
+    } else {
+      setDate(new Date());
+    }
+  }, [toEdit]);
+
   const {
     register,
     handleSubmit,
