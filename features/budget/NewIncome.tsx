@@ -23,12 +23,9 @@ type Props = {
 
 const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
-  const [selected, setSelected] = useState<any>();
   const [date, setDate] = useState<Date | null>(
     toEdit ? new Date(parseISO(toEdit.date)) : new Date()
   );
-  const categories = useSelector(getCategories);
-  const status = useSelector(getStatus);
   const bucketID = useSelector(getBucketID);
   const {
     register,
@@ -36,6 +33,15 @@ const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
     reset,
     formState: { errors },
   } = useForm();
+  useEffect(() => {
+    if (toEdit) {
+      setDate(new Date(parseISO(toEdit.date)));
+    } else {
+      setDate(new Date());
+    }
+    reset();
+  }, [reset, toEdit]);
+
   const handleClose = useCallback(() => {
     reset();
     onClose();
