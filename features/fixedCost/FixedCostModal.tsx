@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef,useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Text } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
@@ -28,6 +28,11 @@ const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
     reset,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    reset();
+  }, [reset, toEdit]);
+
   const handleClose = () => {
     reset();
     onClose();

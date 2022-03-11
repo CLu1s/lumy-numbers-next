@@ -30,21 +30,23 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   );
   const categories = useSelector(getCategories);
   const bucketID = useSelector(getBucketID);
-
-  useEffect(() => {
-    if (toEdit) {
-      setDate(new Date(parseISO(toEdit.date)));
-    } else {
-      setDate(new Date());
-    }
-  }, [toEdit]);
-
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  
+  useEffect(() => {
+    if (toEdit) {
+      setDate(new Date(parseISO(toEdit.date)));
+      setSelected(toEdit.categoryID);
+    } else {
+      setDate(new Date());
+    }
+    reset();
+  }, [reset, toEdit]);
+
   const handleClose = () => {
     reset();
     onClose();
