@@ -124,3 +124,27 @@ export type FixedCostState = {
   status: LoadingStates;
   error: string | null;
 };
+
+export type Project = {
+  id: string;
+  name: string;
+  description: string;
+  status: string;
+  date: string;
+  dueDate: string;
+  amountGoal: number;
+  createdAt?: string;
+  updatedAt?: string;
+  movements: Movement[];
+};
+
+export type Movement = {
+  id: string;
+  projectID: string;
+  amount: number;
+  date: string;
+  description: string;
+  category?: Category;
+  createdAt?: string;
+  updatedAt?: string;
+};
