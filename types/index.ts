@@ -127,6 +127,7 @@ export type FixedCostState = {
 
 export type Project = {
   id: string;
+  bucketID: string;
   name: string;
   description: string;
   status: string;
@@ -144,7 +145,6 @@ export type Movement = {
   amount: number;
   date: string;
   description: string;
-  category?: Category;
   createdAt?: string;
   updatedAt?: string;
 };

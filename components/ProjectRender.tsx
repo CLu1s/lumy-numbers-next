@@ -11,9 +11,10 @@ import { date, money } from "../utils/";
 
 type Props = {
   project: ProjectType;
+  onOpen: (id: string, m: number) => void;
 };
 
-function ProjectRender({ project }: Props) {
+function ProjectRender({ project, onOpen }: Props) {
   const columns = useMemo(
     () => [
       {
@@ -99,7 +100,11 @@ function ProjectRender({ project }: Props) {
             </WrapItem>
           </Wrap>
           <HStack justifyContent="space-between" spacing={4}>
-            <Button size="md" colorScheme="blue">
+            <Button
+              size="md"
+              colorScheme="blue"
+              onClick={() => onOpen(project.id, mensualities)}
+            >
               Abonar
             </Button>
           </HStack>
