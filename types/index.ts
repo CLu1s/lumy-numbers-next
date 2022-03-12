@@ -148,3 +148,9 @@ export type Movement = {
   createdAt?: string;
   updatedAt?: string;
 };
+
+export type ProjectsState = {
+  items: Project[];
+  status: LoadingStates;
+  error?: string;
+};

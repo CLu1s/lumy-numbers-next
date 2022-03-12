@@ -1,11 +1,13 @@
 import { useMemo } from "react";
 
 import { FiEdit, FiTrash2 } from "react-icons/fi";
-import { Button, Wrap, WrapItem, Stack, HStack } from "@chakra-ui/react";
+import differenceInMonths from "date-fns/differenceInMonths";
+import { Button, Wrap, WrapItem, Stack, HStack, Box } from "@chakra-ui/react";
 import Table from "./Table";
 import Screen from "./Screen";
 import Stats from "./Stats";
 import { Project as ProjectType } from "../types/";
+import { date, money } from "../utils/";
 
 type Props = {
   project: ProjectType;
@@ -17,6 +19,7 @@ function ProjectRender({ project }: Props) {
       {
         Header: "Fecha",
         accessor: "date",
+        Cell: ({ value }) => date(new Date(value), "dd/MM/yyyy"),
       },
       {
         Header: "Descripción",
@@ -25,6 +28,7 @@ function ProjectRender({ project }: Props) {
       {
         Header: "Monto",
         accessor: "amount",
+        Cell: ({ value }) => money(value),
       },
       {
         id: "edit",
@@ -59,7 +63,9 @@ function ProjectRender({ project }: Props) {
       amountPending: project.amountGoal,
     }
   );
-
+  const mensualities =
+    project.amountGoal /
+    differenceInMonths(new Date(project.dueDate), new Date(project.date));
   return (
     <WrapItem
       key={project.id}
@@ -68,27 +74,28 @@ function ProjectRender({ project }: Props) {
     >
       <Screen title={project.name} description={project.description}>
         <Stack spacing={4}>
-          <Wrap justifyContent="space-between" spacing={4}>
-            <WrapItem>
-              <Stats name="Meta" amount={Number(project.amountGoal)} />
-            </WrapItem>
-            <WrapItem>
+          <Wrap justifyContent="space-between" spacing={7}>
+            <WrapItem flex="1 1 0">
               <Stats
-                name="Ahorrado a la fecha"
-                amount={numbers.amountPaid}
+                name="Meta"
+                amount={Number(project.amountGoal)}
+                helpText={`Fecha objetivo: ${date(
+                  new Date(project.dueDate),
+                  "dd/MM/yyyy"
+                )}`}
               />
             </WrapItem>
-            <WrapItem>
+            <WrapItem flex="1 1 0">
+              <Stats name="Ahorrado a la fecha" amount={numbers.amountPaid} />
+            </WrapItem>
+            <WrapItem flex="1 1 0">
               <Stats
                 name="Cantidad por Ahorrar"
                 amount={numbers.amountPending}
               />
             </WrapItem>
-            <WrapItem>
-              <Stats
-                name="Menusalidad Sugerida"
-                amount={numbers.amountPaid}
-              />
+            <WrapItem flex="1 1 0">
+              <Stats name="Mensualidad Sugerida" amount={mensualities} />
             </WrapItem>
           </Wrap>
           <HStack justifyContent="space-between" spacing={4}>
