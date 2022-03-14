@@ -22,7 +22,7 @@ type Props = {
 const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
   const [date, setDate] = useState<Date | null>(
-    toEdit ? new Date(parseISO(toEdit.date)) : new Date()
+    toEdit ? new Date(parseISO(toEdit.endDate)) : new Date()
   );
   const bucketID = useSelector(getBucketID);
   const {
@@ -33,7 +33,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
   } = useForm();
   useEffect(() => {
     if (toEdit) {
-      setDate(new Date(parseISO(toEdit.date)));
+      setDate(new Date(parseISO(toEdit.endDate)));
     } else {
       setDate(new Date());
     }
@@ -46,7 +46,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
   }, [reset, onClose]);
   useEffect(() => {
     if (toEdit) {
-      setDate(new Date(parseISO(toEdit.date)));
+      setDate(new Date(parseISO(toEdit.endDate)));
     } else {
       setDate(new Date());
     }
@@ -58,7 +58,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
         addProject({
           ...data,
           bucketID,
-          dueDate: date,
+          endDate: date,
         })
       );
     } else {

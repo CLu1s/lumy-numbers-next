@@ -105,6 +105,22 @@ export const onCreateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      projectsCategoryID
+      projects {
+        items {
+          id
+          name
+          description
+          bucketID
+          status
+          startDate
+          endDate
+          amountGoal
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -180,6 +196,22 @@ export const onUpdateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      projectsCategoryID
+      projects {
+        items {
+          id
+          name
+          description
+          bucketID
+          status
+          startDate
+          endDate
+          amountGoal
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -250,6 +282,22 @@ export const onDeleteBucket = /* GraphQL */ `
           status
           description
           bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      projectsCategoryID
+      projects {
+        items {
+          id
+          name
+          description
+          bucketID
+          status
+          startDate
+          endDate
+          amountGoal
           createdAt
           updatedAt
         }
@@ -426,6 +474,129 @@ export const onDeleteFixedCost = /* GraphQL */ `
       status
       description
       bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateProject = /* GraphQL */ `
+  subscription OnCreateProject {
+    onCreateProject {
+      id
+      name
+      description
+      bucketID
+      status
+      startDate
+      endDate
+      amountGoal
+      movements {
+        items {
+          id
+          projectID
+          amount
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateProject = /* GraphQL */ `
+  subscription OnUpdateProject {
+    onUpdateProject {
+      id
+      name
+      description
+      bucketID
+      status
+      startDate
+      endDate
+      amountGoal
+      movements {
+        items {
+          id
+          projectID
+          amount
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteProject = /* GraphQL */ `
+  subscription OnDeleteProject {
+    onDeleteProject {
+      id
+      name
+      description
+      bucketID
+      status
+      startDate
+      endDate
+      amountGoal
+      movements {
+        items {
+          id
+          projectID
+          amount
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateMovement = /* GraphQL */ `
+  subscription OnCreateMovement {
+    onCreateMovement {
+      id
+      projectID
+      amount
+      date
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateMovement = /* GraphQL */ `
+  subscription OnUpdateMovement {
+    onUpdateMovement {
+      id
+      projectID
+      amount
+      date
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteMovement = /* GraphQL */ `
+  subscription OnDeleteMovement {
+    onDeleteMovement {
+      id
+      projectID
+      amount
+      date
+      description
       createdAt
       updatedAt
     }

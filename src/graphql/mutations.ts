@@ -117,6 +117,22 @@ export const createBucket = /* GraphQL */ `
         }
         nextToken
       }
+      projectsCategoryID
+      projects {
+        items {
+          id
+          name
+          description
+          bucketID
+          status
+          startDate
+          endDate
+          amountGoal
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -195,6 +211,22 @@ export const updateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      projectsCategoryID
+      projects {
+        items {
+          id
+          name
+          description
+          bucketID
+          status
+          startDate
+          endDate
+          amountGoal
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -268,6 +300,22 @@ export const deleteBucket = /* GraphQL */ `
           status
           description
           bucketID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      projectsCategoryID
+      projects {
+        items {
+          id
+          name
+          description
+          bucketID
+          status
+          startDate
+          endDate
+          amountGoal
           createdAt
           updatedAt
         }
@@ -480,6 +528,147 @@ export const deleteFixedCost = /* GraphQL */ `
       status
       description
       bucketID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createProject = /* GraphQL */ `
+  mutation CreateProject(
+    $input: CreateProjectInput!
+    $condition: ModelProjectConditionInput
+  ) {
+    createProject(input: $input, condition: $condition) {
+      id
+      name
+      description
+      bucketID
+      status
+      startDate
+      endDate
+      amountGoal
+      movements {
+        items {
+          id
+          projectID
+          amount
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateProject = /* GraphQL */ `
+  mutation UpdateProject(
+    $input: UpdateProjectInput!
+    $condition: ModelProjectConditionInput
+  ) {
+    updateProject(input: $input, condition: $condition) {
+      id
+      name
+      description
+      bucketID
+      status
+      startDate
+      endDate
+      amountGoal
+      movements {
+        items {
+          id
+          projectID
+          amount
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteProject = /* GraphQL */ `
+  mutation DeleteProject(
+    $input: DeleteProjectInput!
+    $condition: ModelProjectConditionInput
+  ) {
+    deleteProject(input: $input, condition: $condition) {
+      id
+      name
+      description
+      bucketID
+      status
+      startDate
+      endDate
+      amountGoal
+      movements {
+        items {
+          id
+          projectID
+          amount
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createMovement = /* GraphQL */ `
+  mutation CreateMovement(
+    $input: CreateMovementInput!
+    $condition: ModelMovementConditionInput
+  ) {
+    createMovement(input: $input, condition: $condition) {
+      id
+      projectID
+      amount
+      date
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMovement = /* GraphQL */ `
+  mutation UpdateMovement(
+    $input: UpdateMovementInput!
+    $condition: ModelMovementConditionInput
+  ) {
+    updateMovement(input: $input, condition: $condition) {
+      id
+      projectID
+      amount
+      date
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMovement = /* GraphQL */ `
+  mutation DeleteMovement(
+    $input: DeleteMovementInput!
+    $condition: ModelMovementConditionInput
+  ) {
+    deleteMovement(input: $input, condition: $condition) {
+      id
+      projectID
+      amount
+      date
+      description
       createdAt
       updatedAt
     }

@@ -5,6 +5,7 @@ import {
   getBucketID,
   getLastFetched,
 } from "../features/bucket/selector";
+import { fetchProjects } from "../features/project/projectsSlice";
 import { fetchBucket, setLastFetched } from "../features/bucket/bucketSlice";
 import { fetchTransactions } from "../features/wallet/walletSlice";
 import { getStatus as getBudgetStatus } from "../features/budget/selector";
@@ -25,6 +26,7 @@ const useBaseInfo = (userName?: string) => {
     dispatch(fetchFixedCost(bucketID));
     dispatch(fetchIncomes(bucketID));
     dispatch(fetchCategories(bucketID));
+    dispatch(fetchProjects(bucketID));
     dispatch(setLastFetched(new Date()));
   }, [dispatch, bucketID]);
   useEffect(() => {

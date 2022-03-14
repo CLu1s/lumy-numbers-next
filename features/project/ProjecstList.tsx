@@ -11,10 +11,11 @@ import {
 } from "@chakra-ui/react";
 import Screen from "../../components/Screen";
 import ProjectRender from "../../components/ProjectRender";
-import { getProjects } from "./selector";
+import { getProjects, getCategoryID } from "./selector";
 import { Project, Movement } from "../../types";
 import NewProject from "./NewProject";
 import NewMovement from "./NewMovement";
+import SaveCategoryID from "./SaveCategoryID";
 
 function ProjectsList() {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ function ProjectsList() {
   const [movementToEdit, setMovementToEdit] = useState<Movement>(null);
   const [projectID, setProjectID] = useState<string>(null);
   const [monthlyPayment, setMonthlyPayment] = useState<number>(0);
-
+  const categoryID = useSelector(getCategoryID);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const moveModal = useDisclosure();
 
@@ -71,22 +72,26 @@ function ProjectsList() {
         >
           <Screen>
             <Flex direction="column" align="center" justifyContent="center">
-              <Button
-                w="full"
-                h="full"
-                minH="90px"
-                color="gray.400"
-                colorScheme="whiteAlpha"
-                borderWidth="1px"
-                borderColor="gray.200"
-                borderRadius="md"
-                onClick={onOpen}
-              >
-                <Flex direction="column" align="center" justify="center">
-                  <VscAdd />
-                  <Text>Nuevo</Text>
-                </Flex>
-              </Button>
+              {categoryID ? (
+                <Button
+                  w="full"
+                  h="full"
+                  minH="90px"
+                  color="gray.400"
+                  colorScheme="whiteAlpha"
+                  borderWidth="1px"
+                  borderColor="gray.200"
+                  borderRadius="md"
+                  onClick={onOpen}
+                >
+                  <Flex direction="column" align="center" justify="center">
+                    <VscAdd />
+                    <Text>Nuevo</Text>
+                  </Flex>
+                </Button>
+              ) : (
+                <SaveCategoryID />
+              )}
             </Flex>
           </Screen>
         </WrapItem>

@@ -13,16 +13,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Table from "../../components/Table";
 import { getItems, getCategoryID } from "./selector";
-import {
-  deleteFixedCost,
-  updateFixedCost,
-} from "./fixedCostSlice";
+import { deleteFixedCost, updateFixedCost } from "./fixedCostSlice";
 import { addNewTransaction } from "../wallet/walletSlice";
 import { getBucketID } from "../bucket/selector";
 import FixedCostModal from "./FixedCostModal";
 import AlertDialog from "../../components/AlertDialog";
 import ItemsList from "./ItemsList";
 import { money } from "../../utils";
+import NoRegisters from "../../components/NoRegisters";
 
 const DisplayData = (props: any) => {
   const items = useSelector(getItems);
@@ -50,7 +48,6 @@ const DisplayData = (props: any) => {
   const managePaid = (data: any) => {
     const { createdAt, updatedAt, ...input } = data;
     const { type, status, ...trans } = input;
-    dispatch(updateFixedCost({ ...data, status: "paid" }));
     dispatch(
       addNewTransaction({
         ...trans,
@@ -146,11 +143,7 @@ const DisplayData = (props: any) => {
             </Box>
           </Box>
         ) : (
-          <Center>
-            <Heading as="h6" size="xs" textColor="gray.400">
-              No hay registros
-            </Heading>
-          </Center>
+          <NoRegisters />
         )}
       </Stack>
     </>

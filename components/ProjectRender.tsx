@@ -8,6 +8,7 @@ import Screen from "./Screen";
 import Stats from "./Stats";
 import { Project as ProjectType } from "../types/";
 import { date, money } from "../utils/";
+import NoRegisters from "./NoRegisters";
 
 type Props = {
   project: ProjectType;
@@ -53,20 +54,26 @@ function ProjectRender({ project, onOpen }: Props) {
     []
   );
 
-  const numbers = project.movements.reduce(
-    (acc, curr) => {
-      acc.amountPaid += curr.amount;
-      acc.amountPending -= curr.amount;
-      return acc;
-    },
-    {
-      amountPaid: 0,
-      amountPending: project.amountGoal,
-    }
-  );
+  const numbers =
+    project.movements.length > 0
+      ? project.movements.reduce(
+          (acc, curr) => {
+            acc.amountPaid += curr.amount;
+            acc.amountPending -= curr.amount;
+            return acc;
+          },
+          {
+            amountPaid: 0,
+            amountPending: project.amountGoal,
+          }
+        )
+      : {
+          amountPaid: 0,
+          amountPending: project.amountGoal,
+        };
   const mensualities =
     project.amountGoal /
-    differenceInMonths(new Date(project.dueDate), new Date(project.date));
+    differenceInMonths(new Date(project.endDate), new Date(project.startDate));
   return (
     <WrapItem
       key={project.id}
@@ -81,7 +88,7 @@ function ProjectRender({ project, onOpen }: Props) {
                 name="Meta"
                 amount={Number(project.amountGoal)}
                 helpText={`Fecha objetivo: ${date(
-                  new Date(project.dueDate),
+                  new Date(project.endDate),
                   "dd/MM/yyyy"
                 )}`}
               />
@@ -108,7 +115,11 @@ function ProjectRender({ project, onOpen }: Props) {
               Abonar
             </Button>
           </HStack>
-          <Table data={project.movements} columns={columns} />
+          {project.movements.length ? (
+            <Table data={project.movements} columns={columns} />
+          ) : (
+            <NoRegisters />
+          )}
         </Stack>
       </Screen>
     </WrapItem>

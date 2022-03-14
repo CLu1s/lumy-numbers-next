@@ -31,6 +31,8 @@ type Bucket @model {
   categories: [Category] @hasMany(indexName: "byBucket", fields: ["id"])
   fixedCostCategoryID: ID
   fixedCost: [FixedCost] @hasMany(indexName: "byBucket", fields: ["id"])
+  projectsCategoryID: ID
+  projects: [Project] @hasMany(indexName: "byBucket", fields: ["id"])
 }
 
 type Income @model {
@@ -73,4 +75,30 @@ type FixedCost @model {
       queryField: "fixedCostByBucket"
       sortKeyFields: ["id"]
     )
+}
+
+type Project @model {
+  id: ID!
+  name: String!
+    @index(name: "byName", queryField: "projectByName", sortKeyFields: ["id"])
+  description: String
+  bucketID: ID!
+    @index(
+      name: "byBucket"
+      queryField: "ProjectsByBucket"
+      sortKeyFields: ["id"]
+    )
+  status: String
+  startDate: String
+  endDate: String
+  amountGoal: Float
+  movements: [Movement] @hasMany(indexName: "byProject", fields: ["id"])
+}
+
+type Movement @model {
+  id: ID!
+  projectID: ID! @index(name: "byProject", sortKeyFields: ["id"])
+  amount: Float!
+  date: String!
+  description: String
 }

@@ -56,6 +56,7 @@ export type Bucket = {
   nanoid: string;
   listIncomes: Income[];
   fixedCostCategoryID: string;
+  projectsCategoryID: string;
   collaborators: {
     items: User[];
     nextToken: string | null;
@@ -131,8 +132,8 @@ export type Project = {
   name: string;
   description: string;
   status: string;
-  date: string;
-  dueDate: string;
+  startDate: string;
+  endDate: string;
   amountGoal: number;
   createdAt?: string;
   updatedAt?: string;
@@ -152,5 +153,6 @@ export type Movement = {
 export type ProjectsState = {
   items: Project[];
   status: LoadingStates;
+  categoryID: string;
   error?: string;
 };

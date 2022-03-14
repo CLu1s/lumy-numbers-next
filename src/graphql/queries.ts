@@ -101,6 +101,22 @@ export const getBucket = /* GraphQL */ `
         }
         nextToken
       }
+      projectsCategoryID
+      projects {
+        items {
+          id
+          name
+          description
+          bucketID
+          status
+          startDate
+          endDate
+          amountGoal
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -131,6 +147,10 @@ export const listBuckets = /* GraphQL */ `
         }
         fixedCostCategoryID
         fixedCost {
+          nextToken
+        }
+        projectsCategoryID
+        projects {
           nextToken
         }
         createdAt
@@ -282,6 +302,93 @@ export const listFixedCosts = /* GraphQL */ `
     }
   }
 `;
+export const getProject = /* GraphQL */ `
+  query GetProject($id: ID!) {
+    getProject(id: $id) {
+      id
+      name
+      description
+      bucketID
+      status
+      startDate
+      endDate
+      amountGoal
+      movements {
+        items {
+          id
+          projectID
+          amount
+          date
+          description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listProjects = /* GraphQL */ `
+  query ListProjects(
+    $filter: ModelProjectFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listProjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        description
+        bucketID
+        status
+        startDate
+        endDate
+        amountGoal
+        movements {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getMovement = /* GraphQL */ `
+  query GetMovement($id: ID!) {
+    getMovement(id: $id) {
+      id
+      projectID
+      amount
+      date
+      description
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMovements = /* GraphQL */ `
+  query ListMovements(
+    $filter: ModelMovementFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMovements(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        projectID
+        amount
+        date
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const userByUserName = /* GraphQL */ `
   query UserByUserName(
     $userName: String!
@@ -347,6 +454,10 @@ export const bucketByName = /* GraphQL */ `
         fixedCost {
           nextToken
         }
+        projectsCategoryID
+        projects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -391,6 +502,10 @@ export const bucketByNanoid = /* GraphQL */ `
         fixedCost {
           nextToken
         }
+        projectsCategoryID
+        projects {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -422,6 +537,78 @@ export const fixedCostByBucket = /* GraphQL */ `
         status
         description
         bucketID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const projectByName = /* GraphQL */ `
+  query ProjectByName(
+    $name: String!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelProjectFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    projectByName(
+      name: $name
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        description
+        bucketID
+        status
+        startDate
+        endDate
+        amountGoal
+        movements {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const projectsByBucket = /* GraphQL */ `
+  query ProjectsByBucket(
+    $bucketID: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelProjectFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    ProjectsByBucket(
+      bucketID: $bucketID
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        description
+        bucketID
+        status
+        startDate
+        endDate
+        amountGoal
+        movements {
+          nextToken
+        }
         createdAt
         updatedAt
       }

@@ -25,7 +25,7 @@ import AlertDialog from "../../components/AlertDialog";
 import { deleteTransaction } from "./walletSlice";
 import TransactionMini from "../../components/TransactionMini";
 import { compareDates } from "../../utils";
-
+import NoRegisters from "../../components/NoRegisters";
 enum Order {
   ASC = "asc",
   DESC = "desc",
@@ -194,11 +194,7 @@ export default function DataTable() {
               </Box>
             </>
           ) : (
-            <Center>
-              <Heading as="h6" size="xs" textColor="gray.400">
-                No hay registros
-              </Heading>
-            </Center>
+            <NoRegisters />
           )}
         </TableCards>
       </Stack>

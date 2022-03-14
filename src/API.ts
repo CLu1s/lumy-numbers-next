@@ -96,12 +96,14 @@ export type CreateBucketInput = {
   name: string,
   nanoid: string,
   fixedCostCategoryID?: string | null,
+  projectsCategoryID?: string | null,
 };
 
 export type ModelBucketConditionInput = {
   name?: ModelStringInput | null,
   nanoid?: ModelStringInput | null,
   fixedCostCategoryID?: ModelIDInput | null,
+  projectsCategoryID?: ModelIDInput | null,
   and?: Array< ModelBucketConditionInput | null > | null,
   or?: Array< ModelBucketConditionInput | null > | null,
   not?: ModelBucketConditionInput | null,
@@ -118,6 +120,8 @@ export type Bucket = {
   categories?: ModelCategoryConnection | null,
   fixedCostCategoryID?: string | null,
   fixedCost?: ModelFixedCostConnection | null,
+  projectsCategoryID?: string | null,
+  projects?: ModelProjectConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -201,11 +205,50 @@ export type FixedCost = {
   updatedAt: string,
 };
 
+export type ModelProjectConnection = {
+  __typename: "ModelProjectConnection",
+  items:  Array<Project | null >,
+  nextToken?: string | null,
+};
+
+export type Project = {
+  __typename: "Project",
+  id: string,
+  name: string,
+  description?: string | null,
+  bucketID: string,
+  status?: string | null,
+  startDate?: string | null,
+  endDate?: string | null,
+  amountGoal?: number | null,
+  movements?: ModelMovementConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelMovementConnection = {
+  __typename: "ModelMovementConnection",
+  items:  Array<Movement | null >,
+  nextToken?: string | null,
+};
+
+export type Movement = {
+  __typename: "Movement",
+  id: string,
+  projectID: string,
+  amount: number,
+  date: string,
+  description?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
 export type UpdateBucketInput = {
   id: string,
   name?: string | null,
   nanoid?: string | null,
   fixedCostCategoryID?: string | null,
+  projectsCategoryID?: string | null,
 };
 
 export type DeleteBucketInput = {
@@ -371,6 +414,75 @@ export type DeleteFixedCostInput = {
   id: string,
 };
 
+export type CreateProjectInput = {
+  id?: string | null,
+  name: string,
+  description?: string | null,
+  bucketID: string,
+  status?: string | null,
+  startDate?: string | null,
+  endDate?: string | null,
+  amountGoal?: number | null,
+};
+
+export type ModelProjectConditionInput = {
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  status?: ModelStringInput | null,
+  startDate?: ModelStringInput | null,
+  endDate?: ModelStringInput | null,
+  amountGoal?: ModelFloatInput | null,
+  and?: Array< ModelProjectConditionInput | null > | null,
+  or?: Array< ModelProjectConditionInput | null > | null,
+  not?: ModelProjectConditionInput | null,
+};
+
+export type UpdateProjectInput = {
+  id: string,
+  name?: string | null,
+  description?: string | null,
+  bucketID?: string | null,
+  status?: string | null,
+  startDate?: string | null,
+  endDate?: string | null,
+  amountGoal?: number | null,
+};
+
+export type DeleteProjectInput = {
+  id: string,
+};
+
+export type CreateMovementInput = {
+  id?: string | null,
+  projectID: string,
+  amount: number,
+  date: string,
+  description?: string | null,
+};
+
+export type ModelMovementConditionInput = {
+  projectID?: ModelIDInput | null,
+  amount?: ModelFloatInput | null,
+  date?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelMovementConditionInput | null > | null,
+  or?: Array< ModelMovementConditionInput | null > | null,
+  not?: ModelMovementConditionInput | null,
+};
+
+export type UpdateMovementInput = {
+  id: string,
+  projectID?: string | null,
+  amount?: number | null,
+  date?: string | null,
+  description?: string | null,
+};
+
+export type DeleteMovementInput = {
+  id: string,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   userName?: ModelStringInput | null,
@@ -385,6 +497,7 @@ export type ModelBucketFilterInput = {
   name?: ModelStringInput | null,
   nanoid?: ModelStringInput | null,
   fixedCostCategoryID?: ModelIDInput | null,
+  projectsCategoryID?: ModelIDInput | null,
   and?: Array< ModelBucketFilterInput | null > | null,
   or?: Array< ModelBucketFilterInput | null > | null,
   not?: ModelBucketFilterInput | null,
@@ -443,6 +556,31 @@ export type ModelFixedCostFilterInput = {
   and?: Array< ModelFixedCostFilterInput | null > | null,
   or?: Array< ModelFixedCostFilterInput | null > | null,
   not?: ModelFixedCostFilterInput | null,
+};
+
+export type ModelProjectFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  status?: ModelStringInput | null,
+  startDate?: ModelStringInput | null,
+  endDate?: ModelStringInput | null,
+  amountGoal?: ModelFloatInput | null,
+  and?: Array< ModelProjectFilterInput | null > | null,
+  or?: Array< ModelProjectFilterInput | null > | null,
+  not?: ModelProjectFilterInput | null,
+};
+
+export type ModelMovementFilterInput = {
+  id?: ModelIDInput | null,
+  projectID?: ModelIDInput | null,
+  amount?: ModelFloatInput | null,
+  date?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelMovementFilterInput | null > | null,
+  or?: Array< ModelMovementFilterInput | null > | null,
+  not?: ModelMovementFilterInput | null,
 };
 
 export type ModelIDKeyConditionInput = {
@@ -594,6 +732,24 @@ export type CreateBucketMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    projectsCategoryID?: string | null,
+    projects?:  {
+      __typename: "ModelProjectConnection",
+      items:  Array< {
+        __typename: "Project",
+        id: string,
+        name: string,
+        description?: string | null,
+        bucketID: string,
+        status?: string | null,
+        startDate?: string | null,
+        endDate?: string | null,
+        amountGoal?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -684,6 +840,24 @@ export type UpdateBucketMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    projectsCategoryID?: string | null,
+    projects?:  {
+      __typename: "ModelProjectConnection",
+      items:  Array< {
+        __typename: "Project",
+        id: string,
+        name: string,
+        description?: string | null,
+        bucketID: string,
+        status?: string | null,
+        startDate?: string | null,
+        endDate?: string | null,
+        amountGoal?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -769,6 +943,24 @@ export type DeleteBucketMutation = {
         status?: string | null,
         description?: string | null,
         bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    projectsCategoryID?: string | null,
+    projects?:  {
+      __typename: "ModelProjectConnection",
+      items:  Array< {
+        __typename: "Project",
+        id: string,
+        name: string,
+        description?: string | null,
+        bucketID: string,
+        status?: string | null,
+        startDate?: string | null,
+        endDate?: string | null,
+        amountGoal?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -1010,6 +1202,165 @@ export type DeleteFixedCostMutation = {
   } | null,
 };
 
+export type CreateProjectMutationVariables = {
+  input: CreateProjectInput,
+  condition?: ModelProjectConditionInput | null,
+};
+
+export type CreateProjectMutation = {
+  createProject?:  {
+    __typename: "Project",
+    id: string,
+    name: string,
+    description?: string | null,
+    bucketID: string,
+    status?: string | null,
+    startDate?: string | null,
+    endDate?: string | null,
+    amountGoal?: number | null,
+    movements?:  {
+      __typename: "ModelMovementConnection",
+      items:  Array< {
+        __typename: "Movement",
+        id: string,
+        projectID: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateProjectMutationVariables = {
+  input: UpdateProjectInput,
+  condition?: ModelProjectConditionInput | null,
+};
+
+export type UpdateProjectMutation = {
+  updateProject?:  {
+    __typename: "Project",
+    id: string,
+    name: string,
+    description?: string | null,
+    bucketID: string,
+    status?: string | null,
+    startDate?: string | null,
+    endDate?: string | null,
+    amountGoal?: number | null,
+    movements?:  {
+      __typename: "ModelMovementConnection",
+      items:  Array< {
+        __typename: "Movement",
+        id: string,
+        projectID: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteProjectMutationVariables = {
+  input: DeleteProjectInput,
+  condition?: ModelProjectConditionInput | null,
+};
+
+export type DeleteProjectMutation = {
+  deleteProject?:  {
+    __typename: "Project",
+    id: string,
+    name: string,
+    description?: string | null,
+    bucketID: string,
+    status?: string | null,
+    startDate?: string | null,
+    endDate?: string | null,
+    amountGoal?: number | null,
+    movements?:  {
+      __typename: "ModelMovementConnection",
+      items:  Array< {
+        __typename: "Movement",
+        id: string,
+        projectID: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateMovementMutationVariables = {
+  input: CreateMovementInput,
+  condition?: ModelMovementConditionInput | null,
+};
+
+export type CreateMovementMutation = {
+  createMovement?:  {
+    __typename: "Movement",
+    id: string,
+    projectID: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateMovementMutationVariables = {
+  input: UpdateMovementInput,
+  condition?: ModelMovementConditionInput | null,
+};
+
+export type UpdateMovementMutation = {
+  updateMovement?:  {
+    __typename: "Movement",
+    id: string,
+    projectID: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteMovementMutationVariables = {
+  input: DeleteMovementInput,
+  condition?: ModelMovementConditionInput | null,
+};
+
+export type DeleteMovementMutation = {
+  deleteMovement?:  {
+    __typename: "Movement",
+    id: string,
+    projectID: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   id: string,
 };
@@ -1130,6 +1481,24 @@ export type GetBucketQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    projectsCategoryID?: string | null,
+    projects?:  {
+      __typename: "ModelProjectConnection",
+      items:  Array< {
+        __typename: "Project",
+        id: string,
+        name: string,
+        description?: string | null,
+        bucketID: string,
+        status?: string | null,
+        startDate?: string | null,
+        endDate?: string | null,
+        amountGoal?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1168,6 +1537,11 @@ export type ListBucketsQuery = {
       fixedCostCategoryID?: string | null,
       fixedCost?:  {
         __typename: "ModelFixedCostConnection",
+        nextToken?: string | null,
+      } | null,
+      projectsCategoryID?: string | null,
+      projects?:  {
+        __typename: "ModelProjectConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -1347,6 +1721,110 @@ export type ListFixedCostsQuery = {
   } | null,
 };
 
+export type GetProjectQueryVariables = {
+  id: string,
+};
+
+export type GetProjectQuery = {
+  getProject?:  {
+    __typename: "Project",
+    id: string,
+    name: string,
+    description?: string | null,
+    bucketID: string,
+    status?: string | null,
+    startDate?: string | null,
+    endDate?: string | null,
+    amountGoal?: number | null,
+    movements?:  {
+      __typename: "ModelMovementConnection",
+      items:  Array< {
+        __typename: "Movement",
+        id: string,
+        projectID: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListProjectsQueryVariables = {
+  filter?: ModelProjectFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListProjectsQuery = {
+  listProjects?:  {
+    __typename: "ModelProjectConnection",
+    items:  Array< {
+      __typename: "Project",
+      id: string,
+      name: string,
+      description?: string | null,
+      bucketID: string,
+      status?: string | null,
+      startDate?: string | null,
+      endDate?: string | null,
+      amountGoal?: number | null,
+      movements?:  {
+        __typename: "ModelMovementConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetMovementQueryVariables = {
+  id: string,
+};
+
+export type GetMovementQuery = {
+  getMovement?:  {
+    __typename: "Movement",
+    id: string,
+    projectID: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListMovementsQueryVariables = {
+  filter?: ModelMovementFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListMovementsQuery = {
+  listMovements?:  {
+    __typename: "ModelMovementConnection",
+    items:  Array< {
+      __typename: "Movement",
+      id: string,
+      projectID: string,
+      amount: number,
+      date: string,
+      description?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type UserByUserNameQueryVariables = {
   userName: string,
   id?: ModelIDKeyConditionInput | null,
@@ -1409,6 +1887,11 @@ export type BucketByNameQuery = {
         __typename: "ModelFixedCostConnection",
         nextToken?: string | null,
       } | null,
+      projectsCategoryID?: string | null,
+      projects?:  {
+        __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1454,6 +1937,11 @@ export type BucketByNanoidQuery = {
         __typename: "ModelFixedCostConnection",
         nextToken?: string | null,
       } | null,
+      projectsCategoryID?: string | null,
+      projects?:  {
+        __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1481,6 +1969,72 @@ export type FixedCostByBucketQuery = {
       status?: string | null,
       description?: string | null,
       bucketID: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ProjectByNameQueryVariables = {
+  name: string,
+  id?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelProjectFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ProjectByNameQuery = {
+  projectByName?:  {
+    __typename: "ModelProjectConnection",
+    items:  Array< {
+      __typename: "Project",
+      id: string,
+      name: string,
+      description?: string | null,
+      bucketID: string,
+      status?: string | null,
+      startDate?: string | null,
+      endDate?: string | null,
+      amountGoal?: number | null,
+      movements?:  {
+        __typename: "ModelMovementConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ProjectsByBucketQueryVariables = {
+  bucketID: string,
+  id?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelProjectFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ProjectsByBucketQuery = {
+  ProjectsByBucket?:  {
+    __typename: "ModelProjectConnection",
+    items:  Array< {
+      __typename: "Project",
+      id: string,
+      name: string,
+      description?: string | null,
+      bucketID: string,
+      status?: string | null,
+      startDate?: string | null,
+      endDate?: string | null,
+      amountGoal?: number | null,
+      movements?:  {
+        __typename: "ModelMovementConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1601,6 +2155,24 @@ export type OnCreateBucketSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    projectsCategoryID?: string | null,
+    projects?:  {
+      __typename: "ModelProjectConnection",
+      items:  Array< {
+        __typename: "Project",
+        id: string,
+        name: string,
+        description?: string | null,
+        bucketID: string,
+        status?: string | null,
+        startDate?: string | null,
+        endDate?: string | null,
+        amountGoal?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1686,6 +2258,24 @@ export type OnUpdateBucketSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    projectsCategoryID?: string | null,
+    projects?:  {
+      __typename: "ModelProjectConnection",
+      items:  Array< {
+        __typename: "Project",
+        id: string,
+        name: string,
+        description?: string | null,
+        bucketID: string,
+        status?: string | null,
+        startDate?: string | null,
+        endDate?: string | null,
+        amountGoal?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1766,6 +2356,24 @@ export type OnDeleteBucketSubscription = {
         status?: string | null,
         description?: string | null,
         bucketID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    projectsCategoryID?: string | null,
+    projects?:  {
+      __typename: "ModelProjectConnection",
+      items:  Array< {
+        __typename: "Project",
+        id: string,
+        name: string,
+        description?: string | null,
+        bucketID: string,
+        status?: string | null,
+        startDate?: string | null,
+        endDate?: string | null,
+        amountGoal?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -1942,6 +2550,135 @@ export type OnDeleteFixedCostSubscription = {
     status?: string | null,
     description?: string | null,
     bucketID: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateProjectSubscription = {
+  onCreateProject?:  {
+    __typename: "Project",
+    id: string,
+    name: string,
+    description?: string | null,
+    bucketID: string,
+    status?: string | null,
+    startDate?: string | null,
+    endDate?: string | null,
+    amountGoal?: number | null,
+    movements?:  {
+      __typename: "ModelMovementConnection",
+      items:  Array< {
+        __typename: "Movement",
+        id: string,
+        projectID: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateProjectSubscription = {
+  onUpdateProject?:  {
+    __typename: "Project",
+    id: string,
+    name: string,
+    description?: string | null,
+    bucketID: string,
+    status?: string | null,
+    startDate?: string | null,
+    endDate?: string | null,
+    amountGoal?: number | null,
+    movements?:  {
+      __typename: "ModelMovementConnection",
+      items:  Array< {
+        __typename: "Movement",
+        id: string,
+        projectID: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteProjectSubscription = {
+  onDeleteProject?:  {
+    __typename: "Project",
+    id: string,
+    name: string,
+    description?: string | null,
+    bucketID: string,
+    status?: string | null,
+    startDate?: string | null,
+    endDate?: string | null,
+    amountGoal?: number | null,
+    movements?:  {
+      __typename: "ModelMovementConnection",
+      items:  Array< {
+        __typename: "Movement",
+        id: string,
+        projectID: string,
+        amount: number,
+        date: string,
+        description?: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateMovementSubscription = {
+  onCreateMovement?:  {
+    __typename: "Movement",
+    id: string,
+    projectID: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateMovementSubscription = {
+  onUpdateMovement?:  {
+    __typename: "Movement",
+    id: string,
+    projectID: string,
+    amount: number,
+    date: string,
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteMovementSubscription = {
+  onDeleteMovement?:  {
+    __typename: "Movement",
+    id: string,
+    projectID: string,
+    amount: number,
+    date: string,
+    description?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
