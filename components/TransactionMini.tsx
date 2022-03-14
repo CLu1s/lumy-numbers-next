@@ -12,6 +12,7 @@ import _orderBy from "lodash/orderBy";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { money, date, icons } from "../utils";
 import { Transaction } from "../types";
+import Noregisters from "./NoRegisters"
 
 type Props = {
   transactions: Transaction[];
@@ -63,15 +64,7 @@ export default function TransactionMini({
 
   return (
     <Stack spacing={2}>
-      {renderCells.length > 0 ? (
-        renderCells
-      ) : (
-        <Center>
-          <Heading as="h6" size="xs" textColor="gray.400">
-            No hay registros
-          </Heading>
-        </Center>
-      )}
+      {renderCells.length > 0 ? renderCells : <Noregisters />}
     </Stack>
   );
 }

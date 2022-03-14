@@ -1,14 +1,15 @@
-import { useMemo } from "react";
-
+import { useMemo,useEffect } from "react";
+import { useSelector,useDispatch } from "react-redux";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import differenceInMonths from "date-fns/differenceInMonths";
 import { Button, Wrap, WrapItem, Stack, HStack, Box } from "@chakra-ui/react";
-import Table from "./Table";
-import Screen from "./Screen";
-import Stats from "./Stats";
-import { Project as ProjectType } from "../types/";
-import { date, money } from "../utils/";
-import NoRegisters from "./NoRegisters";
+import Table from "../../components/Table";
+import Screen from "../../components/Screen";
+import Stats from "../../components/Stats";
+import { Project as ProjectType } from "../../types";
+import { date, money } from "../../utils";
+import NoRegisters from "../../components/NoRegisters";
+import { fetchMovementsByProject } from "./projectsSlice";
 
 type Props = {
   project: ProjectType;
@@ -16,6 +17,11 @@ type Props = {
 };
 
 function ProjectRender({ project, onOpen }: Props) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchMovementsByProject(project.id));
+  }, [dispatch, project.id]);
+
   const columns = useMemo(
     () => [
       {

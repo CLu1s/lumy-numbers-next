@@ -10,7 +10,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import Screen from "../../components/Screen";
-import ProjectRender from "../../components/ProjectRender";
+import ProjectRender from "./ProjectRender";
 import { getProjects, getCategoryID } from "./selector";
 import { Project, Movement } from "../../types";
 import NewProject from "./NewProject";

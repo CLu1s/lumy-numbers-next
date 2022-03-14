@@ -2042,6 +2042,32 @@ export type ProjectsByBucketQuery = {
   } | null,
 };
 
+export type MovementsByProjectQueryVariables = {
+  projectID: string,
+  id?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelMovementFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type MovementsByProjectQuery = {
+  movementsByProject?:  {
+    __typename: "ModelMovementConnection",
+    items:  Array< {
+      __typename: "Movement",
+      id: string,
+      projectID: string,
+      amount: number,
+      date: string,
+      description?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type OnCreateUserSubscription = {
   onCreateUser?:  {
     __typename: "User",

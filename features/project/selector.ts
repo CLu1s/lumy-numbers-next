@@ -10,8 +10,10 @@ export const getProjects = createSelector(
   (state: ProjectsState): ProjectsState["items"] => state.items
 );
 
+
 export const getCategoryID = createSelector(
   [projectSelector, BucketSelector],
   (state: ProjectsState, bucketState: Bucket): ProjectsState["categoryID"] =>
     state.categoryID || bucketState?.projectsCategoryID || null
 );
+

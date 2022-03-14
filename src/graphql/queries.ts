@@ -616,3 +616,33 @@ export const projectsByBucket = /* GraphQL */ `
     }
   }
 `;
+export const movementsByProject = /* GraphQL */ `
+  query MovementsByProject(
+    $projectID: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMovementFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    movementsByProject(
+      projectID: $projectID
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        projectID
+        amount
+        date
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

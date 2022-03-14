@@ -97,7 +97,12 @@ type Project @model {
 
 type Movement @model {
   id: ID!
-  projectID: ID! @index(name: "byProject", sortKeyFields: ["id"])
+  projectID: ID!
+    @index(
+      name: "byProject"
+      queryField: "movementsByProject"
+      sortKeyFields: ["id"]
+    )
   amount: Float!
   date: String!
   description: String

@@ -23,8 +23,8 @@ function Home({ user }) {
         <CheckcIncomes />
         <Stack spacing={8}>
           <BudgetCard />
-          <Wrap spacing={4} >
-            <WrapItem maxW={{ base: "100%", lg: "50%" }}  width="auto">
+          <Wrap spacing={4}>
+            <WrapItem maxW={{ base: "100%", lg: "50%" }} width="auto">
               <Screen
                 title="Categorías"
                 description="Cada categoría muestra el total disponible en tu presupuesto con la cantidad y porcentaje que le queda."
@@ -32,7 +32,10 @@ function Home({ user }) {
                 <Categories />
               </Screen>
             </WrapItem>
-            <WrapItem maxW={{ base: "100%", lg:"50%", xl: "50%" }} minW={{ base: "100%", lg:"auto" }}  width="auto">
+            <WrapItem
+              maxW={{ base: "100%", lg: "50%" }}
+              width={{ base: "full", lg: "auto" }}
+            >
               <Screen title="Transacciones Recientes">
                 <LastsTransactions />
                 <Link href="/transacciones" passHref>
@@ -42,7 +45,7 @@ function Home({ user }) {
                 </Link>
               </Screen>
             </WrapItem>
-            <WrapItem maxW={{ base: "100%", lg: "50%" }}  width="auto">
+            <WrapItem maxW={{ base: "100%", lg: "50%" }} width="auto">
               <FixedCostDashboard />
             </WrapItem>
           </Wrap>

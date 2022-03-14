@@ -4,8 +4,12 @@ import toast from "react-hot-toast";
 import {
   updateBucket,
   createProject as createProjectMutation,
+  createMovement as createMovementMutation,
 } from "../../src/graphql/mutations";
-import { projectsByBucket } from "../../src/graphql/queries";
+import {
+  projectsByBucket,
+  movementsByProject,
+} from "../../src/graphql/queries";
 import { ProjectsState, LoadingStates, Movement } from "../../types";
 
 const initialState: ProjectsState = {
@@ -55,24 +59,34 @@ export const addProject = createAsyncThunk(
   }
 );
 
+export const addMovement = createAsyncThunk(
+  "projects/addMovement",
+  async (data: any) => {
+    const input = {
+      ...data,
+      date: new Date().toISOString(),
+    };
+    const response = await API.graphql(
+      graphqlOperation(createMovementMutation, { input })
+    );
+    return response;
+  }
+);
+
+export const fetchMovementsByProject = createAsyncThunk(
+  "projects/fetchMovementsByProject",
+  async (projectID: string) => {
+    const response = await API.graphql(
+      graphqlOperation(movementsByProject, { projectID })
+    );
+    return {response, projectID};
+  }
+);
+
 const projectsSlice = createSlice({
   name: "projects",
   initialState,
-  reducers: {
-    addMovement(state, action: PayloadAction<Movement>) {
-      console.log(action.payload);
-      const movement = action.payload;
-      const project = state.items.find((p) => p.id === movement.projectID);
-      if (project) {
-        project.movements.push({
-          ...movement,
-          id: `${Math.random()}`,
-          date: new Date().toISOString(),
-        });
-        toast.success("Movimiento creado!");
-      }
-    },
-  },
+  reducers: {},
   extraReducers: {
     [addCategoryID.fulfilled.type]: (state, action) => {
       toast.success("Guardado correctamente!");
@@ -111,8 +125,41 @@ const projectsSlice = createSlice({
     [fetchProjects.pending.type]: (state) => {
       state.status = LoadingStates.LOADING;
     },
+    [addMovement.fulfilled.type]: (state, action) => {
+      toast.success("Movimiento Guardado!");
+      const movement = action.payload.data.createMovement;
+      const project = state.items.find((p) => p.id === movement.projectID);
+      if (project) {
+        project.movements.push(movement);
+      }
+      state.status = LoadingStates.SUCCEEDED;
+    },
+    [addMovement.rejected.type]: (state, action) => {
+      toast.error("Hubo un error!");
+      state.error = action.payload;
+      state.status = LoadingStates.FAILED;
+    },
+    [addMovement.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
+    [fetchMovementsByProject.fulfilled.type]: (state, action) => {
+      const project = state.items.find(
+        (p) => p.id === action.payload.projectID
+      );
+      if (project) {
+        project.movements = action.payload.response.data.movementsByProject?.items || [];
+      }
+      state.status = LoadingStates.SUCCEEDED;
+    },
+    [fetchMovementsByProject.rejected.type]: (state, action) => {
+      state.error = action.payload;
+      state.status = LoadingStates.FAILED;
+    },
+    [fetchMovementsByProject.pending.type]: (state) => {
+      state.status = LoadingStates.LOADING;
+    },
   },
 });
 
-export const { addMovement } = projectsSlice.actions;
+// export const { addMovement } = projectsSlice.actions;
 export default projectsSlice.reducer;
