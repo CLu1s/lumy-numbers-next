@@ -58,11 +58,23 @@ export const getPendingItems = createSelector(
 );
 
 export const getPendingAmount = createSelector(
-  [FixedCostSelector],
-  (state: FixedCostState): number =>
-    state.items
+  [FixedCostSelector, walletSelector, BucketSelector],
+
+  (
+    state: FixedCostState,
+    walletState: WalletState,
+    bucketState: Bucket
+  ): number => {
+    const transactions = walletState.transactions;
+    const items = orderItems(
+      state.items,
+      transactions,
+      bucketState?.fixedCostCategoryID
+    );
+    return items
       .filter((i) => i.status !== "paid")
-      .reduce((acc, item) => acc + item.amount, 0)
+      .reduce((acc, item) => acc + item.amount, 0);
+  }
 );
 
 export const getStatus = createSelector(
