@@ -1,12 +1,24 @@
-import Topbar from "./Topbar";
-import { Box, Stack, Heading, Portal, IconButton } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import {
+  Box,
+  Stack,
+  Heading,
+  Portal,
+  IconButton,
+  HStack,
+  Button,
+  Text,
+  Flex,
+} from "@chakra-ui/react";
+import Link from "next/link";
 import { ArrowBackIcon } from "@chakra-ui/icons";
+import { menuList } from "../config/menu";
+import Topbar from "./Topbar";
 import useBaseInfo from "../hooks/useBaseInfo";
 import CheckBucket from "../features/bucket/CheckBucket";
 import CheckcIncomes from "../features/budget/CheckIncomes";
-import { RiMenuFill } from "react-icons/ri";
-import { useRouter } from "next/router";
 import Sidebar from "./Sidebar";
+import BottomBar from "./BottomBar";
 type Props = {
   children: JSX.Element[] | JSX.Element;
   pageTitle?: string;
@@ -39,7 +51,8 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
           </Stack>
         </Stack>
         <Portal>
-          {isNotIndex && (
+          <BottomBar />
+          {/* {isNotIndex && (
             <IconButton
               position={{ base: "fixed", md: "static" }}
               display={{ base: "block", md: "none" }}
@@ -55,7 +68,7 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
               width="52px"
               onClick={backButton}
             />
-          )}
+          )} */}
         </Portal>
       </main>
 

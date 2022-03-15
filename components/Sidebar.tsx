@@ -1,13 +1,5 @@
 import { Auth } from "aws-amplify";
-import {
-  Box,
-  Button,
-  Container,
-  Stack,
-  Center,
-  VStack,
-  Heading,
-} from "@chakra-ui/react";
+import { Box, Button, Center, VStack, Heading } from "@chakra-ui/react";
 import { menuList } from "../config/menu";
 import MenuItem from "./MenuItem";
 
