@@ -6,7 +6,8 @@ import esLocale from "date-fns/locale/es";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
-import { addProject } from "./projectsSlice";
+import add from "date-fns/add";
+import { addProject,updateProject } from "./projectsSlice";
 import parseISO from "date-fns/parseISO";
 import { getBucketID } from "../bucket/selector";
 import { Project } from "../../types";
@@ -22,7 +23,7 @@ type Props = {
 const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
   const [date, setDate] = useState<Date | null>(
-    toEdit ? new Date(parseISO(toEdit.endDate)) : new Date()
+    toEdit ? new Date(parseISO(toEdit.endDate)) : add(new Date(), { months: 1 })
   );
   const bucketID = useSelector(getBucketID);
   const {
@@ -35,22 +36,17 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
     if (toEdit) {
       setDate(new Date(parseISO(toEdit.endDate)));
     } else {
-      setDate(new Date());
+      setDate( add(new Date(), { months: 1 }));
     }
     reset();
   }, [reset, toEdit]);
 
   const handleClose = useCallback(() => {
     reset();
+    setDate(add(new Date(), { months: 1 }));
     onClose();
   }, [reset, onClose]);
-  useEffect(() => {
-    if (toEdit) {
-      setDate(new Date(parseISO(toEdit.endDate)));
-    } else {
-      setDate(new Date());
-    }
-  }, [toEdit]);
+
   const onSubmit = (data: any, e: any) => {
     e.preventDefault();
     if (!toEdit) {
@@ -58,15 +54,17 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
         addProject({
           ...data,
           bucketID,
+          initAmount: data.initAmount || 0,
           endDate: date,
         })
       );
     } else {
       dispatch(
-        addProject({
+        updateProject({
           ...toEdit,
           ...data,
-          date: date?.toISOString(),
+          initAmount: data.initAmount || 0,
+          endDate: date?.toISOString(),
         })
       );
     }
@@ -76,7 +74,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
 
   const config = {
     isOpen,
-    title: toEdit ? "Actualizar Ingreso" : "Nuevo Ingreso",
+    title: toEdit ? "Actualizar Projecto" : "Nuevo Projecto",
     onClose: handleClose,
     cancelButtonText: "Cancel",
     onSubmit: handleSubmit(onSubmit),
@@ -116,6 +114,12 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
                 {...register("amountGoal", { required: true })}
               />
               {errors.amount && <span>Este Campo es Requerido</span>}
+              <Input
+                type="number"
+                defaultValue={toEdit?.initAmount}
+                placeholder="Tienes algo ya ahorrado?"
+                {...register("initAmount", { required: false })}
+              />
               <Stack w="full">
                 <Text> Fecha Objetivo</Text>
                 <DatePicker

@@ -135,6 +135,7 @@ export type Project = {
   startDate: string;
   endDate: string;
   amountGoal: number;
+  initAmount?: number;
   createdAt?: string;
   updatedAt?: string;
   movements: Movement[];

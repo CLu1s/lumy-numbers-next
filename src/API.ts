@@ -221,6 +221,7 @@ export type Project = {
   startDate?: string | null,
   endDate?: string | null,
   amountGoal?: number | null,
+  initAmount?: number | null,
   movements?: ModelMovementConnection | null,
   createdAt: string,
   updatedAt: string,
@@ -423,6 +424,7 @@ export type CreateProjectInput = {
   startDate?: string | null,
   endDate?: string | null,
   amountGoal?: number | null,
+  initAmount?: number | null,
 };
 
 export type ModelProjectConditionInput = {
@@ -433,6 +435,7 @@ export type ModelProjectConditionInput = {
   startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
   amountGoal?: ModelFloatInput | null,
+  initAmount?: ModelFloatInput | null,
   and?: Array< ModelProjectConditionInput | null > | null,
   or?: Array< ModelProjectConditionInput | null > | null,
   not?: ModelProjectConditionInput | null,
@@ -447,6 +450,7 @@ export type UpdateProjectInput = {
   startDate?: string | null,
   endDate?: string | null,
   amountGoal?: number | null,
+  initAmount?: number | null,
 };
 
 export type DeleteProjectInput = {
@@ -567,6 +571,7 @@ export type ModelProjectFilterInput = {
   startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
   amountGoal?: ModelFloatInput | null,
+  initAmount?: ModelFloatInput | null,
   and?: Array< ModelProjectFilterInput | null > | null,
   or?: Array< ModelProjectFilterInput | null > | null,
   not?: ModelProjectFilterInput | null,
@@ -745,6 +750,7 @@ export type CreateBucketMutation = {
         startDate?: string | null,
         endDate?: string | null,
         amountGoal?: number | null,
+        initAmount?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -853,6 +859,7 @@ export type UpdateBucketMutation = {
         startDate?: string | null,
         endDate?: string | null,
         amountGoal?: number | null,
+        initAmount?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -961,6 +968,7 @@ export type DeleteBucketMutation = {
         startDate?: string | null,
         endDate?: string | null,
         amountGoal?: number | null,
+        initAmount?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -1218,6 +1226,7 @@ export type CreateProjectMutation = {
     startDate?: string | null,
     endDate?: string | null,
     amountGoal?: number | null,
+    initAmount?: number | null,
     movements?:  {
       __typename: "ModelMovementConnection",
       items:  Array< {
@@ -1253,6 +1262,7 @@ export type UpdateProjectMutation = {
     startDate?: string | null,
     endDate?: string | null,
     amountGoal?: number | null,
+    initAmount?: number | null,
     movements?:  {
       __typename: "ModelMovementConnection",
       items:  Array< {
@@ -1288,6 +1298,7 @@ export type DeleteProjectMutation = {
     startDate?: string | null,
     endDate?: string | null,
     amountGoal?: number | null,
+    initAmount?: number | null,
     movements?:  {
       __typename: "ModelMovementConnection",
       items:  Array< {
@@ -1494,6 +1505,7 @@ export type GetBucketQuery = {
         startDate?: string | null,
         endDate?: string | null,
         amountGoal?: number | null,
+        initAmount?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -1736,6 +1748,7 @@ export type GetProjectQuery = {
     startDate?: string | null,
     endDate?: string | null,
     amountGoal?: number | null,
+    initAmount?: number | null,
     movements?:  {
       __typename: "ModelMovementConnection",
       items:  Array< {
@@ -1774,6 +1787,7 @@ export type ListProjectsQuery = {
       startDate?: string | null,
       endDate?: string | null,
       amountGoal?: number | null,
+      initAmount?: number | null,
       movements?:  {
         __typename: "ModelMovementConnection",
         nextToken?: string | null,
@@ -1998,6 +2012,7 @@ export type ProjectByNameQuery = {
       startDate?: string | null,
       endDate?: string | null,
       amountGoal?: number | null,
+      initAmount?: number | null,
       movements?:  {
         __typename: "ModelMovementConnection",
         nextToken?: string | null,
@@ -2031,6 +2046,7 @@ export type ProjectsByBucketQuery = {
       startDate?: string | null,
       endDate?: string | null,
       amountGoal?: number | null,
+      initAmount?: number | null,
       movements?:  {
         __typename: "ModelMovementConnection",
         nextToken?: string | null,
@@ -2194,6 +2210,7 @@ export type OnCreateBucketSubscription = {
         startDate?: string | null,
         endDate?: string | null,
         amountGoal?: number | null,
+        initAmount?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -2297,6 +2314,7 @@ export type OnUpdateBucketSubscription = {
         startDate?: string | null,
         endDate?: string | null,
         amountGoal?: number | null,
+        initAmount?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -2400,6 +2418,7 @@ export type OnDeleteBucketSubscription = {
         startDate?: string | null,
         endDate?: string | null,
         amountGoal?: number | null,
+        initAmount?: number | null,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -2592,6 +2611,7 @@ export type OnCreateProjectSubscription = {
     startDate?: string | null,
     endDate?: string | null,
     amountGoal?: number | null,
+    initAmount?: number | null,
     movements?:  {
       __typename: "ModelMovementConnection",
       items:  Array< {
@@ -2622,6 +2642,7 @@ export type OnUpdateProjectSubscription = {
     startDate?: string | null,
     endDate?: string | null,
     amountGoal?: number | null,
+    initAmount?: number | null,
     movements?:  {
       __typename: "ModelMovementConnection",
       items:  Array< {
@@ -2652,6 +2673,7 @@ export type OnDeleteProjectSubscription = {
     startDate?: string | null,
     endDate?: string | null,
     amountGoal?: number | null,
+    initAmount?: number | null,
     movements?:  {
       __typename: "ModelMovementConnection",
       items:  Array< {

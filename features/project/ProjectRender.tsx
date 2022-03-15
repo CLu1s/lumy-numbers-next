@@ -1,12 +1,19 @@
-import { useMemo,useEffect } from "react";
-import { useSelector,useDispatch } from "react-redux";
+import { useMemo, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import differenceInMonths from "date-fns/differenceInMonths";
-import { Button, Wrap, WrapItem, Stack, HStack, Box } from "@chakra-ui/react";
+import {
+  Button,
+  Wrap,
+  WrapItem,
+  Stack,
+  HStack,
+  IconButton,
+} from "@chakra-ui/react";
 import Table from "../../components/Table";
 import Screen from "../../components/Screen";
 import Stats from "../../components/Stats";
-import { Project as ProjectType } from "../../types";
+import { Project as ProjectType, Movement } from "../../types";
 import { date, money } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
 import { fetchMovementsByProject } from "./projectsSlice";
@@ -14,13 +21,24 @@ import { fetchMovementsByProject } from "./projectsSlice";
 type Props = {
   project: ProjectType;
   onOpen: (id: string, m: number) => void;
+  handleDelete: (id: string) => void;
+  onEdit: (element: ProjectType) => void;
+  setMovementToEdit: (movement: Movement) => void;
+  onMovementDelete: (id: string) => void;
 };
 
-function ProjectRender({ project, onOpen }: Props) {
+function ProjectRender({
+  project,
+  onOpen,
+  handleDelete,
+  onEdit,
+  setMovementToEdit,
+  onMovementDelete,
+}: Props) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchMovementsByProject(project.id));
-  }, [dispatch, project.id]);
+  }, [dispatch, project.id, project.movements.length]);
 
   const columns = useMemo(
     () => [
@@ -43,12 +61,12 @@ function ProjectRender({ project, onOpen }: Props) {
         accessor: (row) => row,
         Cell: ({ cell: { value } }) => (
           <HStack>
-            <Button bg="white" onClick={() => console.log(value)}>
+            <Button bg="white" onClick={() => setMovementToEdit(value)}>
               <FiEdit />
             </Button>
             <Button
               bg="white"
-              onClick={() => console.log(value.id)}
+              onClick={() => onMovementDelete(value.id)}
               color="red.500"
             >
               <FiTrash2 />
@@ -69,17 +87,21 @@ function ProjectRender({ project, onOpen }: Props) {
             return acc;
           },
           {
-            amountPaid: 0,
-            amountPending: project.amountGoal,
+            amountPaid: project.initAmount,
+            amountPending: project.amountGoal - project.initAmount,
           }
         )
       : {
-          amountPaid: 0,
-          amountPending: project.amountGoal,
+          amountPaid: project.initAmount,
+          amountPending: project.amountGoal - project.initAmount,
         };
   const mensualities =
-    project.amountGoal /
-    differenceInMonths(new Date(project.endDate), new Date(project.startDate));
+    (project.amountGoal + project.initAmount) /
+    (differenceInMonths(
+      new Date(project.endDate),
+      new Date(project.startDate)
+    ) +
+      1);
   return (
     <WrapItem
       key={project.id}
@@ -120,6 +142,22 @@ function ProjectRender({ project, onOpen }: Props) {
             >
               Abonar
             </Button>
+            <HStack>
+              <IconButton
+                bg="white"
+                aria-label="Editar Projecto"
+                icon={<FiEdit />}
+                onClick={() => onEdit(project)}
+              />
+
+              <IconButton
+                bg="white"
+                onClick={() => handleDelete(project.id)}
+                color="red.500"
+                aria-label="Borrar Projecto"
+                icon={<FiTrash2 />}
+              />
+            </HStack>
           </HStack>
           {project.movements.length ? (
             <Table data={project.movements} columns={columns} />

@@ -5,7 +5,7 @@ import { Box, Button, Input, VStack } from "@chakra-ui/react";
 import esLocale from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
-import { addMovement } from "./projectsSlice";
+import { addMovement, updateMovement } from "./projectsSlice";
 import parseISO from "date-fns/parseISO";
 import { Movement } from "../../types";
 import { date as dateFormat } from "../../utils/";
@@ -67,9 +67,10 @@ const NewMovement = ({
       );
     } else {
       dispatch(
-        addMovement({
+        updateMovement({
           ...toEdit,
           ...data,
+          amount: Number(data.amount),
           date: date?.toISOString(),
         })
       );

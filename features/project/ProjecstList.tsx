@@ -16,9 +16,14 @@ import { Project, Movement } from "../../types";
 import NewProject from "./NewProject";
 import NewMovement from "./NewMovement";
 import SaveCategoryID from "./SaveCategoryID";
+import AlertDialog from "../../components/AlertDialog";
+import { deleteProject,deleteMovement } from "./projectsSlice";
 
 function ProjectsList() {
   const dispatch = useDispatch();
+  const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
+  const [alertMovementDelete, setAlertMovementDelete] = useState(false);
+  const [deleteId, setDeleteId] = useState<string>(null);
   const [elementToEdit, setElementToEdit] = useState<Project>(null);
   const [movementToEdit, setMovementToEdit] = useState<Movement>(null);
   const [projectID, setProjectID] = useState<string>(null);
@@ -34,22 +39,79 @@ function ProjectsList() {
   };
 
   const projects = useSelector(getProjects);
-  const renderTables = projects.map((project) => (
-    <ProjectRender key={project.id} project={project} onOpen={movementOnOpen} />
-  ));
+
   const manageOnClose = () => {
     elementToEdit && setElementToEdit(null);
     onClose();
   };
+
   const manageMovementOnClose = () => {
     movementToEdit && setMovementToEdit(null);
     setProjectID(null);
     setMonthlyPayment(0);
     moveModal.onClose();
   };
+  const handleDelete = (id) => {
+    setDeleteId(id);
+    setAlertDialogIsOpen(true);
+  };
+
+  const manageOpen = (item: any) => {
+    setElementToEdit(item);
+    onOpen();
+  };
+
+  const onMovementEdit = (item: Movement) => {
+    setMovementToEdit(item);
+    moveModal.onOpen();
+  };
+  const onMovementDelete = (id: string) => {
+    setAlertMovementDelete(true);
+    setDeleteId(id);
+  };
+  const renderTables = projects.map((project) => (
+    <ProjectRender
+      key={project.id}
+      project={project}
+      onOpen={movementOnOpen}
+      onEdit={manageOpen}
+      handleDelete={handleDelete}
+      setMovementToEdit={onMovementEdit}
+      onMovementDelete={onMovementDelete}
+    />
+  ));
+
 
   return (
     <>
+      <AlertDialog
+        title="Eliminar Projecto"
+        description=" ¿Está seguro? No podrás deshacer esta acción después."
+        isOpen={alertDialogIsOpen}
+        onClose={() => {
+          setAlertDialogIsOpen(false);
+          setDeleteId(null);
+        }}
+        onDelete={() => {
+          dispatch(deleteProject(deleteId));
+          setAlertDialogIsOpen(false);
+          setDeleteId(null);
+        }}
+      />
+      <AlertDialog
+        title="Eliminar Movimiento"
+        description=" ¿Está seguro? No podrás deshacer esta acción después."
+        isOpen={alertMovementDelete}
+        onClose={() => {
+          setAlertMovementDelete(false);
+          setDeleteId(null);
+        }}
+        onDelete={() => {
+          dispatch(deleteMovement(deleteId));
+          setAlertMovementDelete(false);
+          setDeleteId(null);
+        }}
+      />
       <NewProject
         isOpen={isOpen}
         onClose={manageOnClose}

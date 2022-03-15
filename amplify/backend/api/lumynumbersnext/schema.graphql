@@ -92,6 +92,7 @@ type Project @model {
   startDate: String
   endDate: String
   amountGoal: Float
+  initAmount: Float
   movements: [Movement] @hasMany(indexName: "byProject", fields: ["id"])
 }
 

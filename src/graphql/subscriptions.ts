@@ -116,6 +116,7 @@ export const onCreateBucket = /* GraphQL */ `
           startDate
           endDate
           amountGoal
+          initAmount
           createdAt
           updatedAt
         }
@@ -207,6 +208,7 @@ export const onUpdateBucket = /* GraphQL */ `
           startDate
           endDate
           amountGoal
+          initAmount
           createdAt
           updatedAt
         }
@@ -298,6 +300,7 @@ export const onDeleteBucket = /* GraphQL */ `
           startDate
           endDate
           amountGoal
+          initAmount
           createdAt
           updatedAt
         }
@@ -490,6 +493,7 @@ export const onCreateProject = /* GraphQL */ `
       startDate
       endDate
       amountGoal
+      initAmount
       movements {
         items {
           id
@@ -518,6 +522,7 @@ export const onUpdateProject = /* GraphQL */ `
       startDate
       endDate
       amountGoal
+      initAmount
       movements {
         items {
           id
@@ -546,6 +551,7 @@ export const onDeleteProject = /* GraphQL */ `
       startDate
       endDate
       amountGoal
+      initAmount
       movements {
         items {
           id
