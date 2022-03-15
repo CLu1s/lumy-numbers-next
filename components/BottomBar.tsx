@@ -13,6 +13,7 @@ const BottomBar = () => {
       color="gray.500"
       bottom="0"
       width="full"
+      paddingBottom={8}
     >
       <HStack spacing="4">
         {menuList.map((item) => (
@@ -22,7 +23,7 @@ const BottomBar = () => {
             h="60px"
             colorScheme="whiteAlpha"
             color={router.pathname === item.path ? "blue.400" : "gray.400"}
-            shadow={router.pathname === item.path ? "md" : "none"}
+            // shadow={router.pathname === item.path ? "md" : "none"}
             fontSize="xl"
             onClick={() => {
               router.push(item.path);
