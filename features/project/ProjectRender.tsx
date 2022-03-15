@@ -96,7 +96,7 @@ function ProjectRender({
           amountPending: project.amountGoal - project.initAmount,
         };
   const mensualities =
-    (project.amountGoal + project.initAmount) /
+    (project.amountGoal - project.initAmount) /
     (differenceInMonths(
       new Date(project.endDate),
       new Date(project.startDate)
