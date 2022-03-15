@@ -1,15 +1,5 @@
 import { useRouter } from "next/router";
-import {
-  Box,
-  Stack,
-  Heading,
-  Portal,
-  IconButton,
-  HStack,
-  Button,
-  Text,
-  Flex,
-} from "@chakra-ui/react";
+import { Box, Stack, Heading, Portal } from "@chakra-ui/react";
 import Link from "next/link";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { menuList } from "../config/menu";
@@ -35,21 +25,23 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
   return (
     <>
       <main>
-        <Stack spacing={[0, 8]} direction="row">
-          <CheckBucket userName={userName} />
-          <Sidebar />
-          <Stack width="full">
-            <Topbar />
-            <Stack spacing={4} padding={4}>
-              <Heading as="h2" size="md" textTransform="capitalize">
-                Hola {userName}
-              </Heading>
+        <Box marginBottom={{ base: 32, lg: 0 }}>
+          <Stack spacing={[0, 8]} direction="row">
+            <CheckBucket userName={userName} />
+            <Sidebar />
+            <Stack width="full">
+              <Topbar />
+              <Stack spacing={4} padding={4}>
+                <Heading as="h2" size="md" textTransform="capitalize">
+                  Hola {userName}
+                </Heading>
 
-              {pageTitle && <Heading as="h2">{pageTitle}</Heading>}
-              <Box>{children}</Box>
+                {pageTitle && <Heading as="h2">{pageTitle}</Heading>}
+                <Box>{children}</Box>
+              </Stack>
             </Stack>
           </Stack>
-        </Stack>
+        </Box>
         <Portal>
           <BottomBar />
           {/* {isNotIndex && (
@@ -71,8 +63,6 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
           )} */}
         </Portal>
       </main>
-
-      <footer></footer>
     </>
   );
 };

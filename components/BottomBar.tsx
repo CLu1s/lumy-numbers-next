@@ -13,7 +13,7 @@ const BottomBar = () => {
       color="gray.500"
       bottom="0"
       width="full"
-      paddingBottom={8}
+      paddingBottom={6}
     >
       <HStack spacing="4">
         {menuList.map((item) => (
