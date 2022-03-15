@@ -1,4 +1,4 @@
-import { createSlice,  createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import toast from "react-hot-toast";
 import {
@@ -107,7 +107,7 @@ const walletSlice = createSlice({
       state.status = LoadingStates.SUCCEEDED;
     },
     [fetchTransactions.rejected.type]: (state, action) => {
-      toast.error('Hubo un error!');
+      toast.error("Hubo un error!");
       state.error = action.error.message;
       state.status = LoadingStates.FAILED;
     },
@@ -115,12 +115,12 @@ const walletSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [addNewTransaction.fulfilled.type]: (state, action) => {
-      toast.success("Guardado correctamente!");
+      toast.success("Transacción guardada correctamente!");
       state.transactions.push(action.payload.data.createTransaction);
       state.status = LoadingStates.SUCCEEDED;
     },
     [addNewTransaction.rejected.type]: (state, action) => {
-      toast.error('Hubo un error!');
+      toast.error("Hubo un error!");
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },
@@ -137,7 +137,7 @@ const walletSlice = createSlice({
       state.status = LoadingStates.SUCCEEDED;
     },
     [updateTransaction.rejected.type]: (state, action) => {
-      toast.error('Hubo un error!');
+      toast.error("Hubo un error!");
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },

@@ -17,7 +17,7 @@ import NewProject from "./NewProject";
 import NewMovement from "./NewMovement";
 import SaveCategoryID from "./SaveCategoryID";
 import AlertDialog from "../../components/AlertDialog";
-import { deleteProject,deleteMovement } from "./projectsSlice";
+import { deleteProject, deleteMovement } from "./projectsSlice";
 
 function ProjectsList() {
   const dispatch = useDispatch();
@@ -29,11 +29,12 @@ function ProjectsList() {
   const [projectID, setProjectID] = useState<string>(null);
   const [monthlyPayment, setMonthlyPayment] = useState<number>(0);
   const categoryID = useSelector(getCategoryID);
+  const [projectName, setProjectName] = useState<string>("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const moveModal = useDisclosure();
-
-  const movementOnOpen = (id: string, m: number) => {
+  const movementOnOpen = (id: string, m: number, name: string) => {
     setProjectID(id);
+    setProjectName(name);
     setMonthlyPayment(m);
     moveModal.onOpen();
   };
@@ -81,7 +82,6 @@ function ProjectsList() {
     />
   ));
 
-
   return (
     <>
       <AlertDialog
@@ -123,6 +123,7 @@ function ProjectsList() {
         toEdit={movementToEdit}
         projectID={projectID}
         monthlyPayment={monthlyPayment}
+        projectName={projectName}
       />
 
       <Wrap spacing={8}>

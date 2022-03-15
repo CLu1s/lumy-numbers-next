@@ -20,7 +20,7 @@ import { fetchMovementsByProject } from "./projectsSlice";
 
 type Props = {
   project: ProjectType;
-  onOpen: (id: string, m: number) => void;
+  onOpen: (id: string, m: number,name:string) => void;
   handleDelete: (id: string) => void;
   onEdit: (element: ProjectType) => void;
   setMovementToEdit: (movement: Movement) => void;
@@ -138,7 +138,7 @@ function ProjectRender({
             <Button
               size="md"
               colorScheme="blue"
-              onClick={() => onOpen(project.id, mensualities)}
+              onClick={() => onOpen(project.id, mensualities, project.name)}
             >
               Abonar
             </Button>

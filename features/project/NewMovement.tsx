@@ -1,21 +1,23 @@
-import React, { useState, forwardRef, useEffect, useCallback } from "react";
+import React, { useState, forwardRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack } from "@chakra-ui/react";
-import esLocale from "date-fns/locale/es";
 import "react-datepicker/dist/react-datepicker.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addMovement, updateMovement } from "./projectsSlice";
+import { addNewTransaction } from "../wallet/walletSlice";
 import parseISO from "date-fns/parseISO";
 import { Movement } from "../../types";
 import { date as dateFormat } from "../../utils/";
-
+import { getBucketID } from "../bucket/selector";
+import { getCategoryID } from "./selector";
 type Props = {
   isOpen: boolean;
   projectID: string;
   onClose: () => void;
   toEdit?: Movement;
   monthlyPayment?: number;
+  projectName?: string;
 };
 
 const NewMovement = ({
@@ -24,17 +26,22 @@ const NewMovement = ({
   toEdit,
   projectID,
   monthlyPayment,
+  projectName,
 }: Props) => {
   const dispatch = useDispatch();
   const [date, setDate] = useState<Date | null>(
     toEdit ? new Date(parseISO(toEdit.date)) : new Date()
   );
+  const bucketID = useSelector(getBucketID);
+  const categoryID = useSelector(getCategoryID);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+
   useEffect(() => {
     if (toEdit) {
       setDate(new Date(parseISO(toEdit.date)));
@@ -63,6 +70,17 @@ const NewMovement = ({
           ...data,
           amount: Number(data.amount),
           projectID,
+        })
+      );
+      const { ...trans } = data;
+      dispatch(
+        addNewTransaction({
+          ...trans,
+          description: `${projectName}: ${trans.description}`,
+          bucketID,
+          categoryID,
+          amount: Number(data.amount),
+          date: new Date().toISOString(),
         })
       );
     } else {

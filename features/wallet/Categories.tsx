@@ -18,7 +18,7 @@ const Categories = ({ showAll }: Props) => {
   const [itemsToShow, setItemsToShow] = useState(items);
   useEffect(() => {
     if (!showAll) {
-      const itemsToShow = items.filter((item) => item.balance !== 0);
+      const itemsToShow = items.filter((item) => item.balance > 1);
       setItemsToShow(itemsToShow);
     } else {
       setItemsToShow(items);

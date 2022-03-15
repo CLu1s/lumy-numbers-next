@@ -5,12 +5,13 @@ type Props = {
   name: string;
   amount: number;
   helpText?: string;
+  labelStyles?: any;
 };
 
-const Stats = ({ name, amount, helpText }: Props) => {
+const Stats = ({ name, amount, helpText, labelStyles }: Props) => {
   return (
     <Stat>
-      <StatLabel>{name}</StatLabel>
+      <StatLabel style={labelStyles}>{name}</StatLabel>
       <StatNumber
         style={{ width: "100%", minWidth: "130px" }}
         color={`${amount < 0 ? "red.600" : "black"}`}
