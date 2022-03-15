@@ -9,6 +9,7 @@ import CheckcIncomes from "../features/budget/CheckIncomes";
 import Screen from "../components/Screen";
 import LastsTransactions from "../features/wallet/LastsTransactions";
 import FixedCostDashboard from "../features/fixedCost/FixedCostDashboard";
+import CategoriesDashboard from "../features/wallet/CategoriesDashboard";
 
 function Home({ user }) {
   return (
@@ -24,17 +25,12 @@ function Home({ user }) {
         <Stack spacing={8}>
           <BudgetCard />
           <Wrap spacing={4}>
-            <WrapItem maxW={{ base: "100%", lg: "50%" }} width="auto">
-              <Screen
-                title="Categorías"
-                description="Cada categoría muestra el total disponible en tu presupuesto con la cantidad y porcentaje que le queda."
-              >
-                <Categories />
-              </Screen>
+            <WrapItem maxW={{ base: "100%", lg: "45%" }} width="auto">
+              <CategoriesDashboard />
             </WrapItem>
             <WrapItem
-              maxW={{ base: "100%", lg: "50%" }}
-              width={{ base: "full", lg: "auto" }}
+              maxW={{ base: "100%", lg: "45%" }}
+              width={{ base: "full", lg: "50%", xl: "auto" }}
             >
               <Screen title="Transacciones Recientes">
                 <LastsTransactions />
@@ -45,7 +41,10 @@ function Home({ user }) {
                 </Link>
               </Screen>
             </WrapItem>
-            <WrapItem maxW={{ base: "100%", lg: "50%" }} width="auto">
+            <WrapItem
+              maxW={{ base: "100%", lg: "45%" }}
+              width={{ base: "full", lg: "auto" }}
+            >
               <FixedCostDashboard />
             </WrapItem>
           </Wrap>
