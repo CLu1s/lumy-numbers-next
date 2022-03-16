@@ -10,20 +10,22 @@ import Loading from "../../components/Loading";
 
 type Props = {
   showAll?: boolean;
+  setShowSwitch: (showAll: boolean) => void;
 };
 
-const Categories = ({ showAll }: Props) => {
+const Categories = ({ showAll,setShowSwitch }: Props) => {
   const items = useSelector(getBalanceByCategories);
   const status = useSelector(getStatus);
   const [itemsToShow, setItemsToShow] = useState(items);
   useEffect(() => {
     if (!showAll) {
-      const itemsToShow = items.filter((item) => item.balance > 1);
+      const itemsToShow = items.filter((item) => item.balance > 1 || item.balance < -1);
+      setShowSwitch(itemsToShow.length < items.length);
       setItemsToShow(itemsToShow);
     } else {
       setItemsToShow(items);
     }
-  }, [items, showAll]);
+  }, [items, setShowSwitch, showAll]);
   return (
     <Stack spacing={4}>
       {status === "succeeded" ? (

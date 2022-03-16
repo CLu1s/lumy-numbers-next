@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef } from "react";
+import React, { useState, useEffect, forwardRef,useMemo} from "react";
 import { useForm } from "react-hook-form";
 import { Text } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
@@ -30,6 +30,14 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   );
   const categories = useSelector(getCategories);
   const bucketID = useSelector(getBucketID);
+
+  const categoriesOption = useMemo(() => {
+    return categories.map((category) => ({
+      value: category.id,
+      label: category.name,
+    }));
+  }, [categories]);
+
   const {
     register,
     handleSubmit,
@@ -51,7 +59,6 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     reset();
     onClose();
   };
-
   const onSubmit = (data: any, e: any) => {
     e.preventDefault();
     if (toEdit) {
@@ -113,7 +120,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
               <Select
                 label="Categoría"
                 setSelected={setSelected}
-                options={categories}
+                options={categoriesOption}
                 defaultValue={toEdit ? toEdit.categoryID : ""}
               />
 

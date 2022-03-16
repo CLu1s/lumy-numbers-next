@@ -95,7 +95,8 @@ const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
   };
 
   const iconOptions = iconKeys.map((key) => (
-    <MenuItemOption key={key} value={key} fontSize="">
+    <MenuItemOption key={key} value={key} fontSize="2xl">
+
       {icons(key)}
     </MenuItemOption>
   ));
@@ -114,9 +115,10 @@ const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
               defaultValue={name}
               onChange={(e) => setName(e.target.value)}
             />
+
             <Flex marginTop="4">
               <Menu>
-                <MenuButton as={Button}>{icons(icon as string)}</MenuButton>
+                <MenuButton fontSize="4xl" as={Button}>{icons(icon as string)}</MenuButton>
                 <MenuList>
                   <MenuOptionGroup
                     defaultValue={toEdit?.icon}
@@ -131,10 +133,10 @@ const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
               </Menu>
               <Spacer />
               <Menu>
-                <MenuButton as={Button} backgroundColor={color} color="white">
+                <MenuButton w="50%" as={Button} backgroundColor={color} color="white">
                   Color
                 </MenuButton>
-                <MenuList minWidth="240px">
+                <MenuList >
                   <MenuOptionGroup
                     defaultValue="asc"
                     title="Color"
