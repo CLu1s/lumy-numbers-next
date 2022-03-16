@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Box, Button, Input, Stack, HStack, Text } from "@chakra-ui/react";
 import Select from "../../components/Select";
@@ -16,7 +16,12 @@ const SaveCategoryID = () => {
       dispatch(addCategoryID({ projectsCategoryID: selected, id: bucketID }));
     }
   };
-
+  const categoriesOption = useMemo(() => {
+    return categories.map((category) => ({
+      value: category.id,
+      label: category.name,
+    }));
+  }, [categories]);
   return (
     <Stack>
       <Text>
@@ -28,7 +33,7 @@ const SaveCategoryID = () => {
         <Select
           label="Categoría"
           setSelected={setSelected}
-          options={categories}
+          options={categoriesOption}
         />
         <Button colorScheme="blue" onClick={onSave}>
           Seleccionar
