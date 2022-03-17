@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef,useMemo} from "react";
+import React, { useState, useEffect, forwardRef, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { Text } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
@@ -13,6 +13,7 @@ import { getCategories } from "../budget/selector";
 import { addNewTransaction, updateTransaction } from "./walletSlice";
 import { getBucketID } from "../bucket/selector";
 import parseISO from "date-fns/parseISO";
+import { NumberInput, NumberInputField } from "@chakra-ui/react";
 
 registerLocale("es", esLocale);
 
@@ -44,7 +45,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     reset,
     formState: { errors },
   } = useForm();
-  
+
   useEffect(() => {
     if (toEdit) {
       setDate(new Date(parseISO(toEdit.date)));
@@ -105,11 +106,14 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
             <VStack spacing={4} w="full">
-              <Input
-                defaultValue={toEdit ? toEdit.amount : ""}
+              <NumberInput
+                defaultValue={toEdit ? toEdit.amount : 0}
                 placeholder="Cantidad"
-                {...register("amount", { required: true })}
-              />
+                w="full"
+              >
+                <NumberInputField {...register("amount", { required: true })} />
+              </NumberInput>
+
               {errors.description && <span>Este Campo es Requerido</span>}
               <Input
                 defaultValue={toEdit ? toEdit.description : ""}
