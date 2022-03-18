@@ -107,11 +107,11 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
           <Box width="100%">
             <VStack spacing={4} w="full">
               <NumberInput
-                defaultValue={toEdit ? toEdit.amount : 0}
+                defaultValue={toEdit ? toEdit.amount : undefined}
                 placeholder="Cantidad"
                 w="full"
               >
-                <NumberInputField {...register("amount", { required: true })} />
+                <NumberInputField placeholder="Cantidad" {...register("amount", { required: true })} />
               </NumberInput>
 
               {errors.description && <span>Este Campo es Requerido</span>}
