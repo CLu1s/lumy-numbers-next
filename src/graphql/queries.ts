@@ -322,6 +322,7 @@ export const getProject = /* GraphQL */ `
           amount
           date
           description
+          type
           createdAt
           updatedAt
         }
@@ -367,6 +368,7 @@ export const getMovement = /* GraphQL */ `
       amount
       date
       description
+      type
       createdAt
       updatedAt
     }
@@ -385,6 +387,7 @@ export const listMovements = /* GraphQL */ `
         amount
         date
         description
+        type
         createdAt
         updatedAt
       }
@@ -644,6 +647,7 @@ export const movementsByProject = /* GraphQL */ `
         amount
         date
         description
+        type
         createdAt
         updatedAt
       }

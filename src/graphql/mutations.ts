@@ -558,6 +558,7 @@ export const createProject = /* GraphQL */ `
           amount
           date
           description
+          type
           createdAt
           updatedAt
         }
@@ -590,6 +591,7 @@ export const updateProject = /* GraphQL */ `
           amount
           date
           description
+          type
           createdAt
           updatedAt
         }
@@ -622,6 +624,7 @@ export const deleteProject = /* GraphQL */ `
           amount
           date
           description
+          type
           createdAt
           updatedAt
         }
@@ -643,6 +646,7 @@ export const createMovement = /* GraphQL */ `
       amount
       date
       description
+      type
       createdAt
       updatedAt
     }
@@ -659,6 +663,7 @@ export const updateMovement = /* GraphQL */ `
       amount
       date
       description
+      type
       createdAt
       updatedAt
     }
@@ -675,6 +680,7 @@ export const deleteMovement = /* GraphQL */ `
       amount
       date
       description
+      type
       createdAt
       updatedAt
     }

@@ -501,6 +501,7 @@ export const onCreateProject = /* GraphQL */ `
           amount
           date
           description
+          type
           createdAt
           updatedAt
         }
@@ -530,6 +531,7 @@ export const onUpdateProject = /* GraphQL */ `
           amount
           date
           description
+          type
           createdAt
           updatedAt
         }
@@ -559,6 +561,7 @@ export const onDeleteProject = /* GraphQL */ `
           amount
           date
           description
+          type
           createdAt
           updatedAt
         }
@@ -577,6 +580,7 @@ export const onCreateMovement = /* GraphQL */ `
       amount
       date
       description
+      type
       createdAt
       updatedAt
     }
@@ -590,6 +594,7 @@ export const onUpdateMovement = /* GraphQL */ `
       amount
       date
       description
+      type
       createdAt
       updatedAt
     }
@@ -603,6 +608,7 @@ export const onDeleteMovement = /* GraphQL */ `
       amount
       date
       description
+      type
       createdAt
       updatedAt
     }

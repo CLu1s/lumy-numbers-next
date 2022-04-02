@@ -1,4 +1,3 @@
-
 export enum LoadingStates {
   IDLE = "idle",
   LOADING = "loading",
@@ -37,6 +36,7 @@ export type Transaction = {
 
 export type WalletState = {
   transactions: Transaction[];
+  period: Date;
   status: LoadingStates;
   error: string | null;
 };
@@ -146,6 +146,7 @@ export type Movement = {
   projectID: string;
   amount: number;
   date: string;
+  type: string;
   description: string;
   createdAt?: string;
   updatedAt?: string;

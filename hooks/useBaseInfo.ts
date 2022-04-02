@@ -8,6 +8,7 @@ import {
 import { fetchProjects } from "../features/project/projectsSlice";
 import { fetchBucket, setLastFetched } from "../features/bucket/bucketSlice";
 import { fetchTransactions } from "../features/wallet/walletSlice";
+import { getPeriod } from "../features/wallet/selector";
 import { getStatus as getBudgetStatus } from "../features/budget/selector";
 import { fetchIncomes, fetchCategories } from "../features/budget/budgetSlice";
 import { fetchFixedCost } from "../features/fixedCost/fixedCostSlice";
@@ -20,15 +21,21 @@ const useBaseInfo = (userName?: string) => {
   const bucketID = useSelector(getBucketID);
   const budgetStatus = useSelector(getBudgetStatus);
   const lastFetched = useSelector(getLastFetched);
+  const period = useSelector(getPeriod);
 
   const fetchAll = useCallback(() => {
-    dispatch(fetchTransactions(bucketID));
+    dispatch(fetchTransactions({ bucketID, period }));
+    dispatch(fetchIncomes({ bucketID, period }));
     dispatch(fetchFixedCost(bucketID));
-    dispatch(fetchIncomes(bucketID));
     dispatch(fetchCategories(bucketID));
     dispatch(fetchProjects(bucketID));
     dispatch(setLastFetched(new Date()));
-  }, [dispatch, bucketID]);
+  }, [dispatch, bucketID, period]);
+
+  useEffect(() => {
+    fetchAll();
+  }, [dispatch, bucketID, period, fetchAll]);
+
   useEffect(() => {
     if (
       bucketStatus.status === "succeeded" &&

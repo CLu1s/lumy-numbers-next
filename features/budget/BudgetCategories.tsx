@@ -80,12 +80,12 @@ const BudgetCategories = () => {
         description={
           <>
             <Text>
-              El porcentage que no asignes se reflejara en una categoría
+              El porcentaje que no asignes se reflejara en una categoría
               especial llamada Resto. Esta solo indica la cantidad que te hace
               falta por asignar y no podras asignarle transacciones
             </Text>
             <Text>
-              La suma del total no puede ser mayor al 100%. Los porcentages se
+              La suma del total no puede ser mayor al 100%. Los porcentajes se
               actualizan con el maximo disponible
             </Text>
           </>

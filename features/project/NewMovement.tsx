@@ -1,7 +1,17 @@
 import React, { useState, forwardRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../../components/Modal";
-import { Box, Button, Input, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  Input,
+  VStack,
+  NumberInput,
+  NumberInputField,
+  Radio,
+  RadioGroup,
+  Text,
+} from "@chakra-ui/react";
 import "react-datepicker/dist/react-datepicker.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addMovement, updateMovement } from "./projectsSlice";
@@ -29,6 +39,7 @@ const NewMovement = ({
   projectName,
 }: Props) => {
   const dispatch = useDispatch();
+  const [type, setType] = useState<string>("ingress");
   const [date, setDate] = useState<Date | null>(
     toEdit ? new Date(parseISO(toEdit.date)) : new Date()
   );
@@ -44,6 +55,7 @@ const NewMovement = ({
 
   useEffect(() => {
     if (toEdit) {
+      setType(toEdit.type);
       setDate(new Date(parseISO(toEdit.date)));
     } else {
       setDate(new Date());
@@ -51,17 +63,16 @@ const NewMovement = ({
     reset();
   }, [reset, toEdit, monthlyPayment]);
 
+  useEffect(() => {
+    reset();
+  }, [reset, type]);
+
   const handleClose = () => {
+    setType("ingress");
     reset();
     onClose();
   };
-  useEffect(() => {
-    if (toEdit) {
-      setDate(new Date(parseISO(toEdit.date)));
-    } else {
-      setDate(new Date());
-    }
-  }, [toEdit]);
+
   const onSubmit = (data: any, e: any) => {
     e.preventDefault();
     if (!toEdit) {
@@ -70,19 +81,22 @@ const NewMovement = ({
           ...data,
           amount: Number(data.amount),
           projectID,
+          type,
         })
       );
       const { ...trans } = data;
-      dispatch(
-        addNewTransaction({
-          ...trans,
-          description: `${projectName}: ${trans.description}`,
-          bucketID,
-          categoryID,
-          amount: Number(data.amount),
-          date: new Date().toISOString(),
-        })
-      );
+      if (type === "ingress") {
+        dispatch(
+          addNewTransaction({
+            ...trans,
+            description: `${projectName}: ${trans.description}`,
+            bucketID,
+            categoryID,
+            amount: Number(data.amount),
+            date: new Date().toISOString(),
+          })
+        );
+      }
     } else {
       dispatch(
         updateMovement({
@@ -90,6 +104,7 @@ const NewMovement = ({
           ...data,
           amount: Number(data.amount),
           date: date?.toISOString(),
+          type,
         })
       );
     }
@@ -97,25 +112,30 @@ const NewMovement = ({
   };
   const config = {
     isOpen,
-    title: toEdit ? "Actualizar Ingreso" : "Nuevo Ingreso",
+    title: toEdit ? "Actualizar Movimiento" : "Nuevo Movimiento",
     onClose: handleClose,
     cancelButtonText: "Cancel",
     onSubmit: handleSubmit(onSubmit),
   };
-  const ExampleCustomInput = forwardRef(
-    ({ value, onClick }: { value?: any; onClick?: () => void }, ref: any) => (
-      <Button onClick={onClick} ref={ref} width="full">
-        {value}
-      </Button>
-    )
-  );
-  ExampleCustomInput.displayName = "ExampleCustomInput";
+
   return (
     <Modal {...config}>
-      <VStack spacing={4}>
-        <p className="text-sm text-gray-500">
-          Ingresa el monto y la descripción del Ingreso
-        </p>
+      <VStack spacing={4} alignItems="flex-start">
+        <Text>Selecciona el tipo de movimiento</Text>
+        <RadioGroup onChange={setType} value={type}>
+          <Stack direction="row">
+            <Radio value="ingress">Ahorro</Radio>
+            <Radio value="egress">Gasto</Radio>
+          </Stack>
+        </RadioGroup>
+        {toEdit ? (
+          <Text>
+            Si modificas el monto de ingreso recuerdo actualizarlo tambien en la
+            tabla de transacciones
+          </Text>
+        ) : (
+          <Text>Ingresa el monto y la descripción del moviemiento</Text>
+        )}
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
             <VStack spacing={4} w="full">
@@ -128,13 +148,17 @@ const NewMovement = ({
                 {...register("description", { required: true })}
               />
               {errors.amount && <span>Este Campo es Requerido</span>}
-              <Input
+              <NumberInput
                 defaultValue={
                   toEdit?.amount || Number(monthlyPayment.toFixed(2))
                 }
-                placeholder="Cuanto quieres  ahorrar?"
-                {...register("amount", { required: true })}
-              />
+                w="full"
+              >
+                <NumberInputField
+                  placeholder="Cuanto es?"
+                  {...register("amount", { required: true })}
+                />
+              </NumberInput>
               {errors.amount && <span>Este Campo es Requerido</span>}
             </VStack>
           </Box>

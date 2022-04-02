@@ -107,4 +107,5 @@ type Movement @model {
   amount: Float!
   date: String!
   description: String
+  type: String
 }

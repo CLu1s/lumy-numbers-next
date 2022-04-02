@@ -70,20 +70,20 @@ const localFetchIncome = async (id: string, init: string, end: string) =>
 
 export const fetchIncomes = createAsyncThunk(
   "budget/fetchIncomes",
-  async (bucketId: string) => {
-    const actualDate = new Date();
+  async ({ bucketID, period }: { bucketID: string; period: Date }) => {
+    const actualDate = period;
     const firstDate = startOfMonth(actualDate);
     const lastDate = add(endOfMonth(actualDate), { days: 1 });
     const init = format(firstDate, "yyyy-MM-dd");
     const end = format(lastDate, "yyyy-MM-dd");
     let newIncomes = [];
-    const currentIcomes = (await localFetchIncome(bucketId, init, end)) as any;
+    const currentIcomes = (await localFetchIncome(bucketID, init, end)) as any;
     const incomes = currentIcomes.data.getBucket.incomes.items;
     if (incomes.length === 0) {
       const initLastMonth = format(sub(firstDate, { months: 1 }), "yyyy-MM-dd");
       const endLastMonth = format(sub(lastDate, { months: 1 }), "yyyy-MM-dd");
       const lastMonthIncomes = (await localFetchIncome(
-        bucketId,
+        bucketID,
         initLastMonth,
         endLastMonth
       )) as any;

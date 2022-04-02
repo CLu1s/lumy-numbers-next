@@ -1,7 +1,7 @@
 import { createSelector } from "reselect";
 import { BudgetState, Category } from "../../types";
 import { RootState } from "../../store/reducers";
-
+import _sortBy from "lodash/sortBy";
 const budgetSelector = (state: RootState): BudgetState => state.budget;
 
 const sanitizer = (state: Category[]): Category[] => {
@@ -17,7 +17,10 @@ export const getCategories = createSelector(
   [budgetSelector],
   (state: BudgetState): Category[] => {
     const categories = sanitizer(state.categories);
-    const globalPercentageSum = categories.reduce((acc, item) => acc + item.percentage, 0);
+    const globalPercentageSum = categories.reduce(
+      (acc, item) => acc + item.percentage,
+      0
+    );
     if (globalPercentageSum > 100) {
       return categories;
     }
@@ -40,8 +43,6 @@ export const getCategories = createSelector(
       }
     }
     return categories;
-
-    
   }
 );
 
@@ -53,7 +54,8 @@ export const getIncome = createSelector(
 
 export const getListOfIncomes = createSelector(
   [budgetSelector],
-  (state: BudgetState): BudgetState["incomes"] => state.incomes
+  (state: BudgetState): BudgetState["incomes"] =>
+    _sortBy(state.incomes, ["description"])
 );
 
 export const getStatus = createSelector(

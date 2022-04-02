@@ -15,6 +15,7 @@ const initialState: WalletState = {
   transactions: [],
   status: LoadingStates.IDLE,
   error: null,
+  period: new Date(),
 };
 
 const localFetchTransactions = async (id: string, init: string, end: string) =>
@@ -47,8 +48,8 @@ const localFetchTransactions = async (id: string, init: string, end: string) =>
 
 export const fetchTransactions = createAsyncThunk(
   "wallet/fetchTransactions",
-  async (bucketID: string) => {
-    const actualDate = new Date();
+  async ({ bucketID, period }: { bucketID: string; period: Date }) => {
+    const actualDate = period;
     const firstDate = startOfMonth(actualDate);
     const lastDate = add(endOfMonth(actualDate), { days: 1 });
     const init = format(firstDate, "yyyy-MM-dd");
@@ -61,25 +62,25 @@ export const fetchTransactions = createAsyncThunk(
 export const addNewTransaction = createAsyncThunk(
   "wallet/addNewTransaction",
   async (transaction: WalletState["transactions"][0]) => {
-    const response = await API.graphql(
-      graphqlOperation(createTransaction, { input: transaction })
-    );
-    return response;
+    try {
+      const response = await API.graphql(
+        graphqlOperation(createTransaction, { input: transaction })
+      );
+      return response;
+    } catch (e) {
+      console.log(e);
+    }
   }
 );
 
 export const updateTransaction = createAsyncThunk(
   "wallet/updateTransaction",
   async (transaction: WalletState["transactions"][0]) => {
-    try {
-      const { createdAt, updatedAt, category, ...input } = transaction;
-      const response = await API.graphql(
-        graphqlOperation(updateTransactionMutation, { input })
-      );
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
+    const { createdAt, updatedAt, category, ...input } = transaction;
+    const response = await API.graphql(
+      graphqlOperation(updateTransactionMutation, { input })
+    );
+    return response;
   }
 );
 
@@ -96,7 +97,11 @@ export const deleteTransaction = createAsyncThunk(
 const walletSlice = createSlice({
   name: "wallet",
   initialState,
-  reducers: {},
+  reducers: {
+    changePeriod: (state, action) => {
+      state.period = action.payload;
+    },
+  },
   extraReducers: {
     [fetchTransactions.pending.type]: (state) => {
       state.status = LoadingStates.LOADING;
@@ -155,5 +160,5 @@ const walletSlice = createSlice({
   },
 });
 
-// export const { addTransaction } = walletSlice.actions;
+export const { changePeriod } = walletSlice.actions;
 export default walletSlice.reducer;

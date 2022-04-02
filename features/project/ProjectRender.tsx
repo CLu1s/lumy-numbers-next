@@ -20,7 +20,7 @@ import { fetchMovementsByProject } from "./projectsSlice";
 
 type Props = {
   project: ProjectType;
-  onOpen: (id: string, m: number,name:string) => void;
+  onOpen: (id: string, m: number, name: string) => void;
   handleDelete: (id: string) => void;
   onEdit: (element: ProjectType) => void;
   setMovementToEdit: (movement: Movement) => void;
@@ -50,6 +50,11 @@ function ProjectRender({
       {
         Header: "Descripción",
         accessor: "description",
+      },
+      {
+        Header: "Tipo",
+        accessor: "type",
+        Cell: ({ value }) => (value === "egress" ? "Gasto" : "Ahorro"),
       },
       {
         Header: "Monto",
@@ -82,8 +87,13 @@ function ProjectRender({
     project.movements.length > 0
       ? project.movements.reduce(
           (acc, curr) => {
-            acc.amountPaid += curr.amount;
-            acc.amountPending -= curr.amount;
+            if (curr.type === "egress") {
+              acc.amountPaid -= curr.amount;
+              acc.amountPending += curr.amount;
+            } else {
+              acc.amountPaid += curr.amount;
+              acc.amountPending -= curr.amount;
+            }
             return acc;
           },
           {
@@ -106,7 +116,7 @@ function ProjectRender({
     <WrapItem
       key={project.id}
       width="-moz-fit-content"
-      maxW={{ base: "93%", lg: "45%", xl: "31%" }}
+      maxW={{ base: "93%", lg: "45%" }}
     >
       <Screen title={project.name} description={project.description}>
         <Stack spacing={4}>
@@ -140,7 +150,7 @@ function ProjectRender({
               colorScheme="blue"
               onClick={() => onOpen(project.id, mensualities, project.name)}
             >
-              Abonar
+              Nuevo Movimiento
             </Button>
             <HStack>
               <IconButton

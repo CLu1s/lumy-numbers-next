@@ -34,9 +34,9 @@ const formatTransactions = (
 
 const compareTransactions = (transactions: WalletState["transactions"]) => {
   const transactionsClone = [...transactions];
-    return transactionsClone.sort((a, b) => {
-      return compareDates( new Date(a.date),new Date(b.date));
-    });
+  return transactionsClone.sort((a, b) => {
+    return compareDates(new Date(a.date), new Date(b.date));
+  });
 };
 
 export const getLastTransactions = createSelector(
@@ -55,7 +55,8 @@ export const getTransactionsFormatted = createSelector(
   (
     transactions: WalletState["transactions"],
     categories: Category[]
-  ): WalletState["transactions"] => formatTransactions( compareTransactions(transactions), categories)
+  ): WalletState["transactions"] =>
+    formatTransactions(compareTransactions(transactions), categories)
 );
 
 export const getBalance = createSelector(
@@ -98,4 +99,9 @@ export const getBalanceByCategories = createSelector(
     });
     return balanceByCategories;
   }
+);
+
+export const getPeriod = createSelector(
+  [walletSelector],
+  (state: WalletState): WalletState["period"] => state.period
 );
