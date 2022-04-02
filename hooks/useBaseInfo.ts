@@ -32,9 +32,9 @@ const useBaseInfo = (userName?: string) => {
     dispatch(setLastFetched(new Date()));
   }, [dispatch, bucketID, period]);
 
-  useEffect(() => {
-    fetchAll();
-  }, [dispatch, bucketID, period, fetchAll]);
+  // useEffect(() => {
+  //   fetchAll();
+  // }, [dispatch, bucketID, period, fetchAll]);
 
   useEffect(() => {
     if (

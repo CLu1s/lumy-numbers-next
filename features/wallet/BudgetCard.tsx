@@ -35,7 +35,7 @@ const BudgetCard = () => {
         amount={balance}
         loading={status !== "succeeded"}
       >
-        <HeroStatBody>
+        {/* <HeroStatBody>
           {sameMonth && (
             <Button
               size="xs"
@@ -49,7 +49,7 @@ const BudgetCard = () => {
               Mes actual
             </Button>
           )}
-        </HeroStatBody>
+        </HeroStatBody> */}
         <HeroStatFooter>
           {sameMonth && <Button onClick={onOpen} colorScheme="blue" variant="outline">
             Registrar Gasto
