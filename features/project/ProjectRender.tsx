@@ -87,23 +87,28 @@ function ProjectRender({
     project.movements.length > 0
       ? project.movements.reduce(
           (acc, curr) => {
-            if (curr.type === "egress") {
-              acc.amountPaid -= curr.amount;
-              acc.amountPending += curr.amount;
-            } else {
+            if (curr.type !== "egress") {
               acc.amountPaid += curr.amount;
               acc.amountPending -= curr.amount;
+              acc.avalible += curr.amount;
+            } else {
+              acc.expenses += curr.amount;
+              acc.avalible -= curr.amount;
             }
             return acc;
           },
           {
             amountPaid: project.initAmount,
             amountPending: project.amountGoal - project.initAmount,
+            expenses: 0,
+            avalible: 0,
           }
         )
       : {
           amountPaid: project.initAmount,
           amountPending: project.amountGoal - project.initAmount,
+          expenses: 0,
+          avalible: 0,
         };
   const mensualities =
     (project.amountGoal - project.initAmount) /
@@ -143,6 +148,16 @@ function ProjectRender({
             <WrapItem flex="1 1 0">
               <Stats name="Mensualidad Sugerida" amount={mensualities} />
             </WrapItem>
+            {numbers.expenses > 0 && (
+              <WrapItem flex="1 1 0">
+                <Stats name="Gastos" amount={numbers.expenses} />
+              </WrapItem>
+            )}
+            {numbers.expenses > 0 && (
+              <WrapItem flex="1 1 0">
+                <Stats name="Disponible" amount={numbers.avalible} />
+              </WrapItem>
+            )}
           </Wrap>
           <HStack justifyContent="space-between" spacing={4}>
             <Button

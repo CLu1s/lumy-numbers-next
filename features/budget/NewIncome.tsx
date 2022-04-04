@@ -1,15 +1,20 @@
 import React, { useState, forwardRef, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../../components/Modal";
-import { Box, Button, Input, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Input,
+  VStack,
+  NumberInput,
+  NumberInputField,
+} from "@chakra-ui/react";
 import { Income } from "../../types";
 import esLocale from "date-fns/locale/es";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
-import { getCategories } from "./selector";
 import { createNewIncome, updateIcome } from "./budgetSlice";
-import { getStatus } from "./selector";
 import parseISO from "date-fns/parseISO";
 import { getBucketID } from "../bucket/selector";
 
@@ -100,11 +105,13 @@ const NewIncome = ({ isOpen, onClose, toEdit }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
             <VStack spacing={4} w="full">
-              <Input
-                placeholder="Cantidad"
-                defaultValue={toEdit?.amount}
-                {...register("amount", { required: true })}
-              />
+              <NumberInput defaultValue={toEdit?.amount} w="full">
+                <NumberInputField
+                  placeholder="Cantidad"
+                  {...register("amount", { required: true })}
+                />
+              </NumberInput>
+
               {errors.description && <span>Este Campo es Requerido</span>}
               <Input
                 defaultValue={toEdit?.description}
