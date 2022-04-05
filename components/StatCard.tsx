@@ -8,6 +8,7 @@ import {
   SliderFilledTrack,
   SliderThumb,
   Button,
+  VStack,
 } from "@chakra-ui/react";
 import Screen from "./Screen";
 import { money, icons } from "../utils";
@@ -24,6 +25,7 @@ type Props = {
   onEdit?: (e: any) => void;
   slider?: boolean;
   editable?: boolean;
+  showProgress?: boolean;
 };
 
 const StatCard = ({
@@ -37,6 +39,7 @@ const StatCard = ({
   onChange,
   onChangeEnd,
   onEdit,
+  showProgress,
 }: Props) => {
   const loading = false;
   return (
@@ -53,11 +56,13 @@ const StatCard = ({
         </Square>
         <Stats name={name} amount={number} />
 
-        <CircularProgress value={progress > 0 ? progress : 0} color={color}>
-          <CircularProgressLabel>
-            {progress > 0 ? progress : 0}%
-          </CircularProgressLabel>
-        </CircularProgress>
+        {showProgress && (
+          <CircularProgress value={progress > 0 ? progress : 0} color={color}>
+            <CircularProgressLabel>
+              {progress > 0 ? progress : 0}%
+            </CircularProgressLabel>
+          </CircularProgress>
+        )}
         {editable && (
           <Button
             float="right"
@@ -72,7 +77,7 @@ const StatCard = ({
       </HStack>
       {slider && (
         <Slider
-          marginTop={4}
+          marginTop={6}
           aria-label="slider-ex-2"
           colorScheme={color.split(".")[0]}
           defaultValue={progress}

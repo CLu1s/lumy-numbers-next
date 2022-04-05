@@ -116,6 +116,7 @@ const BudgetCategories = () => {
                   onChangeEnd={(e) =>
                     debounceSliderChange(e, item.id, item.percentage)
                   }
+                  showProgress
                 />
               </WrapItem>
             ))}
