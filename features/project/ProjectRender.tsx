@@ -121,7 +121,7 @@ function ProjectRender({
     <WrapItem
       key={project.id}
       width="-moz-fit-content"
-      maxW={{ base: "93%", lg: "45%" }}
+      maxW={{ base: "100%", lg: "48%" }}
     >
       <Screen title={project.name} description={project.description}>
         <Stack spacing={4}>

@@ -126,11 +126,11 @@ function ProjectsList() {
         projectName={projectName}
       />
 
-      <Wrap spacing={8}>
+      <Wrap spacing={{base:0 ,md: 4,xl:8}}>
         {renderTables}
         <WrapItem
           width="100%"
-          maxW={{ base: "93%", lg: "45%", xl: "31%" }}
+          maxW={{ base: "100%", lg: "48%" }}
           minH="123px"
         >
           <Screen>

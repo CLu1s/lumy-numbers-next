@@ -1,14 +1,9 @@
 import RecordExpense from "./RecordExpense";
 import { useDisclosure, Button } from "@chakra-ui/react";
-import sub from "date-fns/sub";
 import { useSelector, useDispatch } from "react-redux";
-import HeroStatCard, {
-  HeroStatFooter,
-  HeroStatBody,
-} from "../../components/HeroStatCard";
+import HeroStatCard, { HeroStatFooter } from "../../components/HeroStatCard";
 import { date } from "../../utils";
-import { getStatus } from "./selector";
-import { getBalance, getPeriod } from "./selector";
+import { getBalance, getPeriod, getStatus } from "./selector";
 import { changePeriod } from "./walletSlice";
 import isSameMonth from "date-fns/isSameMonth";
 
@@ -20,9 +15,7 @@ const BudgetCard = () => {
   const period = useSelector(getPeriod);
   const currentDate = new Date();
 
-  const handleChangePeriod = (neDate) => {
-    dispatch(changePeriod(neDate));
-  };
+  
   const sameMonth = isSameMonth(period, currentDate);
   return (
     <>
@@ -35,25 +28,12 @@ const BudgetCard = () => {
         amount={balance}
         loading={status !== "succeeded"}
       >
-        {/* <HeroStatBody>
-          {sameMonth && (
-            <Button
-              size="xs"
-              onClick={() => handleChangePeriod(sub(new Date(), { months: 1 }))}
-            >
-              Mes anterior
-            </Button>
-          )}
-          {!sameMonth && (
-            <Button size="xs" onClick={() => handleChangePeriod(new Date())}>
-              Mes actual
-            </Button>
-          )}
-        </HeroStatBody> */}
         <HeroStatFooter>
-          {sameMonth && <Button onClick={onOpen} colorScheme="blue" variant="outline">
-            Registrar Gasto
-          </Button>}
+          {sameMonth && (
+            <Button onClick={onOpen} colorScheme="blue" variant="outline">
+              Registrar Gasto
+            </Button>
+          )}
         </HeroStatFooter>
       </HeroStatCard>
     </>

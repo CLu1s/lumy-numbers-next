@@ -70,8 +70,8 @@ const localFetchIncome = async (id: string, init: string, end: string) =>
 
 export const fetchIncomes = createAsyncThunk(
   "budget/fetchIncomes",
-  async ({ bucketID, period }: { bucketID: string; period: Date }) => {
-    const actualDate = period;
+  async ({ bucketID, period }: { bucketID: string; period?: Date }) => {
+    const actualDate = period || new Date();
     const firstDate = startOfMonth(actualDate);
     const lastDate = add(endOfMonth(actualDate), { days: 1 });
     const init = format(firstDate, "yyyy-MM-dd");

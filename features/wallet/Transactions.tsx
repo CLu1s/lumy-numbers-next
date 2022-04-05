@@ -26,6 +26,7 @@ import { deleteTransaction } from "./walletSlice";
 import TransactionMini from "../../components/TransactionMini";
 import { compareDates } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
+import { LoadingStates } from "../../types";
 enum Order {
   ASC = "asc",
   DESC = "desc",
@@ -127,7 +128,7 @@ export default function DataTable() {
     [manageOpen]
   );
 
-  if (status === "idle") {
+  if (status === LoadingStates.LOADING) {
     return <Loading />;
   }
   const changeOrder = (value: Order) => {

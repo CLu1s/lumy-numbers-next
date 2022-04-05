@@ -21,20 +21,17 @@ const useBaseInfo = (userName?: string) => {
   const bucketID = useSelector(getBucketID);
   const budgetStatus = useSelector(getBudgetStatus);
   const lastFetched = useSelector(getLastFetched);
-  const period = useSelector(getPeriod);
+
 
   const fetchAll = useCallback(() => {
-    dispatch(fetchTransactions({ bucketID, period }));
-    dispatch(fetchIncomes({ bucketID, period }));
+    dispatch(fetchTransactions({ bucketID }));
+    dispatch(fetchIncomes({ bucketID }));
     dispatch(fetchFixedCost(bucketID));
     dispatch(fetchCategories(bucketID));
     dispatch(fetchProjects(bucketID));
     dispatch(setLastFetched(new Date()));
-  }, [dispatch, bucketID, period]);
+  }, [dispatch, bucketID]);
 
-  // useEffect(() => {
-  //   fetchAll();
-  // }, [dispatch, bucketID, period, fetchAll]);
 
   useEffect(() => {
     if (
