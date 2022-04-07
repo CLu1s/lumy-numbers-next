@@ -4,13 +4,13 @@ import { withAuthenticator } from "@aws-amplify/ui-react";
 import sub from "date-fns/sub";
 import isSameMonth from "date-fns/isSameMonth";
 import { useSelector, useDispatch } from "react-redux";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import { Stack, Button } from "@chakra-ui/react";
-import Table from "../features/wallet/Transactions";
-import Screen from "../components/Screen";
-import { getPeriod } from "../features/wallet/selector";
-import { changePeriod } from "../features/wallet/walletSlice";
-import useBasicInfo from "../hooks/useBasicInfo";
+import Table from "../../features/wallet/Transactions";
+import Screen from "../../components/Screen";
+import { getPeriod } from "../../features/wallet/selector";
+import { changePeriod } from "../../features/wallet/walletSlice";
+import useBasicInfo from "../../hooks/useBasicInfo";
 
 function Transacciones({ user }) {
   const dispatch = useDispatch();

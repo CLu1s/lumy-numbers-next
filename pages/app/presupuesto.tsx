@@ -1,10 +1,10 @@
 import Head from "next/head";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import { Stack } from "@chakra-ui/react";
-import IncomeCard from "../features/budget/IncomeCard";
-import BudgetCategories from "../features/budget/BudgetCategories";
-import ShareBucket from "../features/bucket/ShareBucket";
+import IncomeCard from "../../features/budget/IncomeCard";
+import BudgetCategories from "../../features/budget/BudgetCategories";
+import ShareBucket from "../../features/bucket/ShareBucket";
 
 function Home({ user }) {
   return (

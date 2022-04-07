@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 
-import ProjectsList from "../features/project/ProjecstList";
+import ProjectsList from "../../features/project/ProjecstList";
 
 function Projects({ user }) {
   return (
