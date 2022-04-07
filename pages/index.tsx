@@ -10,7 +10,104 @@ import {
   VStack,
   Wrap,
   WrapItem,
+  HStack,
+  Stack,
 } from "@chakra-ui/react";
+
+type ContentBoxProps = {
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  imagePosition: "left" | "right";
+};
+
+const ContentBox = ({
+  title,
+  description,
+  image,
+  imageAlt,
+  imagePosition,
+}: ContentBoxProps) => {
+  const position = imagePosition === "left" ? "row" : "row-reverse";
+  return (
+    <Stack
+      spacing={{ base: 4, md: 8 }}
+      direction={{ base: "column", md: position }}
+    >
+      <Box width={{ base: "100%", md: "50%" }}>
+        <Box
+          display="block"
+          margin="auto"
+          position="relative"
+          paddingX={{ base: 12, md: 8, lg: 12 }}
+        >
+          <Box
+            backgroundColor="#1e5af9"
+            width="full"
+            display="block"
+            w={{ base: "100%", md: "100%", lg: "100%" }}
+            h={{ base: "200px", md: "125px", lg: "200px" }}
+            borderRadius="lg"
+            position="absolute"
+            bottom="20%"
+            right={0}
+            left={0}
+          ></Box>
+          <Image
+            src={image}
+            layout="responsive"
+            alt={imageAlt}
+            width={208}
+            height={400}
+          />
+        </Box>
+      </Box>
+      <Box
+        width={{ base: "100%", md: "50%" }}
+        justifyContent="center"
+        display="flex"
+        flexDirection="column"
+        padding={{ xl: 12 }}
+      >
+        <Center>
+          <VStack spacing={4}>
+            <Heading as="h2" size="xl" fontWeight="bold" textAlign="left">
+              {title}
+            </Heading>
+            <Text>{description}</Text>
+          </VStack>
+        </Center>
+      </Box>
+    </Stack>
+  );
+};
+
+type ContentSectionProps = {
+  title: string;
+  description?: string;
+  children: React.ReactNode | React.ReactNode[];
+};
+
+const ContentSection = ({
+  children,
+  title,
+  description,
+}: ContentSectionProps) => {
+  return (
+    <Box marginTop="40">
+      <Center>
+        <VStack spacing={12}>
+          <Heading textAlign="center" as="h2" size="3xl" fontWeight="bold">
+            {title}
+          </Heading>
+          {description && <Text textAlign="center">{description}</Text>}
+          {children}
+        </VStack>
+      </Center>
+    </Box>
+  );
+};
 
 const Home: NextPage = () => {
   return (
@@ -45,84 +142,95 @@ const Home: NextPage = () => {
           </Container>
           <Box position="relative" display="flex" justifyContent="center">
             <Box position="absolute" top="-10rem">
-              <Wrap>
-                <WrapItem paddingTop="6">
-                  <Image
-                    src="/iphone.png"
-                    alt="Vercel Logo"
-                    width={167}
-                    height={320}
-                  />
-                </WrapItem>
-                <WrapItem>
-                  <Image
-                    src="/iphone.png"
-                    alt="Vercel Logo"
-                    width={208}
-                    height={400}
-                  />
-                </WrapItem>
-                <WrapItem paddingTop="6">
-                  <Image
-                    src="/iphone.png"
-                    alt="Vercel Logo"
-                    width={167}
-                    height={320}
-                  />
-                </WrapItem>
-              </Wrap>
+              <HStack spacing={2}>
+                <Image
+                  src="/iphone.png"
+                  alt="Vercel Logo"
+                  width={167}
+                  height={320}
+                />
+
+                <Image
+                  src="/iphone.png"
+                  alt="Vercel Logo"
+                  width={208}
+                  height={400}
+                />
+
+                <Image
+                  src="/iphone.png"
+                  alt="Vercel Logo"
+                  width={167}
+                  height={320}
+                />
+              </HStack>
             </Box>
           </Box>
         </Box>
-        <Container maxW="4xl">
-          <Box paddingTop="72">
-            <Center>
-              <VStack spacing={8}>
-                <Heading
-                  textAlign="center"
-                  as="h2"
-                  size="3xl"
-                  fontWeight="bold"
+        <Container maxW={{ base: "2xl", lg: "4xl" }} paddingTop="72">
+          <ContentSection title="¿Qué Hacemos?">
+            <ContentBox
+              title={"Hacemos cosas chidas"}
+              description={
+                "Sit libero velit eum. Qui nostrum qui dignissimos nostrum recusandae dolorem culpa provident. Repellat enim sit est porro occaecati dolorem."
+              }
+              image="/iphone.png"
+              imageAlt="Vercel Logo"
+              imagePosition="left"
+            />
+            <ContentBox
+              title={"Hacemos más chidas"}
+              description={
+                "Sit libero velit eum. Qui nostrum qui dignissimos nostrum recusandae dolorem culpa provident. Repellat enim sit est porro occaecati dolorem."
+              }
+              image="/iphone.png"
+              imageAlt="Vercel Logo"
+              imagePosition="right"
+            />
+          </ContentSection>
+          <ContentSection title="Testimonios">
+            <Wrap spacing={4}>
+              <WrapItem w="47%">
+                <Box
+                  boxShadow="lg"
+                  borderRadius="lg"
+                  bordercolor="gray.200"
+                  padding="12"
+                  backgroundColor="white"
                 >
-                  ¿Quienes somos?
-                </Heading>
-                <Wrap flexDirection="row">
-                  <WrapItem width="40%">
-                    <Box display="block" width="16rem">
-                      <Image
-                        src="/iphone.png"
-                        layout="responsive"
-                        alt="Vercel Logo"
-                        width={208}
-                        height={400}
-                      />
-                    </Box>
-                  </WrapItem>
-                  <WrapItem
-                    width="50%"
-                    justifyContent="center"
-                    display="flex"
-                    flexDirection="column"
-                  >
-                    <Center>
-                      <Text>
-                        Aperiam voluptas eos neque. Sed aut odio ea. Odio rerum
-                        asperiores illo debitis pariatur deserunt at vel non.
-                        Expedita ipsa consequatur ea eius labore quo. Incidunt
-                        quia exercitationem ut et soluta. Autem et quis voluptas
-                        ut illum unde aliquid quia. Nulla voluptas neque aut
-                        tempora sit eaque minima doloribus. Consequatur tempore
-                        ipsa aut saepe aut error aut. Quas quo repudiandae ipsam
-                        beatae porro hic aut eaque ullam. Est voluptatem aut et
-                        temporibus eius quisquam. Accusamus officia delectus at.
-                        Maxime quo ut velit dolores sint.
-                      </Text>
-                    </Center>
-                  </WrapItem>
-                </Wrap>
-              </VStack>
-            </Center>
-          </Box>
+                  <Box>
+                    <Text>
+                      Quidem enim quia sed. Quod unde ipsa ut beatae dolorem a
+                      molestiae praesentium. Dolores aut rerum commodi itaque
+                      sequi doloremque vel ex. Ipsa cumque id ab est architecto
+                      consequatur odio minima. Quam odit dicta. Laboriosam quo
+                      consequatur facilis sapiente ducimus deserunt a.
+                    </Text>
+                  </Box>
+                </Box>
+              </WrapItem>
+              <WrapItem w="47%">
+                <Box
+                  boxShadow="lg"
+                  borderRadius="lg"
+                  bordercolor="gray.200"
+                  padding="12"
+                  backgroundColor="white"
+                >
+                  <Box>
+                    <Text>
+                      Quidem enim quia sed. Quod unde ipsa ut beatae dolorem a
+                      molestiae praesentium. Dolores aut rerum commodi itaque
+                      sequi doloremque vel ex. Ipsa cumque id ab est architecto
+                      consequatur odio minima. Quam odit dicta. Laboriosam quo
+                      consequatur facilis sapiente ducimus deserunt a.
+                    </Text>
+                  </Box>
+                </Box>
+              </WrapItem>
+              
+            </Wrap>
+          </ContentSection>
         </Container>
       </main>
     </>
