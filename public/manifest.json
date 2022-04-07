@@ -1,15 +1,14 @@
 {
     "name": "Lumi Budget",
-    "short_name": "Budget",
-    "start_url": "/",
+    "short_name": "Numeritos",
+    "start_url": "/app/",
     "display": "standalone",
     "background_color": "#edf2f7",
     "description": "Lleva el control de tus finanzas personales",
     "dir": "ltr",
-    "categories": "finance,lifestyle,productivity,utilities",
     "lang": "es",
     "orientation": "any",
-    "scope": "/",
+    "scope": "/app/",
     "theme_color": "#6b46c1",
     "icons": [
         {

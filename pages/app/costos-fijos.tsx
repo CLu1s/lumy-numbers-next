@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import Layout from "../components/Layout";
+import Layout from "../../components/Layout";
 import { Stack } from "@chakra-ui/react";
-import Container from "../features/fixedCost/Container";
+import Container from "../../features/fixedCost/Container";
 
 function CostosFijos({ user }) {
   return (
