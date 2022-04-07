@@ -1,15 +1,14 @@
 {
-    "name": "Lumi Budget",
-    "short_name": "Numeritos",
+    "name": "Luminus",
+    "short_name": "Luminus",
     "start_url": "/app/",
     "display": "standalone",
     "background_color": "#edf2f7",
-    "description": "Lleva el control de tus finanzas personales",
     "dir": "ltr",
     "lang": "es",
     "orientation": "any",
     "scope": "/app/",
-    "theme_color": "#6b46c1",
+    "theme_color": "#FFC100",
     "icons": [
         {
             "src": "/icon_48x48.png",
