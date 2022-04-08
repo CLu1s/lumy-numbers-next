@@ -45,7 +45,7 @@ const FixedCostDashboard = () => {
           <chakra.span fontWeight="bold"  fontSize='xl'> {money(amount)}</chakra.span>
         </Text>
         <ItemsList items={items} managePaid={managePaid} />
-        <Link href="/costos-fijos" passHref>
+        <Link href="/app/costos-fijos" passHref>
           <ChakraLink color="teal.500">Ver Todos los Gastos</ChakraLink>
         </Link>
       </Stack>

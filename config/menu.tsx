@@ -14,31 +14,31 @@ export const menuList: MenuItem[] = [
   {
     id: 1,
     label: "Dashboard",
-    path: "/",
+    path: "/app/",
     icon: <AiFillHome />,
   },
   {
     id: 2,
     label: "Transacciones",
     icon: <MdAccountBalanceWallet />,
-    path: "/transacciones",
+    path: "/app/transacciones",
   },
   {
     id: 3,
     label: "Mis Gastos fijos",
-    path: "/costos-fijos",
+    path: "/app/costos-fijos",
     icon: <RiBook2Fill />,
   },
   {
     id: 4,
     label: "Mis Proyectos",
-    path: "/proyectos",
+    path: "/app/proyectos",
     icon: <RiHandHeartFill />,
   },
   {
     id: 5,
     label: "Presupuesto",
-    path: "/presupuesto",
+    path: "/app/presupuesto",
     icon: <ImStatsBars />,
   },
 ];

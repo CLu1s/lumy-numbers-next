@@ -29,6 +29,7 @@ export default function SelectContainer({
         defaultValue={defaultValue}
         onChange={(obj)=>setSelected(obj.value)}
         options={options}
+        isSearchable={false}
       />
     </Box>
   );

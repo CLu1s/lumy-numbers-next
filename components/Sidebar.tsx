@@ -26,7 +26,7 @@ const Sidebsar = () => {
             fontWeight="600"
             textTransform="capitalize"
           >
-            Lumi Budget
+            Luminus Conscious Planning
           </Heading>
         </Center>
         <VStack spacing={4} width={"100%"} paddingLeft={4}>

@@ -11,13 +11,14 @@ import {
 } from "@chakra-ui/react";
 import Screen from "../../components/Screen";
 import ProjectRender from "./ProjectRender";
-import { getProjects, getCategoryID } from "./selector";
-import { Project, Movement } from "../../types";
+import { getProjects, getCategoryID, getStatus } from "./selector";
+import { Project, Movement, LoadingStates } from "../../types";
 import NewProject from "./NewProject";
 import NewMovement from "./NewMovement";
 import SaveCategoryID from "./SaveCategoryID";
 import AlertDialog from "../../components/AlertDialog";
 import { deleteProject, deleteMovement } from "./projectsSlice";
+import Loading from "../../components/Loading";
 
 function ProjectsList() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function ProjectsList() {
   const categoryID = useSelector(getCategoryID);
   const [projectName, setProjectName] = useState<string>("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const status = useSelector(getStatus);
   const moveModal = useDisclosure();
   const movementOnOpen = (id: string, m: number, name: string) => {
     setProjectID(id);
@@ -82,6 +84,7 @@ function ProjectsList() {
     />
   ));
 
+
   return (
     <>
       <AlertDialog
@@ -126,13 +129,9 @@ function ProjectsList() {
         projectName={projectName}
       />
 
-      <Wrap spacing={{base:2 ,md: 4,xl:8}} >
+      <Wrap spacing={{ base: 2, md: 4, xl: 8 }}>
         {renderTables}
-        <WrapItem
-          width="100%"
-          maxW={{ base: "100%", lg: "48%" }}
-          minH="123px"
-        >
+        <WrapItem width="100%" maxW={{ base: "100%", lg: "48%" }} minH="123px">
           <Screen>
             <Flex direction="column" align="center" justifyContent="center">
               {categoryID ? (

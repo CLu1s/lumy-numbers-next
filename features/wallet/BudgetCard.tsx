@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import HeroStatCard, { HeroStatFooter } from "../../components/HeroStatCard";
 import { date } from "../../utils";
 import { getBalance, getPeriod, getStatus } from "./selector";
-import { changePeriod } from "./walletSlice";
 import isSameMonth from "date-fns/isSameMonth";
+import { LoadingStates } from "../../types";
 
 const BudgetCard = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,6 @@ const BudgetCard = () => {
   const period = useSelector(getPeriod);
   const currentDate = new Date();
 
-  
   const sameMonth = isSameMonth(period, currentDate);
   return (
     <>
@@ -26,11 +25,16 @@ const BudgetCard = () => {
         statLabel="Disponible"
         helpText={date(new Date(), "LLLL-YYY")}
         amount={balance}
-        loading={status !== "succeeded"}
+        loading={status !== LoadingStates.SUCCEEDED}
       >
         <HeroStatFooter>
           {sameMonth && (
-            <Button onClick={onOpen} colorScheme="blue" variant="outline">
+            <Button
+              onClick={onOpen}
+              disabled={status === LoadingStates.LOADING}
+              colorScheme="blue"
+              variant="outline"
+            >
               Registrar Gasto
             </Button>
           )}

@@ -26,6 +26,7 @@ type Props = {
 const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState<any>();
+  const [quantity, setQuantity] = useState<number>(null);
   const [date, setDate] = useState<Date | null>(
     toEdit ? new Date(parseISO(toEdit.date)) : new Date()
   );
@@ -50,6 +51,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
     if (toEdit) {
       setDate(new Date(parseISO(toEdit.date)));
       setSelected(toEdit.categoryID);
+      setQuantity(toEdit.amount);
     } else {
       setDate(new Date());
     }
@@ -58,6 +60,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
 
   const handleClose = () => {
     reset();
+    setQuantity(null);
     onClose();
   };
   const onSubmit = (data: any, e: any) => {
@@ -107,11 +110,18 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
           <Box width="100%">
             <VStack spacing={4} w="full">
               <NumberInput
-                defaultValue={toEdit ? toEdit.amount : undefined}
+                defaultValue={toEdit ? toEdit.amount : null}
+                value={quantity || ""}
+                onChange={(valueAsString: string, valueAsNumber: number) =>
+                  setQuantity(valueAsNumber)
+                }
                 placeholder="Cantidad"
                 w="full"
               >
-                <NumberInputField placeholder="Cantidad" {...register("amount", { required: true })} />
+                <NumberInputField
+                  placeholder="Cantidad"
+                  {...register("amount", { required: true })}
+                />
               </NumberInput>
 
               {errors.description && <span>Este Campo es Requerido</span>}
