@@ -111,10 +111,6 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
             <VStack spacing={4} w="full">
               <NumberInput
                 defaultValue={toEdit ? toEdit.amount : null}
-                value={quantity || ""}
-                onChange={(valueAsString: string, valueAsNumber: number) =>
-                  setQuantity(valueAsNumber)
-                }
                 placeholder="Cantidad"
                 w="full"
               >
