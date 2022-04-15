@@ -24,12 +24,15 @@ function Home({ user }) {
         <Stack spacing={8}>
           <BudgetCard />
           <Wrap spacing={4}>
-            <WrapItem maxW={{ base: "100%", lg: "45%" }} width="auto">
+            <WrapItem
+              maxW={{ base: "100%" }}
+              width="auto"
+            >
               <CategoriesDashboard />
             </WrapItem>
             <WrapItem
-              maxW={{ base: "100%", lg: "45%" }}
-              width={{ base: "full", lg: "50%", xl: "auto" }}
+              maxW={{ base: "100%", md: "47%",lg: "49%" }}
+              width={{ base: "full" }}
             >
               <Screen title="Transacciones Recientes">
                 <LastsTransactions />
@@ -41,8 +44,8 @@ function Home({ user }) {
               </Screen>
             </WrapItem>
             <WrapItem
-              maxW={{ base: "100%", lg: "45%" }}
-              width={{ base: "full", lg: "auto" }}
+              maxW={{ base: "100%", md: "47%" }}
+              width={{ base: "full" }}
             >
               <FixedCostDashboard />
             </WrapItem>
