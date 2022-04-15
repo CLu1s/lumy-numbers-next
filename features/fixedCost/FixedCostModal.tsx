@@ -1,4 +1,4 @@
-import React, { forwardRef,useEffect } from "react";
+import React, { forwardRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Text } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
@@ -10,6 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addFixedCost, updateFixedCost } from "./fixedCostSlice";
 import { getBucketID } from "../bucket/selector";
+import NumberInput from "../../components/NumberInput";
 
 registerLocale("es", esLocale);
 
@@ -80,11 +81,7 @@ const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
             <VStack spacing={4} w="full">
-              <Input
-                defaultValue={toEdit ? toEdit.amount : ""}
-                placeholder="Cantidad"
-                {...register("amount", { required: true })}
-              />
+              <NumberInput amount={toEdit?.amount} register={register} />
               {errors.description && <span>Este Campo es Requerido</span>}
               <Input
                 defaultValue={toEdit ? toEdit.description : ""}

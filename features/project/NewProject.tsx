@@ -7,10 +7,11 @@ import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import add from "date-fns/add";
-import { addProject,updateProject } from "./projectsSlice";
+import { addProject, updateProject } from "./projectsSlice";
 import parseISO from "date-fns/parseISO";
 import { getBucketID } from "../bucket/selector";
 import { Project } from "../../types";
+import NumberInput from "../../components/NumberInput";
 
 registerLocale("es", esLocale);
 
@@ -36,7 +37,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
     if (toEdit) {
       setDate(new Date(parseISO(toEdit.endDate)));
     } else {
-      setDate( add(new Date(), { months: 1 }));
+      setDate(add(new Date(), { months: 1 }));
     }
     reset();
   }, [reset, toEdit]);
@@ -108,18 +109,22 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
                 {...register("description", { required: true })}
               />
               {errors.amount && <span>Este Campo es Requerido</span>}
-              <Input
+              <NumberInput
                 defaultValue={toEdit?.amountGoal}
-                placeholder="Cuanto quieres  ahorrar?"
-                {...register("amountGoal", { required: true })}
+                name="amountGoal"
+                register={register}
+                placeholder={"¿Cuanto quieres  ahorrar?"}
+                required
               />
-              {errors.amount && <span>Este Campo es Requerido</span>}
-              <Input
-                type="number"
+
+              {errors.amountGoal && <span>Este Campo es Requerido</span>}
+              <NumberInput
                 defaultValue={toEdit?.initAmount}
-                placeholder="Tienes algo ya ahorrado?"
-                {...register("initAmount", { required: false })}
+                name="initAmount"
+                placeholder={"¿Tienes algo ya ahorrado?"}
+                register={register}
               />
+
               <Stack w="full">
                 <Text> Fecha Objetivo</Text>
                 <DatePicker

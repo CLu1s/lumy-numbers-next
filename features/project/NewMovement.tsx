@@ -6,8 +6,6 @@ import {
   Stack,
   Input,
   VStack,
-  NumberInput,
-  NumberInputField,
   Radio,
   RadioGroup,
   Text,
@@ -21,6 +19,8 @@ import { Movement } from "../../types";
 import { date as dateFormat } from "../../utils/";
 import { getBucketID } from "../bucket/selector";
 import { getCategoryID } from "./selector";
+import NumberInput from "../../components/NumberInput";
+
 type Props = {
   isOpen: boolean;
   projectID: string;
@@ -139,6 +139,14 @@ const NewMovement = ({
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
             <VStack spacing={4} w="full">
+              <NumberInput
+                name="amount"
+                amount={toEdit?.amount}
+                defaultValue={
+                  type === "ingress" && Number(monthlyPayment.toFixed(2))
+                }
+                register={register}
+              />
               <Input
                 defaultValue={
                   toEdit?.description ||
@@ -147,18 +155,7 @@ const NewMovement = ({
                 placeholder="Descripción"
                 {...register("description", { required: true })}
               />
-              {errors.amount && <span>Este Campo es Requerido</span>}
-              <NumberInput
-                defaultValue={
-                  toEdit?.amount || Number(monthlyPayment.toFixed(2))
-                }
-                w="full"
-              >
-                <NumberInputField
-                  placeholder="Cuanto es?"
-                  {...register("amount", { required: true })}
-                />
-              </NumberInput>
+
               {errors.amount && <span>Este Campo es Requerido</span>}
             </VStack>
           </Box>

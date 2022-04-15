@@ -1,8 +1,7 @@
 import React, { useState, useEffect, forwardRef, useMemo } from "react";
 import { useForm } from "react-hook-form";
-import { Text } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
-import { Box, Button, Input, VStack } from "@chakra-ui/react";
+import { Text, Box, Button, Input, VStack } from "@chakra-ui/react";
 import { Transaction } from "../../types";
 import Select from "../../components/Select";
 import esLocale from "date-fns/locale/es";
@@ -13,8 +12,7 @@ import { getCategories } from "../budget/selector";
 import { addNewTransaction, updateTransaction } from "./walletSlice";
 import { getBucketID } from "../bucket/selector";
 import parseISO from "date-fns/parseISO";
-import { NumberInput, NumberInputField } from "@chakra-ui/react";
-
+import NumberInput from "../../components/NumberInput";
 registerLocale("es", esLocale);
 
 type Props = {
@@ -109,17 +107,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
             <VStack spacing={4} w="full">
-              <NumberInput
-                defaultValue={toEdit ? toEdit.amount : null}
-                placeholder="Cantidad"
-                w="full"
-              >
-                <NumberInputField
-                  placeholder="Cantidad"
-                  {...register("amount", { required: true })}
-                />
-              </NumberInput>
-
+              <NumberInput amount={toEdit?.amount} register={register} />
               {errors.description && <span>Este Campo es Requerido</span>}
               <Input
                 defaultValue={toEdit ? toEdit.description : ""}

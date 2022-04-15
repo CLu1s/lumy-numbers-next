@@ -31,9 +31,8 @@ const BudgetCard = () => {
           {sameMonth && (
             <Button
               onClick={onOpen}
-              disabled={status === LoadingStates.LOADING}
+              disabled={status !== LoadingStates.SUCCEEDED}
               colorScheme="blue"
-              variant="outline"
             >
               Registrar Gasto
             </Button>
