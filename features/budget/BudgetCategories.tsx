@@ -58,7 +58,6 @@ const BudgetCategories = () => {
 
     if (newPercentage + rest <= 100) {
       dispatch(updateCategory({ ...category, percentage: newPercentage }));
-      toast("Tu cambio ha sido guardado");
     } else {
       dispatch(updateCategory({ ...category, percentage: 100 - rest }));
       toast("Tu cambio ha sido guardado con el maxímo permitido.");
@@ -97,7 +96,7 @@ const BudgetCategories = () => {
               <WrapItem key={item.id} width="full" maxW={{ base:"100%", md:"47%", xl:"48%"}}>
                 <StatCard
                   {...item}
-                  editable
+                  editable={item.id !== "rest"}
                   onEdit={() => {
                     setElementToEdit(item);
                     onOpen();

@@ -8,10 +8,9 @@ import {
   SliderFilledTrack,
   SliderThumb,
   Button,
-  VStack,
 } from "@chakra-ui/react";
 import Screen from "./Screen";
-import { money, icons } from "../utils";
+import { icons } from "../utils";
 import { FiEdit } from "react-icons/fi";
 import Stats from "./Stats";
 type Props = {
@@ -80,7 +79,7 @@ const StatCard = ({
           marginTop={6}
           aria-label="slider-ex-2"
           colorScheme={color.split(".")[0]}
-          defaultValue={progress}
+          value={progress}
           onChange={(e) => onChange(e)}
           onChangeEnd={(e) => onChangeEnd(e)}
         >
