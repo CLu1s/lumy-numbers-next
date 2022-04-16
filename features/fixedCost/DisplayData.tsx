@@ -1,19 +1,19 @@
-import { useMemo, useEffect, useState, useCallback } from "react";
+import { useMemo, useState, useCallback } from "react";
 import {
   Box,
-  Center,
-  Heading,
   Button,
   Tag,
   Stack,
   HStack,
   useDisclosure,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Table from "../../components/Table";
 import { getItems, getCategoryID } from "./selector";
-import { deleteFixedCost, updateFixedCost } from "./fixedCostSlice";
+import { deleteFixedCost } from "./fixedCostSlice";
 import { addNewTransaction } from "../wallet/walletSlice";
 import { getBucketID } from "../bucket/selector";
 import FixedCostModal from "./FixedCostModal";
@@ -21,6 +21,7 @@ import AlertDialog from "../../components/AlertDialog";
 import ItemsList from "./ItemsList";
 import { money } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
+import Stats from "../../components/Stats";
 
 const DisplayData = (props: any) => {
   const items = useSelector(getItems);
@@ -100,6 +101,19 @@ const DisplayData = (props: any) => {
     elementToEdit && setElementToEdit(null);
     onClose();
   };
+  const amounts = items.reduce(
+    (acc, item) => {
+      if (item.status === "paid") {
+        acc.paid += item.amount;
+      }
+      acc.total += item.amount;
+      return acc;
+    },
+    {
+      total: 0,
+      paid: 0,
+    }
+  );
 
   return (
     <>
@@ -122,6 +136,17 @@ const DisplayData = (props: any) => {
         onClose={manageOnClose}
         toEdit={elementToEdit}
       />
+      <Wrap marginBottom="2rem">
+        <WrapItem>
+          <Stats name="Total de Gastos" amount={amounts.total} />
+        </WrapItem>
+        <WrapItem>
+          <Stats name="Gastos Pendientes" amount={amounts.paid} />
+        </WrapItem>
+        <WrapItem>
+          <Stats name="Gastos Pagados" amount={amounts.total - amounts.paid} />
+        </WrapItem>
+      </Wrap>
       <Stack>
         <Box>
           <Button marginBottom="4" colorScheme="blue" onClick={onOpen}>
