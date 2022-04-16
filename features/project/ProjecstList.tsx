@@ -137,24 +137,34 @@ function ProjectsList() {
         projectName={projectName}
       />
 
-      <HStack marginBottom="2rem">
-        {projects.length !== allProjects.length && (
+      {projects.length !== allProjects.length && (
+        <HStack marginBottom="2rem">
           <Text fontSize="sm" fontWeight="medium">
             Ver proyectos concluidos
           </Text>
-        )}
-        <Switch
-          size="md"
-          isChecked={seeHistory}
-          onChange={(e) => setSeeHistory(e.target.checked)}
-        />
-      </HStack>
+          <Switch
+            size="md"
+            isChecked={seeHistory}
+            onChange={(e) => setSeeHistory(e.target.checked)}
+          />
+        </HStack>
+      )}
 
       <Wrap spacing={{ base: 2, md: 4, xl: 8 }}>
         {renderTables}
-        <WrapItem width="100%" maxW={{ base: "100%", lg: "48%" }} minH="123px" height="full" >
+        <WrapItem
+          width="100%"
+          maxW={{ base: "100%", lg: "48%" }}
+          minH="123px"
+          height="full"
+        >
           <Screen>
-            <Flex direction="column" height="full" align="center" justifyContent="center">
+            <Flex
+              direction="column"
+              height="full"
+              align="center"
+              justifyContent="center"
+            >
               {categoryID ? (
                 <Button
                   w="full"
@@ -167,7 +177,12 @@ function ProjectsList() {
                   borderRadius="md"
                   onClick={onOpen}
                 >
-                  <Flex direction="column" align="center" justify="center" height="full">
+                  <Flex
+                    direction="column"
+                    align="center"
+                    justify="center"
+                    height="full"
+                  >
                     <VscAdd />
                     <Text>Nuevo</Text>
                   </Flex>
