@@ -8,7 +8,7 @@
     "lang": "es",
     "orientation": "any",
     "scope": "/app/",
-    "theme_color": "#FFC100",
+    "theme_color": "#edf2f7",
     "icons": [
         {
             "src": "/icon_48x48.png",

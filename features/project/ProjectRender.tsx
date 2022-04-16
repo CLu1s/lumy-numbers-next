@@ -1,5 +1,5 @@
 import { useMemo, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import differenceInMonths from "date-fns/differenceInMonths";
 import {
@@ -8,6 +8,7 @@ import {
   WrapItem,
   Stack,
   HStack,
+  Tag,
   IconButton,
 } from "@chakra-ui/react";
 import Table from "../../components/Table";
@@ -120,12 +121,18 @@ function ProjectRender({
   return (
     <WrapItem
       key={project.id}
-      width="-moz-fit-content"
+      width="full"
       maxW={{ base: "100%", lg: "48%" }}
+      paddingBottom={{ base: "2rem", lg: "0" }}
     >
       <Screen title={project.name} description={project.description}>
-        <Stack spacing={4}>
-          <Wrap justifyContent="space-between" spacing={7}>
+        {numbers.amountPending < 0 && (
+          <Tag colorScheme="green" marginBottom="2">
+            Completado
+          </Tag>
+        )}
+        <Stack spacing={4} w="full">
+          <Wrap justifyContent="space-between" spacing={7} w="full">
             <WrapItem flex="1 1 0">
               <Stats
                 name="Meta"
@@ -137,17 +144,21 @@ function ProjectRender({
               />
             </WrapItem>
             <WrapItem flex="1 1 0">
-              <Stats name="Ahorrado a la fecha" amount={numbers.amountPaid} />
+              <Stats name="Ahorrado" amount={numbers.amountPaid} />
             </WrapItem>
-            <WrapItem flex="1 1 0">
-              <Stats
-                name="Cantidad por Ahorrar"
-                amount={numbers.amountPending}
-              />
-            </WrapItem>
-            <WrapItem flex="1 1 0">
-              <Stats name="Mensualidad Sugerida" amount={mensualities} />
-            </WrapItem>
+            {numbers.amountPending > 0 && (
+              <WrapItem flex="1 1 0">
+                <Stats
+                  name="Cantidad por Ahorrar"
+                  amount={numbers.amountPending}
+                />
+              </WrapItem>
+            )}
+            {numbers.amountPending > 0 && (
+              <WrapItem flex="1 1 0">
+                <Stats name="Mensualidad Sugerida" amount={mensualities} />
+              </WrapItem>
+            )}
             {numbers.expenses > 0 && (
               <WrapItem flex="1 1 0">
                 <Stats name="Gastos" amount={numbers.expenses} />

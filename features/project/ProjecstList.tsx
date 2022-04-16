@@ -8,10 +8,17 @@ import {
   Wrap,
   WrapItem,
   useDisclosure,
+  Switch,
+  HStack,
 } from "@chakra-ui/react";
 import Screen from "../../components/Screen";
 import ProjectRender from "./ProjectRender";
-import { getProjects, getCategoryID, getStatus } from "./selector";
+import {
+  getProjects,
+  getAllProjects,
+  getCategoryID,
+  getStatus,
+} from "./selector";
 import { Project, Movement, LoadingStates } from "../../types";
 import NewProject from "./NewProject";
 import NewMovement from "./NewMovement";
@@ -22,6 +29,7 @@ import Loading from "../../components/Loading";
 
 function ProjectsList() {
   const dispatch = useDispatch();
+  const [seeHistory, setSeeHistory] = useState(false);
   const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
   const [alertMovementDelete, setAlertMovementDelete] = useState(false);
   const [deleteId, setDeleteId] = useState<string>(null);
@@ -42,6 +50,7 @@ function ProjectsList() {
   };
 
   const projects = useSelector(getProjects);
+  const allProjects = useSelector(getAllProjects);
 
   const manageOnClose = () => {
     elementToEdit && setElementToEdit(null);
@@ -72,7 +81,7 @@ function ProjectsList() {
     setAlertMovementDelete(true);
     setDeleteId(id);
   };
-  const renderTables = projects.map((project) => (
+  const renderTables = (seeHistory ? allProjects : projects).map((project) => (
     <ProjectRender
       key={project.id}
       project={project}
@@ -83,7 +92,6 @@ function ProjectsList() {
       onMovementDelete={onMovementDelete}
     />
   ));
-
 
   return (
     <>
@@ -129,15 +137,28 @@ function ProjectsList() {
         projectName={projectName}
       />
 
+      <HStack marginBottom="2rem">
+        {projects.length !== allProjects.length && (
+          <Text fontSize="sm" fontWeight="medium">
+            Ver proyectos concluidos
+          </Text>
+        )}
+        <Switch
+          size="md"
+          isChecked={seeHistory}
+          onChange={(e) => setSeeHistory(e.target.checked)}
+        />
+      </HStack>
+
       <Wrap spacing={{ base: 2, md: 4, xl: 8 }}>
         {renderTables}
-        <WrapItem width="100%" maxW={{ base: "100%", lg: "48%" }} minH="123px">
+        <WrapItem width="100%" maxW={{ base: "100%", lg: "48%" }} minH="123px" height="full" >
           <Screen>
-            <Flex direction="column" align="center" justifyContent="center">
+            <Flex direction="column" height="full" align="center" justifyContent="center">
               {categoryID ? (
                 <Button
                   w="full"
-                  h="full"
+                  height="full"
                   minH="90px"
                   color="gray.400"
                   colorScheme="whiteAlpha"
@@ -146,7 +167,7 @@ function ProjectsList() {
                   borderRadius="md"
                   onClick={onOpen}
                 >
-                  <Flex direction="column" align="center" justify="center">
+                  <Flex direction="column" align="center" justify="center" height="full">
                     <VscAdd />
                     <Text>Nuevo</Text>
                   </Flex>

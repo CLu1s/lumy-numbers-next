@@ -164,7 +164,12 @@ export default function DataTable() {
         toEdit={elementToEdit}
       />
       <Stack spacing={8}>
-        <Stack spacing={4} display={{ base: "flex", lg: "none" }}>
+        <Stack
+          direction="row"
+          spacing={4}
+          display={{ base: "flex", lg: "none" }}
+          w="50%"
+        >
           <Select onChange={(e) => changeSort(e.target.value)}>
             <option value="date">Fecha</option>
             <option value="categoryName">Categoría</option>
