@@ -141,10 +141,10 @@ const DisplayData = (props: any) => {
           <Stats name="Total de Gastos" amount={amounts.total} />
         </WrapItem>
         <WrapItem>
-          <Stats name="Gastos Pendientes" amount={amounts.paid} />
+          <Stats name="Gastos Pagados " amount={amounts.paid} />
         </WrapItem>
         <WrapItem>
-          <Stats name="Gastos Pagados" amount={amounts.total - amounts.paid} />
+          <Stats name="Gastos Pendientes" amount={amounts.total - amounts.paid} />
         </WrapItem>
       </Wrap>
       <Stack>
