@@ -62,14 +62,10 @@ export const fetchTransactions = createAsyncThunk(
 export const addNewTransaction = createAsyncThunk(
   "wallet/addNewTransaction",
   async (transaction: WalletState["transactions"][0]) => {
-    try {
-      const response = await API.graphql(
-        graphqlOperation(createTransaction, { input: transaction })
-      );
-      return response;
-    } catch (e) {
-      console.log(e);
-    }
+    const response = await API.graphql(
+      graphqlOperation(createTransaction, { input: transaction })
+    );
+    return response;
   }
 );
 
