@@ -8,7 +8,7 @@ const Container = () => {
   const categoryID = useSelector(getCategoryID);
   return (
     <Screen
-      title="Tabla"
+      title="Mis Gastos"
       description="Lista de los gastos recurrentes que haces mes con mes"
     >
       {categoryID ? <DisplayData /> : <SaveCategoryID />}

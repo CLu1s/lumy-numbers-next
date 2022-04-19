@@ -23,7 +23,7 @@ const CheckIncomes = () => {
     setIsOpen(false);
   };
   const redirect = () => {
-    router.push("/presupuesto");
+    router.push("/app/presupuesto");
   };
 
   return (
@@ -32,7 +32,7 @@ const CheckIncomes = () => {
       title={"Hemos detectado que no tienes un contenedor"}
       onClose={onClose}
       onSubmit={redirect}
-      onSubmitButtonText={"Ir al presupuesto"}
+      onSubmitButtonText={"Ir al plan de gastos"}
     >
       {status !== "loading" ? (
         <>

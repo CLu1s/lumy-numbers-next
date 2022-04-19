@@ -37,7 +37,7 @@ export const menuList: MenuItem[] = [
   },
   {
     id: 5,
-    label: "Presupuesto",
+    label: "Configuración",
     path: "/app/presupuesto",
     icon: <ImStatsBars />,
   },

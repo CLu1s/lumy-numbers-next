@@ -12,11 +12,11 @@ import {
   WrapItem,
   HStack,
   Stack,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
+  // Accordion,
+  // AccordionItem,
+  // AccordionButton,
+  // AccordionPanel,
+  // AccordionIcon,
 } from "@chakra-ui/react";
 
 type ContentBoxProps = {
@@ -76,7 +76,13 @@ const ContentBox = ({
         padding={{ xl: 12 }}
       >
         <VStack spacing={4} justify="left">
-          <Heading as="h2" size="xl" fontWeight="bold" textAlign="left" w="full">
+          <Heading
+            as="h2"
+            size="xl"
+            fontWeight="bold"
+            textAlign="left"
+            w="full"
+          >
             {title}
           </Heading>
           <Text>{description}</Text>
@@ -165,33 +171,49 @@ const Home: NextPage = () => {
             </Center>
           </Box>
           <Box position="relative" display="flex" justifyContent="center">
-            <Box position="absolute" top="-10rem">
-              <HStack spacing={2}>
+            <Box position="absolute" top="-7rem" display="flex" w="full" justifyContent="center">
+              <Box width="208px" h={{ base: "200px", md: "400px" }}>
                 <Image
-                  src="/iphone.png"
-                  alt="Vercel Logo"
-                  width={167}
-                  height={320}
-                />
-
-                <Image
-                  src="/iphone.png"
-                  alt="Vercel Logo"
+                  src="/images/proyectos.png"
+                  alt="proyectos"
+                  layout="responsive"
                   width={208}
                   height={400}
                 />
+              </Box>
 
+              <Box
+                w="258px"
+                h={{ base: "200px", md: "125px", lg: "450px" }}
+                position="relative"
+                top="-3rem"
+              >
                 <Image
-                  src="/iphone.png"
-                  alt="Vercel Logo"
-                  width={167}
-                  height={320}
+                  src="/images/home.png"
+                  layout="responsive"
+                  alt="home"
+                  width={208}
+                  height={400}
                 />
-              </HStack>
+              </Box>
+
+              <Box w="208px" h={{ base: "200px", md: "400px" }}>
+                <Image
+                  src="/images/gastos.png"
+                  layout="responsive"
+                  alt="gastos"
+                  width={208}
+                  height={400}
+                />
+              </Box>
             </Box>
           </Box>
         </Box>
-        <Container maxW={{ base: "2xl", lg: "1100px" }} paddingTop="10rem" paddingBottom="10rem">
+        <Container
+          maxW={{ base: "2xl", lg: "1100px" }}
+          paddingTop="17rem"
+          paddingBottom="10rem"
+        >
           <ContentSection title="">
             <ContentBox
               title={"Planear Conscientemente"}
@@ -208,7 +230,7 @@ const Home: NextPage = () => {
                   </Text>
                 </Stack>
               }
-              image="/iphone.png"
+              image="/images/proyectos.png"
               imageAlt="Vercel Logo"
               imagePosition="left"
             />
@@ -224,7 +246,7 @@ const Home: NextPage = () => {
                   </Text>
                 </Stack>
               }
-              image="/iphone.png"
+              image="/images/budget.png"
               imageAlt="Vercel Logo"
               imagePosition="right"
             />
@@ -240,7 +262,7 @@ const Home: NextPage = () => {
                   </Text>
                 </Stack>
               }
-              image="/iphone.png"
+              image="/images/gastos.png"
               imageAlt="Vercel Logo"
               imagePosition="left"
             />

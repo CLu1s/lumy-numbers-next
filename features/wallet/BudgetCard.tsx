@@ -20,8 +20,8 @@ const BudgetCard = () => {
     <>
       <RecordExpense isOpen={isOpen} onClose={onClose} />
       <HeroStatCard
-        title="Presupuesto del mes"
-        description="Esta es la cantidad todal que resta de tu presupuesto"
+        title="Plan de gastos del mes"
+        description="Esta es la cantidad todal que resta de tu plande gastos"
         statLabel="Disponible"
         helpText={date(new Date(), "LLLL-YYY")}
         amount={balance}

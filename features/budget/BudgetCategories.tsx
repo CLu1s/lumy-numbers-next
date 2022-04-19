@@ -75,7 +75,7 @@ const BudgetCategories = () => {
       <EditCategory isOpen={isOpen} onClose={onClose} toEdit={elementToEdit} />
 
       <Screen
-        title="Distribución del Presupuesto"
+        title="Catetegorías"
         description={
           <>
             <Text>

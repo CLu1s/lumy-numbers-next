@@ -13,7 +13,7 @@ function CostosFijos({ user }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout userName={user?.username || ""} pageTitle="Costos Fijos">
+      <Layout userName={user?.username || ""} pageTitle="Gastos Fijos">
         <Stack spacing={8}>
           <Container />
         </Stack>
