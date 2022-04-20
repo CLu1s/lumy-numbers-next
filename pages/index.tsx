@@ -12,6 +12,8 @@ import {
   WrapItem,
   HStack,
   Stack,
+  Button,
+  Input,
   // Accordion,
   // AccordionItem,
   // AccordionButton,
@@ -132,6 +134,16 @@ const Home: NextPage = () => {
 
       <main>
         <Box backgroundColor="#1e5af9" width="full">
+          <Box width="full" paddingTop={8} paddingX={4}>
+            <HStack m="auto" width="full" justifyContent="space-between">
+              <Heading color="white">Luminus</Heading>
+              <Box>
+                <Button size="lg" color="#1e5af9">
+                  Registrarse
+                </Button>
+              </Box>
+            </HStack>
+          </Box>
           <Box paddingTop="44" paddingBottom="72" paddingX="8">
             <Center>
               <VStack spacing={8}>
@@ -152,26 +164,32 @@ const Home: NextPage = () => {
                     fontWeight="bold"
                     color="white"
                   >
-                    Gasto Consiente
+                    Gastos Consientes
                   </Heading>
                 </VStack>
                 <VStack spacing={2}>
                   <Text fontSize="lg" color="white" textAlign="center">
                     Cómo ahorrar cientos al mes y seguir comprando lo que
-                    quieres
+                    quieres.
                   </Text>
                   <Text fontSize="lg" color="white" textAlign="center">
                     El gasto consciente no consiste en recortar los gastos en
                     todo. Se trata, simplemente, de elegir las cosas que amas lo
-                    suficiente como para gastar de forma extravagante - y luego
-                    recortar el costo sin piedad en las cosas que no amas
+                    suficiente como para gastar de forma extravagante, y luego
+                    recortar el costo sin piedad en las cosas que no amas.
                   </Text>
                 </VStack>
               </VStack>
             </Center>
           </Box>
           <Box position="relative" display="flex" justifyContent="center">
-            <Box position="absolute" top="-7rem" display="flex" w="full" justifyContent="center">
+            <Box
+              position="absolute"
+              top={{ base: "-6rem", md: "-12rem", lg: "-10rem" }}
+              display="flex"
+              w="full"
+              justifyContent="center"
+            >
               <Box width="208px" h={{ base: "200px", md: "400px" }}>
                 <Image
                   src="/images/proyectos.png"
@@ -211,7 +229,7 @@ const Home: NextPage = () => {
         </Box>
         <Container
           maxW={{ base: "2xl", lg: "1100px" }}
-          paddingTop="17rem"
+          paddingTop={{ base: "5rem", md: "12rem", xl: "17rem" }}
           paddingBottom="10rem"
         >
           <ContentSection title="">
@@ -306,6 +324,45 @@ const Home: NextPage = () => {
               </Accordion>
             </Box>
           </ContentSection> */}
+          <ContentSection title="">
+            <Box
+              backgroundColor="#1e5af9"
+              w="90%"
+              borderRadius="lg"
+              padding={12}
+            >
+              <Wrap direction={["column", "row"]} spacing={6}>
+                <WrapItem width="60%">
+                  <VStack alignItems="left" spacing={6}>
+                    <Heading color="white">
+                      Subscribete a nuestro programa Beta
+                    </Heading>
+                    <Text color="white" fontSize="lg">
+                      Recibe notificaciones de nuestras novedades y promociones
+                    </Text>
+                  </VStack>
+                </WrapItem>
+                <WrapItem>
+                  <VStack alignItems="left">
+                    <Input
+                      variant="filled"
+                      size="lg"
+                      placeholder="mi@correo.com"
+                      type="email"
+                    />
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      color="white"
+                      colorScheme="blue"
+                    >
+                      Quiero ser parte
+                    </Button>
+                  </VStack>
+                </WrapItem>
+              </Wrap>
+            </Box>
+          </ContentSection>
         </Container>
       </main>
     </>
