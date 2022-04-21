@@ -19,14 +19,14 @@ function Transacciones({ user }) {
   const currentDate = new Date();
   const sameMonth = isSameMonth(period, currentDate);
 
-  // useEffect(() => {
-  //   return () => {
-  //     if (!sameMonth) {
-  //       unmount();
-  //       dispatch(changePeriod(currentDate));
-  //     }
-  //   };
-  // }, [sameMonth]);
+  useEffect(() => {
+    return () => {
+      if (!sameMonth) {
+        unmount();
+        dispatch(changePeriod(currentDate));
+      }
+    };
+  }, [sameMonth]);
 
   const handleChangePeriod = (newDate) => {
     fetch(newDate);
