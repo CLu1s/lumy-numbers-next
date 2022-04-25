@@ -102,7 +102,7 @@ function ProjectRender({
             amountPaid: project.initAmount,
             amountPending: project.amountGoal - project.initAmount,
             expenses: 0,
-            avalible: 0,
+            avalible: project.initAmount,
           }
         )
       : {
