@@ -87,7 +87,11 @@ const ContentBox = ({
           >
             {title}
           </Heading>
-          <Text>{description}</Text>
+          {typeof description === "string" ? (
+            <Text>{description}</Text>
+          ) : (
+            description
+          )}
         </VStack>
       </Box>
     </Stack>
