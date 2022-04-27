@@ -17,6 +17,7 @@
     "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@mailchimp/mailchimp_marketing": "^3.0.75",
     "@reduxjs/toolkit": "^1.7.1",
     "aws-amplify": "^4.3.13",
     "clsx": "^1.1.1",

@@ -18,6 +18,7 @@ import {
   AccordionPanel,
   AccordionIcon,
 } from "@chakra-ui/react";
+import useMailchimp from "../hooks/useMailchimp";
 
 type ContentBoxProps = {
   title: string;
@@ -35,6 +36,7 @@ const ContentBox = ({
   imagePosition,
 }: ContentBoxProps) => {
   const position = imagePosition === "left" ? "row" : "row-reverse";
+
   return (
     <Stack
       spacing={{ base: 4, md: 8 }}
