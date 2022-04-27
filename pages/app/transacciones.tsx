@@ -59,9 +59,10 @@ function Transacciones({ user }) {
           </Button>
         )}
         <Stack spacing={8}>
-          <Screen>
+          <TransactionsResume />
+
+          <Screen title="Transcciones del mes">
             <VStack spacing={8}>
-              <TransactionsResume />
               <Table />
             </VStack>
           </Screen>

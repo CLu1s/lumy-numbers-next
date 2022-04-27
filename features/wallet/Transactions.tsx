@@ -1,4 +1,4 @@
-import React, { useState, useEffect,  useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Text,
   Tag,
@@ -161,12 +161,12 @@ export default function DataTable() {
         onClose={manageOnClose}
         toEdit={elementToEdit}
       />
-      <Stack spacing={8}>
+      <Stack spacing={8} w="full">
         <Stack
           direction="row"
           spacing={4}
           display={{ base: "flex", lg: "none" }}
-          w="50%"
+          w="100%"
         >
           <Select onChange={(e) => changeSort(e.target.value)}>
             <option value="date">Fecha</option>
@@ -183,8 +183,8 @@ export default function DataTable() {
         <TableCards>
           {sortedTransactions.length > 0 ? (
             <>
-              <Box display={{ base: "none", lg: "block" }}>
-                <Table columns={columns} data={sortedTransactions} />
+              <Box display={{ base: "none", lg: "block" }} width="full">
+                <Table fullHeight columns={columns} data={sortedTransactions} />
               </Box>
               <Box display={{ base: "block", lg: "none" }}>
                 <TransactionMini

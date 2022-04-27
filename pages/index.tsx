@@ -20,11 +20,15 @@ import {
   // AccordionPanel,
   // AccordionIcon,
 } from "@chakra-ui/react";
+import gastos from "../public/images/gastos.png";
+import proyectos from"../public/images/proyectos.png";
+import home from "../public/images/home.png";
+import budget from "../public/images/budget.png";
 
 type ContentBoxProps = {
   title: string;
   description: string | JSX.Element;
-  image: string;
+  image: StaticImageData;
   imageAlt: string;
   imagePosition: "left" | "right";
 };
@@ -67,6 +71,7 @@ const ContentBox = ({
             alt={imageAlt}
             width={208}
             height={400}
+            placeholder="blur"
           />
         </Box>
       </Box>
@@ -196,7 +201,8 @@ const Home: NextPage = () => {
             >
               <Box width="208px" h={{ base: "200px", md: "400px" }}>
                 <Image
-                  src="/images/proyectos.png"
+                  src={proyectos}
+                  placeholder="blur"
                   alt="proyectos"
                   layout="responsive"
                   width={208}
@@ -211,7 +217,8 @@ const Home: NextPage = () => {
                 top="-3rem"
               >
                 <Image
-                  src="/images/home.png"
+                  src={home}
+                  placeholder="blur"
                   layout="responsive"
                   alt="home"
                   width={208}
@@ -221,7 +228,8 @@ const Home: NextPage = () => {
 
               <Box w="208px" h={{ base: "200px", md: "400px" }}>
                 <Image
-                  src="/images/gastos.png"
+                  src={gastos}
+                  placeholder="blur"
                   layout="responsive"
                   alt="gastos"
                   width={208}
@@ -252,7 +260,7 @@ const Home: NextPage = () => {
                   </Text>
                 </Stack>
               }
-              image="/images/proyectos.png"
+              image={proyectos}
               imageAlt="Vercel Logo"
               imagePosition="left"
             />
@@ -268,7 +276,7 @@ const Home: NextPage = () => {
                   </Text>
                 </Stack>
               }
-              image="/images/budget.png"
+              image={budget}
               imageAlt="Vercel Logo"
               imagePosition="right"
             />
@@ -284,7 +292,7 @@ const Home: NextPage = () => {
                   </Text>
                 </Stack>
               }
-              image="/images/gastos.png"
+              image={gastos}
               imageAlt="Vercel Logo"
               imagePosition="left"
             />
