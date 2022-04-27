@@ -12,9 +12,10 @@ type Column = {
 type TableProps = {
   columns: Column[];
   data: any[];
+  fullHeight?: boolean;
 };
 
-export default function TableRender({ columns, data }: TableProps) {
+export default function TableRender({ columns, data, fullHeight }: TableProps) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data }, useSortBy);
 
@@ -24,7 +25,7 @@ export default function TableRender({ columns, data }: TableProps) {
       borderRadius="lg"
       padding="2"
       overflow="auto"
-      maxHeight={{ base: "430px", xl: "670px" }}
+      maxHeight={fullHeight ? "auto" : { base: "430px", xl: "670px" }}
     >
       <Table {...getTableProps()} variant="simple">
         <Thead>
