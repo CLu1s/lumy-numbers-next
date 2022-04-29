@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../../components/Modal";
-import { Box, Button, Input, VStack, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Input, VStack, Stack, Text,Textarea  } from "@chakra-ui/react";
 import esLocale from "date-fns/locale/es";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -103,7 +103,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
                 {...register("name", { required: true })}
               />
               {errors.name && <span>Este Campo es Requerido</span>}
-              <Input
+              <Textarea 
                 defaultValue={toEdit?.description}
                 placeholder="Descripción"
                 {...register("description", { required: false })}
