@@ -15,7 +15,7 @@ function Home({ user }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout userName={user?.username || ""} pageTitle="Presupuesto">
+      <Layout userName={user?.username || ""} pageTitle="Plan de Gastos">
         <Stack spacing={8}>
           <IncomeCard />
           <BudgetCategories />

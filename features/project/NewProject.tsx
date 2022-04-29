@@ -106,7 +106,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
               <Input
                 defaultValue={toEdit?.description}
                 placeholder="Descripción"
-                {...register("description", { required: true })}
+                {...register("description", { required: false })}
               />
               {errors.amount && <span>Este Campo es Requerido</span>}
               <NumberInput

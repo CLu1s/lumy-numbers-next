@@ -12,18 +12,24 @@ import {
   WrapItem,
   HStack,
   Stack,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
+  Button,
+  Input,
+  // Accordion,
+  // AccordionItem,
+  // AccordionButton,
+  // AccordionPanel,
+  // AccordionIcon,
 } from "@chakra-ui/react";
 import useMailchimp from "../hooks/useMailchimp";
+import gastos from "../public/images/gastos.png";
+import proyectos from"../public/images/proyectos.png";
+import home from "../public/images/home.png";
+import budget from "../public/images/budget.png";
 
 type ContentBoxProps = {
   title: string;
   description: string | JSX.Element;
-  image: string;
+  image: StaticImageData;
   imageAlt: string;
   imagePosition: "left" | "right";
 };
@@ -67,6 +73,7 @@ const ContentBox = ({
             alt={imageAlt}
             width={208}
             height={400}
+            placeholder="blur"
           />
         </Box>
       </Box>
@@ -78,10 +85,20 @@ const ContentBox = ({
         padding={{ xl: 12 }}
       >
         <VStack spacing={4} justify="left">
-          <Heading as="h2" size="xl" fontWeight="bold" textAlign="left" w="full">
+          <Heading
+            as="h2"
+            size="xl"
+            fontWeight="bold"
+            textAlign="left"
+            w="full"
+          >
             {title}
           </Heading>
-          <Text>{description}</Text>
+          {typeof description === "string" ? (
+            <Text>{description}</Text>
+          ) : (
+            description
+          )}
         </VStack>
       </Box>
     </Stack>
@@ -128,6 +145,16 @@ const Home: NextPage = () => {
 
       <main>
         <Box backgroundColor="#1e5af9" width="full">
+          <Box width="full" paddingTop={8} paddingX={4}>
+            <HStack m="auto" width="full" justifyContent="space-between">
+              <Heading color="white">Luminus</Heading>
+              <Box>
+                <Button size="lg" color="#1e5af9">
+                  Registrarse
+                </Button>
+              </Box>
+            </HStack>
+          </Box>
           <Box paddingTop="44" paddingBottom="72" paddingX="8">
             <Center>
               <VStack spacing={8}>
@@ -148,52 +175,77 @@ const Home: NextPage = () => {
                     fontWeight="bold"
                     color="white"
                   >
-                    Gasto Consiente
+                    Gastos Consientes
                   </Heading>
                 </VStack>
                 <VStack spacing={2}>
                   <Text fontSize="lg" color="white" textAlign="center">
                     Cómo ahorrar cientos al mes y seguir comprando lo que
-                    quieres
+                    quieres.
                   </Text>
                   <Text fontSize="lg" color="white" textAlign="center">
                     El gasto consciente no consiste en recortar los gastos en
                     todo. Se trata, simplemente, de elegir las cosas que amas lo
-                    suficiente como para gastar de forma extravagante - y luego
-                    recortar el costo sin piedad en las cosas que no amas
+                    suficiente como para gastar de forma extravagante, y luego
+                    recortar el costo sin piedad en las cosas que no amas.
                   </Text>
                 </VStack>
               </VStack>
             </Center>
           </Box>
           <Box position="relative" display="flex" justifyContent="center">
-            <Box position="absolute" top="-10rem">
-              <HStack spacing={2}>
+            <Box
+              position="absolute"
+              top={{ base: "-6rem", md: "-12rem", lg: "-10rem" }}
+              display="flex"
+              w="full"
+              justifyContent="center"
+            >
+              <Box width="208px" h={{ base: "200px", md: "400px" }}>
                 <Image
-                  src="/iphone.png"
-                  alt="Vercel Logo"
-                  width={167}
-                  height={320}
-                />
-
-                <Image
-                  src="/iphone.png"
-                  alt="Vercel Logo"
+                  src={proyectos}
+                  placeholder="blur"
+                  alt="proyectos"
+                  layout="responsive"
                   width={208}
                   height={400}
                 />
+              </Box>
 
+              <Box
+                w="258px"
+                h={{ base: "200px", md: "125px", lg: "450px" }}
+                position="relative"
+                top="-3rem"
+              >
                 <Image
-                  src="/iphone.png"
-                  alt="Vercel Logo"
-                  width={167}
-                  height={320}
+                  src={home}
+                  placeholder="blur"
+                  layout="responsive"
+                  alt="home"
+                  width={208}
+                  height={400}
                 />
-              </HStack>
+              </Box>
+
+              <Box w="208px" h={{ base: "200px", md: "400px" }}>
+                <Image
+                  src={gastos}
+                  placeholder="blur"
+                  layout="responsive"
+                  alt="gastos"
+                  width={208}
+                  height={400}
+                />
+              </Box>
             </Box>
           </Box>
         </Box>
-        <Container maxW={{ base: "2xl", lg: "1100px" }} paddingTop="10rem" paddingBottom="10rem">
+        <Container
+          maxW={{ base: "2xl", lg: "1100px" }}
+          paddingTop={{ base: "5rem", md: "12rem", xl: "17rem" }}
+          paddingBottom="10rem"
+        >
           <ContentSection title="">
             <ContentBox
               title={"Planear Conscientemente"}
@@ -210,7 +262,7 @@ const Home: NextPage = () => {
                   </Text>
                 </Stack>
               }
-              image="/iphone.png"
+              image={proyectos}
               imageAlt="Vercel Logo"
               imagePosition="left"
             />
@@ -226,7 +278,7 @@ const Home: NextPage = () => {
                   </Text>
                 </Stack>
               }
-              image="/iphone.png"
+              image={budget}
               imageAlt="Vercel Logo"
               imagePosition="right"
             />
@@ -242,7 +294,7 @@ const Home: NextPage = () => {
                   </Text>
                 </Stack>
               }
-              image="/iphone.png"
+              image={gastos}
               imageAlt="Vercel Logo"
               imagePosition="left"
             />
@@ -286,6 +338,45 @@ const Home: NextPage = () => {
               </Accordion>
             </Box>
           </ContentSection> */}
+          <ContentSection title="">
+            <Box
+              backgroundColor="#1e5af9"
+              w="90%"
+              borderRadius="lg"
+              padding={12}
+            >
+              <Wrap direction={["column", "row"]} spacing={6}>
+                <WrapItem width="60%">
+                  <VStack alignItems="left" spacing={6}>
+                    <Heading color="white">
+                      Subscribete a nuestro programa Beta
+                    </Heading>
+                    <Text color="white" fontSize="lg">
+                      Recibe notificaciones de nuestras novedades y promociones
+                    </Text>
+                  </VStack>
+                </WrapItem>
+                <WrapItem>
+                  <VStack alignItems="left">
+                    <Input
+                      variant="filled"
+                      size="lg"
+                      placeholder="mi@correo.com"
+                      type="email"
+                    />
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      color="white"
+                      colorScheme="blue"
+                    >
+                      Quiero ser parte
+                    </Button>
+                  </VStack>
+                </WrapItem>
+              </Wrap>
+            </Box>
+          </ContentSection>
         </Container>
       </main>
     </>

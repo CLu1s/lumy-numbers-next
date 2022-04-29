@@ -9,7 +9,7 @@ const CategoriesDashboard = () => {
   return (
     <Screen
       title="Categorías"
-      description="Cada categoría muestra el total disponible en tu presupuesto con la cantidad y porcentaje que le queda."
+      description="Cada categoría muestra el total disponible en tu plan de gastos con la cantidad y porcentaje que le queda."
     >
       <VStack spacing={4}>
         {showSwitch && <HStack width="full" justifyContent="flex-end">

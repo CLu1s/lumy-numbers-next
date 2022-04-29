@@ -6635,6 +6635,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chart.js@npm:^3.7.1":
+  version: 3.7.1
+  resolution: "chart.js@npm:3.7.1"
+  checksum: f9d118d3b7dd3c36b6da7a8d71ac9e5d9673b81095cc66c3f61ff91674e20020c6700f8c9c6f93713fa8474eb471ded106114346ccc6afa88b4a7d0eb73dcea4
+  languageName: node
+  linkType: hard
+
 "chownr@npm:^2.0.0":
   version: 2.0.0
   resolution: "chownr@npm:2.0.0"
@@ -9136,6 +9143,7 @@ __metadata:
     "@reduxjs/toolkit": ^1.7.1
     "@types/react": ^17.0.38
     aws-amplify: ^4.3.13
+    chart.js: ^3.7.1
     clsx: ^1.1.1
     date-fns: ^2.28.0
     eslint: ^8.2.0
@@ -9153,6 +9161,7 @@ __metadata:
     next: ^12.1.0
     next-pwa: ^5.4.4
     react: ^17.0.2
+    react-chartjs-2: ^4.1.0
     react-datepicker: ^4.6.0
     react-dom: ^17.0.2
     react-hook-form: ^7.25.0
@@ -10096,6 +10105,16 @@ __metadata:
   dependencies:
     safe-buffer: ^5.1.0
   checksum: d779499376bd4cbb435ef3ab9a957006c8682f343f14089ed5f27764e4645114196e75b7f6abf1cbd84fd247c0cb0651698444df8c9bf30e62120fbbc52269d6
+  languageName: node
+  linkType: hard
+
+"react-chartjs-2@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "react-chartjs-2@npm:4.1.0"
+  peerDependencies:
+    chart.js: ^3.5.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: fe01bdaf80c8a806af36e772719f420862e15e393a32c4c15b0e5fb8167143648e3f465b1b3ee8c4889f9531fff6ad6d34832606029ebf7d2751729198eb6121
   languageName: node
   linkType: hard
 

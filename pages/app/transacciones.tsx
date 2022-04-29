@@ -5,8 +5,9 @@ import sub from "date-fns/sub";
 import isSameMonth from "date-fns/isSameMonth";
 import { useSelector, useDispatch } from "react-redux";
 import Layout from "../../components/Layout";
-import { Stack, Button } from "@chakra-ui/react";
+import { Stack, Button, VStack } from "@chakra-ui/react";
 import Table from "../../features/wallet/Transactions";
+import TransactionsResume from "../../features/wallet/TransactionsResume";
 import Screen from "../../components/Screen";
 import { getPeriod } from "../../features/wallet/selector";
 import { changePeriod } from "../../features/wallet/walletSlice";
@@ -36,7 +37,10 @@ function Transacciones({ user }) {
     <div>
       <Head>
         <title>Luminus Conscious Planning</title>
-        <meta name="description" content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres" />
+        <meta
+          name="description"
+          content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -55,8 +59,12 @@ function Transacciones({ user }) {
           </Button>
         )}
         <Stack spacing={8}>
-          <Screen>
-            <Table />
+          <TransactionsResume />
+
+          <Screen title="Transcciones del mes">
+            <VStack spacing={8}>
+              <Table />
+            </VStack>
           </Screen>
         </Stack>
       </Layout>
