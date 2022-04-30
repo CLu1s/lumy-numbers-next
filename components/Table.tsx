@@ -27,7 +27,7 @@ export default function TableRender({ columns, data, fullHeight }: TableProps) {
       overflow="auto"
       maxHeight={fullHeight ? "auto" : { base: "430px", xl: "670px" }}
     >
-      <Table {...getTableProps()} variant="simple">
+      <Table {...getTableProps()} variant="striped">
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>

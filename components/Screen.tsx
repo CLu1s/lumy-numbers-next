@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Box, Stack, Heading, Text } from "@chakra-ui/react";
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import Markdown from "./Markdown";
+
 type props = {
   title?: string;
   description?: string | React.ReactNode;
@@ -32,13 +32,13 @@ const Screen = ({ title, description, children }: props) => {
       >
         <Stack spacing={6}>
           {title && (
-            <Stack  spacing="2">
+            <Stack spacing="2">
               <Heading as="h2" size="md" fontWeight="600">
                 {title}
               </Heading>
               {description &&
                 (typeof description === "string" ? (
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{description}</ReactMarkdown>
+                  <Markdown>{description}</Markdown>
                 ) : (
                   description
                 ))}
