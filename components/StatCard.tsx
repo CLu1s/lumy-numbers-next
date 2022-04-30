@@ -40,7 +40,6 @@ const StatCard = ({
   onEdit,
   showProgress,
 }: Props) => {
-  const loading = false;
   return (
     <Screen>
       <HStack spacing={2}>

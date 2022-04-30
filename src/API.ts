@@ -350,24 +350,12 @@ export type CreateCategoryInput = {
 export type ModelCategoryConditionInput = {
   icon?: ModelStringInput | null,
   name?: ModelStringInput | null,
-  percentage?: ModelIntInput | null,
+  percentage?: ModelFloatInput | null,
   color?: ModelStringInput | null,
   bucketID?: ModelIDInput | null,
   and?: Array< ModelCategoryConditionInput | null > | null,
   or?: Array< ModelCategoryConditionInput | null > | null,
   not?: ModelCategoryConditionInput | null,
-};
-
-export type ModelIntInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
 };
 
 export type UpdateCategoryInput = {
@@ -546,7 +534,7 @@ export type ModelCategoryFilterInput = {
   id?: ModelIDInput | null,
   icon?: ModelStringInput | null,
   name?: ModelStringInput | null,
-  percentage?: ModelIntInput | null,
+  percentage?: ModelFloatInput | null,
   color?: ModelStringInput | null,
   bucketID?: ModelIDInput | null,
   and?: Array< ModelCategoryFilterInput | null > | null,

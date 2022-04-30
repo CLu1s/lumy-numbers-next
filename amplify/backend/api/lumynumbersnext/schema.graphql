@@ -58,7 +58,7 @@ type Category @model {
   id: ID!
   icon: String!
   name: String!
-  percentage: Int!
+  percentage: Float!
   color: String!
   bucketID: ID! @index(name: "byBucket", sortKeyFields: ["id"])
 }

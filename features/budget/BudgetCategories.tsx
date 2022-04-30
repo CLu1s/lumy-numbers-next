@@ -55,16 +55,20 @@ const BudgetCategories = () => {
       }
       return acc;
     }, 0);
+    console.log({ newPercentage });
 
-    if (newPercentage + rest <= 100) {
+    if (newPercentage + rest <= 1) {
       dispatch(updateCategory({ ...category, percentage: newPercentage }));
     } else {
-      dispatch(updateCategory({ ...category, percentage: 100 - rest }));
+      console.log({ rest });
+      dispatch(updateCategory({ ...category, percentage: 1 - rest }));
       toast("Tu cambio ha sido guardado con el maxímo permitido.");
     }
   };
   const debounceSliderChange = _debounce(
     (e: number, id: string, percentage: number) => {
+      console.log({ debounceSliderChange: percentage });
+
       manageSliderChange(e, id, percentage);
     },
     1000
@@ -91,9 +95,13 @@ const BudgetCategories = () => {
         }
       >
         {status !== "idle" ? (
-          <Wrap spacing={{base:2, xl:4}}>
+          <Wrap spacing={{ base: 2, xl: 4 }}>
             {state.map((item: Category) => (
-              <WrapItem key={item.id} width="full" maxW={{ base:"100%", md:"47%", xl:"48%"}}>
+              <WrapItem
+                key={item.id}
+                width="full"
+                maxW={{ base: "100%", md: "47%", xl: "48%" }}
+              >
                 <StatCard
                   {...item}
                   editable={item.id !== "rest"}
@@ -101,25 +109,32 @@ const BudgetCategories = () => {
                     setElementToEdit(item);
                     onOpen();
                   }}
-                  number={(item.percentage / 100) * income}
+                  number={item.percentage * income}
                   slider={item.id !== "rest"}
-                  progress={item.percentage}
+                  progress={item.percentage * 100}
                   key={item.id}
                   onChange={(e) => {
                     const index = categories.findIndex((c) => c.id === item.id);
                     const newState = [...categories];
-                    newState[index] = { ...item, percentage: e };
+                    console.log({ e: e / 100 });
+                    newState[index] = { ...item, percentage: e / 100 };
                     setState(newState);
                     dispatch(updateCategoryTemp(newState[index]));
                   }}
-                  onChangeEnd={(e) =>
-                    debounceSliderChange(e, item.id, item.percentage)
-                  }
+                  onChangeEnd={(e) => {
+                    console.log({ onChangeEnd: item.percentage });
+
+                    debounceSliderChange(e / 100, item.id, item.percentage);
+                  }}
                   showProgress
                 />
               </WrapItem>
             ))}
-            <WrapItem width="full"  maxW={{ base:"100%", md:"47%", xl:"48%"}} minH="123px">
+            <WrapItem
+              width="full"
+              maxW={{ base: "100%", md: "47%", xl: "48%" }}
+              minH="123px"
+            >
               <Screen>
                 <Button
                   w="full"
