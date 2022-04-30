@@ -7,7 +7,6 @@ mailchimp.setConfig({
 function runMailchimp() {
   async function run() {
     const response = await mailchimp.ping.get();
-    console.log(response);
     return response;
   }
   return run();

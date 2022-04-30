@@ -150,7 +150,7 @@ function ProjectsList() {
         </HStack>
       )}
 
-      <Wrap spacing={{ base: 2, md: 4, xl: 8 }}>
+      <Wrap spacing={{ base: 2, md: 4, lg: 8, xl: 6 }}>
         {renderTables}
         <WrapItem
           width="100%"

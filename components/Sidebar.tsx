@@ -19,14 +19,14 @@ const Sidebsar = () => {
       display={{ base: "none", xl: "block" }}
     >
       <VStack spacing={8} width={"100%"}>
-        <Center height="full">
+        <Center height="full" paddingTop={4}>
           <Heading
             as="h2"
             size="md"
             fontWeight="600"
             textTransform="capitalize"
           >
-            Luminus Conscious Planning
+            Luminus
           </Heading>
         </Center>
         <VStack spacing={4} width={"100%"} paddingLeft={4}>
@@ -34,7 +34,7 @@ const Sidebsar = () => {
             <MenuItem key={item.id} {...item} />
           ))}
         </VStack>
-        <VStack spacing={4} width={"100%"} paddingLeft={4}>
+        <VStack spacing={4} width={"100%"} paddingLeft={4} paddingTop={10}>
           <Button colorScheme="blue" onClick={signOut}>
             Cerrar Sesión
           </Button>

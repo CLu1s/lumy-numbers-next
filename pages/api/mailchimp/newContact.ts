@@ -11,7 +11,7 @@ function runMailchimp(email) {
     const response = await mailchimp.lists.addListMember(listId, {
       email_address: email,
       status: "subscribed",
-      tags: ["demoSubscriber"],
+      tags: ["betaTester"],
     });
     return response;
   }

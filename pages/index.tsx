@@ -158,11 +158,11 @@ const Home: NextPage = () => {
           <Box width="full" paddingTop={8} paddingX={4}>
             <HStack m="auto" width="full" justifyContent="space-between">
               <Heading color="white">Luminus</Heading>
-              <Box>
+              {/* <Box>
                 <Button size="lg" color="#1e5af9">
-                  Registrarse
+                  Iniciar Sesión
                 </Button>
-              </Box>
+              </Box> */}
             </HStack>
           </Box>
           <Box paddingTop="44" paddingBottom="72" paddingX="8">
@@ -210,6 +210,7 @@ const Home: NextPage = () => {
               display="flex"
               w="full"
               justifyContent="center"
+              zIndex={100}
             >
               <Box width="208px" h={{ base: "200px", md: "400px" }}>
                 <Image
@@ -256,6 +257,23 @@ const Home: NextPage = () => {
           paddingTop={{ base: "5rem", md: "12rem", xl: "17rem" }}
           paddingBottom="10rem"
         >
+          <Box position="relative">
+            <Box
+              position="absolute"
+              width="25rem"
+              top="-10rem"
+              right="-10rem"
+              opacity={0.4}
+            >
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fill="#0F62FE"
+                  d="M58.5,-61.4C71.7,-45.2,75.5,-22.6,73.3,-2.2C71.1,18.2,62.9,36.4,49.6,47.6C36.4,58.8,18.2,62.9,0.9,62C-16.5,61.2,-33,55.3,-47.5,44.1C-62.1,33,-74.7,16.5,-75.2,-0.6C-75.8,-17.6,-64.3,-35.2,-49.8,-51.4C-35.2,-67.6,-17.6,-82.4,2.5,-84.9C22.6,-87.4,45.2,-77.6,58.5,-61.4Z"
+                  transform="translate(100 100)"
+                />
+              </svg>
+            </Box>
+          </Box>
           <ContentSection title="">
             <ContentBox
               title={"Planear Conscientemente"}
@@ -276,6 +294,7 @@ const Home: NextPage = () => {
               imageAlt="Vercel Logo"
               imagePosition="left"
             />
+
             <ContentBox
               title={"Gastos sin culpa"}
               description={
@@ -309,7 +328,23 @@ const Home: NextPage = () => {
               imagePosition="left"
             />
           </ContentSection>
-
+          <Box position="relative">
+            <Box
+              position="absolute"
+              width="20rem"
+              top="-4rem"
+              right="10rem"
+              opacity={0.6}
+            >
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  fill="#0F62FE"
+                  d="M60,-59.3C76.1,-43.9,86.3,-21.9,86.9,0.6C87.4,23,78.3,46.1,62.2,62.6C46.1,79,23,88.9,1.1,87.7C-20.8,86.6,-41.5,74.4,-56.2,58C-70.9,41.5,-79.6,20.8,-79.6,0C-79.6,-20.7,-70.9,-41.5,-56.2,-56.9C-41.5,-72.2,-20.7,-82.2,0.6,-82.8C21.9,-83.4,43.9,-74.6,60,-59.3Z"
+                  transform="translate(100 100)"
+                />
+              </svg>
+            </Box>
+          </Box>
           <ContentSection title="">
             <Box
               backgroundColor="#1e5af9"
@@ -321,11 +356,20 @@ const Home: NextPage = () => {
                 <WrapItem width="60%">
                   <VStack alignItems="left" spacing={6}>
                     <Heading color="white">
-                      Subscribete a nuestro programa Beta
+                      Inscribete a nuestro taller de finanzas y opten acceso
+                      anticipado a nuestra app
                     </Heading>
                     <Text color="white" fontSize="lg">
-                      Recibe notificaciones de nuestras novedades y promociones
+                      Al inscribirte a nuestro taller de finanzas, ademas de
+                      poder asistir al taller, te daremos acceso prioritario a
+                      nuestra aplicación para que puedas usarla en tu celular,
+                      tableta o computadora.
                     </Text>
+                    <VStack spacing={2}>
+                      <Text fontSize="sm" textColor="white">
+                        Proxímo taller: Mayo 2022
+                      </Text>
+                    </VStack>
                   </VStack>
                 </WrapItem>
                 <WrapItem>
@@ -353,6 +397,24 @@ const Home: NextPage = () => {
           </ContentSection>
         </Container>
       </main>
+      <footer>
+        <Box backgroundColor="#000f38" padding={12}>
+          <Container>
+            <Wrap
+              direction={["column", "row"]}
+              spacing={6}
+              width="full"
+              margin="auto"
+            >
+              <WrapItem>
+                <Text textColor="white" textAlign="center">
+                  Todos los derechos reservados 2022{" "}
+                </Text>
+              </WrapItem>
+            </Wrap>
+          </Container>
+        </Box>
+      </footer>
     </>
   );
 };

@@ -26,7 +26,7 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
     <>
       <main>
         <Box marginBottom={{ base: 32, lg: 0 }}>
-          <Stack spacing={{ base: 0, xl: 8 }} direction="row">
+          <Stack spacing={{ base: 0, xl: 5 }} direction="row">
             <CheckBucket userName={userName} />
             <Sidebar />
             <Stack width="full">

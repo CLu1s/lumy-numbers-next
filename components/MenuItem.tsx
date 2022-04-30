@@ -34,7 +34,7 @@ const MenuItem = ({ label, icon, path }: Props) => {
             <HStack spacing={4}>
               <Square
                 size="30px"
-                bg={isActive ? "blue.200" : "white"}
+                bg={isActive ? "purple.200" : "white"}
                 color={isActive ? "white" : "blue.200"}
                 borderRadius={"lg"}
               >
