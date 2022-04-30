@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -14,15 +15,9 @@ import {
   Stack,
   Button,
   Input,
-  // Accordion,
-  // AccordionItem,
-  // AccordionButton,
-  // AccordionPanel,
-  // AccordionIcon,
 } from "@chakra-ui/react";
-import useMailchimp from "../hooks/useMailchimp";
 import gastos from "../public/images/gastos.png";
-import proyectos from"../public/images/proyectos.png";
+import proyectos from "../public/images/proyectos.png";
 import home from "../public/images/home.png";
 import budget from "../public/images/budget.png";
 
@@ -42,6 +37,9 @@ const ContentBox = ({
   imagePosition,
 }: ContentBoxProps) => {
   const position = imagePosition === "left" ? "row" : "row-reverse";
+  useEffect(() => {
+    fetch("./api/mailchimp");
+  }, []);
 
   return (
     <Stack
@@ -132,6 +130,18 @@ const ContentSection = ({
 };
 
 const Home: NextPage = () => {
+  const [email, setEmail] = useState("");
+  const handleSubscribe = () => {
+    fetch("./api/mailchimp/newContact", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    });
+    setEmail("");
+  };
+
   return (
     <>
       <Head>
@@ -299,45 +309,7 @@ const Home: NextPage = () => {
               imagePosition="left"
             />
           </ContentSection>
-          {/* <ContentSection title="FAQ's">
-            <Box marginBottom="10rem">
-              <Accordion defaultIndex={0}>
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex="1" textAlign="left">
-                        Section 1 title
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  </AccordionPanel>
-                </AccordionItem>
 
-                <AccordionItem>
-                  <h2>
-                    <AccordionButton>
-                      <Box flex="1" textAlign="left">
-                        Section 2 title
-                      </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  </h2>
-                  <AccordionPanel pb={4}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                  </AccordionPanel>
-                </AccordionItem>
-              </Accordion>
-            </Box>
-          </ContentSection> */}
           <ContentSection title="">
             <Box
               backgroundColor="#1e5af9"
@@ -363,12 +335,14 @@ const Home: NextPage = () => {
                       size="lg"
                       placeholder="mi@correo.com"
                       type="email"
+                      onChange={(e) => setEmail(e.target.value)}
                     />
                     <Button
                       variant="outline"
                       size="lg"
                       color="white"
                       colorScheme="blue"
+                      onClick={() => handleSubscribe()}
                     >
                       Quiero ser parte
                     </Button>

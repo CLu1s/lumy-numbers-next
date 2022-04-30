@@ -14,7 +14,7 @@ export const menuList: MenuItem[] = [
   {
     id: 1,
     label: "Dashboard",
-    path: "/app/",
+    path: "/app/home",
     icon: <AiFillHome />,
   },
   {

@@ -1,7 +1,7 @@
 {
     "name": "Luminus",
     "short_name": "Luminus",
-    "start_url": "/app/",
+    "start_url": "/app/home",
     "display": "standalone",
     "background_color": "#edf2f7",
     "dir": "ltr",
