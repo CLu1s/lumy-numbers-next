@@ -26,8 +26,7 @@ const FixedCostDashboard = () => {
 
   const managePaid = (data: any) => {
     const { createdAt, updatedAt, ...input } = data;
-    const { type, status, ...trans } = input;
-    dispatch(updateFixedCost({ ...data, status: "paid" }));
+    const { type, status, id, ...trans } = input;
     dispatch(
       addNewTransaction({
         ...trans,
@@ -40,9 +39,12 @@ const FixedCostDashboard = () => {
   return (
     <Screen title="Gastos Pendientes">
       <Stack spacing={4}>
-        <Text  fontSize='md'>
+        <Text fontSize="md">
           Cantidad necesaria para pagar los gastos pendientes:
-          <chakra.span fontWeight="bold"  fontSize='xl'> {money(amount)}</chakra.span>
+          <chakra.span fontWeight="bold" fontSize="xl">
+            {" "}
+            {money(amount)}
+          </chakra.span>
         </Text>
         <ItemsList items={items} managePaid={managePaid} />
         <Link href="/app/costos-fijos" passHref>
