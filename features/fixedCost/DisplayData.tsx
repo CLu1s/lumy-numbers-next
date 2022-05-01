@@ -48,7 +48,7 @@ const DisplayData = (props: any) => {
   };
   const managePaid = (data: any) => {
     const { createdAt, updatedAt, ...input } = data;
-    const { type, status, ...trans } = input;
+    const { type, status, id, ...trans } = input;
     dispatch(
       addNewTransaction({
         ...trans,
@@ -136,12 +136,15 @@ const DisplayData = (props: any) => {
         onClose={manageOnClose}
         toEdit={elementToEdit}
       />
-      <Wrap marginBottom="2rem"  spacing={10} >
+      <Wrap marginBottom="2rem" spacing={10}>
         <WrapItem>
           <Stats name="Total de Gastos" amount={amounts.total} />
         </WrapItem>
         <WrapItem>
-          <Stats name="Gastos Pendientes" amount={amounts.total - amounts.paid} />
+          <Stats
+            name="Gastos Pendientes"
+            amount={amounts.total - amounts.paid}
+          />
         </WrapItem>
         <WrapItem>
           <Stats name="Gastos Pagados " amount={amounts.paid} />
