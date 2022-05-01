@@ -21,6 +21,7 @@ import { Stack, Wrap, WrapItem, Box } from "@chakra-ui/react";
 import { LoadingStates } from "../../types";
 import Loading from "../../components/Loading";
 import { date } from "../../utils";
+import NoRegisters from "../../components/NoRegisters";
 
 ChartJS.register(
   CategoryScale,
@@ -116,7 +117,7 @@ const TransactionsResume = () => {
           title="Resumen"
           description="Montos gastados en el mes por categoría"
         >
-          <Wrap>{stats}</Wrap>
+          <Wrap>{stats.length > 0 ? stats : <NoRegisters />}</Wrap>
         </Screen>
       </Box>
       <Screen>

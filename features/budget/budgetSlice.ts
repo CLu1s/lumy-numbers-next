@@ -95,8 +95,11 @@ export const fetchIncomes = createAsyncThunk(
         return API.graphql(graphqlOperation(createIncome, { input }));
       });
       newIncomes = await Promise.all(promises);
+      newIncomes = newIncomes.map((income) => income.data.createIncome);
     }
-    return currentIcomes || newIncomes;
+    return currentIcomes.data.getBucket.incomes.items.length > 0
+      ? currentIcomes.data.getBucket.incomes.items
+      : newIncomes;
   }
 );
 
@@ -213,7 +216,7 @@ const budgetSlice = createSlice({
     },
     [fetchIncomes.fulfilled.type]: (state, action) => {
       state.status = LoadingStates.SUCCEEDED;
-      state.incomes = action.payload.data.getBucket.incomes.items;
+      state.incomes = action.payload;
     },
     [fetchIncomes.rejected.type]: (state, action) => {
       toast.error("Hubo un error!");
