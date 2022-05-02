@@ -9,7 +9,7 @@ const Redirect = ({ href }) => {
   return (
     <div>
       <h1>{router.query.name}</h1>
-      <p>This is the app index</p>
+      <p>Redirigiendo...</p>
     </div>
   );
 };

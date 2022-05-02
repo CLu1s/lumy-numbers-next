@@ -82,15 +82,15 @@ export const getBalanceByCategories = createSelector(
       const transactionsByCategory = transactions.filter(
         (transaction) => transaction.categoryID === category.id
       );
-      const budgetAmount = (category.percentage / 100) * income;
-      const amountPercentage = (category.percentage * income) / 100;
+      const budgetAmount = category.percentage * income;
+      const amountPercentage = category.percentage * income;
       const balance =
         budgetAmount -
         transactionsByCategory.reduce(
           (acc, transaction) => acc + transaction.amount,
           0
         );
-      const progress = Math.round((balance * 100) / amountPercentage);
+      const progress = Math.round(balance / amountPercentage);
       return {
         ...category,
         balance,
