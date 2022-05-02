@@ -7,6 +7,7 @@ import {
 } from "../../features/wallet/selector";
 import StatCard from "../../components/StatCard";
 import Loading from "../../components/Loading";
+import { getIncome } from "../budget/selector";
 
 type Props = {
   showAll?: boolean;
@@ -15,6 +16,7 @@ type Props = {
 
 const Categories = ({ showAll, setShowSwitch }: Props) => {
   const items = useSelector(getBalanceByCategories);
+  const income = useSelector(getIncome);
   const status = useSelector(getStatus);
   const [itemsToShow, setItemsToShow] = useState(items);
   useEffect(() => {
@@ -38,7 +40,7 @@ const Categories = ({ showAll, setShowSwitch }: Props) => {
               width={{ base: "full", md: "48%", xl: "xs" }}
               key={item.id}
             >
-              <StatCard number={item.balance} {...item} />
+              <StatCard number={item.percentage * income} {...item} />
             </WrapItem>
           ))}
         </Wrap>

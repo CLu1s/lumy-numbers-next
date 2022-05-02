@@ -8,11 +8,14 @@ import {
   SliderFilledTrack,
   SliderThumb,
   Button,
+  Stack,
 } from "@chakra-ui/react";
 import Screen from "./Screen";
 import { icons } from "../utils";
 import { FiEdit } from "react-icons/fi";
+import { HiOutlineAdjustments } from "react-icons/hi";
 import Stats from "./Stats";
+
 type Props = {
   color: string;
   icon: string;
@@ -22,6 +25,7 @@ type Props = {
   onChange?: (e: number) => void;
   onChangeEnd?: (e: number) => void;
   onEdit?: (e: any) => void;
+  onAdjust?: (e: any) => void;
   slider?: boolean;
   editable?: boolean;
   showProgress?: boolean;
@@ -38,6 +42,7 @@ const StatCard = ({
   onChange,
   onChangeEnd,
   onEdit,
+  onAdjust,
   showProgress,
 }: Props) => {
   return (
@@ -62,15 +67,25 @@ const StatCard = ({
           </CircularProgress>
         )}
         {editable && (
-          <Button
-            float="right"
-            padding="0"
-            // marginRight="4"
-            bg="white"
-            onClick={onEdit}
-          >
-            <FiEdit />
-          </Button>
+          <Stack spacing={2} direction={["column", "row"]}>
+            <Button
+              float="right"
+              padding="0"
+              bg="white"
+              onClick={onEdit}
+            >
+              <FiEdit />
+            </Button>
+
+            <Button
+              float="right"
+              padding="0"
+              bg="white"
+              onClick={onAdjust}
+            >
+              <HiOutlineAdjustments />
+            </Button>
+          </Stack>
         )}
       </HStack>
       {slider && (

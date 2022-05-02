@@ -13,71 +13,57 @@ import _debounce from "lodash/debounce";
 import StatCard from "../../components/StatCard";
 import Screen from "../../components/Screen";
 import { updateCategory, updateCategoryTemp } from "./budgetSlice";
-import { getStatus } from "./selector";
+import { getStatus, getRest } from "./selector";
 import { Category } from "../../types";
 import Loading from "../../components/Loading";
 import { VscAdd } from "react-icons/vsc";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import EditCategory from "./EditCategory";
-const sanitizer = (state: Category[]): Category[] => {
-  return state.reduce((acc, cur) => {
-    if (cur.id !== "rest") {
-      return [...acc, cur];
-    }
-    return acc;
-  }, []);
-};
+import AdjustCategory from "./AdjustCategory";
 
 const BudgetCategories = () => {
   const dispatch = useDispatch();
   const categories = useSelector(getCategories);
+  const rest = useSelector(getRest);
   const income = useSelector(getIncome);
   const [state, setState] = useState(categories);
   const [elementToEdit, setElementToEdit] = useState<any>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: adjustIsOpen,
+    onOpen: adjustOnOpen,
+    onClose: adjustOnClose,
+  } = useDisclosure();
 
   const { status } = useSelector(getStatus);
-
   React.useEffect(() => {
     setState(categories);
   }, [categories]);
 
-  const manageSliderChange = (
-    newPercentage: number,
-    id: string,
-    percentage: number
-  ) => {
+  const manageSliderChange = (newPercentage: number, id: string) => {
     const category = categories.find((c) => c.id === id);
-    const filterState = sanitizer(categories);
-    const rest = filterState.reduce((acc, item) => {
-      if (item.id !== id) {
-        return acc + item.percentage;
-      }
-      return acc;
-    }, 0);
-    console.log({ newPercentage });
+    const restLocal = rest - category.percentage;
 
-    if (newPercentage + rest <= 1) {
+    if (newPercentage + restLocal <= 1) {
       dispatch(updateCategory({ ...category, percentage: newPercentage }));
     } else {
-      console.log({ rest });
-      dispatch(updateCategory({ ...category, percentage: 1 - rest }));
+      dispatch(updateCategory({ ...category, percentage: 1 - restLocal }));
       toast("Tu cambio ha sido guardado con el maxímo permitido.");
     }
   };
-  const debounceSliderChange = _debounce(
-    (e: number, id: string, percentage: number) => {
-      console.log({ debounceSliderChange: percentage });
-
-      manageSliderChange(e, id, percentage);
-    },
-    1000
-  );
+  const debounceSliderChange = _debounce((e: number, id: string) => {
+    manageSliderChange(e, id);
+  }, 1000);
 
   return (
     <>
       <EditCategory isOpen={isOpen} onClose={onClose} toEdit={elementToEdit} />
-
+      <AdjustCategory
+        isOpen={adjustIsOpen}
+        onClose={adjustOnClose}
+        toEdit={elementToEdit}
+        updateElement={debounceSliderChange}
+      />
       <Screen
         title="Catetegorías"
         description={
@@ -110,21 +96,22 @@ const BudgetCategories = () => {
                     onOpen();
                   }}
                   number={item.percentage * income}
+                  onAdjust={() => {
+                    setElementToEdit(item);
+                    adjustOnOpen();
+                  }}
                   slider={item.id !== "rest"}
-                  progress={item.percentage * 100}
+                  progress={Math.round(item.percentage * 100)}
                   key={item.id}
                   onChange={(e) => {
                     const index = categories.findIndex((c) => c.id === item.id);
                     const newState = [...categories];
-                    console.log({ e: e / 100 });
                     newState[index] = { ...item, percentage: e / 100 };
                     setState(newState);
                     dispatch(updateCategoryTemp(newState[index]));
                   }}
                   onChangeEnd={(e) => {
-                    console.log({ onChangeEnd: item.percentage });
-
-                    debounceSliderChange(e / 100, item.id, item.percentage);
+                    debounceSliderChange(e / 100, item.id);
                   }}
                   showProgress
                 />

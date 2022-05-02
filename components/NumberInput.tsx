@@ -8,11 +8,12 @@ import {
 
 type Props = {
   amount?: number | string;
-  register: any;
+  register?: any;
   name?: string;
   defaultValue?: number;
   required?: boolean;
   placeholder?: string;
+  onChange?: (e: number) => void;
 };
 
 const NumberInput = ({
@@ -22,6 +23,7 @@ const NumberInput = ({
   defaultValue,
   required,
   placeholder = "Ingrese un monto",
+  onChange,
 }: Props) => {
   const format = (val) => `$` + val;
   const parse = (val) => val.replace(/^\$/, "");
@@ -31,6 +33,9 @@ const NumberInput = ({
   useEffect(() => {
     setValue(amount || defaultValue || "");
   }, [amount, defaultValue]);
+  useEffect(() => {
+    onChange && onChange(value as number);
+  }, [value, onChange]);
 
   return (
     <InputGroup>
@@ -40,10 +45,14 @@ const NumberInput = ({
         onChange={(valueString) => setValue(parse(valueString))}
         w="full"
       >
-        <NumberInputField
-          placeholder={placeholder}
-          {...register(name, { required })}
-        />
+        {register ? (
+          <NumberInputField
+            placeholder={placeholder}
+            {...register(name, { required })}
+          />
+        ) : (
+          <NumberInputField placeholder={placeholder} />
+        )}
       </NumberInputBase>
     </InputGroup>
   );

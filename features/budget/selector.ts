@@ -21,19 +21,19 @@ export const getCategories = createSelector(
       (acc, item) => acc + item.percentage,
       0
     );
-    if (globalPercentageSum > 100) {
+    if (globalPercentageSum > 1) {
       return categories;
     }
-    if (globalPercentageSum < 100) {
+    if (globalPercentageSum < 1) {
       const index = categories.findIndex((item) => item.id === "rest");
 
       if (index !== -1) {
-        categories[index].percentage = 100 - globalPercentageSum;
+        categories[index].percentage = 1 - globalPercentageSum;
       } else {
         categories.push({
           id: "rest",
           name: "Resto",
-          percentage: 100 - globalPercentageSum,
+          percentage: 1 - globalPercentageSum,
           color: "yellow.500",
           icon: "AiOutlineWarning",
           bucketID: "rest",
@@ -56,6 +56,17 @@ export const getListOfIncomes = createSelector(
   [budgetSelector],
   (state: BudgetState): BudgetState["incomes"] =>
     _sortBy(state.incomes, ["description"])
+);
+
+export const getRest = createSelector(
+  [budgetSelector],
+  (state: BudgetState): number => {
+    const categories = sanitizer(state.categories);
+    const rest = categories.reduce((acc, item) => {
+      return acc + item.percentage;
+    }, 0);
+    return Number((1 % rest).toFixed(5)) === 0.00000 ? 1 : rest;
+  }
 );
 
 export const getStatus = createSelector(
