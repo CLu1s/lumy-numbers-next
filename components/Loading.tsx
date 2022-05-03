@@ -4,7 +4,7 @@ const Loading = () => {
   return (
     <Box>
       <Center>
-        <Spinner color="purple.500" size='xl'/>
+        <Spinner color="purple.500" size="xl" />
       </Center>
     </Box>
   );

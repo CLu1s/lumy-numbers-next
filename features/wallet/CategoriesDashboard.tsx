@@ -12,10 +12,12 @@ const CategoriesDashboard = () => {
       description="Cada categoría muestra el total disponible en tu plan de gastos con la cantidad y porcentaje que le queda."
     >
       <VStack spacing={4}>
-        {showSwitch && <HStack width="full" justifyContent="flex-end">
-          <label htmlFor="email-alerts">Mostrar todas las categorías</label>
-          <Switch id="email-alerts" onChange={() => setShowAll(!showAll)} />
-        </HStack>}
+        {showSwitch && (
+          <HStack width="full" justifyContent="flex-end">
+            <label htmlFor="email-alerts">Mostrar todas las categorías</label>
+            <Switch id="email-alerts" onChange={() => setShowAll(!showAll)} />
+          </HStack>
+        )}
         <Categories showAll={showAll} setShowSwitch={setShowSwitch} />
       </VStack>
     </Screen>

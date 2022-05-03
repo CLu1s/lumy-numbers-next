@@ -12,7 +12,7 @@ import _orderBy from "lodash/orderBy";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { money, date, icons } from "../utils";
 import { Transaction } from "../types";
-import Noregisters from "./NoRegisters"
+import Noregisters from "./NoRegisters";
 
 type Props = {
   transactions: Transaction[];

@@ -17,7 +17,6 @@ export default function Topbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
 
-
   return (
     <Box borderBottomWidth={1} padding={2} width="full">
       <HStack spacing={4} justifyContent={"space-between"}>
@@ -51,7 +50,7 @@ export default function Topbar() {
           />
         </Stack>
       </HStack>
-      <Drawer isOpen={isOpen} onClose={onClose}/>
+      <Drawer isOpen={isOpen} onClose={onClose} />
     </Box>
   );
 }

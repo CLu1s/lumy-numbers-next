@@ -13,7 +13,7 @@ const Button = ({ children, onClick, className, ...props }: Props) => {
       whileHover={{
         y: -3,
         scale: 1.01,
-        transition:{ type: "spring", stiffness: 100 },
+        transition: { type: "spring", stiffness: 100 },
       }}
       whileTap={{ scale: 0.9 }}
       className={clsx(

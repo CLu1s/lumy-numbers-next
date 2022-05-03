@@ -15,7 +15,10 @@ function Home({ user }) {
     <div>
       <Head>
         <title>Luminus Conscious Planning</title>
-        <meta name="description" content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres" />
+        <meta
+          name="description"
+          content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -24,14 +27,11 @@ function Home({ user }) {
         <Stack spacing={8}>
           <BudgetCard />
           <Wrap spacing={4}>
-            <WrapItem
-              maxW={{ base: "100%" }}
-              width="auto"
-            >
+            <WrapItem maxW={{ base: "100%" }} width="auto">
               <CategoriesDashboard />
             </WrapItem>
             <WrapItem
-              maxW={{ base: "100%", md: "47%",lg: "49%" }}
+              maxW={{ base: "100%", md: "47%", lg: "49%" }}
               width={{ base: "full" }}
             >
               <Screen title="Transacciones Recientes">

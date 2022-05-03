@@ -65,7 +65,7 @@ export const getRest = createSelector(
     const rest = categories.reduce((acc, item) => {
       return acc + item.percentage;
     }, 0);
-    return Number((1 % rest).toFixed(5)) === 0.00000 ? 1 : rest;
+    return Number((1 % rest).toFixed(5)) === 0.0 ? 1 : rest;
   }
 );
 

@@ -1,7 +1,8 @@
-import { Global } from '@emotion/react'
+import { Global } from "@emotion/react";
 
 const Fonts = () => (
-  <Global styles={`
+  <Global
+    styles={`
         @font-face {
         font-family: "Manrope";
         src: url('./fonts/Manrope.woff2') format('woff2'), url("./fonts/Manrope.ttf") format('ttf');
@@ -10,6 +11,6 @@ const Fonts = () => (
       }
       `}
   />
-)
+);
 
-export default Fonts
+export default Fonts;

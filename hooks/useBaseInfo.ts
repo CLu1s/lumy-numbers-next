@@ -22,7 +22,6 @@ const useBaseInfo = (userName?: string) => {
   const budgetStatus = useSelector(getBudgetStatus);
   const lastFetched = useSelector(getLastFetched);
 
-
   const fetchAll = useCallback(() => {
     dispatch(fetchTransactions({ bucketID }));
     dispatch(fetchIncomes({ bucketID }));
@@ -31,7 +30,6 @@ const useBaseInfo = (userName?: string) => {
     dispatch(fetchProjects(bucketID));
     dispatch(setLastFetched(new Date()));
   }, [dispatch, bucketID]);
-
 
   useEffect(() => {
     if (

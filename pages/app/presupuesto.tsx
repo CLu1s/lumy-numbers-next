@@ -11,7 +11,10 @@ function Home({ user }) {
     <div>
       <Head>
         <title>Luminus Conscious Planning</title>
-        <meta name="description" content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres" />
+        <meta
+          name="description"
+          content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

@@ -21,7 +21,6 @@ import { getBucketID } from "../bucket/selector";
 import { Project } from "../../types";
 import NumberInput from "../../components/NumberInput";
 
-
 registerLocale("es", esLocale);
 
 type Props = {

@@ -30,13 +30,17 @@ export const Typography = ({ children, type, className }: props) => {
     switch (type) {
       case Types.H1:
         return (
-          <h1 className={clsx("font-headline font-semibold text-6xl", className)}>
+          <h1
+            className={clsx("font-headline font-semibold text-6xl", className)}
+          >
             {children}
           </h1>
         );
       case Types.H2:
         return (
-          <h2 className={clsx("font-headline font-semibold text-5xl", className)}>
+          <h2
+            className={clsx("font-headline font-semibold text-5xl", className)}
+          >
             {children}
           </h2>
         );
@@ -48,19 +52,25 @@ export const Typography = ({ children, type, className }: props) => {
         );
       case Types.H4:
         return (
-          <h2 className={clsx("font-headline font-semibold text-3xl", className)}>
+          <h2
+            className={clsx("font-headline font-semibold text-3xl", className)}
+          >
             {children}
           </h2>
         );
       case Types.H5:
         return (
-          <h2 className={clsx("font-headline font-semibold text-2xl", className)}>
+          <h2
+            className={clsx("font-headline font-semibold text-2xl", className)}
+          >
             {children}
           </h2>
         );
       case Types.H6:
         return (
-          <h2 className={clsx("font-headline font-semibold text-lg", className)}>
+          <h2
+            className={clsx("font-headline font-semibold text-lg", className)}
+          >
             {children}
           </h2>
         );

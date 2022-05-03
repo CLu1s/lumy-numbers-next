@@ -21,7 +21,7 @@ const MenuItem = ({ label, icon, path }: Props) => {
   return (
     <LinkBox as="button" width="full" maxW="full">
       <Link href={path} passHref>
-        <LinkOverlay >
+        <LinkOverlay>
           <Box
             p={2}
             shadow={isActive ? "md" : "none"}

@@ -26,7 +26,7 @@ export default function LastsTransactions() {
   return (
     <Stack spacing={4}>
       <Text>
-      Aquí listamos las 6 transacciones más recientes que has tenido
+        Aquí listamos las 6 transacciones más recientes que has tenido
       </Text>
       <TransactionMini transactions={transactions} />
     </Stack>

@@ -5,11 +5,9 @@ module.exports = {
   ],
   theme: {
     fontFamily: {
-      'sans': ["Manrope", 'Arial', 'sans-serif'],
+      sans: ["Manrope", "Arial", "sans-serif"],
     },
     extend: {},
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [require("@tailwindcss/forms")],
 };

@@ -14,13 +14,11 @@
   }
   ```
 */
-import React from 'react';
+import React from "react";
 
 // eslint-disable-next-line react/display-name
 const Input = React.forwardRef(
-  ({
-    label, prefix, type = 'text', ...props
-  }, ref) => (
+  ({ label, prefix, type = "text", ...props }, ref) => (
     <div className="mb-4">
       <label
         htmlFor="price"
@@ -30,9 +28,9 @@ const Input = React.forwardRef(
       </label>
       <div className="mt-1 relative rounded-md shadow-sm">
         {prefix && (
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <span className="text-gray-500 sm:text-sm">{prefix}</span>
-        </div>
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <span className="text-gray-500 sm:text-sm">{prefix}</span>
+          </div>
         )}
         <input
           autoComplete="off"
@@ -43,7 +41,7 @@ const Input = React.forwardRef(
         />
       </div>
     </div>
-  ),
+  )
 );
 
 export default Input;

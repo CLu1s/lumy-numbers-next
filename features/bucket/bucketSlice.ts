@@ -18,19 +18,19 @@ const CATEGORIES = [
   {
     icon: "HiOutlineHome",
     name: "Gastos Fijos",
-    percentage: .50,
+    percentage: 0.5,
     color: "green.500",
   },
   {
     icon: "AiOutlineStock",
     name: "Ahorro e Inversión",
-    percentage: .30,
+    percentage: 0.3,
     color: "purple.500",
   },
   {
     icon: "BiHappyBeaming",
     name: "Gastos sin Culpa",
-    percentage: .20,
+    percentage: 0.2,
     color: "blue.500",
   },
 ];

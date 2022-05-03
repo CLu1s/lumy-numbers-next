@@ -1,6 +1,6 @@
 import { AiFillHome } from "react-icons/ai";
 import { MdAccountBalanceWallet } from "react-icons/md";
-import { RiBook2Fill,RiHandHeartFill } from "react-icons/ri";
+import { RiBook2Fill, RiHandHeartFill } from "react-icons/ri";
 import { ImStatsBars } from "react-icons/im";
 
 type MenuItem = {

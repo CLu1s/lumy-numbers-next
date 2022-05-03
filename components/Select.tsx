@@ -27,7 +27,7 @@ export default function SelectContainer({
     <Box w="full">
       <Select
         defaultValue={defaultValue}
-        onChange={(obj)=>setSelected(obj.value)}
+        onChange={(obj) => setSelected(obj.value)}
         options={options}
         isSearchable={false}
       />

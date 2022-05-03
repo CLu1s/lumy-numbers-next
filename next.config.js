@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-require('webpack');
+require("webpack");
 const withPWA = require("next-pwa");
 const runtimeCaching = require("next-pwa/cache");
 

@@ -1,7 +1,7 @@
 import React, { useState, forwardRef, useEffect, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import Modal from "../../components/Modal";
-import { Box, Button, Input, Text, VStack,Stack } from "@chakra-ui/react";
+import { Box, Button, Input, Text, VStack, Stack } from "@chakra-ui/react";
 import { Income } from "../../types";
 import esLocale from "date-fns/locale/es";
 import DatePicker, { registerLocale } from "react-datepicker";
