@@ -181,7 +181,7 @@ function ProjectRender({
             <HStack>
               <IconButton
                 bg="white"
-                aria-label="Editar Projecto"
+                aria-label="Editar Proyecto"
                 icon={<FiEdit />}
                 onClick={() => onEdit(project)}
               />
@@ -190,7 +190,7 @@ function ProjectRender({
                 bg="white"
                 onClick={() => handleDelete(project.id)}
                 color="red.500"
-                aria-label="Borrar Projecto"
+                aria-label="Borrar Proyecto"
                 icon={<FiTrash2 />}
               />
             </HStack>

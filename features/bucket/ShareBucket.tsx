@@ -11,7 +11,7 @@ const ShareBucket = () => {
       <Stack spacing={6}>
         <Box>
           <Heading as="h6" size="sm">
-            Codigo del Contenedor
+            Código del Contenedor
           </Heading>
           <Text fontSize="sm">
             Copia y comparte este código para añadir a un colaborador a este

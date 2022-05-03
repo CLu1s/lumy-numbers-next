@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Text } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
-import { Box, Button, Input, VStack } from "@chakra-ui/react";
+import { Box, Button, Input, VStack,Stack } from "@chakra-ui/react";
 import { Transaction } from "../../types";
 import esLocale from "date-fns/locale/es";
 import { registerLocale } from "react-datepicker";
@@ -76,7 +76,7 @@ const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
   ExampleCustomInput.displayName = "ExampleCustomInput";
   return (
     <Modal {...config}>
-      <VStack spacing={4}>
+      <Stack spacing={4}>
         <Text>Introduce la cantidad y la descripción del gasto.</Text>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
@@ -92,7 +92,7 @@ const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
             </VStack>
           </Box>
         </form>
-      </VStack>
+      </Stack>
     </Modal>
   );
 };

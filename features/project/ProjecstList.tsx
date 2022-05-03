@@ -96,7 +96,7 @@ function ProjectsList() {
   return (
     <>
       <AlertDialog
-        title="Eliminar Projecto"
+        title="Eliminar Proyecto"
         description=" ¿Está seguro? No podrás deshacer esta acción después."
         isOpen={alertDialogIsOpen}
         onClose={() => {

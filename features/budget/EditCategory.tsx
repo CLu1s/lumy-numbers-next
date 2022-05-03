@@ -15,6 +15,8 @@ import {
   MenuOptionGroup,
   MenuDivider,
   Spacer,
+  Stack,
+  Text,
 } from "@chakra-ui/react";
 import icons, { iconKeys } from "../../utils/icons";
 
@@ -96,17 +98,14 @@ const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
 
   const iconOptions = iconKeys.map((key) => (
     <MenuItemOption key={key} value={key} fontSize="2xl">
-
       {icons(key)}
     </MenuItemOption>
   ));
 
   return (
     <Modal {...config}>
-      <Box direction="column">
-        <p className="text-sm text-gray-500">
-          Ingresa el monto y la descripción del Ingreso
-        </p>
+      <Stack direction="column">
+        <Text>Ingresa la descripción de la categoría</Text>
 
         <Box width="100%">
           <Box spacing={4} w="full">
@@ -118,7 +117,9 @@ const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
 
             <Flex marginTop="4">
               <Menu>
-                <MenuButton fontSize="4xl" as={Button}>{icons(icon as string)}</MenuButton>
+                <MenuButton fontSize="4xl" as={Button}>
+                  {icons(icon as string)}
+                </MenuButton>
                 <MenuList>
                   <MenuOptionGroup
                     defaultValue={toEdit?.icon}
@@ -133,10 +134,15 @@ const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
               </Menu>
               <Spacer />
               <Menu>
-                <MenuButton w="50%" as={Button} backgroundColor={color} color="white">
+                <MenuButton
+                  w="50%"
+                  as={Button}
+                  backgroundColor={color}
+                  color="white"
+                >
                   Color
                 </MenuButton>
-                <MenuList >
+                <MenuList>
                   <MenuOptionGroup
                     defaultValue="asc"
                     title="Color"
@@ -159,7 +165,7 @@ const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
             </Flex>
           </Box>
         </Box>
-      </Box>
+      </Stack>
     </Modal>
   );
 };

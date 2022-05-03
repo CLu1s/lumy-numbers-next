@@ -134,7 +134,7 @@ const NewMovement = ({
             tabla de transacciones
           </Text>
         ) : (
-          <Text>Ingresa el monto y la descripción del moviemiento</Text>
+          <Text>Ingresa el monto y la descripción del movimiento</Text>
         )}
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">

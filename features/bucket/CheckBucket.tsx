@@ -50,7 +50,7 @@ const CheckBucket = ({ userName }: Props) => {
           <Text>Un contenedor es donde guardamos tu información</Text>
           <Text>Si tienes el codigo de un contendor escribelo aquí</Text>
           <Input
-            placeholder="Codigo de contenedor"
+            placeholder="Código de contenedor"
             value={code}
             onChange={(e) => setCode(e.target.value)}
           />

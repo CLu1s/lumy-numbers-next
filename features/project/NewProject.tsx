@@ -21,6 +21,7 @@ import { getBucketID } from "../bucket/selector";
 import { Project } from "../../types";
 import NumberInput from "../../components/NumberInput";
 
+
 registerLocale("es", esLocale);
 
 type Props = {
@@ -83,7 +84,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
 
   const config = {
     isOpen,
-    title: toEdit ? "Actualizar Projecto" : "Nuevo Projecto",
+    title: toEdit ? "Actualizar Proyecto" : "Nuevo Proyecto",
     onClose: handleClose,
     cancelButtonText: "Cancel",
     onSubmit: handleSubmit(onSubmit),
@@ -98,10 +99,8 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
   ExampleCustomInput.displayName = "ExampleCustomInput";
   return (
     <Modal {...config}>
-      <VStack spacing={4}>
-        <p className="text-sm text-gray-500">
-          Ingresa el monto y la descripción del Ingreso
-        </p>
+      <Stack spacing={4} align="left">
+        <Text>Ingresa el monto y la descripción del proyecto</Text>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
             <VStack spacing={4} w="full">
@@ -146,7 +145,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
             </VStack>
           </Box>
         </form>
-      </VStack>
+      </Stack>
     </Modal>
   );
 };

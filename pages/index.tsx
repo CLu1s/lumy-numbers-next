@@ -20,7 +20,7 @@ import gastos from "../public/images/gastos.png";
 import proyectos from "../public/images/proyectos.png";
 import home from "../public/images/home.png";
 import budget from "../public/images/budget.png";
-
+import { useRouter } from "next/router";
 type ContentBoxProps = {
   title: string;
   description: string | JSX.Element;
@@ -131,6 +131,7 @@ const ContentSection = ({
 
 const Home: NextPage = () => {
   const [email, setEmail] = useState("");
+  const router = useRouter();
   const handleSubscribe = () => {
     fetch("./api/mailchimp/newContact", {
       method: "POST",
@@ -158,11 +159,15 @@ const Home: NextPage = () => {
           <Box width="full" paddingTop={8} paddingX={4}>
             <HStack m="auto" width="full" justifyContent="space-between">
               <Heading color="white">Luminus</Heading>
-              {/* <Box>
-                <Button size="lg" color="#1e5af9">
+              <Box>
+                <Button
+                  onClick={() => router.push("/app/home")}
+                  size="lg"
+                  color="#1e5af9"
+                >
                   Iniciar Sesión
                 </Button>
-              </Box> */}
+              </Box>
             </HStack>
           </Box>
           <Box paddingTop="44" paddingBottom="72" paddingX="8">
@@ -185,7 +190,7 @@ const Home: NextPage = () => {
                     fontWeight="bold"
                     color="white"
                   >
-                    Gastos Consientes
+                    Gastos Conscientes
                   </Heading>
                 </VStack>
                 <VStack spacing={2}>
@@ -323,11 +328,11 @@ const Home: NextPage = () => {
                 <WrapItem width="60%">
                   <VStack alignItems="left" spacing={6}>
                     <Heading color="white">
-                      Inscribete a nuestro taller de finanzas y opten acceso
+                      Inscríbete a nuestro taller de finanzas y obtén acceso
                       anticipado a nuestra app
                     </Heading>
                     <Text color="white" fontSize="lg">
-                      Al inscribirte a nuestro taller de finanzas, ademas de
+                      Al inscribirte a nuestro taller de finanzas, además de
                       poder asistir al taller, te daremos acceso prioritario a
                       nuestra aplicación para que puedas usarla en tu celular,
                       tableta o computadora.
