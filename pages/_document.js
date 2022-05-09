@@ -10,6 +10,12 @@ class MyDocument extends Document {
           <link rel="apple-touch-icon" href="/icon.png"></link>
           <link rel="apple-touch-startup-image" href="/launch.png"></link>
           <meta name="theme-color" content="#edf2f7" />
+          <script
+            async
+            defer
+            data-website-id="82f2b602-3851-4b75-bd15-5c805e89b2ff"
+            src="http://143.110.153.45/umami.js"
+          ></script>
         </Head>
         <body>
           <Main />
