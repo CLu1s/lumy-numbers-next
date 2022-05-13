@@ -38,7 +38,7 @@ const Filters = ({ categories, filter, setFilter }: Props) => {
               setFilter(value);
             }}
           >
-            <Stack spacing={1} direction={"column"}>
+            <Stack spacing={[1, 5]} direction={["column", "row"]}>
               {categories.map((category) => (
                 <Checkbox key={category.id} value={category.id}>
                   {category.name}
