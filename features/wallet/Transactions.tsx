@@ -1,21 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  Text,
-  Tag,
-  Select,
-  Stack,
-  useDisclosure,
-  Button,
-  Box,
-  HStack,
-} from "@chakra-ui/react";
+import { Stack, useDisclosure, Box } from "@chakra-ui/react";
 import _orderBy from "lodash/orderBy";
-import { money, date } from "../../utils";
 import { useSelector, useDispatch } from "react-redux";
 import { getTransactionsFormatted, getStatus } from "./selector";
 import TableCards from "../../components/TableCards";
-import Table from "../../components/Table";
-import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { Transaction } from "../../types";
 import Loading from "../../components/Loading";
 import RecordExpense from "./RecordExpense";
@@ -25,6 +13,11 @@ import TransactionMini from "../../components/TransactionMini";
 import { compareDates } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
 import { LoadingStates } from "../../types";
+import Sorters from "../../components/Sorters";
+import Filters from "../../components/Filters";
+import { getCategories } from "../budget/selector";
+
+import DataTable from "./DataTable";
 enum Order {
   ASC = "asc",
   DESC = "desc",
@@ -41,12 +34,14 @@ const compareTransactions = (transactions: Transaction[], order: Order) => {
   return t;
 };
 
-export default function DataTable() {
+export default function TransactionsTableContainer() {
   const transactions = useSelector(getTransactionsFormatted);
+  const categories = useSelector(getCategories);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [sort, setSort] = useState("date");
+  const [filter, setFilter] = useState([]);
   const [order, setOrder] = useState<Order>(Order.DESC);
   const [elementToEdit, setElementToEdit] = useState<Transaction>(null);
   const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
@@ -54,13 +49,20 @@ export default function DataTable() {
   );
   const status = useSelector(getStatus);
   const dispatch = useDispatch();
+  let sortTrans;
   useEffect(() => {
     if (sort === "date") {
-      setSortedTransactions(compareTransactions(transactions, order));
+      sortTrans = compareTransactions(transactions, order);
     } else {
-      setSortedTransactions(_orderBy(transactions, [sort], [order]));
+      sortTrans = _orderBy(transactions, [sort], [order]);
     }
-  }, [transactions, sort, order]);
+    if (filter.length > 0) {
+      sortTrans = sortTrans.filter((transaction) => {
+        return filter.includes(transaction.categoryID);
+      });
+    }
+    setSortedTransactions(sortTrans);
+  }, [transactions, sort, order, filter]);
 
   const manageOpen = useCallback(
     (item: any) => {
@@ -74,57 +76,6 @@ export default function DataTable() {
     setDeleteId(id);
     setAlertDialogIsOpen(true);
   };
-
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Fecha",
-        accessor: "date",
-        Cell: ({ cell: { value } }) => (
-          <Text> {date(new Date(value), "dd - LLLL")}</Text>
-        ),
-      },
-
-      {
-        Header: "Descripción",
-        accessor: "description",
-      },
-      {
-        Header: "Categoría",
-        accessor: "category",
-        Cell: ({ cell: { value } }) => (
-          <Tag size="md" variant="solid" bgColor={value?.color ?? "gray.400"}>
-            {value ? value.name : "Sin categoría"}
-          </Tag>
-        ),
-      },
-      {
-        Header: "Monto",
-        accessor: "amount",
-        Cell: ({ cell: { value } }) => <Text>{money(value)}</Text>,
-      },
-      {
-        id: "edit",
-        accessor: (row) => row,
-        Cell: ({ cell: { value } }) => (
-          <HStack>
-            <Button bg="white" onClick={() => manageOpen(value)}>
-              <FiEdit />
-            </Button>
-            <Button
-              bg="white"
-              onClick={() => handleDelete(value.id)}
-              color="red.500"
-            >
-              <FiTrash2 />
-            </Button>
-          </HStack>
-        ),
-      },
-    ],
-
-    [manageOpen]
-  );
 
   if (status === LoadingStates.LOADING) {
     return <Loading />;
@@ -162,29 +113,21 @@ export default function DataTable() {
         toEdit={elementToEdit}
       />
       <Stack spacing={8} w="full">
-        <Stack
-          direction="row"
-          spacing={4}
-          display={{ base: "flex", lg: "none" }}
-          w="100%"
-        >
-          <Select onChange={(e) => changeSort(e.target.value)}>
-            <option value="date">Fecha</option>
-            <option value="categoryName">Categoría</option>
-
-            <option value="description">Descripcion</option>
-            <option value="amount">Monto</option>
-          </Select>
-          <Select onChange={(e) => changeOrder(e.target.value as Order)}>
-            <option value={Order.DESC}>Descendente</option>
-            <option value={Order.ASC}>Ascendente</option>
-          </Select>
-        </Stack>
+        <Sorters onChangeSort={changeSort} onChangeOrder={changeOrder} />
+        <Filters
+          categories={categories}
+          filter={filter}
+          setFilter={setFilter}
+        />
         <TableCards>
           {sortedTransactions.length > 0 ? (
             <>
               <Box display={{ base: "none", lg: "block" }} width="full">
-                <Table fullHeight columns={columns} data={sortedTransactions} />
+                <DataTable
+                  transactions={sortedTransactions}
+                  manageOpen={manageOpen}
+                  handleDelete={handleDelete}
+                />
               </Box>
               <Box display={{ base: "block", lg: "none" }}>
                 <TransactionMini
