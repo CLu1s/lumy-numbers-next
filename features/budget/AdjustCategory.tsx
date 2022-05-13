@@ -38,11 +38,12 @@ const AdjustCategory = ({ isOpen, onClose, toEdit, updateElement }: Props) => {
   const onSubmit = () => {
     const { percentage } = toEdit;
     const maxReduce = percentage * income;
-    if (amount > maxReduce) {
+    if (value === "reduce" && amount > maxReduce) {
       toast("No puedes reducir más de lo que tienes en tu cuenta.");
       return;
     }
-    const amountToPercentage = (amount * percentage) / maxReduce;
+    const amountToPercentage =
+      (amount * percentage) / (maxReduce > 0 ? maxReduce : 1);
     const newPercentage =
       value === "reduce"
         ? percentage - amountToPercentage

@@ -72,9 +72,11 @@ const StatCard = ({
               <FiEdit />
             </Button>
 
-            <Button float="right" padding="0" bg="white" onClick={onAdjust}>
-              <HiOutlineAdjustments />
-            </Button>
+            {number > 0 && (
+              <Button float="right" padding="0" bg="white" onClick={onAdjust}>
+                <HiOutlineAdjustments />
+              </Button>
+            )}
           </Stack>
         )}
       </HStack>

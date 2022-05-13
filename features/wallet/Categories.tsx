@@ -31,9 +31,9 @@ const Categories = ({ showAll, setShowSwitch }: Props) => {
     }
   }, [items, setShowSwitch, showAll]);
   return (
-    <Stack spacing={4}>
+    <Stack spacing={4} width="full">
       {status === "succeeded" ? (
-        <Wrap>
+        <Wrap justifyContent="flex-start">
           {itemsToShow.map((item) => (
             <WrapItem
               minW="xs"

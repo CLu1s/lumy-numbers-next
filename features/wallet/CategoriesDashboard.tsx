@@ -11,7 +11,7 @@ const CategoriesDashboard = () => {
       title="Categorías"
       description="Cada categoría muestra el total disponible en tu plan de gastos con la cantidad y porcentaje que le queda."
     >
-      <VStack spacing={4}>
+      <VStack spacing={4} w="full">
         {showSwitch && (
           <HStack width="full" justifyContent="flex-end">
             <label htmlFor="email-alerts">Mostrar todas las categorías</label>
