@@ -18,7 +18,11 @@ const initialState: WalletState = {
   period: new Date(),
 };
 
-const localFetchTransactions = async (id: string, init: string, end: string) =>
+export const localFetchTransactions = async (
+  id: string,
+  init: string,
+  end: string
+) =>
   API.graphql(
     graphqlOperation(
       `query GetBucket($id: ID!,$init: String!, $end: String!) {

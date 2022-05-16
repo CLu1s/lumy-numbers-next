@@ -14,6 +14,7 @@ import {
   updateIncome as updateIncomeMutation,
   deleteIncome as deleteIncomeMutation,
 } from "../../src/graphql/mutations";
+import { localFetchTransactions } from "../wallet/walletSlice";
 
 const initialState: BudgetState = {
   status: LoadingStates.IDLE,
@@ -87,8 +88,27 @@ export const fetchIncomes = createAsyncThunk(
         initLastMonth,
         endLastMonth
       )) as any;
-
+      const lastTransactionsCall = (await localFetchTransactions(
+        bucketID,
+        init,
+        end
+      )) as any;
+      const lastTransactions =
+        lastTransactionsCall.data.getBucket.transactionsByDate.items;
+      const totalTransactions = lastTransactions.reduce(
+        (acc, transaction) => acc + transaction.amount,
+        0
+      );
       const oldIncomes = lastMonthIncomes.data.getBucket.incomes.items;
+      const totalAvailable = incomes.reduce((acc, curr) => {
+        return acc + curr.amount;
+      }, 0);
+      const lastBalance = totalAvailable - totalTransactions;
+      oldIncomes.push({
+        description: "Balance del mes anterior",
+        amount: lastBalance,
+        bucketID,
+      });
       const promises = oldIncomes.map((income) => {
         const { id, updatedAt, createdAt, ...input } = income;
         input.date = startOfMonth(actualDate);
