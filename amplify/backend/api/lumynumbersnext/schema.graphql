@@ -69,6 +69,7 @@ type FixedCost @model {
   type: String
   status: String
   description: String
+  dueDay: Int
   bucketID: ID!
     @index(
       name: "byBucket"

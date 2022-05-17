@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Text } from "@chakra-ui/react";
 import Modal from "../../components/Modal";
 import { Box, Button, Input, VStack, Stack } from "@chakra-ui/react";
-import { Transaction } from "../../types";
+import { FixedCost } from "../../types";
 import esLocale from "date-fns/locale/es";
 import { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,7 +17,7 @@ registerLocale("es", esLocale);
 type Props = {
   isOpen: boolean;
   onClose: () => void;
-  toEdit?: Transaction;
+  toEdit?: FixedCost;
 };
 
 const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
@@ -88,6 +88,14 @@ const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
                 placeholder="Descripción"
                 {...register("description", { required: true })}
               />
+              <NumberInput
+                amount={toEdit?.dueDay}
+                name="dueDay"
+                register={register}
+                leftAddon={false}
+                placeholder="Día de Vencimiento"
+              />
+
               {errors.amount && <span>Este Campo es Requerido</span>}
             </VStack>
           </Box>

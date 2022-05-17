@@ -95,6 +95,7 @@ export const getBucket = /* GraphQL */ `
           type
           status
           description
+          dueDay
           bucketID
           createdAt
           updatedAt
@@ -276,6 +277,7 @@ export const getFixedCost = /* GraphQL */ `
       type
       status
       description
+      dueDay
       bucketID
       createdAt
       updatedAt
@@ -295,6 +297,7 @@ export const listFixedCosts = /* GraphQL */ `
         type
         status
         description
+        dueDay
         bucketID
         createdAt
         updatedAt
@@ -542,6 +545,7 @@ export const fixedCostByBucket = /* GraphQL */ `
         type
         status
         description
+        dueDay
         bucketID
         createdAt
         updatedAt

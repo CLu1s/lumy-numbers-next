@@ -19,7 +19,7 @@ import { getBucketID } from "../bucket/selector";
 import FixedCostModal from "./FixedCostModal";
 import AlertDialog from "../../components/AlertDialog";
 import ItemsList from "./ItemsList";
-import { money } from "../../utils";
+import { money, date } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
 import Stats from "../../components/Stats";
 
@@ -48,7 +48,7 @@ const DisplayData = (props: any) => {
   };
   const managePaid = (data: any) => {
     const { createdAt, updatedAt, ...input } = data;
-    const { type, status, id, ...trans } = input;
+    const { type, status, id, dueDay, ...trans } = input;
     dispatch(
       addNewTransaction({
         ...trans,
@@ -68,6 +68,17 @@ const DisplayData = (props: any) => {
         Header: "Monto",
         accessor: "amount",
         Cell: ({ cell: { value } }: any) => money(value),
+      },
+      {
+        Header: "Fecha de Vencimiento",
+        accessor: "dueDay",
+        Cell: ({ cell: { value } }: any) => {
+          if (!value) return "Sin Definir";
+          const currentDate = new Date();
+          currentDate.setDate(value);
+
+          return date(currentDate, " eeee dd MMMM");
+        },
       },
       {
         id: "edit",

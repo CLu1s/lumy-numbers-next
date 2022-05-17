@@ -113,6 +113,7 @@ export type FixedCost = {
   status: string;
   type: string;
   amount: number;
+  dueDay: number;
   description: string;
   createdAt?: string;
   updatedAt?: string;

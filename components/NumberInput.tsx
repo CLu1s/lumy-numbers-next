@@ -14,6 +14,7 @@ type Props = {
   required?: boolean;
   placeholder?: string;
   onChange?: (e: number) => void;
+  leftAddon?: boolean;
 };
 
 const NumberInput = ({
@@ -23,6 +24,7 @@ const NumberInput = ({
   defaultValue,
   required,
   placeholder = "Ingrese un monto",
+  leftAddon = true,
   onChange,
 }: Props) => {
   const format = (val) => `$` + val;
@@ -39,7 +41,7 @@ const NumberInput = ({
 
   return (
     <InputGroup>
-      <InputLeftAddon>$</InputLeftAddon>
+      {leftAddon && <InputLeftAddon>$</InputLeftAddon>}
       <NumberInputBase
         value={value}
         onChange={(valueString) => setValue(parse(valueString))}

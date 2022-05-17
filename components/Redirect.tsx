@@ -12,13 +12,7 @@ const Redirect = ({ href }) => {
   }, [href, router]);
   return (
     <VStack marginTop="50%" spacing="8">
-      <Image
-        src={logo}
-        alt="Logo"
-        width={192}
-        height={192}
-        placeholder="blur"
-      />
+      <Image src={logo} alt="Logo" width={192} height={192} priority />
       <Heading>Luminus</Heading>
       <Text>Gasto Consciente</Text>
 

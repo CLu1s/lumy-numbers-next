@@ -111,6 +111,7 @@ export const createBucket = /* GraphQL */ `
           type
           status
           description
+          dueDay
           bucketID
           createdAt
           updatedAt
@@ -206,6 +207,7 @@ export const updateBucket = /* GraphQL */ `
           type
           status
           description
+          dueDay
           bucketID
           createdAt
           updatedAt
@@ -301,6 +303,7 @@ export const deleteBucket = /* GraphQL */ `
           type
           status
           description
+          dueDay
           bucketID
           createdAt
           updatedAt
@@ -496,6 +499,7 @@ export const createFixedCost = /* GraphQL */ `
       type
       status
       description
+      dueDay
       bucketID
       createdAt
       updatedAt
@@ -513,6 +517,7 @@ export const updateFixedCost = /* GraphQL */ `
       type
       status
       description
+      dueDay
       bucketID
       createdAt
       updatedAt
@@ -530,6 +535,7 @@ export const deleteFixedCost = /* GraphQL */ `
       type
       status
       description
+      dueDay
       bucketID
       createdAt
       updatedAt
