@@ -40,11 +40,10 @@ export default function TransactionMini({
           }`}</Text>
           {editable && (
             <HStack alignContent="space-between">
-              <Button bg="white" onClick={() => onEdit(item)}>
+              <Button onClick={() => onEdit(item)}>
                 <FiEdit />
               </Button>
               <Button
-                bg="white"
                 onClick={() => {
                   onDelete(item.id);
                 }}

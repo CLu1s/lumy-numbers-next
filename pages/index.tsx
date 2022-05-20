@@ -163,7 +163,8 @@ const Home: NextPage = () => {
                 <Button
                   onClick={() => router.push("/app/home")}
                   size="lg"
-                  color="#1e5af9"
+                  background="white"
+                  color="gray.700"
                 >
                   Iniciar Sesión
                 </Button>

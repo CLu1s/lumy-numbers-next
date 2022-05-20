@@ -67,14 +67,10 @@ function ProjectRender({
         accessor: (row) => row,
         Cell: ({ cell: { value } }) => (
           <HStack>
-            <Button bg="white" onClick={() => setMovementToEdit(value)}>
+            <Button onClick={() => setMovementToEdit(value)}>
               <FiEdit />
             </Button>
-            <Button
-              bg="white"
-              onClick={() => onMovementDelete(value.id)}
-              color="red.500"
-            >
+            <Button onClick={() => onMovementDelete(value.id)} color="red.500">
               <FiTrash2 />
             </Button>
           </HStack>
@@ -180,14 +176,12 @@ function ProjectRender({
             </Button>
             <HStack>
               <IconButton
-                bg="white"
                 aria-label="Editar Proyecto"
                 icon={<FiEdit />}
                 onClick={() => onEdit(project)}
               />
 
               <IconButton
-                bg="white"
                 onClick={() => handleDelete(project.id)}
                 color="red.500"
                 aria-label="Borrar Proyecto"

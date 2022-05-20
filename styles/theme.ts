@@ -1,13 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
-  styles: {
-    global: {
-      "html, body": {
-        background: "gray.100",
-      },
-    },
-  },
+  config: { initialColorMode: "light ", useSystemColorMode: true },
   fonts: {
     heading: "Manrope",
     body: "Manrope",

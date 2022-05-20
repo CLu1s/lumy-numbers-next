@@ -7,6 +7,7 @@ import {
   Text,
   LinkOverlay,
   Square,
+  useColorModeValue,
 } from "@chakra-ui/react";
 
 type Props = {
@@ -18,6 +19,10 @@ type Props = {
 const MenuItem = ({ label, icon, path }: Props) => {
   const router = useRouter();
   const isActive = router.pathname === path;
+  const bgButton = useColorModeValue("white", "gray.800");
+  const bgSquareActive = useColorModeValue("purple.200", "purple.800");
+  const bgSquare = useColorModeValue("white", "gray.800");
+
   return (
     <LinkBox as="button" width="full" maxW="full">
       <Link href={path} passHref>
@@ -26,7 +31,7 @@ const MenuItem = ({ label, icon, path }: Props) => {
             p={2}
             shadow={isActive ? "md" : "none"}
             borderWidth={isActive ? "1px" : "0px"}
-            bg={isActive ? "white" : "transparent"}
+            bg={isActive ? bgButton : "transparent"}
             flex="1"
             borderRadius="xl"
             padding={4}
@@ -34,7 +39,7 @@ const MenuItem = ({ label, icon, path }: Props) => {
             <HStack spacing={4}>
               <Square
                 size="30px"
-                bg={isActive ? "purple.200" : "white"}
+                bg={isActive ? bgSquareActive : bgSquare}
                 color={isActive ? "white" : "blue.200"}
                 borderRadius={"lg"}
               >

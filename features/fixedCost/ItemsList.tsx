@@ -46,16 +46,12 @@ export default function DataTable({
           <HeaderBottom>
             <HStack>
               {manageOpen && (
-                <Button bg="white" onClick={() => manageOpen(item)}>
+                <Button onClick={() => manageOpen(item)}>
                   <FiEdit />
                 </Button>
               )}
               {handleDelete && (
-                <Button
-                  bg="white"
-                  onClick={() => handleDelete(item.id)}
-                  color="red.500"
-                >
+                <Button onClick={() => handleDelete(item.id)} color="red.500">
                   <FiTrash2 />
                 </Button>
               )}

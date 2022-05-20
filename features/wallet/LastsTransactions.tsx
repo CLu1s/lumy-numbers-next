@@ -1,5 +1,12 @@
 import React, { useState, useCallback } from "react";
-import { Text, Stack, useDisclosure } from "@chakra-ui/react";
+import Link from "next/link";
+import {
+  Text,
+  Stack,
+  useDisclosure,
+  Link as ChakraLink,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import _orderBy from "lodash/orderBy";
 import { useSelector, useDispatch } from "react-redux";
 import { getLastTransactions, getStatus } from "./selector";
@@ -17,6 +24,8 @@ export default function LastsTransactions() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [deleteId, setDeleteId] = useState(null);
   const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
+
+  const color = useColorModeValue("teal", "teal.200");
 
   const status = useSelector(getStatus);
   const manageOpen = useCallback(
@@ -58,7 +67,7 @@ export default function LastsTransactions() {
         onClose={manageOnClose}
         toEdit={elementToEdit}
       />
-      <Stack spacing={4}>
+      <Stack spacing={4} marginBottom={4}>
         <Text>
           Aquí listamos las 6 transacciones más recientes que has tenido
         </Text>
@@ -70,6 +79,11 @@ export default function LastsTransactions() {
             handleDelete(id);
           }}
         />
+        <Link href="/app/transacciones" passHref>
+          <ChakraLink color={color} fontSize="lg">
+            Ver todas las transacciones
+          </ChakraLink>
+        </Link>
       </Stack>
     </>
   );

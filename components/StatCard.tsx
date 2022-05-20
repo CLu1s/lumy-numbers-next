@@ -68,12 +68,12 @@ const StatCard = ({
         )}
         {editable && (
           <Stack spacing={2} direction={["column", "row"]}>
-            <Button float="right" padding="0" bg="white" onClick={onEdit}>
+            <Button float="right" padding="0" onClick={onEdit}>
               <FiEdit />
             </Button>
 
             {number > 0 && (
-              <Button float="right" padding="0" bg="white" onClick={onAdjust}>
+              <Button float="right" padding="0" onClick={onAdjust}>
                 <HiOutlineAdjustments />
               </Button>
             )}

@@ -4,6 +4,7 @@ import {
   StatNumber,
   StatHelpText,
   Box,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import Screen from "./Screen";
 import Loading from "./Loading";
@@ -39,6 +40,8 @@ const HeroStatCard = ({
   loading,
   description,
 }: Props) => {
+  const color = useColorModeValue("purple.600", "purple.300");
+
   return (
     <Screen title={title} description={description}>
       {!loading ? (
@@ -47,7 +50,7 @@ const HeroStatCard = ({
           <StatNumber
             fontSize={["5xl", "6xl"]}
             fontWeight="700"
-            color={`${amount < 1 ? "red" : "purple"}.600`}
+            color={`${amount < 1 ? "red.600" : color}`}
           >
             {money(amount)}
           </StatNumber>

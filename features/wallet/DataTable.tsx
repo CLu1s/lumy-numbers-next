@@ -45,14 +45,10 @@ const DataTable = ({ transactions, manageOpen, handleDelete }: Props) => {
         accessor: (row) => row,
         Cell: ({ cell: { value } }) => (
           <HStack>
-            <Button bg="white" onClick={() => manageOpen(value)}>
+            <Button onClick={() => manageOpen(value)}>
               <FiEdit />
             </Button>
-            <Button
-              bg="white"
-              onClick={() => handleDelete(value.id)}
-              color="red.500"
-            >
+            <Button onClick={() => handleDelete(value.id)} color="red.500">
               <FiTrash2 />
             </Button>
           </HStack>

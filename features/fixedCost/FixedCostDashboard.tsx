@@ -5,6 +5,7 @@ import {
   chakra,
   Text,
   Heading,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import _orderBy from "lodash/orderBy";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,6 +23,8 @@ const FixedCostDashboard = () => {
   const categoryID = useSelector(getCategoryID);
   const amount = useSelector(getPendingAmount);
 
+  const color = useColorModeValue("teal", "teal.200");
+
   const managePaid = (data: any) => {
     const { createdAt, updatedAt, ...input } = data;
     const { type, status, id, dueDay, ...trans } = input;
@@ -35,6 +38,7 @@ const FixedCostDashboard = () => {
     );
   };
   const orderItmes = _orderBy(items, ["dueDay"]).slice(0, 6);
+
   return (
     <Screen title="Gastos Pendientes">
       <Stack spacing={4}>
@@ -48,7 +52,7 @@ const FixedCostDashboard = () => {
         <Heading size="sm">Próximos a Pagar</Heading>
         <ItemsList items={orderItmes} managePaid={managePaid} />
         <Link href="/app/costos-fijos" passHref>
-          <ChakraLink color="teal.500">Ver Todos los Gastos</ChakraLink>
+          <ChakraLink color={color}>Ver Todos los Gastos</ChakraLink>
         </Link>
       </Stack>
     </Screen>

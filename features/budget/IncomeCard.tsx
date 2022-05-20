@@ -41,7 +41,6 @@ const IncomeCard = () => {
           <StatNumber>{money(income.amount)}</StatNumber>
         </Stat>
         <Button
-          bg="white"
           onClick={() => {
             setElementToEdit(income);
             onOpen();
@@ -50,7 +49,6 @@ const IncomeCard = () => {
           <FiEdit />
         </Button>
         <Button
-          bg="white"
           onClick={() => {
             setDeleteId(income.id);
             setAlertDialogIsOpen(true);

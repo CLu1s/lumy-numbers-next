@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Box, Stack, Heading, Text } from "@chakra-ui/react";
+import { Box, Stack, Heading, useColorModeValue } from "@chakra-ui/react";
 import Markdown from "./Markdown";
 
 type props = {
@@ -10,6 +10,7 @@ type props = {
 };
 
 const Screen = ({ title, description, children }: props) => {
+  const bg = useColorModeValue("white", "gray.800");
   return (
     <motion.div
       initial={{ x: -100 }}
@@ -26,7 +27,7 @@ const Screen = ({ title, description, children }: props) => {
         p={5}
         shadow="sm"
         borderWidth="1px"
-        bg="white"
+        bgColor={bg}
         flex="1"
         borderRadius="3xl"
       >

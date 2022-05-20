@@ -1,12 +1,14 @@
 import { useRouter } from "next/router";
-import { Box, Stack, Heading, Portal } from "@chakra-ui/react";
-import Link from "next/link";
-import { ArrowBackIcon } from "@chakra-ui/icons";
-import { menuList } from "../config/menu";
+import {
+  Box,
+  Stack,
+  Heading,
+  Portal,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import Topbar from "./Topbar";
 import useBaseInfo from "../hooks/useBaseInfo";
 import CheckBucket from "../features/bucket/CheckBucket";
-import CheckcIncomes from "../features/budget/CheckIncomes";
 import Sidebar from "./Sidebar";
 import BottomBar from "./BottomBar";
 type Props = {
@@ -21,11 +23,12 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
   const backButton = () => {
     router.back();
   };
-  const isNotIndex = router.pathname !== "/";
+  const bg = useColorModeValue("gray.100", "gray.900");
+
   return (
     <>
       <main>
-        <Box marginBottom={{ base: 32, lg: 0 }}>
+        <Box marginBottom={{ base: 32, lg: 0 }} bg={bg}>
           <Stack spacing={{ base: 0, xl: 5 }} direction="row">
             <CheckBucket userName={userName} />
             <Sidebar />
