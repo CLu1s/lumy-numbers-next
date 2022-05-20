@@ -22,7 +22,7 @@ export default function Topbar() {
   return (
     <Box
       position={{ base: "fixed", md: "static" }}
-      display={{ base: "block", md: "none" }}
+      display={{ base: "block" }}
       backgroundColor={bg}
       borderBottomWidth={1}
       padding={2}

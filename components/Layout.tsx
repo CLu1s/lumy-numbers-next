@@ -31,19 +31,19 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
       name="description"
       content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
     />
-    <meta name="theme-color" content={bg} />
+    <meta name="theme-color" content="gray.900" />
     <link rel="icon" href="/favicon.ico" />
   </Head>;
   return (
     <>
       <main>
-        <Box bg={bg}>
+        <Box bg={bg} position="relative">
           <Stack spacing={{ base: 0, xl: 5 }} direction="row">
             <CheckBucket userName={userName} />
             <Sidebar />
             <Stack width="full">
               <Topbar />
-              <Stack spacing={4} paddingX={4} paddingTop={{ base: 24, lg: 0 }}>
+              <Stack spacing={4} paddingX={4} paddingY={{ base: 24, lg: 10 }}>
                 <Heading as="h2" size="md" textTransform="capitalize">
                   Hola {userName}
                 </Heading>
