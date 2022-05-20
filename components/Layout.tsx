@@ -6,6 +6,7 @@ import {
   Portal,
   useColorModeValue,
 } from "@chakra-ui/react";
+import Head from "next/head";
 import Topbar from "./Topbar";
 import useBaseInfo from "../hooks/useBaseInfo";
 import CheckBucket from "../features/bucket/CheckBucket";
@@ -24,7 +25,15 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
     router.back();
   };
   const bg = useColorModeValue("gray.100", "gray.900");
-
+  <Head>
+    <title>Luminus Conscious Planning</title>
+    <meta
+      name="description"
+      content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
+    />
+    <meta name="theme-color" content={bg} />
+    <link rel="icon" href="/favicon.ico" />
+  </Head>;
   return (
     <>
       <main>

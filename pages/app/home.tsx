@@ -2,7 +2,7 @@ import Head from "next/head";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import BudgetCard from "../../features/wallet/BudgetCard";
 import Layout from "../../components/Layout";
-import { Stack, Wrap, WrapItem } from "@chakra-ui/react";
+import { Stack, Wrap, WrapItem, useColorModeValue } from "@chakra-ui/react";
 import CheckcIncomes from "../../features/budget/CheckIncomes";
 import Screen from "../../components/Screen";
 import LastsTransactions from "../../features/wallet/LastsTransactions";
@@ -10,8 +10,20 @@ import FixedCostDashboard from "../../features/fixedCost/FixedCostDashboard";
 import CategoriesDashboard from "../../features/wallet/CategoriesDashboard";
 
 function Home({ user }) {
+  const bg = useColorModeValue("gray.100", "gray.900");
+
   return (
     <div>
+      <Head>
+        <title>Luminus Conscious Planning</title>
+        <meta
+          name="description"
+          content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
+        />
+        <meta name="theme-color" content={bg} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
       <Layout userName={user?.username || ""} pageTitle="Excelente Día">
         <CheckcIncomes />
         <Stack spacing={8}>

@@ -8,24 +8,13 @@ import ShareBucket from "../../features/bucket/ShareBucket";
 
 function Home({ user }) {
   return (
-    <div>
-      <Head>
-        <title>Luminus Conscious Planning</title>
-        <meta
-          name="description"
-          content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <Layout userName={user?.username || ""} pageTitle="Plan de Gastos">
-        <Stack spacing={8}>
-          <IncomeCard />
-          <BudgetCategories />
-          <ShareBucket />
-        </Stack>
-      </Layout>
-    </div>
+    <Layout userName={user?.username || ""} pageTitle="Plan de Gastos">
+      <Stack spacing={8}>
+        <IncomeCard />
+        <BudgetCategories />
+        <ShareBucket />
+      </Stack>
+    </Layout>
   );
 }
 
