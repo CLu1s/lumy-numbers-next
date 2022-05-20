@@ -3,12 +3,10 @@
   "short_name": "Luminus",
   "start_url": "/app/home",
   "display": "standalone",
-  "background_color": "#edf2f7",
   "dir": "ltr",
   "lang": "es",
   "orientation": "any",
   "scope": "/app/",
-  "theme_color": "#edf2f7",
   "icons": [
     {
       "src": "/icon_48x48.png",

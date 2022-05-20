@@ -1,40 +1,65 @@
 import { useRouter } from "next/router";
-import { Box, Button, HStack, Flex } from "@chakra-ui/react";
+import Link from "next/link";
+
+import {
+  Box,
+  LinkBox,
+  HStack,
+  LinkOverlay,
+  useColorModeValue,
+  Text,
+  VStack,
+  Square,
+} from "@chakra-ui/react";
 import { menuList } from "../config/menu";
 
 const BottomBar = () => {
   const router = useRouter();
+  const bg = useColorModeValue("white", "gray.900");
+  const bgButton = useColorModeValue("white", "gray.800");
+  const bgSquareActive = useColorModeValue("purple.800", "purple.300");
+  const bgSquare = useColorModeValue("white", "gray.800");
+
+  const renderButtons = menuList
+    .map((item) => {
+      const isActive = router.pathname === item.path;
+      if (!item.showOnMobile) return null;
+      return (
+        <LinkBox key={item.path} as="button" width="100px" padding={4}>
+          <Link href={item.path} passHref>
+            <LinkOverlay>
+              <VStack spacing={1}>
+                <Square
+                  size="30px"
+                  bg={isActive ? bgSquareActive : bgSquare}
+                  color={isActive ? "white" : "blue.200"}
+                  borderRadius={"lg"}
+                >
+                  {item.icon}
+                </Square>
+                <Text fontSize="xs">{item.mobileLabel ?? item.label}</Text>
+              </VStack>
+            </LinkOverlay>
+          </Link>
+        </LinkBox>
+      );
+    })
+    .filter((item) => item);
+  console.log(renderButtons);
   return (
     <Box
       position={{ base: "fixed", md: "static" }}
       display={{ base: "block", md: "none" }}
-      boxShadow="lg"
-      backgroundColor="white"
+      // boxShadow="lg"
+      backgroundColor={bg}
       color="gray.500"
       bottom="0"
       width="full"
       paddingBottom={6}
+      paddingX={3}
     >
-      <HStack spacing="4">
-        {menuList.map((item) => (
-          <Button
-            key={item.id}
-            width="25%"
-            h="60px"
-            colorScheme="whiteAlpha"
-            color={router.pathname === item.path ? "blue.400" : "gray.400"}
-            // shadow={router.pathname === item.path ? "md" : "none"}
-            fontSize="xl"
-            onClick={() => {
-              router.push(item.path);
-            }}
-          >
-            <Flex direction="column" align="center" justify="center">
-              {item.icon}
-              {/* <Text fontSize="xs">{item.label}</Text> */}
-            </Flex>
-          </Button>
-        ))}
+      <HStack spacing={0} width="full" justifyContent="space-between">
+        {renderButtons}
       </HStack>
     </Box>
   );
