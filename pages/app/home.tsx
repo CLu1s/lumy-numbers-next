@@ -12,15 +12,6 @@ import CategoriesDashboard from "../../features/wallet/CategoriesDashboard";
 function Home({ user }) {
   return (
     <div>
-      <Head>
-        <title>Luminus Conscious Planning</title>
-        <meta
-          name="description"
-          content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Layout userName={user?.username || ""} pageTitle="Excelente Día">
         <CheckcIncomes />
         <Stack spacing={8}>

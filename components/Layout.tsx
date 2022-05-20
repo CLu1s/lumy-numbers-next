@@ -28,13 +28,13 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
   return (
     <>
       <main>
-        <Box marginBottom={{ base: 32, lg: 0 }} bg={bg}>
+        <Box bg={bg}>
           <Stack spacing={{ base: 0, xl: 5 }} direction="row">
             <CheckBucket userName={userName} />
             <Sidebar />
             <Stack width="full">
               <Topbar />
-              <Stack spacing={4} padding={4}>
+              <Stack spacing={4} paddingX={4} paddingTop={{ base: 24, lg: 0 }}>
                 <Heading as="h2" size="md" textTransform="capitalize">
                   Hola {userName}
                 </Heading>
@@ -45,26 +45,7 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
             </Stack>
           </Stack>
         </Box>
-        <Portal>
-          <BottomBar />
-          {/* {isNotIndex && (
-            <IconButton
-              position={{ base: "fixed", md: "static" }}
-              display={{ base: "block", md: "none" }}
-              right="1.5rem"
-              bottom="1.5rem"
-              boxShadow="lg"
-              aria-label="Search database"
-              icon={<ArrowBackIcon />}
-              backgroundColor="white"
-              color="gray.500"
-              rounded="full"
-              height="52px"
-              width="52px"
-              onClick={backButton}
-            />
-          )} */}
-        </Portal>
+        {/* <BottomBar /> */}
       </main>
     </>
   );

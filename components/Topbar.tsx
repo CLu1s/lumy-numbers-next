@@ -8,6 +8,7 @@ import {
   AvatarBadge,
   useDisclosure,
   Button,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { RiUserLine, RiNotification2Line } from "react-icons/ri";
 import Link from "next/link";
@@ -16,9 +17,18 @@ import Drawer from "./Drawer";
 export default function Topbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
+  const bg = useColorModeValue("gray.100", "gray.900");
 
   return (
-    <Box borderBottomWidth={1} padding={2} width="full">
+    <Box
+      position={{ base: "fixed", md: "static" }}
+      display={{ base: "block", md: "none" }}
+      backgroundColor={bg}
+      borderBottomWidth={1}
+      padding={2}
+      zIndex={100}
+      width="full"
+    >
       <HStack spacing={4} justifyContent={"space-between"}>
         <Stack isInline spacing={4}>
           <Button

@@ -26,7 +26,7 @@ const BottomBar = () => {
       if (!item.showOnMobile) return null;
       return (
         <LinkBox key={item.path} as="button" width="100px" padding={4}>
-          <Link href={item.path} passHref>
+          <Link href={item.path} passHref scroll={false}>
             <LinkOverlay>
               <VStack spacing={1}>
                 <Square
@@ -45,7 +45,6 @@ const BottomBar = () => {
       );
     })
     .filter((item) => item);
-  console.log(renderButtons);
   return (
     <Box
       position={{ base: "fixed", md: "static" }}
