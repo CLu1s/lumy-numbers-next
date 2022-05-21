@@ -14,10 +14,11 @@ import {
 import Table from "../../components/Table";
 import Screen from "../../components/Screen";
 import Stats from "../../components/Stats";
-import { Project as ProjectType, Movement } from "../../types";
+import { Project as ProjectType, Movement, LoadingStates } from "../../types";
 import { date, money } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
 import { fetchMovementsByProject } from "./projectsSlice";
+import Loading from "../../components/Loading";
 
 type Props = {
   project: ProjectType;
@@ -38,8 +39,9 @@ function ProjectRender({
 }: Props) {
   const dispatch = useDispatch();
   useEffect(() => {
+    if (project.loadingState === LoadingStates.SUCCEEDED) return;
     dispatch(fetchMovementsByProject(project.id));
-  }, [dispatch, project.id, project.movements.length]);
+  }, [dispatch, project.id, project.loadingState]);
 
   const columns = useMemo(
     () => [
@@ -189,7 +191,9 @@ function ProjectRender({
               />
             </HStack>
           </HStack>
-          {project.movements.length ? (
+          {project.loadingState === LoadingStates.LOADING ? (
+            <Loading />
+          ) : project.movements.length ? (
             <Table data={project.movements} columns={columns} />
           ) : (
             <NoRegisters />

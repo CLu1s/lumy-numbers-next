@@ -12,8 +12,10 @@ import Screen from "../../components/Screen";
 import { getPeriod } from "../../features/wallet/selector";
 import { changePeriod } from "../../features/wallet/walletSlice";
 import useBasicInfo from "../../hooks/useBasicInfo";
+import useGetCategories from "../../hooks/useGetCategories";
 
 function Transacciones({ user }) {
+  useGetCategories();
   const dispatch = useDispatch();
   const { fetch, unmount } = useBasicInfo();
   const period = useSelector(getPeriod);

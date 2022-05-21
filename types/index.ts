@@ -140,6 +140,7 @@ export type Project = {
   createdAt?: string;
   updatedAt?: string;
   movements: Movement[];
+  loadingState?: LoadingStates;
 };
 
 export type Movement = {

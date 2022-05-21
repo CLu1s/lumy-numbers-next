@@ -16,6 +16,7 @@ import { LoadingStates } from "../../types";
 import Sorters from "../../components/Sorters";
 import Filters from "../../components/Filters";
 import { getCategories } from "../budget/selector";
+import useGetTransactions from "../../hooks/useGetTransactions";
 
 import DataTable from "./DataTable";
 enum Order {
@@ -35,6 +36,7 @@ const compareTransactions = (transactions: Transaction[], order: Order) => {
 };
 
 export default function TransactionsTableContainer() {
+  useGetTransactions();
   const transactions = useSelector(getTransactionsFormatted);
   const categories = useSelector(getCategories);
   const { isOpen, onOpen, onClose } = useDisclosure();

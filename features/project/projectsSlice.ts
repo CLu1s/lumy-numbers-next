@@ -270,15 +270,13 @@ const projectsSlice = createSlice({
       if (project) {
         project.movements =
           action.payload.response.data.movementsByProject?.items || [];
+        project.loadingState = LoadingStates.SUCCEEDED;
       }
       state.status = LoadingStates.SUCCEEDED;
     },
     [fetchMovementsByProject.rejected.type]: (state, action) => {
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
-    },
-    [fetchMovementsByProject.pending.type]: (state) => {
-      state.status = LoadingStates.LOADING;
     },
   },
 });

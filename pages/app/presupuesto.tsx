@@ -5,8 +5,11 @@ import { Stack } from "@chakra-ui/react";
 import IncomeCard from "../../features/budget/IncomeCard";
 import BudgetCategories from "../../features/budget/BudgetCategories";
 import ShareBucket from "../../features/bucket/ShareBucket";
+import { useGetCategories, useGetIncomes } from "../../hooks/";
 
 function Home({ user }) {
+  useGetCategories();
+  useGetIncomes();
   return (
     <>
       <Head>

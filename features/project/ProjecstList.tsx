@@ -81,6 +81,11 @@ function ProjectsList() {
     setAlertMovementDelete(true);
     setDeleteId(id);
   };
+
+  if (status !== LoadingStates.SUCCEEDED) {
+    return <Loading />;
+  }
+
   const renderTables = (seeHistory ? allProjects : projects).map((project) => (
     <ProjectRender
       key={project.id}
