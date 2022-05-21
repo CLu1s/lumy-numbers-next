@@ -34,30 +34,50 @@ function Transacciones({ user }) {
     dispatch(changePeriod(newDate));
   };
   return (
-    <Layout userName={user?.username || ""} pageTitle="Transacciones del mes">
-      {sameMonth && (
-        <Button
-          size="xs"
-          onClick={() => handleChangePeriod(sub(new Date(), { months: 1 }))}
-        >
-          Mes anterior
-        </Button>
-      )}
-      {!sameMonth && (
-        <Button size="xs" onClick={() => handleChangePeriod(new Date())}>
-          Mes actual
-        </Button>
-      )}
-      <Stack spacing={8}>
-        <TransactionsResume />
+    <>
+      <Head>
+        <title>Luminus Conscious Planning</title>
+        <meta
+          name="description"
+          content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
+        />
+        <meta
+          name="theme-color"
+          content="#edf2f7"
+          media="(prefers-color-scheme: light)"
+        />
+        <meta
+          name="theme-color"
+          content="#171923"
+          media="(prefers-color-scheme: dark)"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Layout userName={user?.username || ""} pageTitle="Transacciones del mes">
+        {sameMonth && (
+          <Button
+            size="xs"
+            onClick={() => handleChangePeriod(sub(new Date(), { months: 1 }))}
+          >
+            Mes anterior
+          </Button>
+        )}
+        {!sameMonth && (
+          <Button size="xs" onClick={() => handleChangePeriod(new Date())}>
+            Mes actual
+          </Button>
+        )}
+        <Stack spacing={8}>
+          <TransactionsResume />
 
-        <Screen title="Transcciones del mes">
-          <VStack spacing={8}>
-            <Table />
-          </VStack>
-        </Screen>
-      </Stack>
-    </Layout>
+          <Screen title="Transcciones del mes">
+            <VStack spacing={8}>
+              <Table />
+            </VStack>
+          </Screen>
+        </Stack>
+      </Layout>
+    </>
   );
 }
 

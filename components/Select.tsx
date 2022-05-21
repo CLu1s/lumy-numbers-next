@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import Select from "react-select";
 
 function classNames(...classes: string[]) {
@@ -23,6 +23,13 @@ export default function SelectContainer({
   setSelected,
   label,
 }: SelectProps) {
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      color: state.isSelected ? "white" : "black",
+      padding: 20,
+    }),
+  };
   return (
     <Box w="full">
       <Select
@@ -30,6 +37,7 @@ export default function SelectContainer({
         onChange={(obj) => setSelected(obj.value)}
         options={options}
         isSearchable={false}
+        styles={customStyles}
       />
     </Box>
   );

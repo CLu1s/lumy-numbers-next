@@ -11,7 +11,6 @@ import CategoriesDashboard from "../../features/wallet/CategoriesDashboard";
 
 function Home({ user }) {
   const bg = useColorModeValue("gray.100", "gray.900");
-  console.log(bg);
   return (
     <div>
       <Head>
