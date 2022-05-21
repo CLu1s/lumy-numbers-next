@@ -16,9 +16,11 @@ import { Transaction } from "../../types";
 import { deleteTransaction } from "./walletSlice";
 import RecordExpense from "./RecordExpense";
 import AlertDialog from "../../components/AlertDialog";
+import useGetTransactions from "../../hooks/useGetTransactions";
 
 export default function LastsTransactions() {
   const dispatch = useDispatch();
+  useGetTransactions();
   const transactions = useSelector(getLastTransactions);
   const [elementToEdit, setElementToEdit] = useState<Transaction>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();

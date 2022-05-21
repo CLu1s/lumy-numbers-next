@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import { BudgetState, Category } from "../../types";
+import { BudgetState, Category, Income } from "../../types";
 import { RootState } from "../../store/reducers";
 import _sortBy from "lodash/sortBy";
 const budgetSelector = (state: RootState): BudgetState => state.budget;
@@ -50,6 +50,11 @@ export const getIncome = createSelector(
   [budgetSelector],
   (state: BudgetState): number =>
     state.incomes.reduce((acc, curr) => acc + curr.amount, 0)
+);
+
+export const getIncomesList = createSelector(
+  [budgetSelector],
+  (state: BudgetState): Income[] => state.incomes
 );
 
 export const getListOfIncomes = createSelector(

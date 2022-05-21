@@ -1,6 +1,6 @@
 import RecordExpense from "./RecordExpense";
 import { useDisclosure, Button } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import HeroStatCard, { HeroStatFooter } from "../../components/HeroStatCard";
 import { date } from "../../utils";
 import { getBalance, getPeriod, getStatus } from "./selector";
@@ -8,7 +8,6 @@ import isSameMonth from "date-fns/isSameMonth";
 import { LoadingStates } from "../../types";
 
 const BudgetCard = () => {
-  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const balance = useSelector(getBalance);
   const status = useSelector(getStatus);

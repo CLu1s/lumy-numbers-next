@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import {
   Box,
   Stack,
@@ -8,7 +7,7 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Topbar from "./Topbar";
-import useBaseInfo from "../hooks/useBaseInfo";
+import useGetInfo from "../hooks/useGetInfo";
 import CheckBucket from "../features/bucket/CheckBucket";
 import Sidebar from "./Sidebar";
 import BottomBar from "./BottomBar";
@@ -19,21 +18,8 @@ type Props = {
 };
 
 const Layout = ({ children, pageTitle, userName }: Props) => {
-  useBaseInfo(userName);
-  const router = useRouter();
-  const backButton = () => {
-    router.back();
-  };
+  useGetInfo(userName);
   const bg = useColorModeValue("gray.100", "gray.900");
-  <Head>
-    <title>Luminus Conscious Planning</title>
-    <meta
-      name="description"
-      content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
-    />
-    <meta name="theme-color" content="gray.900" />
-    <link rel="icon" href="/favicon.ico" />
-  </Head>;
   return (
     <>
       <main>

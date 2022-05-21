@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Switch, VStack, HStack } from "@chakra-ui/react";
 import Screen from "../../components/Screen";
 import Categories from "./Categories";
+import useGetCategories from "../../hooks/useGetCategories";
 
 const CategoriesDashboard = () => {
+  const cat = useGetCategories();
   const [showAll, setShowAll] = useState(false);
   const [showSwitch, setShowSwitch] = useState(false);
   return (

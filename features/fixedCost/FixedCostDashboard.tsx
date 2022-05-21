@@ -15,8 +15,10 @@ import { getPendingItems, getPendingAmount, getCategoryID } from "./selector";
 import { getBucketID } from "../bucket/selector";
 import { addNewTransaction } from "../wallet/walletSlice";
 import { money } from "../../utils";
+import useGetFixedCosts from "../../hooks/useGetFixedCosts";
 
 const FixedCostDashboard = () => {
+  useGetFixedCosts();
   const items = useSelector(getPendingItems);
   const dispatch = useDispatch();
   const bucketID = useSelector(getBucketID);

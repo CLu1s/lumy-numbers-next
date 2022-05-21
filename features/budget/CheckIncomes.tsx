@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { getStatus, getIncome } from "./selector";
 import Modal from "../../components/Modal";
-import { Input, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import Loading from "../../components/Loading";
+import useGetIncomes from "../../hooks/useGetIncomes";
 
 const CheckIncomes = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const dispatch = useDispatch();
   const router = useRouter();
   const { status, error } = useSelector(getStatus);
-  const bucket = useSelector(getIncome);
+  const income = useSelector(getIncome);
+  useGetIncomes();
 
   useEffect(() => {
     if (status === "succeeded") {
-      setIsOpen(!bucket);
+      setIsOpen(!income);
     }
-  }, [status, bucket]);
+  }, [status, income]);
 
   const onClose = () => {
     setIsOpen(false);
