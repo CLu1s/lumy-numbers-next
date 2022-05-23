@@ -9,13 +9,17 @@ import {
   useDisclosure,
   Button,
   useColorModeValue,
+  IconButton,
+  useColorMode,
 } from "@chakra-ui/react";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { RiUserLine, RiNotification2Line } from "react-icons/ri";
 import Link from "next/link";
 import Drawer from "./Drawer";
 
 export default function Topbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { colorMode, toggleColorMode } = useColorMode();
   const btnRef = React.useRef();
   const bg = useColorModeValue("gray.100", "gray.900");
 
@@ -53,6 +57,11 @@ export default function Topbar() {
               boxSize="1.25em"
             />
           </Avatar> */}
+          <IconButton
+            aria-label="color mode"
+            onClick={toggleColorMode}
+            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          />
           <Avatar
             size="md"
             bg="purple.500"

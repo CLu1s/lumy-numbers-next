@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from "react";
-import { GrPrevious, GrNext } from "react-icons/gr";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import Head from "next/head";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import sub from "date-fns/sub";
@@ -115,18 +115,18 @@ function Transacciones({ user }) {
             onClick={() =>
               handleChangePeriod({ newDate: state.previous, type: "PREVIOUS" })
             }
-            colorScheme="telegram"
+            colorScheme="purple"
           >
-            <GrPrevious />
+            <ChevronLeftIcon fontSize="2xl" />
           </Button>
           {state.showNext && (
             <Button
-              colorScheme="telegram"
+              colorScheme="purple"
               onClick={() =>
                 handleChangePeriod({ newDate: state.next, type: "NEXT" })
               }
             >
-              <GrNext />
+              <ChevronRightIcon fontSize="2xl" />
             </Button>
           )}
           {!sameMonth && (
@@ -134,7 +134,7 @@ function Transacciones({ user }) {
               onClick={() =>
                 handleChangePeriod({ newDate: initDate, type: "CURRENT" })
               }
-              colorScheme="telegram"
+              colorScheme="purple"
             >
               Ver mes actual
             </Button>
