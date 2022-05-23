@@ -120,7 +120,7 @@ const TransactionsResume = () => {
           <Wrap>{stats.length > 0 ? stats : <NoRegisters />}</Wrap>
         </Screen>
       </Box>
-      <Screen>
+      <Screen display={["none", "block"]}>
         <Line options={options} data={data} />
       </Screen>
     </Stack>

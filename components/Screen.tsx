@@ -6,9 +6,10 @@ type props = {
   description?: string | React.ReactNode;
   children: React.ReactNode;
   className?: string;
+  display?: any;
 };
 
-const Screen = ({ title, description, children }: props) => {
+const Screen = ({ title, description, children, display }: props) => {
   const bg = useColorModeValue("white", "gray.800");
   return (
     <Box
@@ -20,6 +21,7 @@ const Screen = ({ title, description, children }: props) => {
       bgColor={bg}
       flex="1"
       borderRadius="3xl"
+      display={display}
     >
       <Stack spacing={6}>
         {title && (

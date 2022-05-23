@@ -166,7 +166,7 @@ const DisplayData = (props: any) => {
         {items.length > 0 ? (
           <Box>
             <Box display={{ base: "none", lg: "block" }}>
-              <Table columns={columns} data={items} />
+              <Table columns={columns} data={items} fullHeight />
             </Box>
             <Box display={{ base: "block", lg: "none" }}>
               <ItemsList

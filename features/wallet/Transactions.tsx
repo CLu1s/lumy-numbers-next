@@ -24,17 +24,6 @@ enum Order {
   DESC = "desc",
 }
 
-const compareTransactions = (transactions: Transaction[], order: Order) => {
-  const transactionsClone = [...transactions];
-  const t = transactionsClone.sort((a, b) => {
-    return compareDates(new Date(a.date), new Date(b.date));
-  });
-  if (order === Order.DESC) {
-    return t.reverse();
-  }
-  return t;
-};
-
 export default function TransactionsTableContainer() {
   useGetTransactions();
   const transactions = useSelector(getTransactionsFormatted);
@@ -47,6 +36,19 @@ export default function TransactionsTableContainer() {
   const [order, setOrder] = useState<Order>(Order.DESC);
   const [elementToEdit, setElementToEdit] = useState<Transaction>(null);
   const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
+    []
+  );
+  const compareTransactions = useCallback(
+    (transactions: Transaction[], order: Order) => {
+      const transactionsClone = [...transactions];
+      const t = transactionsClone.sort((a, b) => {
+        return compareDates(new Date(a.date), new Date(b.date));
+      });
+      if (order === Order.DESC) {
+        return t.reverse();
+      }
+      return t;
+    },
     []
   );
   const status = useSelector(getStatus);

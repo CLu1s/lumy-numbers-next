@@ -29,7 +29,7 @@ export default function TransactionMini({
 }: Props) {
   const renderCells = transactions.map((item) => (
     <HStack key={item.id} spacing="4" alignItems="flex-start">
-      <VStack color={item.category?.color} fontSize="2xl" spacing={0}>
+      <VStack color={item.category?.color} fontSize="2xl" spacing={1}>
         {icons(item.category?.icon)}
         <Box height="10" width="2px" backgroundColor="gray.200" />
       </VStack>
@@ -62,7 +62,7 @@ export default function TransactionMini({
   ));
 
   return (
-    <Stack spacing={2}>
+    <Stack spacing={1}>
       {renderCells.length > 0 ? renderCells : <Noregisters />}
     </Stack>
   );
