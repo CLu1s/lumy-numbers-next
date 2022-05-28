@@ -1,36 +1,21 @@
-import { useState } from "react";
-import { VscAdd } from "react-icons/vsc";
+import { useState, useMemo } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
-import {
-  Button,
-  Text,
-  Flex,
-  Wrap,
-  WrapItem,
-  useDisclosure,
-  Switch,
-  HStack,
-} from "@chakra-ui/react";
-import Screen from "../../components/Screen";
-import ProjectCard from "./ProjectCard";
-import {
-  getProjects,
-  getAllProjects,
-  getCategoryID,
-  getStatus,
-} from "./selector";
+import { useDisclosure } from "@chakra-ui/react";
+import { getAllProjects, getStatus } from "./selector";
 import { Project, Movement, LoadingStates } from "../../types";
 import NewProject from "./NewProject";
 import NewMovement from "./NewMovement";
-import SaveCategoryID from "./SaveCategoryID";
 import AlertDialog from "../../components/AlertDialog";
 import { deleteProject, deleteMovement } from "./projectsSlice";
 import Loading from "../../components/Loading";
 import ProjectRender from "./ProjectRender";
 
-function ProjectsList() {
+type Props = {
+  id: string;
+};
+function ProjectDetail({ id }: Props) {
   const dispatch = useDispatch();
-  const [seeHistory, setSeeHistory] = useState(false);
   const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
   const [alertMovementDelete, setAlertMovementDelete] = useState(false);
   const [deleteId, setDeleteId] = useState<string>(null);
@@ -38,7 +23,6 @@ function ProjectsList() {
   const [movementToEdit, setMovementToEdit] = useState<Movement>(null);
   const [projectID, setProjectID] = useState<string>(null);
   const [monthlyPayment, setMonthlyPayment] = useState<number>(0);
-  const categoryID = useSelector(getCategoryID);
   const [projectName, setProjectName] = useState<string>("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const status = useSelector(getStatus);
@@ -50,9 +34,11 @@ function ProjectsList() {
     moveModal.onOpen();
   };
 
-  const projects = useSelector(getProjects);
   const allProjects = useSelector(getAllProjects);
-
+  const project = useMemo(
+    () => allProjects.find((p) => p.id === id),
+    [id, allProjects]
+  );
   const manageOnClose = () => {
     elementToEdit && setElementToEdit(null);
     onClose();
@@ -69,18 +55,23 @@ function ProjectsList() {
     setAlertDialogIsOpen(true);
   };
 
+  const manageOpen = (item: any) => {
+    setElementToEdit(item);
+    onOpen();
+  };
+
+  const onMovementEdit = (item: Movement) => {
+    setMovementToEdit(item);
+    moveModal.onOpen();
+  };
+  const onMovementDelete = (id: string) => {
+    setAlertMovementDelete(true);
+    setDeleteId(id);
+  };
+
   if (status !== LoadingStates.SUCCEEDED) {
     return <Loading />;
   }
-
-  const renderTables = (seeHistory ? allProjects : projects).map((project) => (
-    <ProjectCard
-      key={project.id}
-      project={project}
-      onOpen={movementOnOpen}
-      handleDelete={handleDelete}
-    />
-  ));
 
   return (
     <>
@@ -126,65 +117,17 @@ function ProjectsList() {
         projectName={projectName}
       />
 
-      {projects.length !== allProjects.length && (
-        <HStack marginBottom="2rem">
-          <Text fontSize="sm" fontWeight="medium">
-            Ver proyectos concluidos
-          </Text>
-          <Switch
-            size="md"
-            isChecked={seeHistory}
-            onChange={(e) => setSeeHistory(e.target.checked)}
-          />
-        </HStack>
-      )}
-
-      <Wrap spacing={{ base: 4, md: 4, lg: 5 }}>
-        {renderTables}
-        <WrapItem
-          width="100%"
-          maxW={{ base: "100%", md: "47%", lg: "30%" }}
-          minH="123px"
-          height="full"
-        >
-          <Screen>
-            <Flex
-              direction="column"
-              height="full"
-              align="center"
-              justifyContent="center"
-            >
-              {categoryID ? (
-                <Button
-                  w="full"
-                  height="full"
-                  minH="200px"
-                  color="gray.400"
-                  colorScheme="whiteAlpha"
-                  borderWidth="1px"
-                  borderColor="gray.200"
-                  borderRadius="md"
-                  onClick={onOpen}
-                >
-                  <Flex
-                    direction="column"
-                    align="center"
-                    justify="center"
-                    height="full"
-                  >
-                    <VscAdd />
-                    <Text>Nuevo</Text>
-                  </Flex>
-                </Button>
-              ) : (
-                <SaveCategoryID />
-              )}
-            </Flex>
-          </Screen>
-        </WrapItem>
-      </Wrap>
+      <ProjectRender
+        key={id}
+        project={project}
+        onOpen={movementOnOpen}
+        onEdit={manageOpen}
+        handleDelete={handleDelete}
+        setMovementToEdit={onMovementEdit}
+        onMovementDelete={onMovementDelete}
+      />
     </>
   );
 }
 
-export default ProjectsList;
+export default ProjectDetail;

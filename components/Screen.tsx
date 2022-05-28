@@ -2,7 +2,7 @@ import { Box, Stack, Heading, useColorModeValue } from "@chakra-ui/react";
 import Markdown from "./Markdown";
 
 type props = {
-  title?: string;
+  title?: string | React.ReactNode;
   description?: string | React.ReactNode;
   children: React.ReactNode;
   className?: string;
@@ -26,9 +26,13 @@ const Screen = ({ title, description, children, display }: props) => {
       <Stack spacing={6}>
         {title && (
           <Stack spacing="2">
-            <Heading as="h2" size="md" fontWeight="600">
-              {title}
-            </Heading>
+            {typeof title === "string" ? (
+              <Heading as="h2" size="md" fontWeight="600">
+                {title}
+              </Heading>
+            ) : (
+              title
+            )}
             {description &&
               (typeof description === "string" ? (
                 <Markdown>{description}</Markdown>

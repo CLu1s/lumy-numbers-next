@@ -120,7 +120,6 @@ function ProjectRender({
     <WrapItem
       key={project.id}
       width="full"
-      maxW={{ base: "100%", lg: "48%" }}
       paddingBottom={{ base: "2rem", lg: "0" }}
     >
       <Screen title={project.name} description={project.description}>

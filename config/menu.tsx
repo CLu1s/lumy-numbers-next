@@ -45,7 +45,7 @@ export const menuList: MenuItem[] = [
   },
   {
     id: 5,
-    label: "Configuración",
+    label: "Plan de Gastos",
     path: "/app/presupuesto",
     icon: <ImStatsBars />,
     showOnMobile: true,
