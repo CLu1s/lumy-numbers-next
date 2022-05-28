@@ -1,3 +1,4 @@
+import { memo } from "react";
 import {
   Box,
   Stack,
@@ -22,6 +23,9 @@ const Layout = ({ children, pageTitle, userName }: Props) => {
   const bg = useColorModeValue("gray.100", "gray.900");
   return (
     <>
+      <Head>
+        <title>Luminus Conscious Planning</title>
+      </Head>
       <main>
         <Box bg={bg} position="relative">
           <Stack spacing={{ base: 0, xl: 5 }} direction="row">

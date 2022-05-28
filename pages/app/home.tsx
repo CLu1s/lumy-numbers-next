@@ -13,25 +13,6 @@ function Home({ user }) {
   const bg = useColorModeValue("gray.100", "gray.900");
   return (
     <div>
-      <Head>
-        <title>Luminus Conscious Planning</title>
-        <meta
-          name="description"
-          content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
-        />
-        <meta
-          name="theme-color"
-          content="#edf2f7"
-          media="(prefers-color-scheme: light)"
-        />
-        <meta
-          name="theme-color"
-          content="#171923"
-          media="(prefers-color-scheme: dark)"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <Layout userName={user?.username || ""} pageTitle="Excelente Día">
         <CheckcIncomes />
         <Stack spacing={8}>
