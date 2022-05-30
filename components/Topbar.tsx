@@ -13,12 +13,14 @@ import {
   useColorMode,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { RiUserLine, RiNotification2Line } from "react-icons/ri";
-import Link from "next/link";
+import { RiNotification2Line } from "react-icons/ri";
 import Drawer from "./Drawer";
+import NotificationCenter from "../features/notificationCenter/NotificationCenter";
 
 export default function Topbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const notificationCenter = useDisclosure();
+
   const { colorMode, toggleColorMode } = useColorMode();
   const btnRef = React.useRef();
   const bg = useColorModeValue("gray.100", "gray.900");
@@ -46,27 +48,12 @@ export default function Topbar() {
           </Button>
         </Stack>
         <Stack isInline spacing={4}>
-          {/* <Avatar
-            size="md"
-            bg="transparent"
-            icon={<RiNotification2Line fontSize="2rem"  />}
-          >
-            <AvatarBadge
-              borderColor="papayawhip"
-              bg="tomato"
-              boxSize="1.25em"
-            />
-          </Avatar> */}
           <IconButton
             aria-label="color mode"
             onClick={toggleColorMode}
             icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           />
-          <Avatar
-            size="md"
-            bg="purple.500"
-            icon={<RiUserLine fontSize="2rem" color="white" />}
-          />
+          <NotificationCenter />
         </Stack>
       </HStack>
       <Drawer isOpen={isOpen} onClose={onClose} />

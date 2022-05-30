@@ -135,6 +135,19 @@ export const createBucket = /* GraphQL */ `
         }
         nextToken
       }
+      notifications {
+        items {
+          id
+          type
+          bucketID
+          message
+          userName
+          date
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -231,6 +244,19 @@ export const updateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      notifications {
+        items {
+          id
+          type
+          bucketID
+          message
+          userName
+          date
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -322,6 +348,19 @@ export const deleteBucket = /* GraphQL */ `
           endDate
           amountGoal
           initAmount
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          type
+          bucketID
+          message
+          userName
+          date
           createdAt
           updatedAt
         }
@@ -687,6 +726,57 @@ export const deleteMovement = /* GraphQL */ `
       date
       description
       type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createNotification = /* GraphQL */ `
+  mutation CreateNotification(
+    $input: CreateNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    createNotification(input: $input, condition: $condition) {
+      id
+      type
+      bucketID
+      message
+      userName
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateNotification = /* GraphQL */ `
+  mutation UpdateNotification(
+    $input: UpdateNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    updateNotification(input: $input, condition: $condition) {
+      id
+      type
+      bucketID
+      message
+      userName
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteNotification = /* GraphQL */ `
+  mutation DeleteNotification(
+    $input: DeleteNotificationInput!
+    $condition: ModelNotificationConditionInput
+  ) {
+    deleteNotification(input: $input, condition: $condition) {
+      id
+      type
+      bucketID
+      message
+      userName
+      date
       createdAt
       updatedAt
     }

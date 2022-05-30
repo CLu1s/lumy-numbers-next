@@ -123,6 +123,19 @@ export const onCreateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      notifications {
+        items {
+          id
+          type
+          bucketID
+          message
+          userName
+          date
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -216,6 +229,19 @@ export const onUpdateBucket = /* GraphQL */ `
         }
         nextToken
       }
+      notifications {
+        items {
+          id
+          type
+          bucketID
+          message
+          userName
+          date
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -304,6 +330,19 @@ export const onDeleteBucket = /* GraphQL */ `
           endDate
           amountGoal
           initAmount
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      notifications {
+        items {
+          id
+          type
+          bucketID
+          message
+          userName
+          date
           createdAt
           updatedAt
         }
@@ -615,6 +654,48 @@ export const onDeleteMovement = /* GraphQL */ `
       date
       description
       type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateNotification = /* GraphQL */ `
+  subscription OnCreateNotification {
+    onCreateNotification {
+      id
+      type
+      bucketID
+      message
+      userName
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateNotification = /* GraphQL */ `
+  subscription OnUpdateNotification {
+    onUpdateNotification {
+      id
+      type
+      bucketID
+      message
+      userName
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteNotification = /* GraphQL */ `
+  subscription OnDeleteNotification {
+    onDeleteNotification {
+      id
+      type
+      bucketID
+      message
+      userName
+      date
       createdAt
       updatedAt
     }

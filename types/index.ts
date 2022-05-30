@@ -160,3 +160,27 @@ export type ProjectsState = {
   categoryID: string;
   error?: string;
 };
+
+export enum NotificationTypes {
+  TRANSACTION = "transaction",
+  PROJECT = "project",
+  FIXED_COST = "fixedCost",
+  BUDGET = "budget",
+}
+
+export type Notification = {
+  id: string;
+  message: string;
+  date: string;
+  type: NotificationTypes;
+  bucketID: string;
+  userName: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type NotificationState = {
+  items: Notification[];
+  status: LoadingStates;
+  error?: string;
+};

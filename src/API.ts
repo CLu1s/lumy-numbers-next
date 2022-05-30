@@ -122,6 +122,7 @@ export type Bucket = {
   fixedCost?: ModelFixedCostConnection | null,
   projectsCategoryID?: string | null,
   projects?: ModelProjectConnection | null,
+  notifications?: ModelNotificationConnection | null,
   createdAt: string,
   updatedAt: string,
 };
@@ -242,6 +243,24 @@ export type Movement = {
   date: string,
   description?: string | null,
   type?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type ModelNotificationConnection = {
+  __typename: "ModelNotificationConnection",
+  items:  Array<Notification | null >,
+  nextToken?: string | null,
+};
+
+export type Notification = {
+  __typename: "Notification",
+  id: string,
+  type: string,
+  bucketID: string,
+  message: string,
+  userName: string,
+  date: string,
   createdAt: string,
   updatedAt: string,
 };
@@ -495,6 +514,39 @@ export type DeleteMovementInput = {
   id: string,
 };
 
+export type CreateNotificationInput = {
+  id?: string | null,
+  type: string,
+  bucketID: string,
+  message: string,
+  userName: string,
+  date: string,
+};
+
+export type ModelNotificationConditionInput = {
+  type?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  message?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  date?: ModelStringInput | null,
+  and?: Array< ModelNotificationConditionInput | null > | null,
+  or?: Array< ModelNotificationConditionInput | null > | null,
+  not?: ModelNotificationConditionInput | null,
+};
+
+export type UpdateNotificationInput = {
+  id: string,
+  type?: string | null,
+  bucketID?: string | null,
+  message?: string | null,
+  userName?: string | null,
+  date?: string | null,
+};
+
+export type DeleteNotificationInput = {
+  id: string,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
   userName?: ModelStringInput | null,
@@ -596,6 +648,18 @@ export type ModelMovementFilterInput = {
   and?: Array< ModelMovementFilterInput | null > | null,
   or?: Array< ModelMovementFilterInput | null > | null,
   not?: ModelMovementFilterInput | null,
+};
+
+export type ModelNotificationFilterInput = {
+  id?: ModelIDInput | null,
+  type?: ModelStringInput | null,
+  bucketID?: ModelIDInput | null,
+  message?: ModelStringInput | null,
+  userName?: ModelStringInput | null,
+  date?: ModelStringInput | null,
+  and?: Array< ModelNotificationFilterInput | null > | null,
+  or?: Array< ModelNotificationFilterInput | null > | null,
+  not?: ModelNotificationFilterInput | null,
 };
 
 export type ModelIDKeyConditionInput = {
@@ -767,6 +831,21 @@ export type CreateBucketMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    notifications?:  {
+      __typename: "ModelNotificationConnection",
+      items:  Array< {
+        __typename: "Notification",
+        id: string,
+        type: string,
+        bucketID: string,
+        message: string,
+        userName: string,
+        date: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -877,6 +956,21 @@ export type UpdateBucketMutation = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    notifications?:  {
+      __typename: "ModelNotificationConnection",
+      items:  Array< {
+        __typename: "Notification",
+        id: string,
+        type: string,
+        bucketID: string,
+        message: string,
+        userName: string,
+        date: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -982,6 +1076,21 @@ export type DeleteBucketMutation = {
         endDate?: string | null,
         amountGoal?: number | null,
         initAmount?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    notifications?:  {
+      __typename: "ModelNotificationConnection",
+      items:  Array< {
+        __typename: "Notification",
+        id: string,
+        type: string,
+        bucketID: string,
+        message: string,
+        userName: string,
+        date: string,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -1394,6 +1503,63 @@ export type DeleteMovementMutation = {
   } | null,
 };
 
+export type CreateNotificationMutationVariables = {
+  input: CreateNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type CreateNotificationMutation = {
+  createNotification?:  {
+    __typename: "Notification",
+    id: string,
+    type: string,
+    bucketID: string,
+    message: string,
+    userName: string,
+    date: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateNotificationMutationVariables = {
+  input: UpdateNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type UpdateNotificationMutation = {
+  updateNotification?:  {
+    __typename: "Notification",
+    id: string,
+    type: string,
+    bucketID: string,
+    message: string,
+    userName: string,
+    date: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteNotificationMutationVariables = {
+  input: DeleteNotificationInput,
+  condition?: ModelNotificationConditionInput | null,
+};
+
+export type DeleteNotificationMutation = {
+  deleteNotification?:  {
+    __typename: "Notification",
+    id: string,
+    type: string,
+    bucketID: string,
+    message: string,
+    userName: string,
+    date: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   id: string,
 };
@@ -1534,6 +1700,21 @@ export type GetBucketQuery = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    notifications?:  {
+      __typename: "ModelNotificationConnection",
+      items:  Array< {
+        __typename: "Notification",
+        id: string,
+        type: string,
+        bucketID: string,
+        message: string,
+        userName: string,
+        date: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1577,6 +1758,10 @@ export type ListBucketsQuery = {
       projectsCategoryID?: string | null,
       projects?:  {
         __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      notifications?:  {
+        __typename: "ModelNotificationConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -1867,6 +2052,48 @@ export type ListMovementsQuery = {
   } | null,
 };
 
+export type GetNotificationQueryVariables = {
+  id: string,
+};
+
+export type GetNotificationQuery = {
+  getNotification?:  {
+    __typename: "Notification",
+    id: string,
+    type: string,
+    bucketID: string,
+    message: string,
+    userName: string,
+    date: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListNotificationsQueryVariables = {
+  filter?: ModelNotificationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListNotificationsQuery = {
+  listNotifications?:  {
+    __typename: "ModelNotificationConnection",
+    items:  Array< {
+      __typename: "Notification",
+      id: string,
+      type: string,
+      bucketID: string,
+      message: string,
+      userName: string,
+      date: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type UserByUserNameQueryVariables = {
   userName: string,
   id?: ModelIDKeyConditionInput | null,
@@ -1934,6 +2161,10 @@ export type BucketByNameQuery = {
         __typename: "ModelProjectConnection",
         nextToken?: string | null,
       } | null,
+      notifications?:  {
+        __typename: "ModelNotificationConnection",
+        nextToken?: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -1982,6 +2213,10 @@ export type BucketByNanoidQuery = {
       projectsCategoryID?: string | null,
       projects?:  {
         __typename: "ModelProjectConnection",
+        nextToken?: string | null,
+      } | null,
+      notifications?:  {
+        __typename: "ModelNotificationConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -2107,6 +2342,33 @@ export type MovementsByProjectQuery = {
       date: string,
       description?: string | null,
       type?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type NotificationsByBucketQueryVariables = {
+  bucketID: string,
+  id?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelNotificationFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type NotificationsByBucketQuery = {
+  notificationsByBucket?:  {
+    __typename: "ModelNotificationConnection",
+    items:  Array< {
+      __typename: "Notification",
+      id: string,
+      type: string,
+      bucketID: string,
+      message: string,
+      userName: string,
+      date: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -2247,6 +2509,21 @@ export type OnCreateBucketSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    notifications?:  {
+      __typename: "ModelNotificationConnection",
+      items:  Array< {
+        __typename: "Notification",
+        id: string,
+        type: string,
+        bucketID: string,
+        message: string,
+        userName: string,
+        date: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2352,6 +2629,21 @@ export type OnUpdateBucketSubscription = {
       } | null >,
       nextToken?: string | null,
     } | null,
+    notifications?:  {
+      __typename: "ModelNotificationConnection",
+      items:  Array< {
+        __typename: "Notification",
+        id: string,
+        type: string,
+        bucketID: string,
+        message: string,
+        userName: string,
+        date: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2452,6 +2744,21 @@ export type OnDeleteBucketSubscription = {
         endDate?: string | null,
         amountGoal?: number | null,
         initAmount?: number | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null >,
+      nextToken?: string | null,
+    } | null,
+    notifications?:  {
+      __typename: "ModelNotificationConnection",
+      items:  Array< {
+        __typename: "Notification",
+        id: string,
+        type: string,
+        bucketID: string,
+        message: string,
+        userName: string,
+        date: string,
         createdAt: string,
         updatedAt: string,
       } | null >,
@@ -2769,6 +3076,48 @@ export type OnDeleteMovementSubscription = {
     date: string,
     description?: string | null,
     type?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateNotificationSubscription = {
+  onCreateNotification?:  {
+    __typename: "Notification",
+    id: string,
+    type: string,
+    bucketID: string,
+    message: string,
+    userName: string,
+    date: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateNotificationSubscription = {
+  onUpdateNotification?:  {
+    __typename: "Notification",
+    id: string,
+    type: string,
+    bucketID: string,
+    message: string,
+    userName: string,
+    date: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteNotificationSubscription = {
+  onDeleteNotification?:  {
+    __typename: "Notification",
+    id: string,
+    type: string,
+    bucketID: string,
+    message: string,
+    userName: string,
+    date: string,
     createdAt: string,
     updatedAt: string,
   } | null,

@@ -10,7 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getCategories } from "../budget/selector";
 import { addNewTransaction, updateTransaction } from "./walletSlice";
-import { getBucketID } from "../bucket/selector";
+import { getBucketID, getUserName } from "../bucket/selector";
 import parseISO from "date-fns/parseISO";
 import NumberInput from "../../components/NumberInput";
 registerLocale("es", esLocale);
@@ -30,6 +30,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
   );
   const categories = useSelector(getCategories);
   const bucketID = useSelector(getBucketID);
+  const userName = useSelector(getUserName);
 
   const categoriesOption = useMemo(() => {
     return categories.map((category) => ({
@@ -79,6 +80,7 @@ const RecordExpense = ({ isOpen, onClose, toEdit }: Props) => {
           bucketID,
           categoryID: selected,
           date: date,
+          userName,
         })
       );
     }

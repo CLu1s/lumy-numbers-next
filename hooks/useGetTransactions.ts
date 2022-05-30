@@ -12,7 +12,6 @@ const useGetTransactions = () => {
   const bucketID = useSelector(getBucketID);
   const status = useSelector(getStatus);
   const lastFetched = useSelector(getLastFetched);
-
   const transactions = useSelector(getLastTransactions);
 
   useEffect(() => {

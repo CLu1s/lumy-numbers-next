@@ -19,6 +19,7 @@
     "@emotion/styled": "^11.6.0",
     "@mailchimp/mailchimp_marketing": "^3.0.75",
     "@reduxjs/toolkit": "^1.7.1",
+    "async-selector-kit": "^3.0.2",
     "aws-amplify": "^4.3.13",
     "chart.js": "^3.7.1",
     "clsx": "^1.1.1",

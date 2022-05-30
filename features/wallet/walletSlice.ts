@@ -6,11 +6,19 @@ import {
   updateTransaction as updateTransactionMutation,
   deleteTransaction as deleteTransactionMutation,
 } from "../../src/graphql/mutations";
+import { createNotification } from "../notificationCenter/notificationSlice";
 import startOfMonth from "date-fns/startOfMonth";
 import endOfMonth from "date-fns/endOfMonth";
 import format from "date-fns/format";
 import add from "date-fns/add";
-import { WalletState, LoadingStates } from "../../types";
+import { money } from "../../utils";
+import {
+  WalletState,
+  LoadingStates,
+  NotificationTypes,
+  Notification,
+  Transaction,
+} from "../../types";
 const initialState: WalletState = {
   transactions: [],
   status: LoadingStates.IDLE,
@@ -63,12 +71,37 @@ export const fetchTransactions = createAsyncThunk(
   }
 );
 
+interface TransactionData extends Transaction {
+  userName: string;
+}
+
 export const addNewTransaction = createAsyncThunk(
   "wallet/addNewTransaction",
-  async (transaction: WalletState["transactions"][0]) => {
-    const response = await API.graphql(
-      graphqlOperation(createTransaction, { input: transaction })
-    );
+  async (transaction: TransactionData, { rejectWithValue }) => {
+    const { userName, ...transactionData } = transaction;
+    let response;
+    try {
+      response = await API.graphql(
+        graphqlOperation(createTransaction, { input: transactionData })
+      );
+    } catch (error) {
+      console.log(error);
+      rejectWithValue(error.errors[0].message);
+    }
+    try {
+      await createNotification({
+        message: `Agregó un gasto ${transaction.description} por ${money(
+          Number(transaction.amount)
+        )}`,
+        date: new Date().toISOString(),
+        type: NotificationTypes.TRANSACTION,
+        bucketID: transaction.bucketID,
+        userName: transaction.userName,
+      } as Notification);
+    } catch (error) {
+      console.log(error);
+      rejectWithValue(error.errors[0].message);
+    }
     return response;
   }
 );
@@ -125,7 +158,7 @@ const walletSlice = createSlice({
       state.status = LoadingStates.SUCCEEDED;
     },
     [addNewTransaction.rejected.type]: (state, action) => {
-      toast.error("Hubo un error!");
+      toast.error(action.payload);
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },

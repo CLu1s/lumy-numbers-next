@@ -119,6 +119,19 @@ export const getBucket = /* GraphQL */ `
         }
         nextToken
       }
+      notifications {
+        items {
+          id
+          type
+          bucketID
+          message
+          userName
+          date
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -153,6 +166,9 @@ export const listBuckets = /* GraphQL */ `
         }
         projectsCategoryID
         projects {
+          nextToken
+        }
+        notifications {
           nextToken
         }
         createdAt
@@ -398,6 +414,41 @@ export const listMovements = /* GraphQL */ `
     }
   }
 `;
+export const getNotification = /* GraphQL */ `
+  query GetNotification($id: ID!) {
+    getNotification(id: $id) {
+      id
+      type
+      bucketID
+      message
+      userName
+      date
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listNotifications = /* GraphQL */ `
+  query ListNotifications(
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listNotifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        type
+        bucketID
+        message
+        userName
+        date
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const userByUserName = /* GraphQL */ `
   query UserByUserName(
     $userName: String!
@@ -467,6 +518,9 @@ export const bucketByName = /* GraphQL */ `
         projects {
           nextToken
         }
+        notifications {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -513,6 +567,9 @@ export const bucketByNanoid = /* GraphQL */ `
         }
         projectsCategoryID
         projects {
+          nextToken
+        }
+        notifications {
           nextToken
         }
         createdAt
@@ -652,6 +709,37 @@ export const movementsByProject = /* GraphQL */ `
         date
         description
         type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const notificationsByBucket = /* GraphQL */ `
+  query NotificationsByBucket(
+    $bucketID: ID!
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelNotificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    notificationsByBucket(
+      bucketID: $bucketID
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        type
+        bucketID
+        message
+        userName
+        date
         createdAt
         updatedAt
       }

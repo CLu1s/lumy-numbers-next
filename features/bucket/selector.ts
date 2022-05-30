@@ -2,7 +2,7 @@ import { createSelector } from "reselect";
 import { BucketState, User } from "../../types";
 import { RootState } from "../../store/reducers";
 
-const bucketSelector = (state: RootState): BucketState => state.bucket;
+export const bucketSelector = (state: RootState): BucketState => state.bucket;
 
 export const getStatus = createSelector(
   [bucketSelector],
@@ -27,6 +27,11 @@ export const getBucketID = createSelector(
 export const getNanoID = createSelector(
   [bucketSelector],
   (state: BucketState): string => state.bucket?.nanoid
+);
+
+export const getUserName = createSelector(
+  [bucketSelector],
+  (state: BucketState): string => state.userName ?? ""
 );
 
 export const getLastFetched = createSelector(

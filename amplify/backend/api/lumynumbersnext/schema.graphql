@@ -33,6 +33,7 @@ type Bucket @model {
   fixedCost: [FixedCost] @hasMany(indexName: "byBucket", fields: ["id"])
   projectsCategoryID: ID
   projects: [Project] @hasMany(indexName: "byBucket", fields: ["id"])
+  notifications: [Notification] @hasMany(indexName: "byBucket", fields: ["id"])
 }
 
 type Income @model {
@@ -109,4 +110,18 @@ type Movement @model {
   date: String!
   description: String
   type: String
+}
+
+type Notification @model {
+  id: ID!
+  type: String!
+  bucketID: ID!
+    @index(
+      name: "byBucket"
+      queryField: "notificationsByBucket"
+      sortKeyFields: ["id"]
+    )
+  message: String!
+  userName: String!
+  date: String!
 }
