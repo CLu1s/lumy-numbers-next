@@ -17,13 +17,12 @@ import differenceInMinutes from "date-fns/differenceInMinutes";
 import { date } from "../../utils";
 import { CheckIcon } from "@chakra-ui/icons";
 import { deleteNotification } from "./notificationSlice";
-import { forceUpdate } from "./selector";
 type Props = {
   notification: Notification;
 };
 
 const NotificationTypeColors = {
-  transaction: "purple.500",
+  gasto: "purple.500",
   project: "blue.500",
   fixedCost: "green.500",
   budget: "orange.500",
@@ -42,11 +41,12 @@ const Notification = ({ notification }: Props) => {
 
   return (
     <Box w="full">
-      <HStack w="full">
+      <HStack w="full" spacing={6}>
         <Avatar
           size="sm"
           name={notification.type}
           bg={NotificationTypeColors[notification.type]}
+          color="white"
         />
         <Box ml={2}>
           <HStack>

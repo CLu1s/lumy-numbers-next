@@ -86,7 +86,7 @@ export const addNewTransaction = createAsyncThunk(
       );
     } catch (error) {
       console.log(error);
-      rejectWithValue(error.errors[0].message);
+      return rejectWithValue(error.errors[0].message);
     }
     try {
       await createNotification({
@@ -100,7 +100,7 @@ export const addNewTransaction = createAsyncThunk(
       } as Notification);
     } catch (error) {
       console.log(error);
-      rejectWithValue(error.errors[0].message);
+      return rejectWithValue(error.errors[0].message);
     }
     return response;
   }

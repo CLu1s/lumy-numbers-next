@@ -8,7 +8,17 @@ import {
   deleteFixedCost as deleteFixedCostMutation,
 } from "../../src/graphql/mutations";
 import { fixedCostByBucket } from "../../src/graphql/queries";
-import { FixedCostState, LoadingStates, FixedCost } from "../../types";
+import {
+  FixedCostState,
+  LoadingStates,
+  FixedCost,
+  NotificationTypes,
+  Notification,
+} from "../../types";
+import { money } from "../../utils";
+
+import { createNotification } from "../notificationCenter/notificationSlice";
+
 const initialState: FixedCostState = {
   items: [],
   category: null,
@@ -42,16 +52,35 @@ export const fetchFixedCost = createAsyncThunk(
   }
 );
 
+interface NewFixedCost extends FixedCost {
+  userName: string;
+}
+
 export const addFixedCost = createAsyncThunk(
   "fixedCost/addFixedCost",
-  async (data: any) => {
+  async (data: NewFixedCost, { rejectWithValue }) => {
+    const { userName, ...fixedCost } = data;
     const input = {
-      ...data,
+      ...fixedCost,
       status: "pending",
     };
     const response = await API.graphql(
       graphqlOperation(createFixedCost, { input })
     );
+    try {
+      await createNotification({
+        message: `Agregó un nuevo gasto fijo: ${data.description} por ${money(
+          Number(data.amount)
+        )}`,
+        date: new Date().toISOString(),
+        type: NotificationTypes.FIXED_COST,
+        bucketID: data.bucketID,
+        userName: userName,
+      } as Notification);
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.errors[0].message);
+    }
     return response;
   }
 );

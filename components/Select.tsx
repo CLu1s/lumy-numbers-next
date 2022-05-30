@@ -27,7 +27,6 @@ export default function SelectContainer({
     option: (provided, state) => ({
       ...provided,
       color: state.isSelected ? "white" : "black",
-      padding: 20,
     }),
   };
   return (

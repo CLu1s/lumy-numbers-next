@@ -114,6 +114,7 @@ export type FixedCost = {
   type: string;
   amount: number;
   dueDay: number;
+  bucketID: string;
   description: string;
   createdAt?: string;
   updatedAt?: string;
@@ -162,7 +163,7 @@ export type ProjectsState = {
 };
 
 export enum NotificationTypes {
-  TRANSACTION = "transaction",
+  TRANSACTION = "gasto",
   PROJECT = "project",
   FIXED_COST = "fixedCost",
   BUDGET = "budget",

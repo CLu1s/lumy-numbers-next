@@ -2,9 +2,10 @@ import { createSelector } from "reselect";
 import { createAsyncSelectorResults } from "async-selector-kit";
 import { NotificationState } from "../../types";
 import { RootState } from "../../store/reducers";
-import { getBucketID } from "../bucket/selector";
+import { getBucketID, getUserName } from "../bucket/selector";
 import { notificationsByBucket } from "../../src/graphql/queries";
 import { API, graphqlOperation } from "aws-amplify";
+import { compareDates } from "../../utils";
 
 const notificationsSelector = (state: RootState): NotificationState =>
   state.notifications;
@@ -27,3 +28,13 @@ export const [getNotifications, isLoading, error, forceUpdate] =
     },
     [getBucketID]
   );
+
+export const getAllNotifications = createSelector(
+  [notificationsSelector, getUserName],
+  (state: NotificationState, name: String) =>
+    state.items
+      .filter((item) => item.userName !== name)
+      .sort((a, b) => {
+        return compareDates(new Date(b.date), new Date(a.date));
+      })
+);

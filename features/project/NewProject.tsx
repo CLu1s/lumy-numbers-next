@@ -17,7 +17,7 @@ import { useSelector, useDispatch } from "react-redux";
 import add from "date-fns/add";
 import { addProject, updateProject } from "./projectsSlice";
 import parseISO from "date-fns/parseISO";
-import { getBucketID } from "../bucket/selector";
+import { getBucketID, getUserName } from "../bucket/selector";
 import { Project } from "../../types";
 import NumberInput from "../../components/NumberInput";
 
@@ -35,6 +35,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
     toEdit ? new Date(parseISO(toEdit.endDate)) : add(new Date(), { months: 1 })
   );
   const bucketID = useSelector(getBucketID);
+  const userName = useSelector(getUserName);
   const {
     register,
     handleSubmit,
@@ -65,6 +66,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
           bucketID,
           initAmount: data.initAmount || 0,
           endDate: date,
+          userName,
         })
       );
     } else {

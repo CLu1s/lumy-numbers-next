@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { API, graphqlOperation } from "aws-amplify";
 import toast from "react-hot-toast";
+import { createNotification } from "../notificationCenter/notificationSlice";
 import {
   updateBucket,
   createProject as createProjectMutation,
@@ -14,7 +15,15 @@ import {
   projectsByBucket,
   movementsByProject,
 } from "../../src/graphql/queries";
-import { ProjectsState, LoadingStates, Project, Movement } from "../../types";
+import {
+  ProjectsState,
+  LoadingStates,
+  Project,
+  Movement,
+  NotificationTypes,
+  Notification,
+} from "../../types";
+import { money } from "../../utils";
 
 const initialState: ProjectsState = {
   items: [],
@@ -46,18 +55,36 @@ export const fetchProjects = createAsyncThunk(
     return response;
   }
 );
+interface NewProject extends Project {
+  userName: string;
+}
 
 export const addProject = createAsyncThunk(
   "projects/addProject",
-  async (data: Project) => {
+  async (data: NewProject, { rejectWithValue }) => {
+    const { userName, ...project } = data;
     const input = {
-      ...data,
+      ...project,
       status: "pending",
       startDate: new Date().toISOString(),
     };
     const response = await API.graphql(
       graphqlOperation(createProjectMutation, { input })
     );
+    try {
+      await createNotification({
+        message: `Agregó un nuevo Proyecto ${data.name} por ${money(
+          Number(data.amountGoal)
+        )}`,
+        date: new Date().toISOString(),
+        type: NotificationTypes.PROJECT,
+        bucketID: data.bucketID,
+        userName: data.userName,
+      } as Notification);
+    } catch (error) {
+      console.log(error);
+      return rejectWithValue(error.errors[0].message);
+    }
     return response;
   }
 );

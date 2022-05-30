@@ -1,5 +1,3 @@
-import { RiMenuFill } from "react-icons/ri";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { RiNotification2Line } from "react-icons/ri";
 import {
   Drawer,
@@ -16,15 +14,23 @@ import {
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
-import { getNotifications, isLoading } from "./selector";
+import { useSelector, useDispatch } from "react-redux";
+import { getAllNotifications } from "./selector";
+import { getBucketID } from "../bucket/selector";
+import { fetchAllNotifications } from "./notificationSlice";
 import Notification from "./Notification";
+import { useEffect } from "react";
 
 const NotificationCenter = () => {
+  const dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const bucketID = useSelector(getBucketID);
+  const notifications = useSelector(getAllNotifications);
 
-  const notifications = useSelector(getNotifications);
-  console.log(notifications);
+  useEffect(() => {
+    if (!bucketID) return;
+    dispatch(fetchAllNotifications(bucketID));
+  }, [bucketID, dispatch]);
   return (
     <>
       <Button

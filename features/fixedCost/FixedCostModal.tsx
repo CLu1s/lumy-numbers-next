@@ -9,7 +9,7 @@ import { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addFixedCost, updateFixedCost } from "./fixedCostSlice";
-import { getBucketID } from "../bucket/selector";
+import { getBucketID, getUserName } from "../bucket/selector";
 import NumberInput from "../../components/NumberInput";
 
 registerLocale("es", esLocale);
@@ -23,6 +23,7 @@ type Props = {
 const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();
   const bucketID = useSelector(getBucketID);
+  const userName = useSelector(getUserName);
   const {
     register,
     handleSubmit,
@@ -53,6 +54,7 @@ const FixedCostModal = ({ isOpen, onClose, toEdit }: Props) => {
         addFixedCost({
           ...data,
           bucketID,
+          userName,
         })
       );
     }
