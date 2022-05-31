@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { getStatus, getIncome } from "./selector";
@@ -14,12 +14,6 @@ const CheckIncomes = () => {
   const income = useSelector(getIncome);
   useGetIncomes();
 
-  useEffect(() => {
-    if (status === "succeeded") {
-      setIsOpen(!income);
-    }
-  }, [status, income]);
-
   const onClose = () => {
     setIsOpen(false);
   };
@@ -29,8 +23,8 @@ const CheckIncomes = () => {
 
   return (
     <Modal
-      isOpen={isOpen}
-      title={"Hemos detectado que no tienes un contenedor"}
+      isOpen={income === 0 && status === "succeeded"}
+      title={"Hemos detectado que no tienes Ingresos registrados"}
       onClose={onClose}
       onSubmit={redirect}
       onSubmitButtonText={"Ir al plan de gastos"}

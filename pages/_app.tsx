@@ -11,11 +11,12 @@ import theme from "../styles/theme";
 Amplify.configure({ ...awsExports, ssr: true });
 
 function MyApp({ Component, pageProps }) {
+  const getLayout = Component.getLayout || ((page) => page);
   return (
     <ChakraProvider theme={theme}>
       <Fonts />
       <Provider store={store}>
-        <Component {...pageProps} />
+        {getLayout(<Component {...pageProps} />)}
         <Toaster />
       </Provider>
     </ChakraProvider>

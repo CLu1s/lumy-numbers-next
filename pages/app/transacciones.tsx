@@ -1,14 +1,14 @@
+import type { ReactElement } from "react";
 import { useReducer, useEffect } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import Head from "next/head";
-import { withAuthenticator } from "@aws-amplify/ui-react";
 import sub from "date-fns/sub";
 import add from "date-fns/add";
 import differenceInMonths from "date-fns/differenceInMonths";
 import isSameMonth from "date-fns/isSameMonth";
 import { useSelector, useDispatch } from "react-redux";
 import Layout from "../../components/Layout";
-import { Stack, Button, VStack, HStack } from "@chakra-ui/react";
+import { Stack, Button, VStack, HStack, Heading } from "@chakra-ui/react";
 import Table from "../../features/wallet/Transactions";
 import TransactionsResume from "../../features/wallet/TransactionsResume";
 import Screen from "../../components/Screen";
@@ -64,7 +64,7 @@ function reducer(state: DatesHandler, action: any) {
   }
 }
 
-function Transacciones({ user }) {
+function Transacciones() {
   useGetCategories();
   const dispatch = useDispatch();
   const { fetch, unmount } = useBasicInfo();
@@ -88,52 +88,54 @@ function Transacciones({ user }) {
   };
   return (
     <>
-      <Layout
-        userName={user?.username || ""}
-        pageTitle={`Transacciones del mes de ${date(state.current, "MMMM")}`}
-      >
-        <HStack spacing={6} marginBottom="4">
+      <Heading as="h1" size="lg" mb={4} textTransform="capitalize">
+        {`${date(state.current, "MMMM")}`}
+      </Heading>
+      <HStack spacing={6} marginBottom="4">
+        <Button
+          onClick={() =>
+            handleChangePeriod({ newDate: state.previous, type: "PREVIOUS" })
+          }
+          colorScheme="purple"
+        >
+          <ChevronLeftIcon fontSize="2xl" />
+        </Button>
+        {state.showNext && (
+          <Button
+            colorScheme="purple"
+            onClick={() =>
+              handleChangePeriod({ newDate: state.next, type: "NEXT" })
+            }
+          >
+            <ChevronRightIcon fontSize="2xl" />
+          </Button>
+        )}
+        {!sameMonth && (
           <Button
             onClick={() =>
-              handleChangePeriod({ newDate: state.previous, type: "PREVIOUS" })
+              handleChangePeriod({ newDate: initDate, type: "CURRENT" })
             }
             colorScheme="purple"
           >
-            <ChevronLeftIcon fontSize="2xl" />
+            Ver mes actual
           </Button>
-          {state.showNext && (
-            <Button
-              colorScheme="purple"
-              onClick={() =>
-                handleChangePeriod({ newDate: state.next, type: "NEXT" })
-              }
-            >
-              <ChevronRightIcon fontSize="2xl" />
-            </Button>
-          )}
-          {!sameMonth && (
-            <Button
-              onClick={() =>
-                handleChangePeriod({ newDate: initDate, type: "CURRENT" })
-              }
-              colorScheme="purple"
-            >
-              Ver mes actual
-            </Button>
-          )}
-        </HStack>
-        <Stack spacing={8}>
-          <TransactionsResume />
+        )}
+      </HStack>
+      <Stack spacing={8}>
+        <TransactionsResume />
 
-          <Screen title="Transcciones del mes">
-            <VStack spacing={8}>
-              <Table />
-            </VStack>
-          </Screen>
-        </Stack>
-      </Layout>
+        <Screen title="Transcciones del mes">
+          <VStack spacing={8}>
+            <Table />
+          </VStack>
+        </Screen>
+      </Stack>
     </>
   );
 }
 
-export default withAuthenticator(Transacciones);
+Transacciones.getLayout = (page: ReactElement) => (
+  <Layout pageTitle={`Transacciones del mes`}>{page}</Layout>
+);
+
+export default Transacciones;

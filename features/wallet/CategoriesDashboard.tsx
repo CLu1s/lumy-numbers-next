@@ -5,7 +5,7 @@ import Categories from "./Categories";
 import useGetCategories from "../../hooks/useGetCategories";
 
 const CategoriesDashboard = () => {
-  const cat = useGetCategories();
+  useGetCategories();
   const [showAll, setShowAll] = useState(false);
   const [showSwitch, setShowSwitch] = useState(false);
   return (

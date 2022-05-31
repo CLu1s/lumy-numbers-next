@@ -1,19 +1,18 @@
-import Head from "next/head";
-import { withAuthenticator } from "@aws-amplify/ui-react";
-import Layout from "../../components/Layout";
+import type { ReactElement } from "react";
 import { Stack } from "@chakra-ui/react";
+import Layout from "../../components/Layout";
 import Container from "../../features/fixedCost/Container";
 
-function CostosFijos({ user }) {
+function CostosFijos() {
   return (
-    <div>
-      <Layout userName={user?.username || ""} pageTitle="Gastos Fijos">
-        <Stack spacing={8}>
-          <Container />
-        </Stack>
-      </Layout>
-    </div>
+    <Stack spacing={8}>
+      <Container />
+    </Stack>
   );
 }
 
-export default withAuthenticator(CostosFijos);
+CostosFijos.getLayout = (page: ReactElement) => (
+  <Layout pageTitle="Gastos Fijos">{page}</Layout>
+);
+
+export default CostosFijos;

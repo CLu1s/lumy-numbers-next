@@ -1,5 +1,4 @@
-import Head from "next/head";
-import { withAuthenticator } from "@aws-amplify/ui-react";
+import type { ReactElement } from "react";
 import Layout from "../../components/Layout";
 import { Stack } from "@chakra-ui/react";
 import IncomeCard from "../../features/budget/IncomeCard";
@@ -7,20 +6,20 @@ import BudgetCategories from "../../features/budget/BudgetCategories";
 import ShareBucket from "../../features/bucket/ShareBucket";
 import { useGetCategories, useGetIncomes } from "../../hooks";
 
-function Home({ user }) {
+function Presupuesto() {
   useGetCategories();
   useGetIncomes();
   return (
-    <>
-      <Layout userName={user?.username || ""} pageTitle="Plan de Gastos">
-        <Stack spacing={8}>
-          <IncomeCard />
-          <BudgetCategories />
-          <ShareBucket />
-        </Stack>
-      </Layout>
-    </>
+    <Stack spacing={8}>
+      <IncomeCard />
+      <BudgetCategories />
+      <ShareBucket />
+    </Stack>
   );
 }
 
-export default withAuthenticator(Home);
+Presupuesto.getLayout = (page: ReactElement) => (
+  <Layout pageTitle="Plan de Gastos">{page}</Layout>
+);
+
+export default Presupuesto;
