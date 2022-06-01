@@ -15,7 +15,8 @@ const orderItems = (
   items.map((item: FixedCostState["items"][0]) => {
     const transaction = transactions.findIndex(
       (transaction: WalletState["transactions"][0]) =>
-        transaction.description === item.description &&
+        (transaction.description === `Costo Fijo: ${item.description}` ||
+          transaction.description === item.description) &&
         transaction.categoryID === fixedCostCategoryID
     );
     return {

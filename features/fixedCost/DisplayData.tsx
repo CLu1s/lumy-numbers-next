@@ -12,22 +12,20 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import Table from "../../components/Table";
-import { getItems, getCategoryID } from "./selector";
+import { getItems } from "./selector";
 import { deleteFixedCost } from "./fixedCostSlice";
-import { addNewTransaction } from "../wallet/walletSlice";
-import { getBucketID } from "../bucket/selector";
 import FixedCostModal from "./FixedCostModal";
 import AlertDialog from "../../components/AlertDialog";
 import ItemsList from "./ItemsList";
 import { money, date } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
 import Stats from "../../components/Stats";
+import usePayFixedCost from "./hooks/usePayFixedCost";
 
 const DisplayData = (props: any) => {
   const items = useSelector(getItems);
+  const managePaid = usePayFixedCost();
   const dispatch = useDispatch();
-  const bucketID = useSelector(getBucketID);
-  const categoryID = useSelector(getCategoryID);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
@@ -46,18 +44,7 @@ const DisplayData = (props: any) => {
     setDeleteId(id);
     setAlertDialogIsOpen(true);
   };
-  const managePaid = (data: any) => {
-    const { createdAt, updatedAt, ...input } = data;
-    const { type, status, id, dueDay, ...trans } = input;
-    dispatch(
-      addNewTransaction({
-        ...trans,
-        bucketID,
-        categoryID,
-        date: new Date().toISOString(),
-      })
-    );
-  };
+
   const columns = useMemo(
     () => [
       {

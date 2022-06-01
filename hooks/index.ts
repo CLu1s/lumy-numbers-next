@@ -5,6 +5,7 @@ import useGetIncomes from "./useGetIncomes";
 import useGetInfo from "./useGetInfo";
 import useGetProjects from "./useGetProjects";
 import useGetTransactions from "./useGetTransactions";
+import usePayFixedCost from "../features/fixedCost/hooks/usePayFixedCost";
 
 export {
   useBasicInfo,
@@ -14,4 +15,5 @@ export {
   useGetInfo,
   useGetProjects,
   useGetTransactions,
+  usePayFixedCost,
 };

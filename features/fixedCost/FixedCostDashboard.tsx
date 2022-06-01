@@ -11,34 +11,19 @@ import _orderBy from "lodash/orderBy";
 import { useSelector, useDispatch } from "react-redux";
 import Screen from "../../components/Screen";
 import ItemsList from "./ItemsList";
-import { getPendingItems, getPendingAmount, getCategoryID } from "./selector";
-import { getBucketID } from "../bucket/selector";
-import { addNewTransaction } from "../wallet/walletSlice";
+import { getPendingItems, getPendingAmount } from "./selector";
 import { money } from "../../utils";
 import useGetFixedCosts from "../../hooks/useGetFixedCosts";
+import usePayFixedCost from "./hooks/usePayFixedCost";
 
 const FixedCostDashboard = () => {
   useGetFixedCosts();
+  const managePaid = usePayFixedCost();
   const items = useSelector(getPendingItems);
-  const dispatch = useDispatch();
-  const bucketID = useSelector(getBucketID);
-  const categoryID = useSelector(getCategoryID);
   const amount = useSelector(getPendingAmount);
 
   const color = useColorModeValue("teal", "teal.200");
 
-  const managePaid = (data: any) => {
-    const { createdAt, updatedAt, ...input } = data;
-    const { type, status, id, dueDay, ...trans } = input;
-    dispatch(
-      addNewTransaction({
-        ...trans,
-        bucketID,
-        categoryID,
-        date: new Date().toISOString(),
-      })
-    );
-  };
   const orderItmes = _orderBy(items, ["dueDay"]).slice(0, 6);
 
   return (
