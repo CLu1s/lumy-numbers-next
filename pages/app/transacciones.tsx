@@ -96,13 +96,13 @@ function Transacciones() {
           onClick={() =>
             handleChangePeriod({ newDate: state.previous, type: "PREVIOUS" })
           }
-          colorScheme="purple"
+          colorScheme="messenger"
         >
           <ChevronLeftIcon fontSize="2xl" />
         </Button>
         {state.showNext && (
           <Button
-            colorScheme="purple"
+            colorScheme="messenger"
             onClick={() =>
               handleChangePeriod({ newDate: state.next, type: "NEXT" })
             }
@@ -115,7 +115,7 @@ function Transacciones() {
             onClick={() =>
               handleChangePeriod({ newDate: initDate, type: "CURRENT" })
             }
-            colorScheme="purple"
+            colorScheme="messenger"
           >
             Ver mes actual
           </Button>

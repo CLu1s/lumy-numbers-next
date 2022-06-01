@@ -1,30 +1,30 @@
-import clsx from "clsx";
-import { motion } from "framer-motion";
+import { Button as ChakraButton } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 type Props = {
-  children: React.ReactNode;
+  children: any;
   onClick?: () => void;
-  className?: string;
+  to?: string;
 };
 
-const Button = ({ children, onClick, className, ...props }: Props) => {
+const Button = ({ children, to, onClick, ...props }: Props) => {
+  const router = useRouter();
+  if (to) {
+    return (
+      <ChakraButton
+        colorScheme="messenger"
+        onClick={() => router.push(to)}
+        {...props}
+      >
+        {children}
+      </ChakraButton>
+    );
+  }
+
   return (
-    <motion.button
-      whileHover={{
-        y: -3,
-        scale: 1.01,
-        transition: { type: "spring", stiffness: 100 },
-      }}
-      whileTap={{ scale: 0.9 }}
-      className={clsx(
-        "shadow-xl text-sm font-semibold rounded-2xl py-5 px-9 border border-purple-500 text-purple-600  mx-auto",
-        className
-      )}
-      onClick={onClick}
-      {...props}
-    >
+    <ChakraButton colorScheme="messenger" onClick={onClick} {...props}>
       {children}
-    </motion.button>
+    </ChakraButton>
   );
 };
 

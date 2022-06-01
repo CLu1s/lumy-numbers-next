@@ -40,7 +40,7 @@ const HeroStatCard = ({
   loading,
   description,
 }: Props) => {
-  const color = useColorModeValue("purple.600", "purple.300");
+  const color = useColorModeValue("gray.700", "gray.200");
 
   return (
     <Screen title={title} description={description}>

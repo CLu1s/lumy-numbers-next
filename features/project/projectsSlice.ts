@@ -91,8 +91,8 @@ export const addProject = createAsyncThunk(
 
 export const updateProject = createAsyncThunk(
   "projects/updateProject",
-  async (data: Project) => {
-    const { movements, createdAt, updatedAt, ...project } = data;
+  async (data: Project, { rejectWithValue }) => {
+    const { movements, createdAt, updatedAt, loadingState, ...project } = data;
     const input = {
       ...project,
     };
@@ -102,8 +102,9 @@ export const updateProject = createAsyncThunk(
         graphqlOperation(updateProjectMutation, { input })
       );
       return response;
-    } catch (error) {
-      console.log(error);
+    } catch (obj) {
+      console.log(obj);
+      return rejectWithValue(obj.errors[0].message);
     }
   }
 );
@@ -217,7 +218,7 @@ const projectsSlice = createSlice({
       state.status = LoadingStates.SUCCEEDED;
     },
     [updateProject.rejected.type]: (state, action) => {
-      toast.error("Hubo un error!");
+      toast.error(action.payload);
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },

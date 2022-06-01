@@ -29,6 +29,7 @@ type Props = {
   slider?: boolean;
   editable?: boolean;
   showProgress?: boolean;
+  helpText?: string;
 };
 
 const StatCard = ({
@@ -44,6 +45,7 @@ const StatCard = ({
   onEdit,
   onAdjust,
   showProgress,
+  helpText,
 }: Props) => {
   return (
     <Screen>
@@ -57,7 +59,7 @@ const StatCard = ({
         >
           {icons(icon)}
         </Square>
-        <Stats name={name} amount={number} />
+        <Stats name={name} amount={number} helpText={helpText} />
 
         {showProgress && (
           <CircularProgress value={progress > 0 ? progress : 0} color={color}>

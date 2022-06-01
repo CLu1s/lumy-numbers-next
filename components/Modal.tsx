@@ -42,7 +42,7 @@ export default function ModalComponent({
           <Button variant="ghost" mr={3} onClick={onClose}>
             Cancelar
           </Button>
-          <Button colorScheme="blue" onClick={onSubmit}>
+          <Button colorScheme="messenger" onClick={onSubmit}>
             {onSubmitButtonText ? onSubmitButtonText : "Guardar"}
           </Button>
         </ModalFooter>

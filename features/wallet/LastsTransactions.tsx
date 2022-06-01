@@ -1,10 +1,8 @@
 import React, { useState, useCallback } from "react";
-import Link from "next/link";
 import {
   Text,
   Stack,
   useDisclosure,
-  Link as ChakraLink,
   useColorModeValue,
 } from "@chakra-ui/react";
 import _orderBy from "lodash/orderBy";
@@ -17,6 +15,7 @@ import { deleteTransaction } from "./walletSlice";
 import RecordExpense from "./RecordExpense";
 import AlertDialog from "../../components/AlertDialog";
 import useGetTransactions from "../../hooks/useGetTransactions";
+import Button from "../../components/Button";
 
 export default function LastsTransactions() {
   const dispatch = useDispatch();
@@ -27,7 +26,7 @@ export default function LastsTransactions() {
   const [deleteId, setDeleteId] = useState(null);
   const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
 
-  const color = useColorModeValue("teal", "teal.200");
+  const color = useColorModeValue("blue", "cyan.200");
 
   const status = useSelector(getStatus);
   const manageOpen = useCallback(
@@ -81,11 +80,7 @@ export default function LastsTransactions() {
             handleDelete(id);
           }}
         />
-        <Link href="/app/transacciones" passHref>
-          <ChakraLink color={color} fontSize="lg">
-            Ver todas las transacciones
-          </ChakraLink>
-        </Link>
+        <Button to="/app/transacciones">Ver Todas las Transacciones</Button>
       </Stack>
     </>
   );

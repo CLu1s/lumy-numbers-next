@@ -1,7 +1,6 @@
 import {
-  Heading,
   Text,
-  Center,
+  chakra,
   Stack,
   Box,
   HStack,
@@ -35,9 +34,13 @@ export default function TransactionMini({
       </VStack>
       <Stack spacing={0} width="full">
         <HStack justifyContent="space-between">
-          <Text fontWeight="bold">{`${money(item.amount)}, ${
-            item.description
-          }`}</Text>
+          <Text fontWeight="medium">
+            <chakra.span fontWeight="semibold">
+              {money(item.amount)},{" "}
+            </chakra.span>
+            {item.description}{" "}
+          </Text>
+
           {editable && (
             <HStack alignContent="space-between">
               <Button onClick={() => onEdit(item)}>

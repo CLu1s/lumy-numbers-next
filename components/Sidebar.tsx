@@ -35,7 +35,7 @@ const Sidebsar = () => {
           ))}
         </VStack>
         <VStack spacing={4} width={"100%"} paddingLeft={4} paddingTop={10}>
-          <Button colorScheme="blue" onClick={signOut}>
+          <Button colorScheme="messenger" onClick={signOut}>
             Cerrar Sesión
           </Button>
         </VStack>

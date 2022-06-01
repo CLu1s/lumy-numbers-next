@@ -1,6 +1,7 @@
 import React from "react";
 import { Heading, Text, Tag, HStack, Button } from "@chakra-ui/react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
+import { CheckIcon } from "@chakra-ui/icons";
 import Table, {
   Header,
   HeaderTop,
@@ -62,14 +63,15 @@ export default function DataTable({
           <Text fontWeight="medium">{money(item.amount)}</Text>
           {item.status !== "paid" ? (
             <Button
-              colorScheme="teal"
-              size="sm"
+              leftIcon={<CheckIcon />}
               onClick={() => managePaid(item)}
+              colorScheme="messenger"
+              variant="solid"
             >
-              Marcar como Pagado
+              Pagado
             </Button>
           ) : (
-            <Tag colorScheme="purple">Pagado</Tag>
+            <Tag colorScheme="messenger">Pagado</Tag>
           )}
         </Body>
       </Cell>

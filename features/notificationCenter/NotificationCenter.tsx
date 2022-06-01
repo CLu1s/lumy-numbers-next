@@ -41,7 +41,7 @@ const NotificationCenter = () => {
       >
         <Avatar
           size="md"
-          bg="purple.500"
+          bg="blue.500"
           icon={<RiNotification2Line fontSize="2rem" color="white" />}
         >
           {notifications.length > 0 && (

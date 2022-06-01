@@ -1,8 +1,8 @@
 import { AiFillHome } from "react-icons/ai";
-import { MdAccountBalanceWallet } from "react-icons/md";
-import { RiBook2Fill, RiHandHeartFill } from "react-icons/ri";
+import { RiHandHeartFill } from "react-icons/ri";
 import { ImStatsBars } from "react-icons/im";
-
+import { BiTransfer } from "react-icons/bi";
+import { AiFillCarryOut } from "react-icons/ai";
 type MenuItem = {
   id: number;
   label: string;
@@ -23,7 +23,7 @@ export const menuList: MenuItem[] = [
   {
     id: 2,
     label: "Transacciones",
-    icon: <MdAccountBalanceWallet />,
+    icon: <BiTransfer />,
     path: "/app/transacciones",
     showOnMobile: true,
   },
@@ -32,7 +32,7 @@ export const menuList: MenuItem[] = [
     label: "Mis Gastos fijos",
     mobileLabel: "Gastos fijos",
     path: "/app/costos-fijos",
-    icon: <RiBook2Fill />,
+    icon: <AiFillCarryOut />,
     showOnMobile: true,
   },
   {

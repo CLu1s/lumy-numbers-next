@@ -170,7 +170,7 @@ function ProjectRender({
           <HStack justifyContent="space-between" spacing={4}>
             <Button
               size="md"
-              colorScheme="blue"
+              colorScheme="messenger"
               onClick={() => onOpen(project.id, mensualities, project.name)}
             >
               Nuevo Movimiento

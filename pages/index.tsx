@@ -358,7 +358,7 @@ const Home: NextPage = () => {
                       variant="outline"
                       size="lg"
                       color="white"
-                      colorScheme="blue"
+                      colorScheme="messenger"
                       onClick={() => handleSubscribe()}
                     >
                       Quiero ser parte

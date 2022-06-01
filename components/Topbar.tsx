@@ -39,7 +39,7 @@ export default function Topbar() {
         <Stack isInline spacing={4}>
           <Button
             ref={btnRef}
-            colorScheme="teal"
+            colorScheme="messenger"
             variant="ghost"
             onClick={onOpen}
             display={{ base: "block", xl: "none" }}

@@ -40,7 +40,7 @@ const Categories = ({ showAll, setShowSwitch }: Props) => {
               width={{ base: "full", md: "48%", xl: "xs" }}
               key={item.id}
             >
-              <StatCard number={item.balance} {...item} />
+              <StatCard number={item.balance} {...item} helpText="Disponible" />
             </WrapItem>
           ))}
         </Wrap>
