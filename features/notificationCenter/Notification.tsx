@@ -30,10 +30,10 @@ const NotificationTypeColors = {
 
 const Notification = ({ notification }: Props) => {
   const dispatch = useDispatch();
-  const minuts = differenceInMinutes(new Date(notification.date), new Date());
-  const hours = differenceInHours(new Date(notification.date), new Date());
-  let time: String = minuts > 59 ? `${hours}h` : `${minuts}m`;
-  time = hours > 24 ? date(new Date(notification.date), "DD/MM") : time;
+  const minuts = differenceInMinutes(new Date(), new Date(notification.date));
+  const hours = differenceInHours(new Date(), new Date(notification.date));
+  let time: String = hours < 1 ? `Hace ${minuts}m` : `Hace ${hours}h`;
+  time = hours > 24 ? date(new Date(notification.date), "dd/MM") : time;
 
   const handleClick = () => {
     dispatch(deleteNotification(notification.id));
