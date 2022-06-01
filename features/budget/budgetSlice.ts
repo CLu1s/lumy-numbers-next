@@ -90,8 +90,8 @@ export const fetchIncomes = createAsyncThunk(
       )) as any;
       const lastTransactionsCall = (await localFetchTransactions(
         bucketID,
-        init,
-        end
+        initLastMonth,
+        endLastMonth
       )) as any;
       const lastTransactions =
         lastTransactionsCall.data.getBucket.transactionsByDate.items;
@@ -100,7 +100,7 @@ export const fetchIncomes = createAsyncThunk(
         0
       );
       const oldIncomes = lastMonthIncomes.data.getBucket.incomes.items;
-      const totalAvailable = incomes.reduce((acc, curr) => {
+      const totalAvailable = oldIncomes.reduce((acc, curr) => {
         return acc + curr.amount;
       }, 0);
       const lastBalance = totalAvailable - totalTransactions;
