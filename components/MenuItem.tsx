@@ -20,9 +20,9 @@ const MenuItem = ({ label, icon, path }: Props) => {
   const router = useRouter();
   const isActive = router.pathname === path;
   const bgButton = useColorModeValue("white", "gray.800");
-  const bgSquareActive = "purple.600";
+  const bgSquareActive = "blue.500";
   const bgSquare = useColorModeValue("white", "gray.800");
-  const ColorSquareNoActive = useColorModeValue("blue.400", "blue.300");
+  const ColorSquareNoActive = useColorModeValue("blue.200", "blue.300");
 
   return (
     <LinkBox as="button" width="full" maxW="full">

@@ -12,11 +12,10 @@ const useGetIncomes = () => {
   const incomesList = useSelector(getIncomesList);
 
   useEffect(() => {
-    if (!bucketID || status !== LoadingStates.IDLE || incomesList.length > 0)
+    if (!bucketID || status === LoadingStates.LOADING || incomesList.length > 0)
       return;
-
     dispatch(fetchIncomes({ bucketID }));
-  }, [bucketID, dispatch, incomesList, status]);
+  }, [bucketID, dispatch, status, incomesList.length]);
 
   return { bucketID };
 };

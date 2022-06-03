@@ -17,7 +17,7 @@ const BottomBar = () => {
   const router = useRouter();
   const bg = useColorModeValue("white", "gray.900");
   const bgButton = useColorModeValue("white", "gray.800");
-  const bgSquareActive = useColorModeValue("purple.800", "purple.300");
+  const bgSquareActive = useColorModeValue("blue.500", "blue.200");
   const bgSquare = useColorModeValue("white", "gray.800");
 
   const renderButtons = menuList
@@ -25,8 +25,8 @@ const BottomBar = () => {
       const isActive = router.pathname === item.path;
       if (!item.showOnMobile) return null;
       return (
-        <LinkBox key={item.path} as="button" width="100px" padding={4}>
-          <Link href={item.path} passHref scroll={false}>
+        <LinkBox key={item.path} as="button" maxWidth="70px" padding={4}>
+          <Link href={item.path} passHref>
             <LinkOverlay>
               <VStack spacing={1}>
                 <Square
@@ -55,7 +55,8 @@ const BottomBar = () => {
       bottom="0"
       width="full"
       paddingBottom={6}
-      paddingX={3}
+      paddingX={2}
+      zIndex={100}
     >
       <HStack spacing={0} width="full" justifyContent="space-between">
         {renderButtons}

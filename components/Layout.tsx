@@ -1,5 +1,5 @@
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import { Box, Stack, Heading, useColorModeValue } from "@chakra-ui/react";
+import { Box, Stack, Heading, Portal } from "@chakra-ui/react";
 import Head from "next/head";
 import Topbar from "./Topbar";
 import useGetInfo from "../hooks/useGetInfo";
@@ -15,7 +15,6 @@ type Props = {
 const Layout = ({ children, pageTitle, user }: Props) => {
   const { username } = user;
   useGetInfo(username);
-  const bg = useColorModeValue("gray.100", "gray.900");
   return (
     <>
       <Head>
@@ -39,7 +38,9 @@ const Layout = ({ children, pageTitle, user }: Props) => {
             </Stack>
           </Stack>
         </Box>
-        <BottomBar />
+        <Portal>
+          <BottomBar />
+        </Portal>
       </main>
     </>
   );

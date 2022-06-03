@@ -42,7 +42,7 @@ export const menuList: MenuItem[] = [
     mobileLabel: "Proyectos",
     path: "/app/proyectos",
     icon: <Icon as={RiHandHeartFill} w={6} h={6} />,
-    showOnMobile: false,
+    showOnMobile: true,
   },
   {
     id: 5,

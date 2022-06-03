@@ -12,7 +12,7 @@ const Cards = () => {
   const stats = useMemo(
     () =>
       items.map((total) => (
-        <WrapItem key={total.id} w={{ base: "40%", lg: "20%" }}>
+        <WrapItem key={total.id} w={{ base: "40%", md: "209px", lg: "175px" }}>
           <Stats
             icon={
               <Square
@@ -28,11 +28,7 @@ const Cards = () => {
             amount={total.spent}
             helpText="Gastado"
           />
-          <Divider
-            orientation="vertical"
-            marginLeft={[0, 2]}
-            display={["none", "block"]}
-          />
+          <Divider orientation="vertical" display={["none", "block"]} />
         </WrapItem>
       )),
     [items]
@@ -42,8 +38,9 @@ const Cards = () => {
       borderRadius="lg"
       borderColor="gray.200"
       borderWidth="thin"
-      padding={[5, 8]}
+      padding={{ base: 5, xl: 8 }}
       justifyItems="center"
+      margin={0}
     >
       {stats.length > 0 ? stats : <NoRegisters />}
     </Wrap>
