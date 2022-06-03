@@ -1,10 +1,11 @@
+import type { ReactElement } from "react";
 import Head from "next/head";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import Layout from "../../../components/Layout";
 import useGetProjects from "../../../hooks/useGetProjects";
 import ProjectsList from "../../../features/project/ProjecstList";
 
-function Project({ user }) {
+function Project() {
   useGetProjects();
   return (
     <>
@@ -26,11 +27,11 @@ function Project({ user }) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout userName={user?.username || ""} pageTitle="Mis Proyectos">
-        <ProjectsList />
-      </Layout>
+      <ProjectsList />
     </>
   );
 }
-
-export default withAuthenticator(Project);
+Project.getLayout = (page: ReactElement) => (
+  <Layout pageTitle="Mis Proyectos">{page}</Layout>
+);
+export default Project;
