@@ -10,6 +10,7 @@ module.exports = withPWA({
   pwa: {
     dest: "public",
     runtimeCaching,
+    buildExcludes: ["*.png"],
     disable: process.env.NODE_ENV === "development",
   },
 });
