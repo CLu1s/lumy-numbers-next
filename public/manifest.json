@@ -6,6 +6,8 @@
   "dir": "ltr",
   "lang": "es",
   "orientation": "any",
+  "theme_color": "#0078ff",
+  "background_color": "#edf2f7",
   "scope": "/app/",
   "icons": [
     {
@@ -36,6 +38,17 @@
     {
       "src": "/icon_192x192.png",
       "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/maskable_icon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/android-chrome-512x512",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
