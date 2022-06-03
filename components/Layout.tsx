@@ -1,12 +1,5 @@
-import { memo } from "react";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import {
-  Box,
-  Stack,
-  Heading,
-  Portal,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Stack, Heading, useColorModeValue } from "@chakra-ui/react";
 import Head from "next/head";
 import Topbar from "./Topbar";
 import useGetInfo from "../hooks/useGetInfo";
@@ -29,7 +22,7 @@ const Layout = ({ children, pageTitle, user }: Props) => {
         <title>Luminus Conscious Planning</title>
       </Head>
       <main>
-        <Box bg={bg} position="relative" height="100vh">
+        <Box paddingBottom="10">
           <Stack spacing={{ base: 0, xl: 5 }} direction="row">
             <CheckBucket userName={username} />
             <Sidebar />

@@ -31,7 +31,7 @@ export const menuList: MenuItem[] = [
   {
     id: 3,
     label: "Mis Gastos fijos",
-    mobileLabel: "Gastos fijos",
+    mobileLabel: "Gastos",
     path: "/app/costos-fijos",
     icon: <Icon as={AiFillCarryOut} w={6} h={6} />,
     showOnMobile: true,
@@ -47,6 +47,7 @@ export const menuList: MenuItem[] = [
   {
     id: 5,
     label: "Plan de Gastos",
+    mobileLabel: "Plan",
     path: "/app/presupuesto",
     icon: <Icon as={ImStatsBars} w={6} h={6} />,
     showOnMobile: true,
