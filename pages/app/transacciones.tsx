@@ -1,6 +1,5 @@
 import type { ReactElement } from "react";
 import { useReducer, useEffect } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import Head from "next/head";
 import sub from "date-fns/sub";
 import add from "date-fns/add";
@@ -17,13 +16,8 @@ import { changePeriod } from "../../features/wallet/walletSlice";
 import useBasicInfo from "../../hooks/useBasicInfo";
 import useGetCategories from "../../hooks/useGetCategories";
 import { date } from "../../utils";
+import { DatesHandler } from "../../types";
 
-type DatesHandler = {
-  current: Date;
-  previous: Date;
-  next: Date;
-  showNext: boolean;
-};
 const initDate = new Date();
 
 const initialState = {
@@ -87,50 +81,17 @@ function Transacciones() {
     dispatch(changePeriod(newDate));
   };
   return (
-    <>
-      <Heading as="h1" size="lg" mb={4} textTransform="capitalize">
-        {`${date(state.current, "MMMM")}`}
-      </Heading>
-      <HStack spacing={6} marginBottom="4">
-        <Button
-          onClick={() =>
-            handleChangePeriod({ newDate: state.previous, type: "PREVIOUS" })
-          }
-          colorScheme="messenger"
-        >
-          <ChevronLeftIcon fontSize="2xl" />
-        </Button>
-        {state.showNext && (
-          <Button
-            colorScheme="messenger"
-            onClick={() =>
-              handleChangePeriod({ newDate: state.next, type: "NEXT" })
-            }
-          >
-            <ChevronRightIcon fontSize="2xl" />
-          </Button>
-        )}
-        {!sameMonth && (
-          <Button
-            onClick={() =>
-              handleChangePeriod({ newDate: initDate, type: "CURRENT" })
-            }
-            colorScheme="messenger"
-          >
-            Ver mes actual
-          </Button>
-        )}
-      </HStack>
-      <Stack spacing={8}>
-        <TransactionsResume />
-
-        <Screen title="Transcciones del mes">
-          <VStack spacing={8}>
-            <Table />
-          </VStack>
-        </Screen>
-      </Stack>
-    </>
+    <Stack spacing={8}>
+      <TransactionsResume
+        state={state}
+        handleChangePeriod={handleChangePeriod}
+      />
+      <Screen title="Transcciones del mes">
+        <VStack spacing={8}>
+          <Table />
+        </VStack>
+      </Screen>
+    </Stack>
   );
 }
 

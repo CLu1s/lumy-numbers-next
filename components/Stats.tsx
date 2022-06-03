@@ -4,6 +4,7 @@ import {
   StatNumber,
   StatHelpText,
   useColorModeValue,
+  HStack,
 } from "@chakra-ui/react";
 import { money } from "../utils";
 
@@ -13,16 +14,20 @@ type Props = {
   helpText?: string;
   labelStyles?: any;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
+  icon?: React.ReactNode;
 };
 
-const Stats = ({ name, amount, helpText, labelStyles, size }: Props) => {
+const Stats = ({ name, amount, helpText, labelStyles, size, icon }: Props) => {
   const color = useColorModeValue("gray.900", "gray.200");
 
   return (
     <Stat>
-      <StatLabel fontSize={size} style={labelStyles}>
-        {name}
-      </StatLabel>
+      <HStack spacing={2}>
+        {icon}
+        <StatLabel fontSize={size} style={labelStyles} color="gray.500">
+          {name}
+        </StatLabel>
+      </HStack>
       <StatNumber
         fontSize={size}
         style={{ width: "100%", minWidth: "130px" }}

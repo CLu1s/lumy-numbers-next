@@ -29,7 +29,7 @@ const Layout = ({ children, pageTitle, user }: Props) => {
         <title>Luminus Conscious Planning</title>
       </Head>
       <main>
-        <Box bg={bg} position="relative">
+        <Box bg={bg} position="relative" height="100vh">
           <Stack spacing={{ base: 0, xl: 5 }} direction="row">
             <CheckBucket userName={username} />
             <Sidebar />

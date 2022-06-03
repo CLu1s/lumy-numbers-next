@@ -84,20 +84,29 @@ export const getBalanceByCategories = createSelector(
       );
       const budgetAmount = category.percentage * income;
       const amountPercentage = category.percentage * income;
-      const balance =
-        budgetAmount -
-        transactionsByCategory.reduce(
-          (acc, transaction) => acc + transaction.amount,
-          0
-        );
+      const spent = transactionsByCategory.reduce(
+        (acc, transaction) => acc + transaction.amount,
+        0
+      );
+      const balance = budgetAmount - spent;
       const progress = Math.round(balance / amountPercentage);
       return {
         ...category,
         balance,
         progress,
+        spent,
       };
     });
     return balanceByCategories;
+  }
+);
+
+export const getTotalSpent = createSelector(
+  [getTransactions],
+  (transactions: WalletState["transactions"]): number => {
+    return transactions.reduce((acc, transaction) => {
+      return acc + transaction.amount;
+    }, 0);
   }
 );
 

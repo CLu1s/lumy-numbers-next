@@ -3,6 +3,7 @@ import { RiHandHeartFill } from "react-icons/ri";
 import { ImStatsBars } from "react-icons/im";
 import { BiTransfer } from "react-icons/bi";
 import { AiFillCarryOut } from "react-icons/ai";
+import { Icon } from "@chakra-ui/react";
 type MenuItem = {
   id: number;
   label: string;
@@ -17,13 +18,13 @@ export const menuList: MenuItem[] = [
     id: 1,
     label: "General",
     path: "/app/home",
-    icon: <AiFillHome />,
+    icon: <Icon as={AiFillHome} w={6} h={6} />,
     showOnMobile: true,
   },
   {
     id: 2,
     label: "Transacciones",
-    icon: <BiTransfer />,
+    icon: <Icon as={BiTransfer} w={6} h={6} />,
     path: "/app/transacciones",
     showOnMobile: true,
   },
@@ -32,7 +33,7 @@ export const menuList: MenuItem[] = [
     label: "Mis Gastos fijos",
     mobileLabel: "Gastos fijos",
     path: "/app/costos-fijos",
-    icon: <AiFillCarryOut />,
+    icon: <Icon as={AiFillCarryOut} w={6} h={6} />,
     showOnMobile: true,
   },
   {
@@ -40,14 +41,14 @@ export const menuList: MenuItem[] = [
     label: "Mis Proyectos",
     mobileLabel: "Proyectos",
     path: "/app/proyectos",
-    icon: <RiHandHeartFill />,
+    icon: <Icon as={RiHandHeartFill} w={6} h={6} />,
     showOnMobile: false,
   },
   {
     id: 5,
     label: "Plan de Gastos",
     path: "/app/presupuesto",
-    icon: <ImStatsBars />,
+    icon: <Icon as={ImStatsBars} w={6} h={6} />,
     showOnMobile: true,
   },
 ];

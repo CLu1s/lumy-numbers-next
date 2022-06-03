@@ -105,6 +105,7 @@ export type BalancedCategory = {
   icon: string;
   percentage: number;
   balance: number;
+  spent: number;
   progress: number;
 };
 
@@ -184,4 +185,11 @@ export type NotificationState = {
   items: Notification[];
   status: LoadingStates;
   error?: string;
+};
+
+export type DatesHandler = {
+  current: Date;
+  previous: Date;
+  next: Date;
+  showNext: boolean;
 };

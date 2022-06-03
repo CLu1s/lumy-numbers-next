@@ -9,6 +9,7 @@ import {
   SliderThumb,
   Button,
   Stack,
+  Box,
 } from "@chakra-ui/react";
 import Screen from "./Screen";
 import { icons } from "../utils";
@@ -83,19 +84,21 @@ const StatCard = ({
         )}
       </HStack>
       {slider && (
-        <Slider
-          marginTop={6}
-          aria-label="slider-ex-2"
-          colorScheme={color.split(".")[0]}
-          value={progress}
-          onChange={(e) => onChange(e)}
-          onChangeEnd={(e) => onChangeEnd(e)}
-        >
-          <SliderTrack>
-            <SliderFilledTrack />
-          </SliderTrack>
-          <SliderThumb boxSize={6} />
-        </Slider>
+        <Box w="75%">
+          <Slider
+            marginTop={6}
+            aria-label="slider-ex-2"
+            colorScheme={color.split(".")[0]}
+            value={progress}
+            onChange={(e) => onChange(e)}
+            onChangeEnd={(e) => onChangeEnd(e)}
+          >
+            <SliderTrack>
+              <SliderFilledTrack />
+            </SliderTrack>
+            <SliderThumb boxSize={6} />
+          </Slider>
+        </Box>
       )}
     </Screen>
   );

@@ -16,7 +16,7 @@ const Screen = ({ title, description, children, display }: props) => {
       width="full"
       height="full"
       p={5}
-      shadow="sm"
+      shadow="md"
       borderWidth="1px"
       bgColor={bg}
       flex="1"
@@ -27,7 +27,7 @@ const Screen = ({ title, description, children, display }: props) => {
         {title && (
           <Stack spacing="2">
             {typeof title === "string" ? (
-              <Heading as="h2" size="md" fontWeight="600">
+              <Heading as="h6" size="lg" fontWeight="medium">
                 {title}
               </Heading>
             ) : (

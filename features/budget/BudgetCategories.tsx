@@ -81,12 +81,12 @@ const BudgetCategories = () => {
         }
       >
         {status !== "idle" ? (
-          <Wrap spacing={{ base: 2, xl: 4 }}>
+          <Wrap spacing={{ base: 2, lg: 10 }}>
             {state.map((item: Category) => (
               <WrapItem
                 key={item.id}
                 width="full"
-                maxW={{ base: "100%", md: "47%", xl: "48%" }}
+                maxW={{ base: "100%", lg: "45%" }}
               >
                 <StatCard
                   {...item}
@@ -119,7 +119,7 @@ const BudgetCategories = () => {
             ))}
             <WrapItem
               width="full"
-              maxW={{ base: "100%", md: "47%", xl: "48%" }}
+              maxW={{ base: "100%", lg: "45%" }}
               minH="123px"
             >
               <Screen>

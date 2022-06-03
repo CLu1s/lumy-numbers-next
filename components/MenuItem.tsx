@@ -20,8 +20,9 @@ const MenuItem = ({ label, icon, path }: Props) => {
   const router = useRouter();
   const isActive = router.pathname === path;
   const bgButton = useColorModeValue("white", "gray.800");
-  const bgSquareActive = useColorModeValue("purple.200", "purple.800");
+  const bgSquareActive = "purple.600";
   const bgSquare = useColorModeValue("white", "gray.800");
+  const ColorSquareNoActive = useColorModeValue("blue.400", "blue.300");
 
   return (
     <LinkBox as="button" width="full" maxW="full">
@@ -38,10 +39,10 @@ const MenuItem = ({ label, icon, path }: Props) => {
           >
             <HStack spacing={4}>
               <Square
-                size="30px"
                 bg={isActive ? bgSquareActive : bgSquare}
-                color={isActive ? "white" : "blue.200"}
+                color={isActive ? "white" : ColorSquareNoActive}
                 borderRadius={"lg"}
+                padding={2}
               >
                 {icon}
               </Square>
