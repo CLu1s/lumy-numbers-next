@@ -39,7 +39,7 @@ const Layout = ({ children, pageTitle, user }: Props) => {
             </Stack>
           </Stack>
         </Box>
-        {/* <BottomBar /> */}
+        <BottomBar />
       </main>
     </>
   );
