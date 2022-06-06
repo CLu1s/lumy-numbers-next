@@ -34,8 +34,8 @@ const Categories = ({ showAll, setShowSwitch }: Props) => {
         <Wrap justifyContent="flex-start">
           {itemsToShow.map((item) => (
             <WrapItem
-              minW="xs"
-              width={{ base: "full", md: "48%", xl: "xs" }}
+              minW="218px"
+              width={{ base: "full", md: "48%" }}
               key={item.id}
             >
               <StatCard number={item.balance} {...item} helpText="Disponible" />

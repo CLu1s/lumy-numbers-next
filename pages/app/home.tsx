@@ -1,7 +1,7 @@
 import type { ReactElement } from "react";
 import BudgetCard from "../../features/wallet/BudgetCard";
 import Layout from "../../components/Layout";
-import { Stack, Wrap, WrapItem } from "@chakra-ui/react";
+import { Box, Stack, Wrap, WrapItem } from "@chakra-ui/react";
 import CheckcIncomes from "../../features/budget/CheckIncomes";
 import Screen from "../../components/Screen";
 import LastsTransactions from "../../features/wallet/LastsTransactions";
@@ -13,22 +13,21 @@ function Home() {
       <CheckcIncomes />
       <Stack spacing={8}>
         <BudgetCard />
-        <Wrap spacing={4}>
-          <WrapItem maxW={{ base: "100%" }} width="100%">
+        <Stack spacing={4} direction={["column", "row"]}>
+          <Box maxW={{ base: "100%" }} width="100%">
             <CategoriesDashboard />
-          </WrapItem>
-          <WrapItem
+          </Box>
+          <Box
             maxW={{ base: "100%", md: "47%", lg: "49%" }}
             width={{ base: "full" }}
           >
-            <Screen title="Transacciones Recientes">
-              <LastsTransactions />
-            </Screen>
-          </WrapItem>
-          <WrapItem maxW={{ base: "100%", md: "47%" }} width={{ base: "full" }}>
-            <FixedCostDashboard />
-          </WrapItem>
-        </Wrap>
+            <LastsTransactions />
+          </Box>
+        </Stack>
+
+        <Box maxW={{ base: "100%", md: "47%" }} width={{ base: "full" }}>
+          <FixedCostDashboard />
+        </Box>
       </Stack>
     </>
   );
