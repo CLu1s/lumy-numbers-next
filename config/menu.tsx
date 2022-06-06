@@ -23,7 +23,7 @@ export const menuList: MenuItem[] = [
   },
   {
     id: 2,
-    label: "Transacciones",
+    label: "Gastos",
     icon: <Icon as={BiTransfer} w={6} h={6} />,
     path: "/app/transacciones",
     showOnMobile: true,
@@ -31,7 +31,7 @@ export const menuList: MenuItem[] = [
   {
     id: 3,
     label: "Mis Gastos fijos",
-    mobileLabel: "Gastos",
+    mobileLabel: "Fijos",
     path: "/app/costos-fijos",
     icon: <Icon as={AiFillCarryOut} w={6} h={6} />,
     showOnMobile: true,

@@ -36,6 +36,10 @@ const TdCustom = ({ node, ...props }) => {
   return <Td {...props} />;
 };
 
+const ParagraphCustom = ({ node, ...props }) => {
+  return <Text {...props} color="gray.500" fontWeight="medium" />;
+};
+
 const Markdown = ({ children }) => {
   return (
     <ReactMarkdown
@@ -52,7 +56,7 @@ const Markdown = ({ children }) => {
         tr: Tr,
         th: ThCustom,
         td: TdCustom,
-        p: Text,
+        p: ParagraphCustom,
       }}
     >
       {children}

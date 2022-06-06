@@ -14,6 +14,7 @@ import { money } from "../../utils";
 import useGetFixedCosts from "../../hooks/useGetFixedCosts";
 import usePayFixedCost from "./hooks/usePayFixedCost";
 import Button from "../../components/Button";
+import Stats from "../../components/Stats";
 
 const FixedCostDashboard = () => {
   useGetFixedCosts();
@@ -21,21 +22,12 @@ const FixedCostDashboard = () => {
   const items = useSelector(getPendingItems);
   const amount = useSelector(getPendingAmount);
 
-  const color = useColorModeValue("blue", "cyan.200");
-
-  const orderItmes = _orderBy(items, ["dueDay"]).slice(0, 6);
+  const orderItmes = _orderBy(items, ["dueDay"]).slice(0, 3);
 
   return (
     <Screen title="Próximos Pagos">
       <Stack spacing={4}>
-        <Text fontSize="md">
-          Cantidad necesaria para pagar los próximos pagos:
-          <chakra.span fontWeight="bold" fontSize="xl">
-            {" "}
-            {money(amount)}
-          </chakra.span>
-        </Text>
-        <Heading size="sm">Próximos a Pagar</Heading>
+        <Stats name={"Total de pagos pendientes"} amount={amount} />
         <ItemsList items={orderItmes} managePaid={managePaid} />
         <Button to="/app/costos-fijos">
           <Text>Ver Todos los Gastos</Text>

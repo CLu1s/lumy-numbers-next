@@ -16,6 +16,7 @@ import RecordExpense from "./RecordExpense";
 import AlertDialog from "../../components/AlertDialog";
 import useGetTransactions from "../../hooks/useGetTransactions";
 import Button from "../../components/Button";
+import Screen from "../../components/Screen";
 
 export default function LastsTransactions() {
   const dispatch = useDispatch();
@@ -68,20 +69,22 @@ export default function LastsTransactions() {
         onClose={manageOnClose}
         toEdit={elementToEdit}
       />
-      <Stack spacing={4} marginBottom={4}>
-        <Text>
-          Aquí listamos las 6 transacciones más recientes que has tenido
-        </Text>
-        <TransactionMini
-          transactions={transactions}
-          editable
-          onEdit={manageOpen}
-          onDelete={(id) => {
-            handleDelete(id);
-          }}
-        />
-        <Button to="/app/transacciones">Ver Todas las Transacciones</Button>
-      </Stack>
+      <Screen
+        title="Transacciones Recientes"
+        description=" Aquí listamos las transacciones más recientes que has tenido"
+      >
+        <Stack spacing={4} marginBottom={4}>
+          <TransactionMini
+            transactions={transactions}
+            editable
+            onEdit={manageOpen}
+            onDelete={(id) => {
+              handleDelete(id);
+            }}
+          />
+          <Button to="/app/transacciones">Ver Todas las Transacciones</Button>
+        </Stack>
+      </Screen>
     </>
   );
 }
