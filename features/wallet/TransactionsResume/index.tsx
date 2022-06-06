@@ -1,13 +1,5 @@
 import { useSelector } from "react-redux";
 import {
-  getTransactionsFormatted,
-  getStatus,
-  getTotalSpent,
-} from "../selector";
-import Screen from "../../../components/Screen";
-import _groupBy from "lodash/groupBy";
-import _sortBy from "lodash/sortBy";
-import {
   Stack,
   Box,
   HStack,
@@ -16,6 +8,15 @@ import {
   Text,
   Divider,
 } from "@chakra-ui/react";
+import {
+  getTransactionsFormatted,
+  getStatus,
+  getTotalSpent,
+  getBalance,
+} from "../selector";
+import Screen from "../../../components/Screen";
+import _groupBy from "lodash/groupBy";
+import _sortBy from "lodash/sortBy";
 import { LoadingStates } from "../../../types";
 import Loading from "../../../components/Loading";
 import { money } from "../../../utils";
@@ -30,6 +31,7 @@ type Props = {
 
 const TransactionsResume = ({ state, handleChangePeriod }: Props) => {
   const transactions = useSelector(getTransactionsFormatted);
+  const balance = useSelector(getBalance);
   const totalSpent = useSelector(getTotalSpent);
   const status = useSelector(getStatus);
 
@@ -45,9 +47,9 @@ const TransactionsResume = ({ state, handleChangePeriod }: Props) => {
               </Heading>
               <Text fontSize="sm">Gastos totales del mes.</Text>
               <Divider />
-              {/* <Text fontSize="sm" color="gray.500" fontWeight="medium">
-                Edita tus gastos en la tabla de abajo
-              </Text> */}
+              <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                Disponible {money(balance)}
+              </Text>
             </VStack>
             <Box width="70%">
               <LineChart transactions={transactions} />

@@ -1,9 +1,8 @@
 import type { ReactElement } from "react";
 import BudgetCard from "../../features/wallet/BudgetCard";
 import Layout from "../../components/Layout";
-import { Box, Stack, Wrap, WrapItem } from "@chakra-ui/react";
+import { Box, Stack } from "@chakra-ui/react";
 import CheckcIncomes from "../../features/budget/CheckIncomes";
-import Screen from "../../components/Screen";
 import LastsTransactions from "../../features/wallet/LastsTransactions";
 import FixedCostDashboard from "../../features/fixedCost/FixedCostDashboard";
 import CategoriesDashboard from "../../features/wallet/CategoriesDashboard";

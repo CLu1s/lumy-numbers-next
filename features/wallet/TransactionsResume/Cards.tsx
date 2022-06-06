@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { Wrap, WrapItem, Divider, Square } from "@chakra-ui/react";
+import { Wrap, WrapItem, Square } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { getBalanceByCategories } from "../selector";
 import { icons } from "../../../utils";
@@ -12,7 +12,11 @@ const Cards = () => {
   const stats = useMemo(
     () =>
       items.map((total) => (
-        <WrapItem key={total.id} w={{ base: "40%", md: "209px", lg: "175px" }}>
+        <WrapItem
+          key={total.id}
+          maxW={{ md: "200px", lg: "286", xl: "181px" }}
+          w={{ base: "100%", md: "30%", lg: "31%", xl: "18%" }}
+        >
           <Stats
             icon={
               <Square
@@ -26,9 +30,9 @@ const Cards = () => {
             }
             name={total.name || "no cat"}
             amount={total.spent}
-            helpText="Gastado"
+            compareAmount={total.balance}
+            helpText="Gastado / Disponible"
           />
-          <Divider orientation="vertical" display={["none", "block"]} />
         </WrapItem>
       )),
     [items]
@@ -39,8 +43,8 @@ const Cards = () => {
       borderColor="gray.200"
       borderWidth="thin"
       padding={{ base: 5, xl: 8 }}
-      justifyItems="center"
-      margin={0}
+      width="full"
+      spacing={4}
     >
       {stats.length > 0 ? stats : <NoRegisters />}
     </Wrap>
