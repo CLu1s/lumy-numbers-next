@@ -114,6 +114,7 @@ export const getBucket = /* GraphQL */ `
           endDate
           amountGoal
           initAmount
+          isActive
           createdAt
           updatedAt
         }
@@ -347,6 +348,7 @@ export const getProject = /* GraphQL */ `
         }
         nextToken
       }
+      isActive
       createdAt
       updatedAt
     }
@@ -372,6 +374,7 @@ export const listProjects = /* GraphQL */ `
         movements {
           nextToken
         }
+        isActive
         createdAt
         updatedAt
       }
@@ -641,6 +644,7 @@ export const projectByName = /* GraphQL */ `
         movements {
           nextToken
         }
+        isActive
         createdAt
         updatedAt
       }
@@ -678,6 +682,7 @@ export const projectsByBucket = /* GraphQL */ `
         movements {
           nextToken
         }
+        isActive
         createdAt
         updatedAt
       }

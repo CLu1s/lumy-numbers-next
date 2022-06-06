@@ -67,6 +67,7 @@ export const addProject = createAsyncThunk(
       ...project,
       status: "pending",
       startDate: new Date().toISOString(),
+      isActive: true,
     };
     const response = await API.graphql(
       graphqlOperation(createProjectMutation, { input })

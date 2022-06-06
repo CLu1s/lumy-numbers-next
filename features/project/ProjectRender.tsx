@@ -9,6 +9,7 @@ import {
   Stack,
   HStack,
   Tag,
+  Heading,
   IconButton,
 } from "@chakra-ui/react";
 import Table from "../../components/Table";
@@ -122,12 +123,26 @@ function ProjectRender({
       width="full"
       paddingBottom={{ base: "2rem", lg: "0" }}
     >
-      <Screen title={project.name} description={project.description}>
-        {numbers.amountPending < 0 && (
-          <Tag colorScheme="green" marginBottom="2">
-            Completado
-          </Tag>
-        )}
+      <Screen
+        title={
+          <HStack>
+            <Heading as="h6" size="lg" fontWeight="medium">
+              {project.name}
+            </Heading>
+            {!project.isActive && (
+              <Tag colorScheme="gray" marginBottom="2">
+                Inactivo
+              </Tag>
+            )}
+            {numbers.amountPending < 0 && (
+              <Tag colorScheme="green" marginBottom="2">
+                Completado
+              </Tag>
+            )}
+          </HStack>
+        }
+        description={project.description}
+      >
         <Stack spacing={4} w="full">
           <Wrap justifyContent="space-between" spacing={7} w="full">
             <WrapItem flex="1 1 0">
@@ -172,6 +187,7 @@ function ProjectRender({
               size="md"
               colorScheme="messenger"
               onClick={() => onOpen(project.id, mensualities, project.name)}
+              disabled={!project.isActive}
             >
               Nuevo Movimiento
             </Button>

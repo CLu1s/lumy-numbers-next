@@ -9,7 +9,10 @@ import {
   WrapItem,
   useDisclosure,
   Switch,
+  Divider,
   HStack,
+  VStack,
+  Heading,
 } from "@chakra-ui/react";
 import Screen from "../../components/Screen";
 import ProjectCard from "./ProjectCard";
@@ -26,7 +29,6 @@ import SaveCategoryID from "./SaveCategoryID";
 import AlertDialog from "../../components/AlertDialog";
 import { deleteProject, deleteMovement } from "./projectsSlice";
 import Loading from "../../components/Loading";
-import ProjectRender from "./ProjectRender";
 
 function ProjectsList() {
   const dispatch = useDispatch();
@@ -69,18 +71,30 @@ function ProjectsList() {
     setAlertDialogIsOpen(true);
   };
 
-  if (status !== LoadingStates.SUCCEEDED) {
+  if (status === LoadingStates.IDLE) {
     return <Loading />;
   }
 
-  const renderTables = (seeHistory ? allProjects : projects).map((project) => (
-    <ProjectCard
-      key={project.id}
-      project={project}
-      onOpen={movementOnOpen}
-      handleDelete={handleDelete}
-    />
-  ));
+  const renderActiveItems = (seeHistory ? allProjects : projects)
+    .filter((item) => item.isActive)
+    .map((project) => (
+      <ProjectCard
+        key={project.id}
+        project={project}
+        onOpen={movementOnOpen}
+        handleDelete={handleDelete}
+      />
+    ));
+  const renderInactiveItems = (seeHistory ? allProjects : projects)
+    .filter((item) => !item.isActive)
+    .map((project) => (
+      <ProjectCard
+        key={project.id}
+        project={project}
+        onOpen={movementOnOpen}
+        handleDelete={handleDelete}
+      />
+    ));
 
   return (
     <>
@@ -138,51 +152,60 @@ function ProjectsList() {
           />
         </HStack>
       )}
-
-      <Wrap spacing={{ base: 4, md: 4, lg: 5 }}>
-        {renderTables}
-        <WrapItem
-          width="100%"
-          maxW={{ base: "100%", md: "47%", lg: "30%" }}
-          minH="123px"
-          height="full"
-        >
-          <Screen>
-            <Flex
-              direction="column"
-              height="full"
-              align="center"
-              justifyContent="center"
-            >
-              {categoryID ? (
-                <Button
-                  w="full"
-                  height="full"
-                  minH="200px"
-                  color="gray.400"
-                  colorScheme="whiteAlpha"
-                  borderWidth="1px"
-                  borderColor="gray.200"
-                  borderRadius="md"
-                  onClick={onOpen}
-                >
-                  <Flex
-                    direction="column"
-                    align="center"
-                    justify="center"
+      <VStack w="full" spacing={10} alignItems="flex-start">
+        <Wrap spacing={{ base: 4, md: 4, lg: 5 }} w="full">
+          {renderActiveItems}
+          <WrapItem
+            width="100%"
+            maxW={{ base: "100%", md: "47%", lg: "30%" }}
+            minH="123px"
+            height="full"
+          >
+            <Screen>
+              <Flex
+                direction="column"
+                height="full"
+                w="full"
+                align="center"
+                justifyContent="center"
+              >
+                {categoryID ? (
+                  <Button
+                    w="full"
                     height="full"
+                    minH="200px"
+                    color="gray.400"
+                    colorScheme="whiteAlpha"
+                    borderWidth="1px"
+                    borderColor="gray.200"
+                    borderRadius="md"
+                    onClick={onOpen}
                   >
-                    <VscAdd />
-                    <Text>Nuevo</Text>
-                  </Flex>
-                </Button>
-              ) : (
-                <SaveCategoryID />
-              )}
-            </Flex>
-          </Screen>
-        </WrapItem>
-      </Wrap>
+                    <Flex
+                      direction="column"
+                      align="center"
+                      justify="center"
+                      height="full"
+                    >
+                      <VscAdd />
+                      <Text>Nuevo</Text>
+                    </Flex>
+                  </Button>
+                ) : (
+                  <SaveCategoryID />
+                )}
+              </Flex>
+            </Screen>
+          </WrapItem>
+        </Wrap>
+        <Divider />
+        <Heading as="h3" size="md">
+          Proyectos inactivos
+        </Heading>
+        <Wrap spacing={{ base: 4, md: 4, lg: 5 }} w="full">
+          {renderInactiveItems}
+        </Wrap>
+      </VStack>
     </>
   );
 }

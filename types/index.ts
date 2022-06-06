@@ -143,6 +143,7 @@ export type Project = {
   updatedAt?: string;
   movements: Movement[];
   loadingState?: LoadingStates;
+  isActive: boolean;
 };
 
 export type Movement = {

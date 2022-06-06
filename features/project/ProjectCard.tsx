@@ -1,9 +1,4 @@
-import { useMemo, useEffect } from "react";
-import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { FiTrash2 } from "react-icons/fi";
-import { ViewIcon, PlusSquareIcon } from "@chakra-ui/icons";
-import differenceInMonths from "date-fns/differenceInMonths";
+import { useEffect } from "react";
 import {
   Wrap,
   WrapItem,
@@ -12,12 +7,21 @@ import {
   Tag,
   IconButton,
   Heading,
+  Switch,
+  VStack,
+  FormControl,
+  FormLabel,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { FiTrash2 } from "react-icons/fi";
+import { ViewIcon, PlusSquareIcon } from "@chakra-ui/icons";
+import differenceInMonths from "date-fns/differenceInMonths";
 import Screen from "../../components/Screen";
 import Stats from "../../components/Stats";
 import { Project as ProjectType, LoadingStates } from "../../types";
 import { date } from "../../utils";
-import { fetchMovementsByProject } from "./projectsSlice";
+import { fetchMovementsByProject, updateProject } from "./projectsSlice";
 
 type Props = {
   project: ProjectType;
@@ -79,25 +83,51 @@ function ProjectCard({ project, onOpen, handleDelete }: Props) {
             <Heading as="h2" size="md" fontWeight="600">
               {project.name}
             </Heading>
-            <HStack>
-              <IconButton
-                onClick={() => router.push(`/app/proyectos/${project.id}`)}
-                aria-label="Ver Proyecto"
-                icon={<ViewIcon />}
-              />
-              <IconButton
-                aria-label="Nuevo Movimiento"
-                icon={<PlusSquareIcon />}
-                onClick={() => onOpen(project.id, mensualities, project.name)}
-              />
-
-              <IconButton
-                onClick={() => handleDelete(project.id)}
-                color="red.500"
-                aria-label="Borrar Proyecto"
-                icon={<FiTrash2 />}
-              />
-            </HStack>
+            <VStack>
+              <HStack>
+                <IconButton
+                  onClick={() => router.push(`/app/proyectos/${project.id}`)}
+                  aria-label="Ver Proyecto"
+                  icon={<ViewIcon />}
+                />
+                {project.isActive && (
+                  <IconButton
+                    aria-label="Nuevo Movimiento"
+                    icon={<PlusSquareIcon />}
+                    onClick={() =>
+                      onOpen(project.id, mensualities, project.name)
+                    }
+                  />
+                )}
+                <IconButton
+                  onClick={() => handleDelete(project.id)}
+                  color="red.500"
+                  aria-label="Borrar Proyecto"
+                  icon={<FiTrash2 />}
+                />
+              </HStack>
+              <FormControl
+                display="flex"
+                alignItems="flex-end"
+                justifyContent="flex-end"
+              >
+                <FormLabel htmlFor="email-alerts" mb="0">
+                  Activo
+                </FormLabel>
+                <Switch
+                  id="email-alerts"
+                  onChange={(e) =>
+                    dispatch(
+                      updateProject({
+                        ...project,
+                        isActive: e.target.checked,
+                      })
+                    )
+                  }
+                  isChecked={project.isActive}
+                />
+              </FormControl>
+            </VStack>
           </HStack>
         }
       >
