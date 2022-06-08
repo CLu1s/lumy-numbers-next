@@ -158,7 +158,7 @@ function ProjectsList() {
           <WrapItem
             width="100%"
             maxW={{ base: "100%", md: "47%", lg: "30%" }}
-            minH="123px"
+            minH="280px"
             height="full"
           >
             <Screen>
@@ -173,7 +173,7 @@ function ProjectsList() {
                   <Button
                     w="full"
                     height="full"
-                    minH="200px"
+                    minH="238px"
                     color="gray.400"
                     colorScheme="whiteAlpha"
                     borderWidth="1px"

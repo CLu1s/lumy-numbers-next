@@ -11,6 +11,7 @@ import {
   VStack,
   FormControl,
   FormLabel,
+  Text,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
@@ -71,6 +72,8 @@ function ProjectCard({ project, onOpen, handleDelete }: Props) {
       new Date(project.startDate)
     ) +
       1);
+  const lastMovement =
+    project.movements.length > 0 ? project.movements[0] : null;
   return (
     <WrapItem
       key={project.id}
@@ -151,7 +154,17 @@ function ProjectCard({ project, onOpen, handleDelete }: Props) {
             </WrapItem>
 
             <WrapItem flex="1 1 0">
-              <Stats name="Disponible" size="sm" amount={numbers.avalible} />
+              <VStack spacing={2} alignItems="flex-start">
+                <Stats name="Disponible" size="sm" amount={numbers.avalible} />
+                {lastMovement && (
+                  <VStack spacing={0} alignItems="flex-start">
+                    <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                      Último movimiento:{" "}
+                    </Text>
+                    <Text fontSize="sm">{lastMovement.description}</Text>
+                  </VStack>
+                )}
+              </VStack>
             </WrapItem>
           </Wrap>
         </Stack>
