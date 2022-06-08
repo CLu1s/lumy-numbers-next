@@ -1,5 +1,5 @@
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import { Box, Stack, Heading, Portal } from "@chakra-ui/react";
+import { Box, Stack, Heading, Portal, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import Topbar from "./Topbar";
 import useGetInfo from "../hooks/useGetInfo";
@@ -10,9 +10,10 @@ type Props = {
   children: JSX.Element[] | JSX.Element;
   pageTitle?: string;
   user: any;
+  description?: string;
 };
 
-const Layout = ({ children, pageTitle, user }: Props) => {
+const Layout = ({ children, pageTitle, user, description }: Props) => {
   const { username } = user;
   useGetInfo(username);
   return (
@@ -33,6 +34,7 @@ const Layout = ({ children, pageTitle, user }: Props) => {
                 </Heading>
 
                 {pageTitle && <Heading as="h2">{pageTitle}</Heading>}
+                {description && <Text>{description}</Text>}
                 <Box>{children}</Box>
               </Stack>
             </Stack>

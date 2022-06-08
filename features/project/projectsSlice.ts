@@ -23,7 +23,7 @@ import {
   NotificationTypes,
   Notification,
 } from "../../types";
-import { money } from "../../utils";
+import { money, compareDates } from "../../utils";
 
 const initialState: ProjectsState = {
   items: [],
@@ -161,10 +161,13 @@ export const deleteMovement = createAsyncThunk(
 export const fetchMovementsByProject = createAsyncThunk(
   "projects/fetchMovementsByProject",
   async (projectID: string) => {
-    const response = await API.graphql(
+    const response = (await API.graphql(
       graphqlOperation(movementsByProject, { projectID })
-    );
-    return { response, projectID };
+    )) as any;
+    const items = response.data.movementsByProject.items.sort((a, b) => {
+      return compareDates(new Date(b.date), new Date(a.date));
+    });
+    return { response: items, projectID };
   }
 );
 
@@ -297,8 +300,7 @@ const projectsSlice = createSlice({
         (p) => p.id === action.payload.projectID
       );
       if (project) {
-        project.movements =
-          action.payload.response.data.movementsByProject?.items || [];
+        project.movements = action.payload.response || [];
         project.loadingState = LoadingStates.SUCCEEDED;
       }
       state.status = LoadingStates.SUCCEEDED;
