@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+import { createSelector } from '@reduxjs/toolkit'
 import { createAsyncSelectorResults } from "async-selector-kit";
 import { NotificationState } from "../../types";
 import { RootState } from "../../store/reducers";

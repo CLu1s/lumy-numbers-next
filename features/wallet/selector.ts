@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+import { createSelector } from '@reduxjs/toolkit'
 import { WalletState, BalancedCategory, Category } from "../../types";
 import { RootState } from "../../store/reducers";
 import { getCategories, getIncome } from "../budget/selector";

@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+import { createSelector } from '@reduxjs/toolkit'
 import { BudgetState, Category, Income } from "../../types";
 import { RootState } from "../../store/reducers";
 import _sortBy from "lodash/sortBy";

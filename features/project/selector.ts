@@ -1,6 +1,6 @@
 import isBefore from "date-fns/isBefore";
 import isSameMonth from "date-fns/isSameMonth";
-import { createSelector } from "reselect";
+import { createSelector } from '@reduxjs/toolkit'
 import { ProjectsState, Bucket } from "../../types";
 import { RootState } from "../../store/reducers";
 import { compareDates } from "../../utils";

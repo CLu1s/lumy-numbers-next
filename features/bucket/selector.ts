@@ -1,4 +1,4 @@
-import { createSelector } from "reselect";
+import { createSelector } from '@reduxjs/toolkit'
 import { BucketState, User } from "../../types";
 import { RootState } from "../../store/reducers";
 
