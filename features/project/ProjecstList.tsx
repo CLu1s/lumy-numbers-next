@@ -1,19 +1,19 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { VscAdd } from "react-icons/vsc";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Button,
   Text,
   Flex,
-  Wrap,
-  WrapItem,
   useDisclosure,
   Switch,
   Divider,
   HStack,
   VStack,
   Heading,
+  SimpleGrid,
 } from "@chakra-ui/react";
+import autoAnimate from "@formkit/auto-animate";
 import Screen from "../../components/Screen";
 import ProjectCard from "./ProjectCard";
 import {
@@ -45,6 +45,17 @@ function ProjectsList() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const status = useSelector(getStatus);
   const moveModal = useDisclosure();
+
+  const parent = useRef(null);
+  const parentInactive = useRef(null);
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, [parent]);
+  useEffect(() => {
+    parentInactive.current && autoAnimate(parentInactive.current);
+  }, [parentInactive]);
+
   const movementOnOpen = (id: string, m: number, name: string) => {
     setProjectID(id);
     setProjectName(name);
@@ -153,58 +164,62 @@ function ProjectsList() {
         </HStack>
       )}
       <VStack w="full" spacing={10} alignItems="flex-start">
-        <Wrap spacing={{ base: 4, md: 4, lg: 5 }} w="full">
+        <SimpleGrid
+          columns={{ base: 1, md: 2, lg: 3, xl: 5 }}
+          spacing={{ base: 4, md: 4, lg: 5 }}
+          w="full"
+          ref={parent}
+        >
           {renderActiveItems}
-          <WrapItem
-            width="100%"
-            maxW={{ base: "100%", md: "47%", lg: "30%" }}
-            minH="280px"
-            height="full"
-          >
-            <Screen>
-              <Flex
-                direction="column"
-                height="full"
-                w="full"
-                align="center"
-                justifyContent="center"
-              >
-                {categoryID ? (
-                  <Button
-                    w="full"
+
+          <Screen>
+            <Flex
+              direction="column"
+              height="full"
+              w="full"
+              align="center"
+              justifyContent="center"
+            >
+              {categoryID ? (
+                <Button
+                  w="full"
+                  height="full"
+                  minH="238px"
+                  color="gray.400"
+                  colorScheme="whiteAlpha"
+                  borderWidth="1px"
+                  borderColor="gray.200"
+                  borderRadius="md"
+                  onClick={onOpen}
+                >
+                  <Flex
+                    direction="column"
+                    align="center"
+                    justify="center"
                     height="full"
-                    minH="238px"
-                    color="gray.400"
-                    colorScheme="whiteAlpha"
-                    borderWidth="1px"
-                    borderColor="gray.200"
-                    borderRadius="md"
-                    onClick={onOpen}
                   >
-                    <Flex
-                      direction="column"
-                      align="center"
-                      justify="center"
-                      height="full"
-                    >
-                      <VscAdd />
-                      <Text>Nuevo</Text>
-                    </Flex>
-                  </Button>
-                ) : (
-                  <SaveCategoryID />
-                )}
-              </Flex>
-            </Screen>
-          </WrapItem>
-        </Wrap>
+                    <VscAdd />
+                    <Text>Nuevo</Text>
+                  </Flex>
+                </Button>
+              ) : (
+                <SaveCategoryID />
+              )}
+            </Flex>
+          </Screen>
+        </SimpleGrid>
         <Divider />
         <Heading as="h3" size="md">
           Proyectos inactivos
         </Heading>
-        <Wrap spacing={{ base: 4, md: 4, lg: 5 }} w="full">
+        <SimpleGrid
+          columns={{ base: 1, md: 2, lg: 3, xl: 5 }}
+          spacing={{ base: 4, md: 4, lg: 5 }}
+          w="full"
+          ref={parentInactive}
+        >
           {renderInactiveItems}
-        </Wrap>
+        </SimpleGrid>
       </VStack>
     </>
   );

@@ -7,6 +7,7 @@ import {
   HStack,
   Text,
   chakra,
+  Skeleton,
 } from "@chakra-ui/react";
 import { money } from "../utils";
 
@@ -18,6 +19,7 @@ type Props = {
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   icon?: React.ReactNode;
   compareAmount?: number;
+  loading?: boolean;
 };
 
 const Stats = ({
@@ -28,6 +30,7 @@ const Stats = ({
   size,
   icon,
   compareAmount,
+  loading,
 }: Props) => {
   const color = useColorModeValue("gray.900", "gray.200");
 
@@ -39,21 +42,26 @@ const Stats = ({
           <Text>{name}</Text>
         </HStack>
       </StatLabel>
-      <StatNumber fontSize={size} color={`${amount < 0 ? "red.600" : color}`}>
-        {compareAmount ? (
-          <HStack spacing={0}>
-            <Text>{money(amount)}</Text>
-            <chakra.span fontSize="sm" color="gray">
-              /
-            </chakra.span>
-            <Text fontSize="sm" color="gray">
-              {money(compareAmount)}
-            </Text>
-          </HStack>
-        ) : (
-          money(amount)
-        )}
-      </StatNumber>
+
+      {loading ? (
+        <Skeleton height="36px" />
+      ) : (
+        <StatNumber fontSize={size} color={`${amount < 0 ? "red.600" : color}`}>
+          {compareAmount ? (
+            <HStack spacing={0}>
+              <Text>{money(amount)}</Text>
+              <chakra.span fontSize="sm" color="gray">
+                /
+              </chakra.span>
+              <Text fontSize="sm" color="gray">
+                {money(compareAmount)}
+              </Text>
+            </HStack>
+          ) : (
+            money(amount)
+          )}
+        </StatNumber>
+      )}
       {helpText && <StatHelpText fontSize={size}>{helpText}</StatHelpText>}
     </Stat>
   );

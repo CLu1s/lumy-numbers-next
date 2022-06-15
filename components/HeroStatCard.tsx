@@ -44,9 +44,9 @@ const HeroStatCard = ({
 
   return (
     <Screen title={title} description={description}>
-      {!loading ? (
-        <Stat>
-          <StatLabel textTransform="capitalize">{statLabel}</StatLabel>
+      <Stat>
+        <StatLabel textTransform="capitalize">{statLabel}</StatLabel>
+        {!loading ? (
           <StatNumber
             fontSize={["5xl", "6xl"]}
             fontWeight="700"
@@ -54,13 +54,15 @@ const HeroStatCard = ({
           >
             {money(amount)}
           </StatNumber>
-          {helpText && (
-            <StatHelpText textTransform="capitalize">{helpText}</StatHelpText>
-          )}
-        </Stat>
-      ) : (
-        <Loading />
-      )}
+        ) : (
+          <Box minH="90px">
+            <Loading />
+          </Box>
+        )}
+        {helpText && (
+          <StatHelpText textTransform="capitalize">{helpText}</StatHelpText>
+        )}
+      </Stat>
       {children}
     </Screen>
   );

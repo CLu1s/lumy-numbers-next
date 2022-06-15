@@ -41,9 +41,7 @@ export default function LastsTransactions() {
     setDeleteId(id);
     setAlertDialogIsOpen(true);
   };
-  if (status === "idle") {
-    return <Loading />;
-  }
+
   const manageOnClose = () => {
     elementToEdit && setElementToEdit(null);
     onClose();
@@ -73,17 +71,21 @@ export default function LastsTransactions() {
         title="Transacciones Recientes"
         description=" Aquí listamos las transacciones más recientes que has tenido"
       >
-        <Stack spacing={4} marginBottom={4}>
-          <TransactionMini
-            transactions={transactions}
-            editable
-            onEdit={manageOpen}
-            onDelete={(id) => {
-              handleDelete(id);
-            }}
-          />
-          <Button to="/app/transacciones">Ver Todas las Transacciones</Button>
-        </Stack>
+        {status === "idle" ? (
+          <Loading />
+        ) : (
+          <Stack spacing={4} marginBottom={4}>
+            <TransactionMini
+              transactions={transactions}
+              editable
+              onEdit={manageOpen}
+              onDelete={(id) => {
+                handleDelete(id);
+              }}
+            />
+            <Button to="/app/transacciones">Ver Todas las Transacciones</Button>
+          </Stack>
+        )}
       </Screen>
     </>
   );

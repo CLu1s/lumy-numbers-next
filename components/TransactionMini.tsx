@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import {
   Text,
   chakra,
@@ -7,6 +8,7 @@ import {
   VStack,
   Button,
 } from "@chakra-ui/react";
+import autoAnimate from "@formkit/auto-animate";
 import _orderBy from "lodash/orderBy";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { money, date, icons } from "../utils";
@@ -26,6 +28,12 @@ export default function TransactionMini({
   onDelete,
   editable = false,
 }: Props) {
+  const parent = useRef(null);
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, [parent]);
+
   const renderCells = transactions.map((item) => (
     <HStack key={item.id} spacing="4" alignItems="flex-start">
       <VStack color={item.category?.color} fontSize="2xl" spacing={1}>
@@ -65,7 +73,7 @@ export default function TransactionMini({
   ));
 
   return (
-    <Stack spacing={1}>
+    <Stack spacing={1} ref={parent}>
       {renderCells.length > 0 ? renderCells : <Noregisters />}
     </Stack>
   );

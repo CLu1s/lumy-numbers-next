@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import autoAnimate from "@formkit/auto-animate";
 import { Heading, Text, Tag, HStack, Button } from "@chakra-ui/react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { CheckIcon } from "@chakra-ui/icons";
@@ -25,6 +26,12 @@ export default function DataTable({
   manageOpen,
   managePaid,
 }: Props) {
+  const parent = useRef(null);
+
+  useEffect(() => {
+    parent.current && autoAnimate(parent.current);
+  }, [parent]);
+
   const renderCells = items.map((item) => {
     const currentDate = new Date();
     currentDate.setDate(item.dueDay);
@@ -78,5 +85,9 @@ export default function DataTable({
     );
   });
 
-  return <Table>{renderCells}</Table>;
+  return (
+    <Table>
+      <div ref={parent}>{renderCells}</div>
+    </Table>
+  );
 }
