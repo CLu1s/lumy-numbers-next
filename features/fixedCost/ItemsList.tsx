@@ -68,7 +68,7 @@ export default function DataTable({
               colorScheme="messenger"
               variant="solid"
             >
-              Pagado
+              Marcar como Pagado
             </Button>
           ) : (
             <Tag colorScheme="messenger">Pagado</Tag>

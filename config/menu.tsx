@@ -23,7 +23,8 @@ export const menuList: MenuItem[] = [
   },
   {
     id: 2,
-    label: "Gastos",
+    label: "Transacciones",
+    mobileLabel: "Transacciones",
     icon: <Icon as={BiTransfer} w={6} h={6} />,
     path: "/app/transacciones",
     showOnMobile: true,
