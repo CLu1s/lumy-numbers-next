@@ -82,10 +82,6 @@ function ProjectsList() {
     setAlertDialogIsOpen(true);
   };
 
-  if (status === LoadingStates.IDLE) {
-    return <Loading />;
-  }
-
   const renderActiveItems = (seeHistory ? allProjects : projects)
     .filter((item) => item.isActive)
     .map((project) => (
@@ -165,55 +161,60 @@ function ProjectsList() {
       )}
       <VStack w="full" spacing={10} alignItems="flex-start">
         <SimpleGrid
-          columns={{ base: 1, md: 2, lg: 3, xl: 5 }}
+          columns={{ base: 1, md: 2, lg: 3 }}
           spacing={{ base: 4, md: 4, lg: 5 }}
           w="full"
           ref={parent}
         >
-          {renderActiveItems}
-
-          <Screen>
-            <Flex
-              direction="column"
-              height="full"
-              w="full"
-              align="center"
-              justifyContent="center"
-            >
-              {categoryID ? (
-                <Button
-                  w="full"
+          {status === LoadingStates.IDLE ? (
+            <Loading />
+          ) : (
+            <>
+              {renderActiveItems}
+              <Screen>
+                <Flex
+                  direction="column"
                   height="full"
-                  minH="238px"
-                  color="gray.400"
-                  colorScheme="whiteAlpha"
-                  borderWidth="1px"
-                  borderColor="gray.200"
-                  borderRadius="md"
-                  onClick={onOpen}
+                  w="full"
+                  align="center"
+                  justifyContent="center"
                 >
-                  <Flex
-                    direction="column"
-                    align="center"
-                    justify="center"
-                    height="full"
-                  >
-                    <VscAdd />
-                    <Text>Nuevo</Text>
-                  </Flex>
-                </Button>
-              ) : (
-                <SaveCategoryID />
-              )}
-            </Flex>
-          </Screen>
+                  {categoryID ? (
+                    <Button
+                      w="full"
+                      height="full"
+                      minH="238px"
+                      color="gray.400"
+                      colorScheme="whiteAlpha"
+                      borderWidth="1px"
+                      borderColor="gray.200"
+                      borderRadius="md"
+                      onClick={onOpen}
+                    >
+                      <Flex
+                        direction="column"
+                        align="center"
+                        justify="center"
+                        height="full"
+                      >
+                        <VscAdd />
+                        <Text>Nuevo</Text>
+                      </Flex>
+                    </Button>
+                  ) : (
+                    <SaveCategoryID />
+                  )}
+                </Flex>
+              </Screen>
+            </>
+          )}
         </SimpleGrid>
         <Divider />
         <Heading as="h3" size="md">
           Proyectos inactivos
         </Heading>
         <SimpleGrid
-          columns={{ base: 1, md: 2, lg: 3, xl: 5 }}
+          columns={{ base: 1, md: 2, lg: 3 }}
           spacing={{ base: 4, md: 4, lg: 5 }}
           w="full"
           ref={parentInactive}

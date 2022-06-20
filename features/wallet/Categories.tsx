@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Stack, SimpleGrid, Box } from "@chakra-ui/react";
+import { Stack, Skeleton, SimpleGrid, Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import autoAnimate from "@formkit/auto-animate";
 import {
@@ -48,17 +48,18 @@ const Categories = ({ showAll, setShowSwitch }: Props) => {
   ));
   return (
     <Stack spacing={4} width="full">
-      {status === LoadingStates.IDLE ? (
-        <Loading />
-      ) : (
-        <SimpleGrid
-          columns={{ base: 1, md: 1, lg: 2 }}
-          spacing={4}
-          ref={parent}
-        >
-          {renderItemsToShow}
-        </SimpleGrid>
-      )}
+      <SimpleGrid columns={{ base: 1, md: 1, lg: 2 }} spacing={4} ref={parent}>
+        {status === LoadingStates.IDLE ? (
+          <>
+            <Skeleton borderRadius="md" height="128px" />
+            <Skeleton borderRadius="md" height="128px" />
+            <Skeleton borderRadius="md" height="128px" />
+            <Skeleton borderRadius="md" height="128px" />
+          </>
+        ) : (
+          renderItemsToShow
+        )}
+      </SimpleGrid>
     </Stack>
   );
 };

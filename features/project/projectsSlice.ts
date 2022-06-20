@@ -214,7 +214,6 @@ const projectsSlice = createSlice({
       state.status = LoadingStates.LOADING;
     },
     [updateProject.fulfilled.type]: (state, action) => {
-      toast.success("Guardado correctamente!");
       const index = state.items.findIndex(
         (project) => project.id === action.payload.data.updateProject.id
       );
