@@ -9,7 +9,7 @@ class MyDocument extends Document {
         <Head>
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <link rel="manifest" href="/manifest.json" />
-          <link rel="apple-touch-icon" href="/icon.png"></link>
+          <link rel="apple-touch-icon" href="/icon_168x168.png"></link>
           <meta
             name="description"
             content="Cómo ahorrar cientos al mes y seguir comprando lo que quieres"
