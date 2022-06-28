@@ -194,3 +194,7 @@ export type DatesHandler = {
   next: Date;
   showNext: boolean;
 };
+
+export type SystemState = {
+  isMenuCollapsed: boolean;
+};

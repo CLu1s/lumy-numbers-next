@@ -9,11 +9,13 @@ import {
   useDisclosure,
   Button,
   useColorModeValue,
-  IconButton,
   useColorMode,
+  Icon,
+  IconButton,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { RiNotification2Line } from "react-icons/ri";
+import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import Drawer from "./Drawer";
 import NotificationCenter from "../features/notificationCenter/NotificationCenter";
 
@@ -23,29 +25,26 @@ export default function Topbar() {
 
   const { colorMode, toggleColorMode } = useColorMode();
   const btnRef = React.useRef();
-  const bg = useColorModeValue("gray.100", "gray.900");
 
   return (
     <Box
       position={{ base: "fixed", md: "static" }}
       display={{ base: "block" }}
-      backgroundColor={bg}
-      borderBottomWidth={1}
+      borderBottomWidth={[1, 0]}
+      bordercolor="gray.100"
       padding={2}
       zIndex={100}
       width="full"
     >
       <HStack spacing={4} justifyContent={"space-between"}>
         <Stack isInline spacing={4}>
-          <Button
-            ref={btnRef}
-            colorScheme="messenger"
+          <IconButton
             variant="ghost"
+            aria-label="Menu hamburguesa"
             onClick={onOpen}
-            display={{ base: "block", xl: "none" }}
-          >
-            <RiMenuFill fontSize={"1.5rem"} />
-          </Button>
+            display={{ base: "block", md: "none" }}
+            icon={<Icon as={HiOutlineMenuAlt4} w={8} h={8} />}
+          />
         </Stack>
         <Stack isInline spacing={4}>
           <IconButton

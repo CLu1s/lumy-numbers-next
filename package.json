@@ -17,6 +17,8 @@
     "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@fontsource/inter": "^4.5.11",
+    "@fontsource/poppins": "^4.5.8",
     "@formkit/auto-animate": "^1.0.0-beta.1",
     "@mailchimp/mailchimp_marketing": "^3.0.75",
     "@next/bundle-analyzer": "^12.1.6",

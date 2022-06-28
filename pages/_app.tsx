@@ -8,6 +8,11 @@ import awsExports from "../aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import Fonts from "../styles/fonts";
 import theme from "../styles/theme";
+import "@fontsource/inter/variable.css";
+import "@fontsource/poppins/400.css";
+import "@fontsource/poppins/500.css";
+import "@fontsource/poppins/600.css";
+
 Amplify.configure({ ...awsExports, ssr: true });
 
 function MyApp({ Component, pageProps }) {

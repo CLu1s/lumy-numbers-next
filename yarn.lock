@@ -4722,6 +4722,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/inter@npm:^4.5.11":
+  version: 4.5.11
+  resolution: "@fontsource/inter@npm:4.5.11"
+  checksum: 5d30b0c40f04b4bfc74cbae0ba87aceba1204ee43706d779ef2183959a01fe56b724cadad996ecca920f5be30058c75ca9eb0b58957d57982a3d6711341150b0
+  languageName: node
+  linkType: hard
+
+"@fontsource/poppins@npm:^4.5.8":
+  version: 4.5.8
+  resolution: "@fontsource/poppins@npm:4.5.8"
+  checksum: 00ece7dbe26970d2431b741f027b1e6889169b93b83cb3d64a1290a5bba18bd0798cdc2be3c20b346623f25ee4a1389869becd5f2ec766405d60f22357751d32
+  languageName: node
+  linkType: hard
+
 "@formkit/auto-animate@npm:^1.0.0-beta.1":
   version: 1.0.0-pre-alpha.3
   resolution: "@formkit/auto-animate@npm:1.0.0-pre-alpha.3"
@@ -9410,6 +9424,8 @@ __metadata:
     "@date-io/date-fns": ^2.13.1
     "@emotion/react": ^11.7.1
     "@emotion/styled": ^11.6.0
+    "@fontsource/inter": ^4.5.11
+    "@fontsource/poppins": ^4.5.8
     "@formkit/auto-animate": ^1.0.0-beta.1
     "@mailchimp/mailchimp_marketing": ^3.0.75
     "@next/bundle-analyzer": ^12.1.6

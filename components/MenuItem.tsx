@@ -14,15 +14,14 @@ type Props = {
   label: string;
   icon: React.ReactNode;
   path: string;
+  showLabel?: boolean;
 };
 
-const MenuItem = ({ label, icon, path }: Props) => {
+const MenuItem = ({ label, icon, path, showLabel }: Props) => {
   const router = useRouter();
   const isActive = router.pathname === path;
-  const bgButton = useColorModeValue("white", "gray.800");
-  const bgSquareActive = "blue.500";
-  const bgSquare = useColorModeValue("white", "gray.800");
-  const ColorSquareNoActive = useColorModeValue("blue.200", "blue.300");
+  const bgButton = useColorModeValue("purple.400", "gray.800");
+  const ColorSquareNoActive = useColorModeValue("gray.200", "blue.300");
 
   return (
     <LinkBox as="button" width="full" maxW="full">
@@ -38,15 +37,18 @@ const MenuItem = ({ label, icon, path }: Props) => {
             padding={4}
           >
             <HStack spacing={4}>
-              <Square
-                bg={isActive ? bgSquareActive : bgSquare}
-                color={isActive ? "white" : ColorSquareNoActive}
-                borderRadius={"lg"}
-                padding={2}
-              >
+              <Square color={isActive ? "white" : ColorSquareNoActive}>
                 {icon}
               </Square>
-              <Text>{label}</Text>
+              {showLabel && (
+                <Text
+                  color={isActive ? "white" : "gray"}
+                  fontSize="14"
+                  fontWeight="semibold"
+                >
+                  {label}
+                </Text>
+              )}
             </HStack>
           </Box>
         </LinkOverlay>

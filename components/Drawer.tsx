@@ -39,12 +39,12 @@ const DrawerMenu = React.forwardRef(
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader>Menú</DrawerHeader>
+          <DrawerHeader color={"gray"}>Menú</DrawerHeader>
 
           <DrawerBody>
             <Stack spacing={4}>
               {menuList.map((item) => (
-                <MenuItem key={item.id} {...item} />
+                <MenuItem key={item.id} {...item} showLabel />
               ))}
             </Stack>
           </DrawerBody>

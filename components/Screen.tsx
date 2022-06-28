@@ -16,9 +16,7 @@ const Screen = ({ title, description, children, display }: props) => {
       width="full"
       height="full"
       p={5}
-      shadow="md"
-      borderWidth="1px"
-      bgColor={bg}
+      shadow="xl"
       flex="1"
       borderRadius="3xl"
       display={display}

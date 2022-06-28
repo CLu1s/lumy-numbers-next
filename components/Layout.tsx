@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { withAuthenticator } from "@aws-amplify/ui-react";
 import { Box, Stack, Heading, Portal, Text } from "@chakra-ui/react";
 import Head from "next/head";
 import Topbar from "./Topbar";
 import useGetInfo from "../hooks/useGetInfo";
 import CheckBucket from "../features/bucket/CheckBucket";
-import Sidebar from "./Sidebar";
+import Sidebar from "../features/system/Sidebar";
 import BottomBar from "./BottomBar";
 type Props = {
   children: JSX.Element[] | JSX.Element;
@@ -15,6 +16,8 @@ type Props = {
 
 const Layout = ({ children, pageTitle, user, description }: Props) => {
   const { username } = user;
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   useGetInfo(username);
   return (
     <>
