@@ -24,14 +24,14 @@ export default function Topbar() {
   const notificationCenter = useDisclosure();
 
   const { colorMode, toggleColorMode } = useColorMode();
-  const btnRef = React.useRef();
+  const bg = useColorModeValue("white", "gray.900");
 
   return (
     <Box
       position={{ base: "fixed", md: "static" }}
       display={{ base: "block" }}
       borderBottomWidth={[1, 0]}
-      bordercolor="gray.100"
+      backgroundColor={bg}
       padding={2}
       zIndex={100}
       width="full"

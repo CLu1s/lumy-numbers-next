@@ -185,7 +185,8 @@ function ProjectRender({
           <HStack justifyContent="space-between" spacing={4}>
             <Button
               size="md"
-              colorScheme="messenger"
+              backgroundColor="purple.400"
+              color="white"
               onClick={() => onOpen(project.id, mensualities, project.name)}
               disabled={!project.isActive}
             >

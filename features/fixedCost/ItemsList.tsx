@@ -72,13 +72,16 @@ export default function DataTable({
             <Button
               leftIcon={<CheckIcon />}
               onClick={() => managePaid(item)}
-              colorScheme="messenger"
+              backgroundColor="purple.400"
+              color="white"
               variant="solid"
             >
               Marcar como Pagado
             </Button>
           ) : (
-            <Tag colorScheme="messenger">Pagado</Tag>
+            <Tag backgroundColor="purple.400" color="white">
+              Pagado
+            </Tag>
           )}
         </Body>
       </Cell>

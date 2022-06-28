@@ -95,7 +95,7 @@ const IncomeCard = () => {
       >
         <HeroStatBody>{list}</HeroStatBody>
         <HeroStatFooter>
-          <Button onClick={onOpen} colorScheme="messenger">
+          <Button onClick={onOpen} backgroundColor="purple.400" color="white">
             Registrar Nuevo Ingreso
           </Button>
         </HeroStatFooter>

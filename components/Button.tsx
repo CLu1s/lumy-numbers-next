@@ -12,7 +12,8 @@ const Button = ({ children, to, onClick, ...props }: Props) => {
   if (to) {
     return (
       <ChakraButton
-        colorScheme="messenger"
+        backgroundColor="purple.400"
+        color="white"
         onClick={() => router.push(to)}
         {...props}
       >
@@ -22,7 +23,12 @@ const Button = ({ children, to, onClick, ...props }: Props) => {
   }
 
   return (
-    <ChakraButton colorScheme="messenger" onClick={onClick} {...props}>
+    <ChakraButton
+      backgroundColor="purple.400"
+      color="white"
+      onClick={onClick}
+      {...props}
+    >
       {children}
     </ChakraButton>
   );

@@ -73,11 +73,17 @@ const DisplayData = (props: any) => {
         Cell: ({ cell: { value } }) => (
           <HStack>
             {value.status !== "paid" ? (
-              <Button colorScheme="messenger" onClick={() => managePaid(value)}>
+              <Button
+                backgroundColor="purple.400"
+                color="white"
+                onClick={() => managePaid(value)}
+              >
                 Marcar como Pagado
               </Button>
             ) : (
-              <Tag colorScheme="messenger">Pagado</Tag>
+              <Tag backgroundColor="purple.400" color="white">
+                Pagado
+              </Tag>
             )}
             <Button onClick={() => manageOpen(value)}>
               <FiEdit />
@@ -143,7 +149,12 @@ const DisplayData = (props: any) => {
       </Wrap>
       <Stack>
         <Box>
-          <Button marginBottom="4" colorScheme="messenger" onClick={onOpen}>
+          <Button
+            marginBottom="4"
+            backgroundColor="purple.400"
+            color="white"
+            onClick={onOpen}
+          >
             Nuevo Gasto Fijo
           </Button>
         </Box>

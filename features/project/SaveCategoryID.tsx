@@ -35,7 +35,7 @@ const SaveCategoryID = () => {
           setSelected={setSelected}
           options={categoriesOption}
         />
-        <Button colorScheme="messenger" onClick={onSave}>
+        <Button backgroundColor="purple.400" color="white" onClick={onSave}>
           Seleccionar
         </Button>
       </HStack>

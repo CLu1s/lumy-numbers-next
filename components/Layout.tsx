@@ -1,6 +1,12 @@
-import { useState } from "react";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import { Box, Stack, Heading, Portal, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Stack,
+  Heading,
+  Portal,
+  Text,
+  useMediaQuery,
+} from "@chakra-ui/react";
 import Head from "next/head";
 import Topbar from "./Topbar";
 import useGetInfo from "../hooks/useGetInfo";
@@ -16,7 +22,7 @@ type Props = {
 
 const Layout = ({ children, pageTitle, user, description }: Props) => {
   const { username } = user;
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isDisplayingInBrowser] = useMediaQuery(["(display-mode: browser)"]);
 
   useGetInfo(username);
   return (
@@ -43,9 +49,11 @@ const Layout = ({ children, pageTitle, user, description }: Props) => {
             </Stack>
           </Stack>
         </Box>
-        <Portal>
-          <BottomBar />
-        </Portal>
+        {!!isDisplayingInBrowser && (
+          <Portal>
+            <BottomBar />
+          </Portal>
+        )}
       </main>
     </>
   );

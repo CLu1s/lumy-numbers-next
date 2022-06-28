@@ -22,7 +22,7 @@ type Props = {
 const Filters = ({ categories, filter, setFilter }: Props) => {
   const checkboxGroup = (
     <CheckboxGroup
-      colorScheme="messenger"
+      colorScheme="purple"
       defaultValue={filter}
       onChange={(value: string[]) => {
         setFilter(value);

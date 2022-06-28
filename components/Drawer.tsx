@@ -50,7 +50,11 @@ const DrawerMenu = React.forwardRef(
           </DrawerBody>
 
           <DrawerFooter>
-            <Button colorScheme="messenger" onClick={signOut}>
+            <Button
+              backgroundColor="purple.400"
+              color="white"
+              onClick={signOut}
+            >
               Cerrar Sesión
             </Button>
           </DrawerFooter>

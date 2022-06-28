@@ -28,13 +28,15 @@ const Control = ({ state, handleChangePeriod }: Props) => {
           onClick={() =>
             handleChangePeriod({ newDate: state.previous, type: "PREVIOUS" })
           }
-          colorScheme="messenger"
+          backgroundColor="purple.400"
+          color="white"
         >
           <ChevronLeftIcon fontSize="2xl" />
         </Button>
         {state.showNext && (
           <Button
-            colorScheme="messenger"
+            backgroundColor="purple.400"
+            color="white"
             onClick={() =>
               handleChangePeriod({ newDate: state.next, type: "NEXT" })
             }
@@ -47,7 +49,8 @@ const Control = ({ state, handleChangePeriod }: Props) => {
             onClick={() =>
               handleChangePeriod({ newDate: initDate, type: "CURRENT" })
             }
-            colorScheme="messenger"
+            backgroundColor="purple.400"
+            color="white"
           >
             Ver mes actual
           </Button>
