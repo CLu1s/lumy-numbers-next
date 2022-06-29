@@ -7,11 +7,19 @@ export const HeaderTop = ({ children, ...props }) => (
 );
 
 export const Body = ({ children }) => (
-  <Flex border="1px" borderRadius="lg" borderColor="gray.200" padding={2}>
-    <HStack justifyContent="space-between" w="full" spacing={6}>
-      {children}
-    </HStack>
-  </Flex>
+  <Box>
+    <Flex
+      border="1px"
+      borderRadius="lg"
+      borderColor="gray.200"
+      padding={2}
+      marginBottom="20px"
+    >
+      <HStack justifyContent="space-between" w="full" spacing={6}>
+        {children}
+      </HStack>
+    </Flex>
+  </Box>
 );
 
 export const HeaderBottom = ({ children, ...props }) => (

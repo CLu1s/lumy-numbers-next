@@ -131,6 +131,7 @@ function ProjectCard({ project, onOpen, handleDelete }: Props) {
           </Stack>
         </Stack>
       }
+      height="255px"
     >
       {numbers.amountPending < 0 && (
         <Tag colorScheme="green" marginBottom="2">

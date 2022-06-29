@@ -43,7 +43,7 @@ export default function DataTable({
       <Cell key={item.id}>
         <Header>
           <HeaderTop>
-            <Heading as="h6" size="xs" textColor="gray.400" marginTop="2">
+            <Heading as="h6" size="xs" textColor="gray.400">
               Descripción
             </Heading>
             <HStack>

@@ -10,6 +10,7 @@ type props = {
   bg?: string;
   textColor?: string;
   withShadow?: boolean;
+  maxHeight?: string;
 };
 
 const Screen = ({
@@ -20,11 +21,13 @@ const Screen = ({
   bg,
   textColor,
   withShadow = true,
+  maxHeight = "auto",
 }: props) => {
   return (
     <Box
       width="full"
       height="full"
+      maxHeight={maxHeight}
       borderWidth="1px"
       p={5}
       shadow={withShadow && "xl"}

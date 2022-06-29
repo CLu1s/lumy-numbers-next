@@ -1,5 +1,10 @@
 import { extendTheme } from "@chakra-ui/react";
 import { mode, StyleFunctionProps } from "@chakra-ui/theme-tools";
+
+const breakpoints = {
+  md: "765px",
+};
+
 const theme = extendTheme({
   config: { initialColorMode: "light ", useSystemColorMode: true },
   fonts: {
@@ -13,7 +18,7 @@ const theme = extendTheme({
       },
     }),
   },
-
+  breakpoints,
   colors: {
     black: "#1B1D21",
     purple: {

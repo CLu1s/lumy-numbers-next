@@ -20,7 +20,7 @@ import { setMenuCollapsed } from "./systemSlice";
 const Sidebsar = () => {
   const dispatch = useDispatch();
   const isCollapsed = useSelector(getIsMenuCollapsed);
-  const [isTablet] = useMediaQuery(["(min-width: 768px)"]);
+  const [isTablet] = useMediaQuery(["(min-width: 765px)"]);
   async function signOut() {
     try {
       await Auth.signOut();

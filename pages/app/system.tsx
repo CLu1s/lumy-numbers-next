@@ -1,6 +1,6 @@
 import { useMediaQuery } from "@chakra-ui/react";
 const SystemInfo = () => {
-  const [isLargerThan1280] = useMediaQuery("(min-width: 768px)");
+  const [isLargerThan1280] = useMediaQuery("(width: 768px)");
   return (
     <>
       <h1>System Info</h1>
