@@ -148,16 +148,26 @@ function ProjectsList() {
       />
 
       {projects.length !== allProjects.length && (
-        <HStack marginBottom="2rem">
-          <Text fontSize="sm" fontWeight="medium">
-            Ver proyectos concluidos
-          </Text>
-          <Switch
-            size="md"
-            isChecked={seeHistory}
-            colorScheme="purple"
-            onChange={(e) => setSeeHistory(e.target.checked)}
-          />
+        <HStack marginBottom="2rem" spacing={8}>
+          <HStack spacing={2}>
+            <Text fontSize="sm" fontWeight="medium">
+              Ver proyectos concluidos
+            </Text>
+            <Switch
+              size="md"
+              isChecked={seeHistory}
+              colorScheme="purple"
+              onChange={(e) => setSeeHistory(e.target.checked)}
+            />
+          </HStack>
+          <Button
+            size="sm"
+            backgroundColor="purple.400"
+            color="white"
+            onClick={onOpen}
+          >
+            Nuevo
+          </Button>
         </HStack>
       )}
       <VStack w="full" spacing={10} alignItems="flex-start">

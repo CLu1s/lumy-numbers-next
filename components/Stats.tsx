@@ -8,6 +8,7 @@ import {
   Text,
   chakra,
   Skeleton,
+  VStack,
 } from "@chakra-ui/react";
 import { money } from "../utils";
 
@@ -52,15 +53,13 @@ const Stats = ({
           color={`${amount < 0 ? "red.500" : color}`}
         >
           {compareAmount ? (
-            <HStack spacing={0}>
+            <VStack spacing={0} alignItems="flex-start">
               <Text>{money(amount)}</Text>
-              <chakra.span fontSize="sm" color="gray">
-                /
-              </chakra.span>
+
               <Text fontSize="sm" color="gray">
                 {money(compareAmount)}
               </Text>
-            </HStack>
+            </VStack>
           ) : (
             money(amount)
           )}

@@ -39,7 +39,7 @@ const Cards = () => {
       borderWidth="thin"
       padding={{ base: 5, xl: 8 }}
       width="full"
-      columns={{ base: 1, md: 3, xl: 4 }}
+      columns={{ base: 2, md: 3, xl: 4 }}
       spacing={4}
     >
       {stats.length > 0 ? stats : <NoRegisters />}

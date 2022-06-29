@@ -37,7 +37,6 @@ function ProjectCard({ project, onOpen, handleDelete }: Props) {
     if (project.loadingState === LoadingStates.SUCCEEDED) return;
     dispatch(fetchMovementsByProject(project.id));
   }, [dispatch, project.id, project.loadingState]);
-
   const numbers =
     project.movements.length > 0
       ? project.movements.reduce(
@@ -63,7 +62,7 @@ function ProjectCard({ project, onOpen, handleDelete }: Props) {
           amountPaid: project.initAmount,
           amountPending: project.amountGoal - project.initAmount,
           expenses: 0,
-          avalible: 0,
+          avalible: project.initAmount,
         };
   const mensualities =
     (project.amountGoal - project.initAmount) /

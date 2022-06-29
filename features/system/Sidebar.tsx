@@ -19,6 +19,7 @@ import { menuList } from "../../config/menu";
 import MenuItem from "../../components/MenuItem";
 import { getIsMenuCollapsed } from "./selector";
 import { setMenuCollapsed } from "./systemSlice";
+import { useIsTablet } from "../../hooks";
 
 const ChakraBox = chakra(motion.div, {
   /**
@@ -31,7 +32,7 @@ const ChakraBox = chakra(motion.div, {
 const Sidebsar = () => {
   const dispatch = useDispatch();
   const isCollapsed = useSelector(getIsMenuCollapsed);
-  const [isTablet] = useMediaQuery(["(min-width: 744px)"]);
+  const isTablet = useIsTablet();
   async function signOut() {
     try {
       await Auth.signOut();

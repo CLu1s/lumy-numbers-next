@@ -8,6 +8,7 @@ import {
   useDisclosure,
   Wrap,
   WrapItem,
+  IconButton,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
@@ -21,7 +22,7 @@ import { money, date } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
 import Stats from "../../components/Stats";
 import usePayFixedCost from "./hooks/usePayFixedCost";
-
+import { CheckIcon } from "@chakra-ui/icons";
 const DisplayData = (props: any) => {
   const items = useSelector(getItems);
   const managePaid = usePayFixedCost();

@@ -1,13 +1,12 @@
 import type { ReactElement } from "react";
 import { useReducer, useEffect } from "react";
-import Head from "next/head";
 import sub from "date-fns/sub";
 import add from "date-fns/add";
 import differenceInMonths from "date-fns/differenceInMonths";
 import isSameMonth from "date-fns/isSameMonth";
 import { useSelector, useDispatch } from "react-redux";
 import Layout from "../../components/Layout";
-import { Stack, Button, VStack, HStack, Heading } from "@chakra-ui/react";
+import { Stack, VStack } from "@chakra-ui/react";
 import Table from "../../features/wallet/Transactions";
 import TransactionsResume from "../../features/wallet/TransactionsResume";
 import Screen from "../../components/Screen";
@@ -15,7 +14,6 @@ import { getPeriod } from "../../features/wallet/selector";
 import { changePeriod } from "../../features/wallet/walletSlice";
 import useBasicInfo from "../../hooks/useBasicInfo";
 import useGetCategories from "../../hooks/useGetCategories";
-import { date } from "../../utils";
 import { DatesHandler } from "../../types";
 
 const initDate = new Date();
@@ -32,16 +30,16 @@ function reducer(state: DatesHandler, action: any) {
     case "PREVIOUS":
       return {
         ...state,
-        previous: sub(state.previous, { months: 1 }),
-        current: sub(state.current, { months: 1 }),
+        previous: sub(state.current, { months: 1 }),
+        current: state.previous,
         next: add(state.previous, { months: 1 }),
         showNext: true,
       };
     case "NEXT":
       return {
         ...state,
-        previous: sub(state.previous, { months: 1 }),
-        current: add(state.current, { months: 1 }),
+        previous: state.current,
+        current: state.next,
         next: add(state.next, { months: 1 }),
         showNext: differenceInMonths(state.next, initDate) < 1,
       };

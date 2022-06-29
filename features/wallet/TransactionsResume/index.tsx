@@ -37,11 +37,17 @@ const TransactionsResume = ({ state, handleChangePeriod }: Props) => {
 
   return (
     <Screen title="Resumen">
-      <Control state={state} handleChangePeriod={handleChangePeriod} />
-      {status !== LoadingStates.LOADING ? (
+      {status === LoadingStates.IDLE ? (
+        <Loading />
+      ) : (
         <Stack direction={{ base: "column" }} width="full">
-          <HStack spacing="10" height="50%">
+          <HStack
+            spacing="10"
+            height="50%"
+            justifyContent={{ base: "center", md: "flex-start" }}
+          >
             <VStack alignItems="flex-start">
+              <Control state={state} handleChangePeriod={handleChangePeriod} />
               <Heading as="h2" size="2xl">
                 {money(totalSpent)}
               </Heading>
@@ -51,7 +57,7 @@ const TransactionsResume = ({ state, handleChangePeriod }: Props) => {
                 Disponible {money(balance)}
               </Text>
             </VStack>
-            <Box width="70%">
+            <Box width="70%" display={["none", "block"]}>
               <LineChart transactions={transactions} />
             </Box>
           </HStack>
@@ -59,8 +65,6 @@ const TransactionsResume = ({ state, handleChangePeriod }: Props) => {
             <Cards />
           </Box>
         </Stack>
-      ) : (
-        <Loading />
       )}
     </Screen>
   );

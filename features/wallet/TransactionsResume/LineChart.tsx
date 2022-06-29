@@ -66,7 +66,7 @@ const LineChart = ({ transactions }) => {
     [groupedDate, labels]
   );
   return (
-    <Box w="full" display={["none", "block"]} height="30%">
+    <Box w="full" height="30%">
       <Line options={options} data={data} />
     </Box>
   );

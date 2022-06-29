@@ -1,6 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import autoAnimate from "@formkit/auto-animate";
-import { Heading, Text, Tag, HStack, Button } from "@chakra-ui/react";
+import {
+  Heading,
+  Text,
+  Tag,
+  HStack,
+  Button,
+  IconButton,
+} from "@chakra-ui/react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { CheckIcon } from "@chakra-ui/icons";
 import Table, {
@@ -69,15 +76,14 @@ export default function DataTable({
         <Body>
           <Text fontWeight="medium">{money(item.amount)}</Text>
           {item.status !== "paid" ? (
-            <Button
-              leftIcon={<CheckIcon />}
-              onClick={() => managePaid(item)}
+            <IconButton
+              aria-label="Marcar como Pagado"
               backgroundColor="purple.400"
               color="white"
-              variant="solid"
-            >
-              Marcar como Pagado
-            </Button>
+              onClick={() => managePaid(item)}
+              minWidth={24}
+              icon={<CheckIcon />}
+            />
           ) : (
             <Tag backgroundColor="purple.400" color="white">
               Pagado

@@ -1,7 +1,7 @@
 import { useReducer, useEffect } from "react";
 import { useSelector } from "react-redux";
 import isSameMonth from "date-fns/isSameMonth";
-import { Stack, Button, VStack, HStack, Heading } from "@chakra-ui/react";
+import { Stack, Button, VStack, HStack, Heading, Box } from "@chakra-ui/react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { DatesHandler } from "../../../types";
 import { date } from "../../../utils";
@@ -19,44 +19,47 @@ const Control = ({ state, handleChangePeriod }: Props) => {
   const sameMonth = isSameMonth(period, initDate);
 
   return (
-    <>
-      <Heading as="h1" size="lg" mb={4} textTransform="capitalize">
-        {`${date(state.current, "MMMM")}`}
-      </Heading>
-      <HStack spacing={6} marginBottom="4">
+    <Stack w="full" marginBottom="4" spacing={4} direction={{ base: "column" }}>
+      <HStack spacing={6} justifyContent={{ base: "center", md: "flex-start" }}>
         <Button
           onClick={() =>
             handleChangePeriod({ newDate: state.previous, type: "PREVIOUS" })
           }
           backgroundColor="purple.400"
           color="white"
+          size="sm"
         >
           <ChevronLeftIcon fontSize="2xl" />
         </Button>
-        {state.showNext && (
-          <Button
-            backgroundColor="purple.400"
-            color="white"
-            onClick={() =>
-              handleChangePeriod({ newDate: state.next, type: "NEXT" })
-            }
-          >
-            <ChevronRightIcon fontSize="2xl" />
-          </Button>
-        )}
-        {!sameMonth && (
-          <Button
-            onClick={() =>
-              handleChangePeriod({ newDate: initDate, type: "CURRENT" })
-            }
-            backgroundColor="purple.400"
-            color="white"
-          >
-            Ver mes actual
-          </Button>
-        )}
+        <Heading as="h1" size="lg" mb={4} textTransform="capitalize">
+          {`${date(state.current, "MMMM")}`}
+        </Heading>
+
+        <Button
+          backgroundColor="purple.400"
+          color="white"
+          onClick={() =>
+            handleChangePeriod({ newDate: state.next, type: "NEXT" })
+          }
+          size="sm"
+          disabled={!state.showNext}
+        >
+          <ChevronRightIcon fontSize="2xl" />
+        </Button>
       </HStack>
-    </>
+      {!sameMonth && (
+        <Button
+          onClick={() =>
+            handleChangePeriod({ newDate: initDate, type: "CURRENT" })
+          }
+          backgroundColor="purple.400"
+          color="white"
+          size="sm"
+        >
+          Ver mes actual
+        </Button>
+      )}
+    </Stack>
   );
 };
 
