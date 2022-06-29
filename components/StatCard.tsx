@@ -51,7 +51,7 @@ const StatCard = ({
   loading,
 }: Props) => {
   return (
-    <Screen>
+    <Screen withShadow={false}>
       <HStack spacing={2}>
         <Square
           size="48px"

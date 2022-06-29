@@ -5,6 +5,7 @@ import {
   StatHelpText,
   Box,
   useColorModeValue,
+  Text,
 } from "@chakra-ui/react";
 import Screen from "./Screen";
 import Loading from "./Loading";
@@ -40,10 +41,19 @@ const HeroStatCard = ({
   loading,
   description,
 }: Props) => {
-  const color = useColorModeValue("gray.700", "gray.200");
+  const color = useColorModeValue("white", "gray.200");
 
   return (
-    <Screen title={title} description={description}>
+    <Screen
+      title={title}
+      description={
+        <Text color="white" fontWeight="medium">
+          {description}
+        </Text>
+      }
+      bg="purple.400"
+      textColor="white"
+    >
       <Stat>
         <StatLabel textTransform="capitalize">{statLabel}</StatLabel>
         {!loading ? (

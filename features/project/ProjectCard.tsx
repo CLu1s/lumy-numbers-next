@@ -77,11 +77,15 @@ function ProjectCard({ project, onOpen, handleDelete }: Props) {
   return (
     <Screen
       title={
-        <HStack justifyContent="space-between" w="full">
+        <Stack
+          direction={{ base: "column", xl: "row" }}
+          justifyContent={{ base: "flex-start", xl: "space-between" }}
+          w="full"
+        >
           <Heading as="h2" size="md" fontWeight="600">
             {project.name}
           </Heading>
-          <VStack>
+          <Stack direction={{ base: "row", xl: "column" }}>
             <HStack>
               <IconButton
                 onClick={() => router.push(`/app/proyectos/${project.id}`)}
@@ -112,6 +116,7 @@ function ProjectCard({ project, onOpen, handleDelete }: Props) {
               </FormLabel>
               <Switch
                 id="email-alerts"
+                colorScheme="purple"
                 onChange={(e) =>
                   dispatch(
                     updateProject({
@@ -123,8 +128,8 @@ function ProjectCard({ project, onOpen, handleDelete }: Props) {
                 isChecked={project.isActive}
               />
             </FormControl>
-          </VStack>
-        </HStack>
+          </Stack>
+        </Stack>
       }
     >
       {numbers.amountPending < 0 && (

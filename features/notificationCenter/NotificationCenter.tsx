@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { RiNotification2Line } from "react-icons/ri";
+import { MdOutlineNotificationsNone } from "react-icons/md";
 import {
   Drawer,
   DrawerBody,
@@ -40,8 +40,8 @@ const NotificationCenter = () => {
       >
         <Avatar
           size="md"
-          bg="blue.500"
-          icon={<RiNotification2Line fontSize="2rem" color="white" />}
+          bg="purple.400"
+          icon={<MdOutlineNotificationsNone fontSize="2rem" color="white" />}
         >
           {notifications.length > 0 && (
             <AvatarBadge

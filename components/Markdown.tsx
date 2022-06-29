@@ -40,7 +40,7 @@ const ParagraphCustom = ({ node, ...props }) => {
   return <Text {...props} color="gray.500" fontWeight="medium" />;
 };
 
-const Markdown = ({ children }) => {
+const Markdown = ({ children, color }) => {
   return (
     <ReactMarkdown
       remarkPlugins={[remarkGfm]}

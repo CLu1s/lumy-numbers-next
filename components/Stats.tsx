@@ -46,7 +46,11 @@ const Stats = ({
       {loading ? (
         <Skeleton height="36px" />
       ) : (
-        <StatNumber fontSize={size} color={`${amount < 0 ? "red.600" : color}`}>
+        <StatNumber
+          fontFamily="poppins"
+          fontSize={size}
+          color={`${amount < 0 ? "red.500" : color}`}
+        >
           {compareAmount ? (
             <HStack spacing={0}>
               <Text>{money(amount)}</Text>

@@ -19,25 +19,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import icons, { iconKeys } from "../../utils/icons";
+import { availableColors } from "../../config/colors";
 
 type Props = {
   isOpen: boolean;
   onClose: () => void;
   toEdit?: Category;
 };
-
-const availableColors = [
-  "red.500",
-  "orange.500",
-  "yellow.500",
-  "green.500",
-  "teal.500",
-  "blue.500",
-  "indigo.500",
-  "purple.500",
-  "pink.500",
-  "gray.500",
-];
 
 const EditCategory = ({ isOpen, onClose, toEdit }: Props) => {
   const dispatch = useDispatch();

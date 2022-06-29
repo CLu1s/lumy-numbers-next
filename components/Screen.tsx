@@ -7,19 +7,32 @@ type props = {
   children: React.ReactNode;
   className?: string;
   display?: any;
+  bg?: string;
+  textColor?: string;
+  withShadow?: boolean;
 };
 
-const Screen = ({ title, description, children, display }: props) => {
-  const bg = useColorModeValue("white", "gray.800");
+const Screen = ({
+  title,
+  description,
+  children,
+  display,
+  bg,
+  textColor,
+  withShadow = true,
+}: props) => {
   return (
     <Box
       width="full"
       height="full"
+      borderWidth="1px"
       p={5}
-      shadow="xl"
-      flex="1"
+      shadow={withShadow && "xl"}
+      flex="1 1 auto"
       borderRadius="3xl"
       display={display}
+      bg={bg}
+      color={textColor}
     >
       <Stack spacing={6}>
         {title && (
@@ -33,7 +46,7 @@ const Screen = ({ title, description, children, display }: props) => {
             )}
             {description &&
               (typeof description === "string" ? (
-                <Markdown>{description}</Markdown>
+                <Markdown color={textColor}>{description}</Markdown>
               ) : (
                 description
               ))}

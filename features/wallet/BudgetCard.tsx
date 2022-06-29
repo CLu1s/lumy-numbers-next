@@ -31,8 +31,9 @@ const BudgetCard = () => {
             <Button
               onClick={onOpen}
               disabled={status !== LoadingStates.SUCCEEDED}
-              backgroundColor="purple.400"
-              color="white"
+              backgroundColor="white"
+              padding={6}
+              color="black"
             >
               Registrar Gasto
             </Button>

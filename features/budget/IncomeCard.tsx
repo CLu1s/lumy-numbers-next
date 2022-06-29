@@ -45,6 +45,7 @@ const IncomeCard = () => {
             setElementToEdit(income);
             onOpen();
           }}
+          color="black"
         >
           <FiEdit />
         </Button>
@@ -95,7 +96,7 @@ const IncomeCard = () => {
       >
         <HeroStatBody>{list}</HeroStatBody>
         <HeroStatFooter>
-          <Button onClick={onOpen} backgroundColor="purple.400" color="white">
+          <Button onClick={onOpen} backgroundColor="white" color="black">
             Registrar Nuevo Ingreso
           </Button>
         </HeroStatFooter>

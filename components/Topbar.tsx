@@ -24,15 +24,16 @@ export default function Topbar() {
   const notificationCenter = useDisclosure();
 
   const { colorMode, toggleColorMode } = useColorMode();
-  const bg = useColorModeValue("white", "gray.900");
+  const bg = useColorModeValue("#F7F7FF", "gray.900");
 
   return (
     <Box
       position={{ base: "fixed", md: "static" }}
       display={{ base: "block" }}
-      borderBottomWidth={[1, 0]}
+      borderBottomWidth={["1px", 0]}
       backgroundColor={bg}
-      padding={2}
+      borderColor="gray.100"
+      padding={[6, 2]}
       zIndex={100}
       width="full"
     >
@@ -50,6 +51,7 @@ export default function Topbar() {
           <IconButton
             aria-label="color mode"
             onClick={toggleColorMode}
+            variant="ghost"
             icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
           />
           <NotificationCenter />

@@ -20,9 +20,9 @@ type Props = {
 const MenuItem = ({ label, icon, path, showLabel }: Props) => {
   const router = useRouter();
   const isActive = router.pathname === path;
-  const bgButton = useColorModeValue("purple.400", "gray.800");
-  const ColorSquareNoActive = useColorModeValue("gray.200", "blue.300");
-
+  const bgButton = useColorModeValue("purple.400", "purple.800");
+  const ColorSquareNoActive = useColorModeValue("gray.400", "gray.300");
+  const textColor = useColorModeValue("gray.500", "gray.300");
   return (
     <LinkBox as="button" width="full" maxW="full">
       <Link href={path} passHref>
@@ -42,7 +42,7 @@ const MenuItem = ({ label, icon, path, showLabel }: Props) => {
               </Square>
               {showLabel && (
                 <Text
-                  color={isActive ? "white" : "gray"}
+                  color={isActive ? "white" : textColor}
                   fontSize="14"
                   fontWeight="semibold"
                 >

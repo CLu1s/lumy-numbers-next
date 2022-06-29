@@ -10,6 +10,11 @@ import {
   DrawerCloseButton,
   Stack,
   Button,
+  HStack,
+  Heading,
+  Center,
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import MenuItem from "./MenuItem";
 import { menuList } from "../config/menu";
@@ -29,6 +34,8 @@ const DrawerMenu = React.forwardRef(
         console.log("error signing out: ", error);
       }
     }
+    const color = useColorModeValue("black", "white");
+
     return (
       <Drawer
         isOpen={isOpen}
@@ -39,9 +46,29 @@ const DrawerMenu = React.forwardRef(
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <DrawerHeader color={"gray"}>Menú</DrawerHeader>
+          <DrawerHeader color={"gray"}>
+            <Center height="full" paddingY="16px">
+              <HStack spacing={1}>
+                <Heading
+                  as="h2"
+                  size="md"
+                  fontWeight="800"
+                  textTransform="capitalize"
+                  color={color}
+                >
+                  Luminus
+                </Heading>
+              </HStack>
+            </Center>
+          </DrawerHeader>
 
           <DrawerBody>
+            <Text
+              fontSize="sm"
+              color={useColorModeValue("gray.500", "gray.300")}
+            >
+              Menú
+            </Text>
             <Stack spacing={4}>
               {menuList.map((item) => (
                 <MenuItem key={item.id} {...item} showLabel />

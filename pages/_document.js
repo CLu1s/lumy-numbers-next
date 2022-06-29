@@ -22,7 +22,7 @@ class MyDocument extends Document {
           />
           <meta
             name="theme-color"
-            content="#edf2f7"
+            content="#F7F7FF"
             media="(prefers-color-scheme: light)"
           />
           <meta

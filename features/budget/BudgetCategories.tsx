@@ -122,7 +122,7 @@ const BudgetCategories = () => {
               maxW={{ base: "100%", lg: "45%" }}
               minH="123px"
             >
-              <Screen>
+              <Screen withShadow={false}>
                 <Button
                   w="full"
                   h="90px"

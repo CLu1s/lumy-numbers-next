@@ -155,6 +155,7 @@ function ProjectsList() {
           <Switch
             size="md"
             isChecked={seeHistory}
+            colorScheme="purple"
             onChange={(e) => setSeeHistory(e.target.checked)}
           />
         </HStack>

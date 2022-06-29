@@ -33,7 +33,7 @@ function Home() {
 }
 
 Home.getLayout = (page: ReactElement) => (
-  <Layout pageTitle="Excelente Día">{page}</Layout>
+  <Layout pageTitle="Excelente Día 👋">{page}</Layout>
 );
 
 export default Home;
