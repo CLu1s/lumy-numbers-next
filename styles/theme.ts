@@ -2,7 +2,7 @@ import { extendTheme } from "@chakra-ui/react";
 import { mode, StyleFunctionProps } from "@chakra-ui/theme-tools";
 
 const breakpoints = {
-  md: "765px",
+  md: "744px",
 };
 
 const theme = extendTheme({
@@ -14,7 +14,7 @@ const theme = extendTheme({
   styles: {
     global: (props: StyleFunctionProps) => ({
       body: {
-        bg: mode("#F7F7FF", "gray.900")(props),
+        bg: mode("#F7F7FF", "#1F2128")(props),
       },
     }),
   },

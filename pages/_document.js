@@ -27,7 +27,7 @@ class MyDocument extends Document {
           />
           <meta
             name="theme-color"
-            content="#171923"
+            content="#1F2128"
             media="(prefers-color-scheme: dark)"
           />
           <link rel="icon" href="/favicon.ico" />

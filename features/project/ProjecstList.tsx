@@ -172,7 +172,8 @@ function ProjectsList() {
           ) : (
             <>
               {renderActiveItems}
-              <Screen>
+
+              <Screen maxHeight="255px">
                 <Flex
                   direction="column"
                   height="full"
@@ -184,7 +185,8 @@ function ProjectsList() {
                     <Button
                       w="full"
                       height="full"
-                      minH="238px"
+                      minH="220px"
+                      maxHeight="238px"
                       color="gray.400"
                       colorScheme="whiteAlpha"
                       borderWidth="1px"

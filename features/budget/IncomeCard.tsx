@@ -45,7 +45,7 @@ const IncomeCard = () => {
             setElementToEdit(income);
             onOpen();
           }}
-          color="black"
+          color="white"
         >
           <FiEdit />
         </Button>

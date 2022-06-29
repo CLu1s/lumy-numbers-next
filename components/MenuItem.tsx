@@ -1,6 +1,9 @@
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { motion, isValidMotionProp } from "framer-motion";
+
 import {
+  chakra,
   Box,
   LinkBox,
   HStack,
@@ -17,10 +20,18 @@ type Props = {
   showLabel?: boolean;
 };
 
+const ChakraBox = chakra(motion.div, {
+  /**
+   * Allow motion props and the children prop to be forwarded.
+   * All other chakra props not matching the motion props will still be forwarded.
+   */
+  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",
+});
+
 const MenuItem = ({ label, icon, path, showLabel }: Props) => {
   const router = useRouter();
   const isActive = router.pathname === path;
-  const bgButton = useColorModeValue("purple.400", "purple.800");
+  const bgButton = "purple.400";
   const ColorSquareNoActive = useColorModeValue("gray.400", "gray.300");
   const textColor = useColorModeValue("gray.500", "gray.300");
   return (
@@ -37,18 +48,22 @@ const MenuItem = ({ label, icon, path, showLabel }: Props) => {
             padding={4}
           >
             <HStack spacing={4}>
-              <Square color={isActive ? "white" : ColorSquareNoActive}>
-                {icon}
-              </Square>
-              {showLabel && (
-                <Text
-                  color={isActive ? "white" : textColor}
-                  fontSize="14"
-                  fontWeight="semibold"
-                >
-                  {label}
-                </Text>
-              )}
+              <ChakraBox layout>
+                <Square color={isActive ? "white" : ColorSquareNoActive}>
+                  {icon}
+                </Square>
+              </ChakraBox>
+              <ChakraBox layout>
+                {showLabel && (
+                  <Text
+                    color={isActive ? "white" : textColor}
+                    fontSize="14"
+                    fontWeight="semibold"
+                  >
+                    {label}
+                  </Text>
+                )}
+              </ChakraBox>
             </HStack>
           </Box>
         </LinkOverlay>

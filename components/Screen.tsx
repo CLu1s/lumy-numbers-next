@@ -23,6 +23,8 @@ const Screen = ({
   withShadow = true,
   maxHeight = "auto",
 }: props) => {
+  const shadow = useColorModeValue("xl", "2xl");
+
   return (
     <Box
       width="full"
@@ -30,7 +32,7 @@ const Screen = ({
       maxHeight={maxHeight}
       borderWidth="1px"
       p={5}
-      shadow={withShadow && "xl"}
+      shadow={withShadow && shadow}
       flex="1 1 auto"
       borderRadius="3xl"
       display={display}

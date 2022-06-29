@@ -1,20 +1,15 @@
 import React from "react";
-import { RiMenuFill } from "react-icons/ri";
 import {
   Box,
   Stack,
   HStack,
-  Avatar,
-  AvatarBadge,
   useDisclosure,
-  Button,
   useColorModeValue,
   useColorMode,
   Icon,
   IconButton,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { RiNotification2Line } from "react-icons/ri";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import Drawer from "./Drawer";
 import NotificationCenter from "../features/notificationCenter/NotificationCenter";
@@ -24,7 +19,7 @@ export default function Topbar() {
   const notificationCenter = useDisclosure();
 
   const { colorMode, toggleColorMode } = useColorMode();
-  const bg = useColorModeValue("#F7F7FF", "gray.900");
+  const bg = useColorModeValue("#F7F7FF", "#1F2128");
 
   return (
     <Box
