@@ -23,7 +23,6 @@ function Home() {
             <LastsTransactions />
           </Box>
         </Stack>
-
         <Box maxW={{ base: "100%", md: "47%" }} width={{ base: "full" }}>
           <FixedCostDashboard />
         </Box>
