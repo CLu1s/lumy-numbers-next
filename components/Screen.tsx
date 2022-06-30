@@ -22,15 +22,15 @@ const Screen = ({
   bg,
   textColor,
   withShadow = true,
-  maxHeight = "auto",
-  minHeight = "auto",
+  maxHeight = "initial",
+  minHeight = "initial",
 }: props) => {
   const shadow = useColorModeValue("xl", "2xl");
   const defaultbg = useColorModeValue("white", "#242731");
 
   return (
     <ChackraBox
-      width="full"
+      width="auto"
       height="full"
       maxHeight={maxHeight}
       minHeight={minHeight}
