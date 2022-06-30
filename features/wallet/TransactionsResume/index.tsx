@@ -40,7 +40,7 @@ const TransactionsResume = ({ state, handleChangePeriod }: Props) => {
       {status === LoadingStates.IDLE ? (
         <Loading />
       ) : (
-        <Stack direction={{ base: "column" }} width="full">
+        <Stack direction={{ base: "column" }} width="full" spacing={6}>
           <HStack
             spacing="10"
             height="50%"

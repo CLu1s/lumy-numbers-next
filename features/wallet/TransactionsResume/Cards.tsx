@@ -1,5 +1,12 @@
 import { useMemo } from "react";
-import { SimpleGrid, Wrap, WrapItem, Square } from "@chakra-ui/react";
+import {
+  SimpleGrid,
+  Wrap,
+  WrapItem,
+  Square,
+  VStack,
+  Text,
+} from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { getBalanceByCategories } from "../selector";
 import { icons } from "../../../utils";
@@ -27,23 +34,27 @@ const Cards = () => {
           name={total.name || "no cat"}
           amount={total.spent}
           compareAmount={total.balance}
-          helpText="Gastado / Disponible"
         />
       )),
     [items]
   );
   return (
-    <SimpleGrid
-      borderRadius="lg"
-      borderColor="gray.200"
-      borderWidth="thin"
-      padding={{ base: 5, xl: 8 }}
-      width="full"
-      columns={{ base: 2, md: 3, xl: 4 }}
-      spacing={4}
-    >
-      {stats.length > 0 ? stats : <NoRegisters />}
-    </SimpleGrid>
+    <VStack spacing={2} alignItems="flex-start">
+      <Text fontSize="sm" fontWeight="medium">
+        Resumen de lo gastado sobre lo disponible a la fecha.
+      </Text>
+      <SimpleGrid
+        borderRadius="lg"
+        borderColor="gray.200"
+        borderWidth="thin"
+        padding={{ base: 5, xl: 8 }}
+        width="full"
+        columns={{ base: 2, md: 3, xl: 4 }}
+        spacing={4}
+      >
+        {stats.length > 0 ? stats : <NoRegisters />}
+      </SimpleGrid>
+    </VStack>
   );
 };
 

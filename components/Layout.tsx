@@ -6,58 +6,64 @@ import {
   Portal,
   Text,
   useMediaQuery,
-  chakra,
+  Container,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import { motion, isValidMotionProp } from "framer-motion";
 import Topbar from "./Topbar";
 import useGetInfo from "../hooks/useGetInfo";
 import CheckBucket from "../features/bucket/CheckBucket";
 import Sidebar from "../features/system/Sidebar";
 import BottomBar from "./BottomBar";
-
+import ChakraBox from "../components/ChakraBox";
+import { useSelector } from "react-redux";
+import { getIsMenuCollapsed } from "../features/system/selector";
 type Props = {
   children: JSX.Element[] | JSX.Element;
   pageTitle?: string;
   user: any;
   description?: string;
 };
-const ChakraBox = chakra(motion.div, {
-  /**
-   * Allow motion props and the children prop to be forwarded.
-   * All other chakra props not matching the motion props will still be forwarded.
-   */
-  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",
-});
 
 const Layout = ({ children, pageTitle, user, description }: Props) => {
   const { username } = user;
   const [isDisplayingInBrowser] = useMediaQuery(["(display-mode: browser)"]);
+  const isCollapsed = useSelector(getIsMenuCollapsed);
 
   useGetInfo(username);
   return (
-    <ChakraBox layout>
+    <>
       <Head>
         <title>Luminus Conscious Planning</title>
       </Head>
       <main>
         <Box paddingBottom="10">
-          <Stack spacing={{ base: 0, xl: 5 }} direction="row">
+          <Stack spacing={0} direction="row" width="full">
             <CheckBucket userName={username} />
             <Sidebar />
             <Stack width="full">
               <Topbar />
-              <Stack spacing={4} paddingX={4} paddingY={{ base: 24, lg: 10 }}>
-                <Heading as="h2" size="md" textTransform="capitalize">
-                  Hola {username}
-                </Heading>
-
-                {pageTitle && <Heading as="h2">{pageTitle}</Heading>}
-                {description && <Text>{description}</Text>}
-                <ChakraBox layout minW={{ base: "full", md: "647px" }}>
-                  {children}
-                </ChakraBox>
-              </Stack>
+              <ChakraBox layout display="flex" justifyContent="center">
+                <Stack
+                  spacing={4}
+                  paddingX={{ base: 4, md: 6, lg: 20, xl: 24 }}
+                  paddingY={{ base: 24, md: 8, lg: 10 }}
+                  width={{ base: "full" }}
+                  maxW="876px"
+                >
+                  <ChakraBox layout w="full">
+                    <Heading as="h2" size="md" textTransform="capitalize">
+                      Hola {username}
+                    </Heading>
+                  </ChakraBox>
+                  <ChakraBox layout w="full">
+                    {pageTitle && <Heading as="h2">{pageTitle}</Heading>}
+                  </ChakraBox>
+                  {description && <Text>{description}</Text>}
+                  <ChakraBox layout w="full">
+                    {children}
+                  </ChakraBox>
+                </Stack>
+              </ChakraBox>
             </Stack>
           </Stack>
         </Box>
@@ -67,7 +73,7 @@ const Layout = ({ children, pageTitle, user, description }: Props) => {
           </Portal>
         )}
       </main>
-    </ChakraBox>
+    </>
   );
 };
 export default withAuthenticator(Layout);

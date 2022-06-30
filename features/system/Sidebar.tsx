@@ -1,33 +1,22 @@
 import { Auth } from "aws-amplify";
 import {
-  Box,
   Center,
   VStack,
   Heading,
   Text,
-  useMediaQuery,
   HStack,
   Icon,
-  chakra,
   IconButton,
   useColorModeValue,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
-import { motion, isValidMotionProp } from "framer-motion";
 import { menuList } from "../../config/menu";
 import MenuItem from "../../components/MenuItem";
 import { getIsMenuCollapsed } from "./selector";
 import { setMenuCollapsed } from "./systemSlice";
 import { useIsTablet } from "../../hooks";
-
-const ChakraBox = chakra(motion.div, {
-  /**
-   * Allow motion props and the children prop to be forwarded.
-   * All other chakra props not matching the motion props will still be forwarded.
-   */
-  shouldForwardProp: (prop) => isValidMotionProp(prop) || prop === "children",
-});
+import ChakraBox from "../../components/ChakraBox";
 
 const Sidebsar = () => {
   const dispatch = useDispatch();
@@ -40,7 +29,7 @@ const Sidebsar = () => {
       console.log("error signing out: ", error);
     }
   }
-  const bg = useColorModeValue("#F7F7FF", "#1F2128");
+  const bg = useColorModeValue("#F7F7FF", "#242731");
 
   return (
     <ChakraBox
@@ -50,7 +39,9 @@ const Sidebsar = () => {
       display={{ base: "none", md: "block" }}
       layout
     >
-      <VStack width={isCollapsed && isTablet ? "96px" : "256px"}>
+      <VStack
+        width={isCollapsed && isTablet ? "96px" : { md: "220px", lg: "256px" }}
+      >
         <Center
           height="full"
           paddingY={{ base: "29px", xl: "40px" }}

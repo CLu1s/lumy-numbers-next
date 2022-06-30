@@ -1,6 +1,6 @@
 import { Box, Stack, Heading, useColorModeValue } from "@chakra-ui/react";
 import Markdown from "./Markdown";
-
+import ChackraBox from "./ChakraBox";
 type props = {
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;
@@ -11,6 +11,7 @@ type props = {
   textColor?: string;
   withShadow?: boolean;
   maxHeight?: string;
+  minHeight?: string;
 };
 
 const Screen = ({
@@ -22,22 +23,26 @@ const Screen = ({
   textColor,
   withShadow = true,
   maxHeight = "auto",
+  minHeight = "auto",
 }: props) => {
   const shadow = useColorModeValue("xl", "2xl");
+  const defaultbg = useColorModeValue("white", "#242731");
 
   return (
-    <Box
+    <ChackraBox
       width="full"
       height="full"
       maxHeight={maxHeight}
+      minHeight={minHeight}
       borderWidth="1px"
       p={5}
       shadow={withShadow && shadow}
       flex="1 1 auto"
       borderRadius="3xl"
       display={display}
-      bg={bg}
+      bg={bg ?? defaultbg}
       color={textColor}
+      layout
     >
       <Stack spacing={6}>
         {title && (
@@ -59,7 +64,7 @@ const Screen = ({
         )}
         <Box>{children}</Box>
       </Stack>
-    </Box>
+    </ChackraBox>
   );
 };
 

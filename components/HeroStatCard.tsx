@@ -53,6 +53,7 @@ const HeroStatCard = ({
       }
       bg="purple.400"
       textColor="white"
+      minHeight="347px"
     >
       <Stat>
         <StatLabel textTransform="capitalize">{statLabel}</StatLabel>
