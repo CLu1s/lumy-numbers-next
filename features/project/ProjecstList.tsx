@@ -198,7 +198,7 @@ function ProjectsList() {
                       w="full"
                       height="full"
                       minH="220px"
-                      maxHeight="238px"
+                      maxHeight="583px"
                       color="gray.400"
                       colorScheme="whiteAlpha"
                       borderWidth="1px"
@@ -229,7 +229,7 @@ function ProjectsList() {
           Proyectos inactivos
         </Heading>
         <SimpleGrid
-          columns={{ base: 1, md: 2, lg: 3 }}
+          columns={[1, isCollapsed ? 2 : 1, 3]}
           spacing={{ base: 4, md: 4, lg: 5 }}
           w="full"
           ref={parentInactive}

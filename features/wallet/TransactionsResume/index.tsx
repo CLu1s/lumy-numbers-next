@@ -19,11 +19,13 @@ import _groupBy from "lodash/groupBy";
 import _sortBy from "lodash/sortBy";
 import { LoadingStates } from "../../../types";
 import Loading from "../../../components/Loading";
+import ChackraBox from "../../../components/ChakraBox";
 import { money } from "../../../utils";
 import LineChart from "./LineChart";
 import Cards from "./Cards";
 import { DatesHandler } from "../../../types";
 import Control from "./Control";
+import { getIsMenuCollapsed } from "../../system/selector";
 type Props = {
   state: DatesHandler;
   handleChangePeriod: ({ newDate, type }: { newDate: any; type: any }) => void;
@@ -34,33 +36,44 @@ const TransactionsResume = ({ state, handleChangePeriod }: Props) => {
   const balance = useSelector(getBalance);
   const totalSpent = useSelector(getTotalSpent);
   const status = useSelector(getStatus);
+  const isCollapsed = useSelector(getIsMenuCollapsed);
 
   return (
     <Screen title="Resumen">
       {status === LoadingStates.IDLE ? (
         <Loading />
       ) : (
-        <Stack direction={{ base: "column" }} width="full" spacing={6}>
-          <HStack
-            spacing="10"
-            height="50%"
-            justifyContent={{ base: "center", md: "flex-start" }}
-          >
-            <VStack alignItems="flex-start">
-              <Control state={state} handleChangePeriod={handleChangePeriod} />
-              <Heading as="h2" size="2xl">
-                {money(totalSpent)}
-              </Heading>
-              <Text fontSize="sm">Gastos totales del mes.</Text>
-              <Divider />
-              <Text fontSize="sm" color="gray.500" fontWeight="medium">
-                Disponible {money(balance)}
-              </Text>
-            </VStack>
-            <Box width="70%" display={["none", "block"]}>
-              <LineChart transactions={transactions} />
-            </Box>
-          </HStack>
+        <Stack
+          direction={{ base: "column" }}
+          w={isCollapsed ? "auto" : "full"}
+          spacing={6}
+        >
+          <ChackraBox layout>
+            <Stack
+              spacing="10"
+              height="50%"
+              direction={["row", isCollapsed ? "row" : "column"]}
+            >
+              <VStack alignItems="flex-start">
+                <Control
+                  state={state}
+                  handleChangePeriod={handleChangePeriod}
+                />
+                <Heading as="h2" size="2xl">
+                  {money(totalSpent)}
+                </Heading>
+                <Text fontSize="sm">Gastos totales del mes.</Text>
+                <Divider />
+                <Text fontSize="sm" color="gray.500" fontWeight="medium">
+                  Disponible {money(balance)}
+                </Text>
+              </VStack>
+
+              <Box w={isCollapsed ? "70%" : "70%"} display={["none", "block"]}>
+                <LineChart transactions={transactions} />
+              </Box>
+            </Stack>
+          </ChackraBox>
           <Box width="full">
             <Cards />
           </Box>
