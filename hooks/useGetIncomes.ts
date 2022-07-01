@@ -2,7 +2,11 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getBucketID } from "../features/bucket/selector";
 import { fetchIncomes } from "../features/budget/budgetSlice";
-import { getIncomesList, getStatus } from "../features/budget/selector";
+import {
+  getIncomesList,
+  getStatus,
+  getIncomesLoadingStatus,
+} from "../features/budget/selector";
 import { LoadingStates } from "../types";
 
 const useGetIncomes = () => {
@@ -10,12 +14,18 @@ const useGetIncomes = () => {
   const dispatch = useDispatch();
   const { status } = useSelector(getStatus);
   const incomesList = useSelector(getIncomesList);
+  const loadingIncomesStatus = useSelector(getIncomesLoadingStatus);
 
   useEffect(() => {
-    if (!bucketID || status === LoadingStates.LOADING || incomesList.length > 0)
+    if (
+      !bucketID ||
+      status === LoadingStates.LOADING ||
+      loadingIncomesStatus === LoadingStates.LOADING ||
+      incomesList.length > 0
+    )
       return;
     dispatch(fetchIncomes({ bucketID }));
-  }, [bucketID, dispatch, status, incomesList.length]);
+  }, [bucketID, dispatch, status, incomesList.length, loadingIncomesStatus]);
 
   return { bucketID };
 };

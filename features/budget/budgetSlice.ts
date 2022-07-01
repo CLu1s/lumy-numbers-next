@@ -18,6 +18,7 @@ import { localFetchTransactions } from "../wallet/walletSlice";
 
 const initialState: BudgetState = {
   status: LoadingStates.IDLE,
+  loadingIncomesStatus: LoadingStates.IDLE,
   error: null,
   incomes: [],
   categories: [],
@@ -69,6 +70,49 @@ const localFetchIncome = async (id: string, init: string, end: string) =>
     )
   );
 
+const calculateLastMonthIncomes = async (
+  actualDate,
+  firstDate,
+  lastDate,
+  bucketID
+) => {
+  const initLastMonth = format(sub(firstDate, { months: 1 }), "yyyy-MM-dd");
+  const endLastMonth = format(sub(lastDate, { months: 1 }), "yyyy-MM-dd");
+  const lastMonthIncomes = (await localFetchIncome(
+    bucketID,
+    initLastMonth,
+    endLastMonth
+  )) as any;
+  const lastTransactionsCall = (await localFetchTransactions(
+    bucketID,
+    initLastMonth,
+    endLastMonth
+  )) as any;
+  const lastTransactions =
+    lastTransactionsCall.data.getBucket.transactionsByDate.items;
+  const totalTransactions = lastTransactions.reduce(
+    (acc, transaction) => acc + transaction.amount,
+    0
+  );
+  const oldIncomes = lastMonthIncomes.data.getBucket.incomes.items;
+  const totalAvailable = oldIncomes.reduce((acc, curr) => {
+    return acc + curr.amount;
+  }, 0);
+  const lastBalance = totalAvailable - totalTransactions;
+  oldIncomes.push({
+    description: "Balance del mes anterior",
+    amount: lastBalance,
+    bucketID,
+  });
+  const promises = oldIncomes.map((income) => {
+    const { id, updatedAt, createdAt, ...input } = income;
+    input.date = startOfMonth(actualDate);
+    return API.graphql(graphqlOperation(createIncome, { input }));
+  });
+  let newIncomes = await Promise.all(promises);
+  return newIncomes.map((income) => income.data.createIncome);
+};
+
 export const fetchIncomes = createAsyncThunk(
   "budget/fetchIncomes",
   async ({ bucketID, period }: { bucketID: string; period?: Date }) => {
@@ -81,45 +125,14 @@ export const fetchIncomes = createAsyncThunk(
     const currentIcomes = (await localFetchIncome(bucketID, init, end)) as any;
     const incomes = currentIcomes.data.getBucket.incomes.items;
     if (incomes.length === 0) {
-      const initLastMonth = format(sub(firstDate, { months: 1 }), "yyyy-MM-dd");
-      const endLastMonth = format(sub(lastDate, { months: 1 }), "yyyy-MM-dd");
-      const lastMonthIncomes = (await localFetchIncome(
-        bucketID,
-        initLastMonth,
-        endLastMonth
-      )) as any;
-      const lastTransactionsCall = (await localFetchTransactions(
-        bucketID,
-        initLastMonth,
-        endLastMonth
-      )) as any;
-      const lastTransactions =
-        lastTransactionsCall.data.getBucket.transactionsByDate.items;
-      const totalTransactions = lastTransactions.reduce(
-        (acc, transaction) => acc + transaction.amount,
-        0
+      newIncomes = await calculateLastMonthIncomes(
+        actualDate,
+        firstDate,
+        lastDate,
+        bucketID
       );
-      const oldIncomes = lastMonthIncomes.data.getBucket.incomes.items;
-      const totalAvailable = oldIncomes.reduce((acc, curr) => {
-        return acc + curr.amount;
-      }, 0);
-      const lastBalance = totalAvailable - totalTransactions;
-      oldIncomes.push({
-        description: "Balance del mes anterior",
-        amount: lastBalance,
-        bucketID,
-      });
-      const promises = oldIncomes.map((income) => {
-        const { id, updatedAt, createdAt, ...input } = income;
-        input.date = startOfMonth(actualDate);
-        return API.graphql(graphqlOperation(createIncome, { input }));
-      });
-      newIncomes = await Promise.all(promises);
-      newIncomes = newIncomes.map((income) => income.data.createIncome);
     }
-    return currentIcomes.data.getBucket.incomes.items.length > 0
-      ? currentIcomes.data.getBucket.incomes.items
-      : newIncomes;
+    return incomes.length > 0 ? incomes : newIncomes;
   }
 );
 
@@ -233,14 +246,17 @@ const budgetSlice = createSlice({
     },
     [fetchIncomes.pending.type]: (state) => {
       state.status = LoadingStates.LOADING;
+      state.loadingIncomesStatus = LoadingStates.LOADING;
     },
     [fetchIncomes.fulfilled.type]: (state, action) => {
       state.status = LoadingStates.SUCCEEDED;
+      state.loadingIncomesStatus = LoadingStates.SUCCEEDED;
       state.incomes = action.payload;
     },
     [fetchIncomes.rejected.type]: (state, action) => {
       toast.error("Hubo un error!");
       state.status = LoadingStates.FAILED;
+      state.loadingIncomesStatus = LoadingStates.FAILED;
       console.log(action.payload);
       state.error = action.payload;
     },

@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit'
+import { createSelector } from "@reduxjs/toolkit";
 import { BudgetState, Category, Income } from "../../types";
 import { RootState } from "../../store/reducers";
 import _sortBy from "lodash/sortBy";
@@ -82,4 +82,10 @@ export const getStatus = createSelector(
     status: state.status,
     error: state.error,
   })
+);
+
+export const getIncomesLoadingStatus = createSelector(
+  [budgetSelector],
+  (state: BudgetState): BudgetState["loadingIncomesStatus"] =>
+    state.loadingIncomesStatus
 );

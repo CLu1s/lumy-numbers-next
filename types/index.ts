@@ -95,6 +95,7 @@ export type BudgetState = {
   incomes: Income[];
   categories: Category[];
   status: LoadingStates;
+  loadingIncomesStatus: LoadingStates;
   error: null | string;
 };
 

@@ -67,11 +67,6 @@ const Layout = ({ children, pageTitle, user, description }: Props) => {
             </Stack>
           </Stack>
         </Box>
-        {!isDisplayingInBrowser && (
-          <Portal>
-            <BottomBar />
-          </Portal>
-        )}
       </main>
     </>
   );
