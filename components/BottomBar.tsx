@@ -14,7 +14,7 @@ const BottomBar = () => {
   return (
     <Box
       position={{ base: "fixed", md: "static" }}
-      display={{ base: "block", md: "none" }}
+      display={["block", "none"]}
       // boxShadow="lg"
       backgroundColor={bg}
       color="gray.500"
