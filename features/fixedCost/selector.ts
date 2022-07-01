@@ -1,4 +1,4 @@
-import { createSelector } from '@reduxjs/toolkit'
+import { createSelector } from "@reduxjs/toolkit";
 import { FixedCostState, Bucket, WalletState } from "../../types";
 import { RootState } from "../../store/reducers";
 import _orderBy from "lodash/orderBy";
@@ -38,7 +38,7 @@ export const getItems = createSelector(
       transactions,
       bucketState?.fixedCostCategoryID
     );
-    return _orderBy(items, ["status"], ["desc"]);
+    return _orderBy(items, ["status", "dueDay"], ["desc"]);
   }
 );
 export const getPendingItems = createSelector(
@@ -54,7 +54,9 @@ export const getPendingItems = createSelector(
       transactions,
       bucketState?.fixedCostCategoryID
     );
-    return items.filter((item) => item.status !== "paid");
+    const pendingItems = items.filter((item) => item.status !== "paid");
+
+    return _orderBy(pendingItems, ["dueDay"]);
   }
 );
 

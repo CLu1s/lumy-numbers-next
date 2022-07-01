@@ -7,7 +7,6 @@ import {
   getStatus,
 } from "../../features/wallet/selector";
 import StatCard from "../../components/StatCard";
-import Loading from "../../components/Loading";
 import { LoadingStates } from "../../types";
 
 type Props = {
@@ -48,7 +47,7 @@ const Categories = ({ showAll, setShowSwitch }: Props) => {
   ));
   return (
     <Stack spacing={4} width="full">
-      <SimpleGrid columns={{ base: 1, md: 1, lg: 2 }} spacing={4} ref={parent}>
+      <SimpleGrid columns={[1, 2, 3]} spacing={4} ref={parent}>
         {status === LoadingStates.IDLE ? (
           <>
             <Skeleton borderRadius="md" height="128px" />

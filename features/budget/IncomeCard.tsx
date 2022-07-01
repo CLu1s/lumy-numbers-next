@@ -15,6 +15,7 @@ import {
   StatNumber,
   Divider,
   useDisclosure,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { money } from "../../utils";
@@ -32,6 +33,7 @@ const IncomeCard = () => {
   const listOfIncomes = useSelector(getListOfIncomes);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [elementToEdit, setElementToEdit] = useState<any>(null);
+  const color = useColorModeValue("black", "white");
 
   const list = listOfIncomes.map((income) => (
     <Stack key={income.id}>
@@ -45,7 +47,7 @@ const IncomeCard = () => {
             setElementToEdit(income);
             onOpen();
           }}
-          color="white"
+          color={color}
         >
           <FiEdit />
         </Button>

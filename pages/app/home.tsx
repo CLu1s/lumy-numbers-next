@@ -12,20 +12,21 @@ function Home() {
       <CheckcIncomes />
       <Stack spacing={8}>
         <BudgetCard />
+        <Box maxW={{ base: "100%" }} width="100%">
+          <CategoriesDashboard />
+        </Box>
+
         <Stack spacing={4} direction={["column", "row"]}>
-          <Box maxW={{ base: "100%" }} width="100%">
-            <CategoriesDashboard />
+          <Box maxW={{ base: "100%", md: "47%", lg: "49%" }} width="100%">
+            <FixedCostDashboard />
           </Box>
           <Box
-            maxW={{ base: "100%", md: "47%", lg: "49%" }}
+            maxW={{ base: "100%", md: "auto", lg: "49%" }}
             width={{ base: "full" }}
           >
             <LastsTransactions />
           </Box>
         </Stack>
-        <Box maxW={{ base: "100%", md: "47%" }} width={{ base: "full" }}>
-          <FixedCostDashboard />
-        </Box>
       </Stack>
     </>
   );

@@ -48,7 +48,7 @@ const Layout = ({ children, pageTitle, user, description }: Props) => {
                   paddingX={{ base: 4, md: 6, lg: 20, xl: 24 }}
                   paddingY={{ base: 24, md: 8, lg: 10 }}
                   width={{ base: "full" }}
-                  maxW="876px"
+                  maxW={["876px", "960px", "1024px"]}
                 >
                   <ChakraBox layout w="full">
                     <Heading as="h2" size="md" textTransform="capitalize">

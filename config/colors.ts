@@ -1,11 +1,18 @@
 export const availableColors = [
   "red.400",
+  "red.700",
   "orange.400",
+  "orange.200",
   "yellow.400",
+  "yellow.700",
   "green.400",
   "teal.400",
   "blue.400",
+  "purple.200",
   "purple.400",
+  "purple.700",
   "pink.100",
+  "pink.400",
+  "pink.700",
   "gray.400",
 ];

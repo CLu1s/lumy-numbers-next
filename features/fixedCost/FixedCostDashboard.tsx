@@ -1,16 +1,8 @@
-import {
-  Stack,
-  chakra,
-  Text,
-  Heading,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import _orderBy from "lodash/orderBy";
+import { Stack, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import Screen from "../../components/Screen";
 import ItemsList from "./ItemsList";
 import { getPendingItems, getPendingAmount } from "./selector";
-import { money } from "../../utils";
 import useGetFixedCosts from "../../hooks/useGetFixedCosts";
 import usePayFixedCost from "./hooks/usePayFixedCost";
 import Button from "../../components/Button";
@@ -22,7 +14,7 @@ const FixedCostDashboard = () => {
   const items = useSelector(getPendingItems);
   const amount = useSelector(getPendingAmount);
 
-  const orderItmes = _orderBy(items, ["dueDay"]).slice(0, 3);
+  const orderItmes = items.slice(0, 3);
 
   return (
     <Screen title="Próximos Pagos">
