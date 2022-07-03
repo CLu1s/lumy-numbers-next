@@ -136,15 +136,20 @@ export const addMovement = createAsyncThunk(
 
 export const updateMovement = createAsyncThunk(
   "projects/updateMovement",
-  async (data: Movement) => {
+  async (data: Movement, { rejectWithValue }) => {
     const { createdAt, updatedAt, ...movement } = data;
     const input = {
       ...movement,
     };
-    const response = await API.graphql(
-      graphqlOperation(updateMovementMutation, { input })
-    );
-    return response;
+    try {
+      const response = await API.graphql(
+        graphqlOperation(updateMovementMutation, { input })
+      );
+      return response;
+    } catch (err) {
+      console.log(err.errors[0].message);
+      return rejectWithValue(err.errors[0].message);
+    }
   }
 );
 
@@ -272,7 +277,7 @@ const projectsSlice = createSlice({
       state.status = LoadingStates.SUCCEEDED;
     },
     [updateMovement.rejected.type]: (state, action) => {
-      toast.error("Hubo un error!");
+      toast.error(action.payload);
       state.error = action.payload;
       state.status = LoadingStates.FAILED;
     },

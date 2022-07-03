@@ -12,13 +12,24 @@ import autoAnimate from "@formkit/auto-animate";
 import _orderBy from "lodash/orderBy";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import { money, date, icons } from "../utils";
-import { Transaction } from "../types";
 import Noregisters from "./NoRegisters";
+import { Transaction, Movement } from "../types";
+
+type DataDisplay = {
+  id: string;
+  category?: {
+    color: string;
+    icon: string;
+  };
+  amount: number;
+  description: string;
+  date: string;
+};
 
 type Props = {
-  transactions: Transaction[];
+  transactions: Transaction[] | Movement[];
   editable?: boolean;
-  onEdit?: (item: Transaction) => void;
+  onEdit?: (item: object) => void;
   onDelete?: (id: string) => void;
 };
 
@@ -34,10 +45,29 @@ export default function TransactionMini({
     parent.current && autoAnimate(parent.current);
   }, [parent]);
 
+  const returnColor = (item: any) => {
+    if (item.category) {
+      return item.category.color;
+    }
+    if (item.type === "ingress") {
+      return "green.500";
+    }
+    return "red.500";
+  };
+  const returnIcon = (item: any) => {
+    if (item.category) {
+      return item.category.icon;
+    }
+    if (item.type === "ingress") {
+      return "SiAddthis";
+    }
+    return "FaMinusSquare";
+  };
+
   const renderCells = transactions.map((item) => (
     <HStack key={item.id} spacing="4" alignItems="flex-start">
-      <VStack color={item.category?.color} fontSize="2xl" spacing={1}>
-        {icons(item.category?.icon)}
+      <VStack color={returnColor(item)} fontSize="2xl" spacing={1}>
+        {icons(returnIcon(item))}
         <Box height="10" width="2px" backgroundColor="gray.200" />
       </VStack>
       <Stack spacing={0} width="full">

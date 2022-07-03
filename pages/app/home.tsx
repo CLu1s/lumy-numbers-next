@@ -24,7 +24,7 @@ function Home() {
 
         <Stack
           spacing={4}
-          direction={["column", isCollapsed ? "row" : "column"]}
+          direction={["column-reverse", isCollapsed ? "row" : "column-reverse"]}
         >
           <Box maxW={{ base: "100%", md: "auto", lg: "49%" }} width="100%">
             <FixedCostDashboard />

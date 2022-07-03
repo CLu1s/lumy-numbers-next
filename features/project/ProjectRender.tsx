@@ -1,11 +1,9 @@
 import { useMemo, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
-import { differenceInMonths } from "date-fns";
+import { differenceInMonths, differenceInCalendarMonths } from "date-fns";
 import {
   Button,
-  Wrap,
-  WrapItem,
   Stack,
   HStack,
   Tag,
@@ -13,6 +11,9 @@ import {
   IconButton,
   VStack,
   Text,
+  SimpleGrid,
+  Box,
+  Divider,
 } from "@chakra-ui/react";
 import Table from "../../components/Table";
 import Screen from "../../components/Screen";
@@ -22,6 +23,8 @@ import { date, money } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
 import { fetchMovementsByProject } from "./projectsSlice";
 import Loading from "../../components/Loading";
+import { getIsMenuCollapsed } from "../system/selector";
+import TransactionMini from "../../components/TransactionMini";
 type Props = {
   project: ProjectType;
   onOpen: (id: string, m: number, name: string) => void;
@@ -44,6 +47,7 @@ function ProjectRender({
     if (project.loadingState === LoadingStates.SUCCEEDED) return;
     dispatch(fetchMovementsByProject(project.id));
   }, [dispatch, project.id, project.loadingState]);
+  const isCollapsed = useSelector(getIsMenuCollapsed);
 
   const columns = useMemo(
     () => [
@@ -113,127 +117,156 @@ function ProjectRender({
         };
   const mensualities =
     (project.amountGoal - project.initAmount) /
-    (differenceInMonths(
+    differenceInCalendarMonths(
       new Date(project.endDate),
       new Date(project.startDate)
-    ) +
-      1);
-  return (
-    <WrapItem
-      key={project.id}
-      width="full"
-      paddingBottom={{ base: "2rem", lg: "0" }}
-    >
-      <Screen
-        title={
-          <VStack spacing={2} alignItems="flex-start">
-            <HStack>
-              <Heading as="h6" size="lg" fontWeight="medium">
-                {project.name}
-              </Heading>
-              {!project.isActive && (
-                <Tag colorScheme="gray" marginBottom="2">
-                  Inactivo
-                </Tag>
-              )}
-              {numbers.amountPending < 0 && (
-                <Tag colorScheme="green" marginBottom="2">
-                  Completado
-                </Tag>
-              )}
-            </HStack>
-            <Text fontSize="sm" color="gray.500">
-              Fecha de Inicio:{" "}
-              {date(new Date(project.startDate), "dd/MMMM/yyyy")}
-            </Text>
-          </VStack>
-        }
-        description={project.description}
-      >
-        <Stack spacing={4} w="full">
-          <Wrap justifyContent="space-between" spacing={2} w="full">
-            <WrapItem flex="1 1 0">
-              <Stats
-                name="Meta"
-                amount={Number(project.amountGoal)}
-                helpText={`Fecha objetivo: ${date(
-                  new Date(project.endDate),
-                  "dd/MMMM/yyyy"
-                )}`}
-              />
-            </WrapItem>
-            <WrapItem flex="1 1 0">
-              <Stats
-                name="Estimado a la fecha"
-                amount={
-                  mensualities *
-                  differenceInMonths(new Date(), new Date(project.startDate))
-                }
-                helpText={"Lo que a esta fecha deberias tener"}
-              />
-            </WrapItem>
-            <WrapItem flex="1 1 0">
-              <Stats name="Ahorrado" amount={numbers.amountPaid} />
-            </WrapItem>
-            {numbers.amountPending > 0 && (
-              <WrapItem flex="1 1 0">
-                <Stats
-                  name="Cantidad por Ahorrar"
-                  amount={numbers.amountPending}
-                />
-              </WrapItem>
-            )}
-            {numbers.amountPending > 0 && (
-              <WrapItem flex="1 1 0">
-                <Stats name="Mensualidad Sugerida" amount={mensualities} />
-              </WrapItem>
-            )}
-            {numbers.expenses > 0 && (
-              <WrapItem flex="1 1 0">
-                <Stats name="Gastos" amount={numbers.expenses} />
-              </WrapItem>
-            )}
-            {numbers.expenses > 0 && (
-              <WrapItem flex="1 1 0">
-                <Stats name="Disponible" amount={numbers.avalible} />
-              </WrapItem>
-            )}
-          </Wrap>
-          <HStack justifyContent="space-between" spacing={4}>
-            <Button
-              size="md"
-              backgroundColor="purple.400"
-              color="white"
-              onClick={() => onOpen(project.id, mensualities, project.name)}
-              disabled={!project.isActive}
-            >
-              Nuevo Movimiento
-            </Button>
-            <HStack>
-              <IconButton
-                aria-label="Editar Proyecto"
-                icon={<FiEdit />}
-                onClick={() => onEdit(project)}
-              />
+    );
 
-              <IconButton
-                onClick={() => handleDelete(project.id)}
-                color="red.500"
-                aria-label="Borrar Proyecto"
-                icon={<FiTrash2 />}
-              />
-            </HStack>
+  const formatItems = (items: Movement[]) => {
+    return items.map((item) => ({
+      id: item.id,
+      date: item.date,
+      description: item.description,
+      amount: item.amount,
+      category: {
+        color: item.type?.toLowerCase() === "egress" ? "red.500" : "green.500",
+        icon:
+          item.type?.toLowerCase() === "egress" ? "FaMinusSquare" : "SiAddthis",
+      },
+    }));
+  };
+
+  return (
+    <Screen
+      title={
+        <VStack spacing={2} alignItems="flex-start">
+          <HStack>
+            <Heading as="h6" size="lg" fontWeight="medium">
+              {project.name}
+            </Heading>
+            {!project.isActive && (
+              <Tag colorScheme="gray" marginBottom="2">
+                Inactivo
+              </Tag>
+            )}
+            {numbers.amountPending < 0 && (
+              <Tag colorScheme="green" marginBottom="2">
+                Completado
+              </Tag>
+            )}
           </HStack>
-          {project.loadingState === LoadingStates.LOADING ? (
-            <Loading />
-          ) : project.movements.length ? (
-            <Table data={project.movements} columns={columns} />
-          ) : (
-            <NoRegisters />
+          <Text fontSize="sm" color="gray.500">
+            Fecha de Inicio: {date(new Date(project.startDate), "dd/MMMM/yyyy")}
+          </Text>
+        </VStack>
+      }
+      description={project.description}
+    >
+      <Stack spacing={4} w="full">
+        <SimpleGrid columns={[2, isCollapsed ? 3 : 2, 3]} spacing={2} w="full">
+          <Box>
+            <Stats
+              name="Meta"
+              amount={Number(project.amountGoal)}
+              helpText={`Fecha objetivo: ${date(
+                new Date(project.endDate),
+                "dd/MMMM/yyyy"
+              )}`}
+            />
+          </Box>
+          <Box>
+            <Stats
+              name="Estimado a la fecha"
+              amount={
+                mensualities *
+                differenceInCalendarMonths(
+                  new Date(),
+                  new Date(project.startDate)
+                )
+              }
+              helpText={"Lo que a esta fecha deberias tener"}
+            />
+          </Box>
+          <Box>
+            <Stats name="Ahorrado" amount={numbers.amountPaid} />
+          </Box>
+          {numbers.amountPending > 0 && (
+            <Box>
+              <Stats
+                name="Cantidad por Ahorrar"
+                amount={numbers.amountPending}
+              />
+            </Box>
           )}
-        </Stack>
-      </Screen>
-    </WrapItem>
+          {numbers.amountPending > 0 && (
+            <Box>
+              <Stats name="Mensualidad Sugerida" amount={mensualities} />
+            </Box>
+          )}
+          {numbers.expenses > 0 && (
+            <Box>
+              <Stats name="Gastos" amount={numbers.expenses} />
+            </Box>
+          )}
+          {numbers.expenses > 0 && (
+            <Box>
+              <Stats name="Disponible" amount={numbers.avalible} />
+            </Box>
+          )}
+        </SimpleGrid>
+        <HStack justifyContent="space-between" spacing={4}>
+          <Button
+            size="md"
+            backgroundColor="purple.400"
+            color="white"
+            onClick={() => onOpen(project.id, mensualities, project.name)}
+            disabled={!project.isActive}
+          >
+            Nuevo Movimiento
+          </Button>
+          <HStack>
+            <IconButton
+              aria-label="Editar Proyecto"
+              icon={<FiEdit />}
+              onClick={() => onEdit(project)}
+            />
+
+            <IconButton
+              onClick={() => handleDelete(project.id)}
+              color="red.500"
+              aria-label="Borrar Proyecto"
+              icon={<FiTrash2 />}
+            />
+          </HStack>
+        </HStack>
+        {project.loadingState === LoadingStates.LOADING ? (
+          <Loading />
+        ) : project.movements.length ? (
+          <>
+            <Box display={["none", null, "block"]}>
+              <Table data={project.movements} columns={columns} />
+            </Box>
+            <Divider display={["block", null, "none"]} />
+            <Stack
+              spacing={4}
+              marginBottom={4}
+              display={["block", null, "none"]}
+            >
+              <TransactionMini
+                transactions={project.movements}
+                editable
+                onEdit={setMovementToEdit}
+                onDelete={(id) => {
+                  onMovementDelete(id);
+                }}
+              />
+            </Stack>
+          </>
+        ) : (
+          <NoRegisters />
+        )}
+      </Stack>
+    </Screen>
   );
 }
 

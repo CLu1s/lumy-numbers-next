@@ -16,8 +16,13 @@ type TableProps = {
 };
 
 export default function TableRender({ columns, data, fullHeight }: TableProps) {
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({ columns, data }, useSortBy);
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({ columns, data }, useSortBy);
 
   return (
     <Box
@@ -26,6 +31,7 @@ export default function TableRender({ columns, data, fullHeight }: TableProps) {
       padding="2"
       overflow="auto"
       maxHeight={fullHeight ? "auto" : { base: "430px", xl: "670px" }}
+      overflowX="hidden"
     >
       <Table {...getTableProps()} variant="striped">
         <Thead>

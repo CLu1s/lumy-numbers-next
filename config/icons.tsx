@@ -19,7 +19,8 @@ import {
   GiButterfly,
   GiTravelDress,
 } from "react-icons/gi";
-
+import { FaMinusSquare } from "react-icons/fa";
+import { SiAddthis } from "react-icons/si";
 export const iconList = {
   HiOutlineHome: {
     icon: <HiOutlineHome />,
@@ -42,4 +43,6 @@ export const iconList = {
   GiButterfly: { icon: <GiButterfly />, name: "Butterfly" },
   GiTravelDress: { icon: <GiTravelDress />, name: "Travel" },
   GiBlackBook: { icon: <GiBlackBook />, name: "Book" },
+  FaMinusSquare: { icon: <FaMinusSquare />, name: "Minus" },
+  SiAddthis: { icon: <SiAddthis />, name: "Add" },
 };
