@@ -11,6 +11,8 @@ import {
   Tag,
   Heading,
   IconButton,
+  VStack,
+  Text,
 } from "@chakra-ui/react";
 import Table from "../../components/Table";
 import Screen from "../../components/Screen";
@@ -20,6 +22,7 @@ import { date, money } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
 import { fetchMovementsByProject } from "./projectsSlice";
 import Loading from "../../components/Loading";
+import { differenceInCalendarMonths } from "date-fns";
 
 type Props = {
   project: ProjectType;
@@ -125,34 +128,53 @@ function ProjectRender({
     >
       <Screen
         title={
-          <HStack>
-            <Heading as="h6" size="lg" fontWeight="medium">
-              {project.name}
-            </Heading>
-            {!project.isActive && (
-              <Tag colorScheme="gray" marginBottom="2">
-                Inactivo
-              </Tag>
-            )}
-            {numbers.amountPending < 0 && (
-              <Tag colorScheme="green" marginBottom="2">
-                Completado
-              </Tag>
-            )}
-          </HStack>
+          <VStack spacing={2} alignItems="flex-start">
+            <HStack>
+              <Heading as="h6" size="lg" fontWeight="medium">
+                {project.name}
+              </Heading>
+              {!project.isActive && (
+                <Tag colorScheme="gray" marginBottom="2">
+                  Inactivo
+                </Tag>
+              )}
+              {numbers.amountPending < 0 && (
+                <Tag colorScheme="green" marginBottom="2">
+                  Completado
+                </Tag>
+              )}
+            </HStack>
+            <Text fontSize="sm" color="gray.500">
+              Fecha de Inicio:{" "}
+              {date(new Date(project.startDate), "dd/MMMM/yyyy")}
+            </Text>
+          </VStack>
         }
         description={project.description}
       >
         <Stack spacing={4} w="full">
-          <Wrap justifyContent="space-between" spacing={7} w="full">
+          <Wrap justifyContent="space-between" spacing={2} w="full">
             <WrapItem flex="1 1 0">
               <Stats
                 name="Meta"
                 amount={Number(project.amountGoal)}
                 helpText={`Fecha objetivo: ${date(
                   new Date(project.endDate),
-                  "dd/MM/yyyy"
+                  "dd/MMMM/yyyy"
                 )}`}
+              />
+            </WrapItem>
+            <WrapItem flex="1 1 0">
+              <Stats
+                name="Estimado a la fecha"
+                amount={
+                  mensualities *
+                  differenceInCalendarMonths(
+                    new Date(),
+                    new Date(project.startDate)
+                  )
+                }
+                helpText={"Lo que a esta fecha deberias tener"}
               />
             </WrapItem>
             <WrapItem flex="1 1 0">

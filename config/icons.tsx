@@ -13,10 +13,11 @@ import {
 import { AiOutlineStock, AiOutlineWarning } from "react-icons/ai";
 import { MdOutlineSavings } from "react-icons/md";
 import {
-  GiAchievement,
   GiAmpleDress,
   GiAstronautHelmet,
   GiBlackBook,
+  GiButterfly,
+  GiTravelDress,
 } from "react-icons/gi";
 
 export const iconList = {
@@ -36,8 +37,9 @@ export const iconList = {
   BiBrain: { icon: <BiBrain />, name: "Gift" },
   BiCalendar: { icon: <BiCalendar />, name: "Birthday" },
   BiBriefcaseAlt: { icon: <BiBriefcaseAlt />, name: "Business" },
-  GiAchievement: { icon: <GiAchievement />, name: "Achievement" },
   GiAmpleDress: { icon: <GiAmpleDress />, name: "Dress" },
   GiAstronautHelmet: { icon: <GiAstronautHelmet />, name: "Astronaut" },
+  GiButterfly: { icon: <GiButterfly />, name: "Butterfly" },
+  GiTravelDress: { icon: <GiTravelDress />, name: "Travel" },
   GiBlackBook: { icon: <GiBlackBook />, name: "Book" },
 };
