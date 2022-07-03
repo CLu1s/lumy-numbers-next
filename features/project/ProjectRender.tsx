@@ -1,7 +1,7 @@
 import { useMemo, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { FiEdit, FiTrash2 } from "react-icons/fi";
-import differenceInMonths from "date-fns/differenceInMonths";
+import { differenceInMonths } from "date-fns";
 import {
   Button,
   Wrap,
@@ -22,8 +22,6 @@ import { date, money } from "../../utils";
 import NoRegisters from "../../components/NoRegisters";
 import { fetchMovementsByProject } from "./projectsSlice";
 import Loading from "../../components/Loading";
-import { differenceInCalendarMonths } from "date-fns";
-
 type Props = {
   project: ProjectType;
   onOpen: (id: string, m: number, name: string) => void;
@@ -169,10 +167,7 @@ function ProjectRender({
                 name="Estimado a la fecha"
                 amount={
                   mensualities *
-                  differenceInCalendarMonths(
-                    new Date(),
-                    new Date(project.startDate)
-                  )
+                  differenceInMonths(new Date(), new Date(project.startDate))
                 }
                 helpText={"Lo que a esta fecha deberias tener"}
               />
