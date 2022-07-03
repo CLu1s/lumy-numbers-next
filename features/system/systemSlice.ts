@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { SystemState } from "../../types";
 
 const initialState: SystemState = {
-  isMenuCollapsed: false,
+  isMenuCollapsed: true,
 };
 
 const systemSlice = createSlice({

@@ -18,7 +18,6 @@ const theme = extendTheme({
       },
     }),
   },
-  breakpoints,
   colors: {
     black: "#1B1D21",
     purple: {

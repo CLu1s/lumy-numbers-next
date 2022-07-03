@@ -1,6 +1,8 @@
 import { Box, Stack, Heading, useColorModeValue } from "@chakra-ui/react";
 import Markdown from "./Markdown";
 import ChackraBox from "./ChakraBox";
+import { getIsMenuCollapsed } from "../features/system/selector";
+import { useSelector } from "react-redux";
 type props = {
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;
@@ -22,15 +24,16 @@ const Screen = ({
   bg,
   textColor,
   withShadow = true,
-  maxHeight = "auto",
-  minHeight = "auto",
+  maxHeight = "initial",
+  minHeight = "initial",
 }: props) => {
   const shadow = useColorModeValue("xl", "2xl");
   const defaultbg = useColorModeValue("white", "#242731");
+  const isCollapsed = useSelector(getIsMenuCollapsed);
 
   return (
     <ChackraBox
-      width="full"
+      w={isCollapsed ? "auto" : "full"}
       height="full"
       maxHeight={maxHeight}
       minHeight={minHeight}

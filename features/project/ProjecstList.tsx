@@ -29,6 +29,7 @@ import SaveCategoryID from "./SaveCategoryID";
 import AlertDialog from "../../components/AlertDialog";
 import { deleteProject, deleteMovement } from "./projectsSlice";
 import Loading from "../../components/Loading";
+import { getIsMenuCollapsed } from "../system/selector";
 
 function ProjectsList() {
   const dispatch = useDispatch();
@@ -45,6 +46,7 @@ function ProjectsList() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const status = useSelector(getStatus);
   const moveModal = useDisclosure();
+  const isCollapsed = useSelector(getIsMenuCollapsed);
 
   const parent = useRef(null);
   const parentInactive = useRef(null);
@@ -172,7 +174,7 @@ function ProjectsList() {
       )}
       <VStack w="full" spacing={10} alignItems="flex-start">
         <SimpleGrid
-          columns={{ base: 1, md: 2, lg: 3 }}
+          columns={[1, isCollapsed ? 2 : 1, 3]}
           spacing={{ base: 4, md: 4, lg: 5 }}
           w="full"
           ref={parent}
@@ -196,7 +198,7 @@ function ProjectsList() {
                       w="full"
                       height="full"
                       minH="220px"
-                      maxHeight="238px"
+                      maxHeight="583px"
                       color="gray.400"
                       colorScheme="whiteAlpha"
                       borderWidth="1px"
@@ -227,7 +229,7 @@ function ProjectsList() {
           Proyectos inactivos
         </Heading>
         <SimpleGrid
-          columns={{ base: 1, md: 2, lg: 3 }}
+          columns={[1, isCollapsed ? 2 : 1, 3]}
           spacing={{ base: 4, md: 4, lg: 5 }}
           w="full"
           ref={parentInactive}

@@ -1,15 +1,21 @@
 import type { ReactElement } from "react";
 import BudgetCard from "../../features/wallet/BudgetCard";
 import Layout from "../../components/Layout";
-import { Box, Stack } from "@chakra-ui/react";
+import { Box, Stack, Wrap, WrapItem } from "@chakra-ui/react";
 import CheckcIncomes from "../../features/budget/CheckIncomes";
 import LastsTransactions from "../../features/wallet/LastsTransactions";
 import FixedCostDashboard from "../../features/fixedCost/FixedCostDashboard";
 import CategoriesDashboard from "../../features/wallet/CategoriesDashboard";
+import ChakraBox from "../../components/ChakraBox";
+import { getIsMenuCollapsed } from "../../features/system/selector";
+import { useSelector } from "react-redux";
 function Home() {
+  const isCollapsed = useSelector(getIsMenuCollapsed);
+
   return (
     <>
       <CheckcIncomes />
+
       <Stack spacing={8}>
         <BudgetCard />
         <Box maxW={{ base: "100%" }} width="100%">

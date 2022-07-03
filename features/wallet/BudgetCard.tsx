@@ -6,6 +6,8 @@ import { date } from "../../utils";
 import { getBalance, getPeriod, getStatus } from "./selector";
 import isSameMonth from "date-fns/isSameMonth";
 import { LoadingStates } from "../../types";
+import ChakraBox from "../../components/ChakraBox";
+import { getIsMenuCollapsed } from "../system/selector";
 
 const BudgetCard = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -13,10 +15,11 @@ const BudgetCard = () => {
   const status = useSelector(getStatus);
   const period = useSelector(getPeriod);
   const currentDate = new Date();
+  const isCollapsed = useSelector(getIsMenuCollapsed);
 
   const sameMonth = isSameMonth(period, currentDate);
   return (
-    <>
+    <ChakraBox layout w={isCollapsed ? "auto" : "full"}>
       <RecordExpense isOpen={isOpen} onClose={onClose} />
       <HeroStatCard
         title="Plan de gastos del mes"
@@ -40,7 +43,7 @@ const BudgetCard = () => {
           )}
         </HeroStatFooter>
       </HeroStatCard>
-    </>
+    </ChakraBox>
   );
 };
 

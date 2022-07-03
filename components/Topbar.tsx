@@ -26,8 +26,7 @@ export default function Topbar() {
 
   return (
     <ChakraBox
-      position={{ base: "fixed", md: "static" }}
-      display={{ base: "block" }}
+      position={["fixed", "static"]}
       borderBottomWidth={["1px", 0]}
       backgroundColor={bg}
       borderColor="gray.100"
@@ -42,7 +41,7 @@ export default function Topbar() {
             variant="ghost"
             aria-label="Menu hamburguesa"
             onClick={onOpen}
-            display={{ base: "block", md: "none" }}
+            display={["block", "none"]}
             icon={<Icon as={HiOutlineMenuAlt4} w={8} h={8} />}
           />
         </Stack>

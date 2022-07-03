@@ -36,16 +36,16 @@ const Sidebsar = () => {
       borderRight="1px solid"
       borderColor="gray.100"
       backgroundColor={bg}
-      display={{ base: "none", md: "block" }}
+      display={["none", "block"]}
       layout
     >
       <VStack
-        width={isCollapsed && isTablet ? "96px" : { md: "220px", lg: "256px" }}
+        width={isCollapsed && isTablet ? "96px" : ["220px", "220px", "256px"]}
       >
         <Center
           height="full"
           paddingY={{ base: "29px", xl: "40px" }}
-          paddingX={{ base: "29px", xl: "48px" }}
+          paddingX={"20px"}
         >
           <HStack spacing={6}>
             {!isCollapsed && (
@@ -85,7 +85,12 @@ const Sidebsar = () => {
 
           <VStack spacing={5} width={"100%"}>
             {menuList.map((item) => (
-              <ChakraBox key={item.id} layout width={"100%"}>
+              <ChakraBox
+                key={item.id}
+                layout
+                width={"100%"}
+                initial={{ borderRadius: "0.75rem" }}
+              >
                 <MenuItem {...item} showLabel={!isCollapsed} />
               </ChakraBox>
             ))}

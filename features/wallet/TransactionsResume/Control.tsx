@@ -6,6 +6,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { DatesHandler } from "../../../types";
 import { date } from "../../../utils";
 import { getPeriod } from "../../../features/wallet/selector";
+import { getIsMenuCollapsed } from "../../system/selector";
 
 const initDate = new Date();
 
@@ -17,6 +18,7 @@ type Props = {
 const Control = ({ state, handleChangePeriod }: Props) => {
   const period = useSelector(getPeriod);
   const sameMonth = isSameMonth(period, initDate);
+  const isCollapsed = useSelector(getIsMenuCollapsed);
 
   return (
     <Stack w="full" marginBottom="4" spacing={4} direction={{ base: "column" }}>
@@ -54,6 +56,7 @@ const Control = ({ state, handleChangePeriod }: Props) => {
           }
           backgroundColor="purple.400"
           color="white"
+          maxWidth={isCollapsed ? "100%" : "30%"}
           size="sm"
         >
           Ver mes actual
