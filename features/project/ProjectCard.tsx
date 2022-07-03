@@ -130,7 +130,7 @@ function ProjectCard({ project, onOpen, handleDelete }: Props) {
           </Stack>
         </Stack>
       }
-      maxHeight="311px"
+      maxHeight="fit-content"
     >
       {numbers.amountPending < 0 && (
         <Tag colorScheme="green" marginBottom="2">

@@ -22,7 +22,10 @@ function Home() {
           <CategoriesDashboard />
         </Box>
 
-        <Stack spacing={4} direction={["column", "row"]}>
+        <Stack
+          spacing={4}
+          direction={["column", isCollapsed ? "row" : "column"]}
+        >
           <Box maxW={{ base: "100%", md: "47%", lg: "49%" }} width="100%">
             <FixedCostDashboard />
           </Box>
