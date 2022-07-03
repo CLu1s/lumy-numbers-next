@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-
+import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { useDisclosure } from "@chakra-ui/react";
 import { getAllProjects, getStatus } from "./selector";
@@ -16,6 +16,7 @@ type Props = {
 };
 function ProjectDetail({ id }: Props) {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
   const [alertMovementDelete, setAlertMovementDelete] = useState(false);
   const [deleteId, setDeleteId] = useState<string>(null);
@@ -35,10 +36,10 @@ function ProjectDetail({ id }: Props) {
   };
 
   const allProjects = useSelector(getAllProjects);
-  const project = useMemo(
-    () => allProjects.find((p) => p.id === id),
-    [id, allProjects]
-  );
+  const project = useMemo(() => allProjects.find((p) => p.id === id), [
+    id,
+    allProjects,
+  ]);
   const manageOnClose = () => {
     elementToEdit && setElementToEdit(null);
     onClose();
@@ -84,7 +85,10 @@ function ProjectDetail({ id }: Props) {
           setDeleteId(null);
         }}
         onDelete={() => {
+          if (project.movements.length > 0)
+            project.movements.forEach((m) => dispatch(deleteMovement(m.id)));
           dispatch(deleteProject(deleteId));
+          router.push("/app/proyectos");
           setAlertDialogIsOpen(false);
           setDeleteId(null);
         }}

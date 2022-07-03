@@ -34,6 +34,9 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
   const [date, setDate] = useState<Date | null>(
     toEdit ? new Date(parseISO(toEdit.endDate)) : add(new Date(), { months: 1 })
   );
+  const [startDate, setStartDate] = useState<Date | null>(
+    toEdit ? new Date(parseISO(toEdit.startDate)) : new Date()
+  );
   const bucketID = useSelector(getBucketID);
   const userName = useSelector(getUserName);
   const {
@@ -45,6 +48,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
   useEffect(() => {
     if (toEdit) {
       setDate(new Date(parseISO(toEdit.endDate)));
+      setStartDate(new Date(parseISO(toEdit.startDate)));
     } else {
       setDate(add(new Date(), { months: 1 }));
     }
@@ -76,6 +80,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
           ...data,
           initAmount: data.initAmount || 0,
           endDate: date?.toISOString(),
+          startDate: startDate?.toISOString(),
         })
       );
     }
@@ -132,7 +137,18 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
                 placeholder={"¿Tienes algo ya ahorrado?"}
                 register={register}
               />
-
+              {toEdit?.startDate && (
+                <Stack w="full">
+                  <Text> Fecha Inicio</Text>
+                  <DatePicker
+                    dateFormat="dd/MM/yyyy"
+                    selected={startDate}
+                    onChange={(date) => setStartDate(date)}
+                    locale="es"
+                    customInput={<ExampleCustomInput />}
+                  />
+                </Stack>
+              )}
               <Stack w="full">
                 <Text> Fecha Objetivo</Text>
                 <DatePicker

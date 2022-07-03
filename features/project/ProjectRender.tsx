@@ -83,7 +83,7 @@ function ProjectRender({
         ),
       },
     ],
-    []
+    [onMovementDelete, setMovementToEdit]
   );
 
   const numbers =

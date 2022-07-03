@@ -26,11 +26,11 @@ function Home() {
           spacing={4}
           direction={["column", isCollapsed ? "row" : "column"]}
         >
-          <Box maxW={{ base: "100%", md: "47%", lg: "49%" }} width="100%">
+          <Box maxW={{ base: "100%", md: "auto", lg: "49%" }} width="100%">
             <FixedCostDashboard />
           </Box>
           <Box
-            maxW={{ base: "100%", md: "auto", lg: "49%" }}
+            maxW={{ base: "100%", md: "47%", lg: "49%" }}
             width={{ base: "full" }}
           >
             <LastsTransactions />
