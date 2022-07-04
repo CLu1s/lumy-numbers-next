@@ -54,7 +54,7 @@ const ContentBox = ({
           paddingX={{ base: 12, md: 8, lg: 12 }}
         >
           <Box
-            backgroundColor="#1e5af9"
+            backgroundColor="purple.400"
             width="full"
             display="block"
             w={{ base: "100%", md: "100%", lg: "100%" }}
@@ -155,7 +155,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main>
-        <Box backgroundColor="#1e5af9" width="full">
+        <Box backgroundColor="purple.400" width="full">
           <Box width="full" paddingTop={8} paddingX={4}>
             <HStack m="auto" width="full" justifyContent="space-between">
               <Heading color="white">Luminus</Heading>

@@ -151,7 +151,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
                 //   !isSameMonth(new Date(toEdit?.startDate), new Date())
                 // }
               >
-                Iniciar el mismo Mes
+                Ahorrar en el ultimo Mes
               </Checkbox>
               {toEdit?.startDate && (
                 <Stack w="full">
