@@ -115,6 +115,7 @@ export const getBucket = /* GraphQL */ `
           amountGoal
           initAmount
           isActive
+          includeInitialMonth
           createdAt
           updatedAt
         }
@@ -349,6 +350,7 @@ export const getProject = /* GraphQL */ `
         nextToken
       }
       isActive
+      includeInitialMonth
       createdAt
       updatedAt
     }
@@ -375,6 +377,7 @@ export const listProjects = /* GraphQL */ `
           nextToken
         }
         isActive
+        includeInitialMonth
         createdAt
         updatedAt
       }
@@ -645,6 +648,7 @@ export const projectByName = /* GraphQL */ `
           nextToken
         }
         isActive
+        includeInitialMonth
         createdAt
         updatedAt
       }
@@ -683,6 +687,7 @@ export const projectsByBucket = /* GraphQL */ `
           nextToken
         }
         isActive
+        includeInitialMonth
         createdAt
         updatedAt
       }

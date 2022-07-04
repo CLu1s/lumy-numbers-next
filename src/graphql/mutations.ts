@@ -131,6 +131,7 @@ export const createBucket = /* GraphQL */ `
           amountGoal
           initAmount
           isActive
+          includeInitialMonth
           createdAt
           updatedAt
         }
@@ -241,6 +242,7 @@ export const updateBucket = /* GraphQL */ `
           amountGoal
           initAmount
           isActive
+          includeInitialMonth
           createdAt
           updatedAt
         }
@@ -351,6 +353,7 @@ export const deleteBucket = /* GraphQL */ `
           amountGoal
           initAmount
           isActive
+          includeInitialMonth
           createdAt
           updatedAt
         }
@@ -613,6 +616,7 @@ export const createProject = /* GraphQL */ `
         nextToken
       }
       isActive
+      includeInitialMonth
       createdAt
       updatedAt
     }
@@ -647,6 +651,7 @@ export const updateProject = /* GraphQL */ `
         nextToken
       }
       isActive
+      includeInitialMonth
       createdAt
       updatedAt
     }
@@ -681,6 +686,7 @@ export const deleteProject = /* GraphQL */ `
         nextToken
       }
       isActive
+      includeInitialMonth
       createdAt
       updatedAt
     }

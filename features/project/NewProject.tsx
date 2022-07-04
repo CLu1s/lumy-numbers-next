@@ -9,7 +9,9 @@ import {
   Stack,
   Text,
   Textarea,
+  Checkbox,
 } from "@chakra-ui/react";
+// import { isSameMonth } from "date-fns";
 import esLocale from "date-fns/locale/es";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -37,6 +39,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
   const [startDate, setStartDate] = useState<Date | null>(
     toEdit ? new Date(parseISO(toEdit.startDate)) : new Date()
   );
+  const [includeInitialMonth, setIncludeInitialMonth] = useState(true);
   const bucketID = useSelector(getBucketID);
   const userName = useSelector(getUserName);
   const {
@@ -49,10 +52,11 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
     if (toEdit) {
       setDate(new Date(parseISO(toEdit.endDate)));
       setStartDate(new Date(parseISO(toEdit.startDate)));
+      setIncludeInitialMonth(toEdit.includeInitialMonth);
     } else {
       setDate(add(new Date(), { months: 1 }));
     }
-    reset();
+    return reset;
   }, [reset, toEdit]);
 
   const handleClose = useCallback(() => {
@@ -70,6 +74,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
           bucketID,
           initAmount: data.initAmount || 0,
           endDate: date,
+          includeInitialMonth,
           userName,
         })
       );
@@ -81,6 +86,7 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
           initAmount: data.initAmount || 0,
           endDate: date?.toISOString(),
           startDate: startDate?.toISOString(),
+          includeInitialMonth,
         })
       );
     }
@@ -105,11 +111,11 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
   ExampleCustomInput.displayName = "ExampleCustomInput";
   return (
     <Modal {...config}>
-      <Stack spacing={4} align="left">
+      <Stack spacing={4} alignItems="flex-start">
         <Text>Ingresa el monto y la descripción del proyecto</Text>
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
           <Box width="100%">
-            <VStack spacing={4} w="full">
+            <VStack spacing={4} w="full" alignItems="flex-start">
               <Input
                 placeholder="Nombre"
                 defaultValue={toEdit?.name}
@@ -137,6 +143,16 @@ const NewProject = ({ isOpen, onClose, toEdit }: Props) => {
                 placeholder={"¿Tienes algo ya ahorrado?"}
                 register={register}
               />
+              <Checkbox
+                defaultChecked={includeInitialMonth}
+                onChange={() => setIncludeInitialMonth(!includeInitialMonth)}
+                name="includeInitialMonth"
+                // isDisabled={
+                //   !isSameMonth(new Date(toEdit?.startDate), new Date())
+                // }
+              >
+                Iniciar el mismo Mes
+              </Checkbox>
               {toEdit?.startDate && (
                 <Stack w="full">
                   <Text> Fecha Inicio</Text>

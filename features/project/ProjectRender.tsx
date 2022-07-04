@@ -117,24 +117,11 @@ function ProjectRender({
         };
   const mensualities =
     (project.amountGoal - project.initAmount) /
-    differenceInCalendarMonths(
+    (differenceInCalendarMonths(
       new Date(project.endDate),
       new Date(project.startDate)
-    );
-
-  const formatItems = (items: Movement[]) => {
-    return items.map((item) => ({
-      id: item.id,
-      date: item.date,
-      description: item.description,
-      amount: item.amount,
-      category: {
-        color: item.type?.toLowerCase() === "egress" ? "red.500" : "green.500",
-        icon:
-          item.type?.toLowerCase() === "egress" ? "FaMinusSquare" : "SiAddthis",
-      },
-    }));
-  };
+    ) +
+      (project.includeInitialMonth ? 1 : 0));
 
   return (
     <Screen
@@ -179,12 +166,13 @@ function ProjectRender({
               name="Estimado a la fecha"
               amount={
                 mensualities *
-                differenceInCalendarMonths(
+                (differenceInCalendarMonths(
                   new Date(),
                   new Date(project.startDate)
-                )
+                ) +
+                  1)
               }
-              helpText={"Lo que a esta fecha deberias tener"}
+              helpText={"Lo que al día de hoy deberías tener"}
             />
           </Box>
           <Box>

@@ -145,6 +145,7 @@ export type Project = {
   movements: Movement[];
   loadingState?: LoadingStates;
   isActive: boolean;
+  includeInitialMonth: boolean;
 };
 
 export type Movement = {
