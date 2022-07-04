@@ -165,12 +165,13 @@ function ProjectRender({
             <Stats
               name="Estimado a la fecha"
               amount={
+                project.initAmount +
                 mensualities *
-                (differenceInCalendarMonths(
-                  new Date(),
-                  new Date(project.startDate)
-                ) +
-                  1)
+                  (differenceInCalendarMonths(
+                    new Date(),
+                    new Date(project.startDate)
+                  ) +
+                    1)
               }
               helpText={"Lo que al día de hoy deberías tener"}
             />
