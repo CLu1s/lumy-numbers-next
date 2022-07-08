@@ -8,6 +8,7 @@ import {
 } from "../../features/wallet/selector";
 import StatCard from "../../components/StatCard";
 import { LoadingStates } from "../../types";
+import ChakraBox from "../../components/ChakraBox";
 
 type Props = {
   showAll?: boolean;
@@ -46,7 +47,7 @@ const Categories = ({ showAll, setShowSwitch }: Props) => {
     </Box>
   ));
   return (
-    <Stack spacing={4} width="full">
+    <ChakraBox layout w="full">
       <SimpleGrid columns={[1, 2, 3]} spacing={4} ref={parent}>
         {status === LoadingStates.IDLE ? (
           <>
@@ -59,7 +60,7 @@ const Categories = ({ showAll, setShowSwitch }: Props) => {
           renderItemsToShow
         )}
       </SimpleGrid>
-    </Stack>
+    </ChakraBox>
   );
 };
 

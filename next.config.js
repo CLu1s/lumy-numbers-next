@@ -14,4 +14,4 @@ module.exports = withPWA({
   },
 });
 
-// module.exports = withBundleAnalyzer({});
+module.exports = withBundleAnalyzer({});

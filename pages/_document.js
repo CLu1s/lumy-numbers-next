@@ -7,12 +7,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <script
-            async
-            defer
-            data-website-id="82f2b602-3851-4b75-bd15-5c805e89b2ff"
-            src="https://analitycs.luminusapp.com/umami.js"
-          ></script>
           <meta name="apple-mobile-web-app-capable" content="yes" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/icon_168x168.png"></link>

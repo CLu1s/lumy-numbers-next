@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Switch, VStack, HStack } from "@chakra-ui/react";
 import Screen from "../../components/Screen";
+import ChakraBox from "../../components/ChakraBox";
 import Categories from "./Categories";
 import useGetCategories from "../../hooks/useGetCategories";
 
@@ -15,10 +16,12 @@ const CategoriesDashboard = () => {
     >
       <VStack spacing={4} w="full">
         {showSwitch && (
-          <HStack width="full" justifyContent="flex-end">
-            <label htmlFor="email-alerts">Mostrar todas las categorías</label>
-            <Switch id="email-alerts" onChange={() => setShowAll(!showAll)} />
-          </HStack>
+          <ChakraBox layout w="full">
+            <HStack width="full" justifyContent="flex-end">
+              <label htmlFor="email-alerts">Mostrar todas las categorías</label>
+              <Switch id="email-alerts" onChange={() => setShowAll(!showAll)} />
+            </HStack>
+          </ChakraBox>
         )}
         <Categories showAll={showAll} setShowSwitch={setShowSwitch} />
       </VStack>

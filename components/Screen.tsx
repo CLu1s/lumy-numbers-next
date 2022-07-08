@@ -24,8 +24,8 @@ const Screen = ({
   bg,
   textColor,
   withShadow = true,
-  maxHeight = "initial",
-  minHeight = "initial",
+  maxHeight = "fit-content",
+  minHeight = "fit-content",
 }: props) => {
   const shadow = useColorModeValue("xl", "2xl");
   const defaultbg = useColorModeValue("white", "#242731");
@@ -40,7 +40,6 @@ const Screen = ({
       borderWidth="1px"
       p={5}
       shadow={withShadow && shadow}
-      flex="1 1 auto"
       borderRadius="3xl"
       display={display}
       bg={bg ?? defaultbg}
@@ -51,9 +50,11 @@ const Screen = ({
         {title && (
           <Stack spacing="2">
             {typeof title === "string" ? (
-              <Heading as="h6" size="lg" fontWeight="medium">
-                {title}
-              </Heading>
+              <ChackraBox layout>
+                <Heading as="h6" size="lg" fontWeight="medium">
+                  {title}
+                </Heading>
+              </ChackraBox>
             ) : (
               title
             )}
@@ -65,7 +66,7 @@ const Screen = ({
               ))}
           </Stack>
         )}
-        <Box>{children}</Box>
+        <ChackraBox layout>{children}</ChackraBox>
       </Stack>
     </ChackraBox>
   );
