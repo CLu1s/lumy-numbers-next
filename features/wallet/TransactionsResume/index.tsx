@@ -28,6 +28,7 @@ import { getIsMenuCollapsed } from "../../system/selector";
 type Props = {
   state: DatesHandler;
   transactions: Transaction[];
+  filter: string[];
   handleChangePeriod: ({ newDate, type }: { newDate: any; type: any }) => void;
 };
 
@@ -35,6 +36,7 @@ const TransactionsResume = ({
   state,
   handleChangePeriod,
   transactions,
+  filter,
 }: Props) => {
   const balance = useSelector(getBalance);
   const totalSpent = useSelector(getTotalSpent);
@@ -69,7 +71,7 @@ const TransactionsResume = ({
             </Box>
           </Stack>
           <Box width="full">
-            <Cards />
+            <Cards filter={filter} />
           </Box>
         </Stack>
       )}

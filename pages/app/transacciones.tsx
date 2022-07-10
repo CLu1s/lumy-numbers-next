@@ -19,7 +19,6 @@ import { changePeriod } from "../../features/wallet/walletSlice";
 import useBasicInfo from "../../hooks/useBasicInfo";
 import useGetCategories from "../../hooks/useGetCategories";
 import { DatesHandler, Transaction } from "../../types";
-import { getCategories } from "../../features/budget/selector";
 import { compareDates } from "../../utils";
 
 const initDate = new Date();
@@ -45,7 +44,7 @@ function reducer(state: DatesHandler, action: any) {
     case "PREVIOUS":
       return {
         ...state,
-        previous: sub(state.current, { months: 1 }),
+        previous: sub(state.previous, { months: 1 }),
         current: state.previous,
         next: add(state.previous, { months: 1 }),
         showNext: true,
@@ -124,6 +123,7 @@ function Transacciones() {
         state={state}
         handleChangePeriod={handleChangePeriod}
         transactions={sortedTransactions}
+        filter={filter}
       />
       <Screen title="Transcciones del mes">
         <VStack spacing={8}>

@@ -1,24 +1,26 @@
 import { useMemo } from "react";
-import {
-  SimpleGrid,
-  Wrap,
-  WrapItem,
-  Square,
-  VStack,
-  Text,
-} from "@chakra-ui/react";
+import { SimpleGrid, Square, VStack, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { getBalanceByCategories } from "../selector";
 import { icons } from "../../../utils";
 import NoRegisters from "../../../components/NoRegisters";
 import Stats from "../../../components/Stats";
 
-const Cards = () => {
+type Props = {
+  filter: string[];
+};
+
+const Cards = ({ filter }: Props) => {
   const items = useSelector(getBalanceByCategories);
+  const filterItems = useMemo(() => {
+    const i = items.filter((item) => filter.includes(item.id));
+    if (i.length === 0) return items;
+    return i;
+  }, [items, filter]);
 
   const stats = useMemo(
     () =>
-      items.map((total) => (
+      filterItems.map((total) => (
         <Stats
           key={total.id}
           icon={
@@ -36,8 +38,15 @@ const Cards = () => {
           compareAmount={total.balance}
         />
       )),
-    [items]
+    [filterItems]
   );
+
+  const setColumns = (defaultNumber: number) => {
+    return filterItems.length >= defaultNumber
+      ? defaultNumber
+      : filterItems.length;
+  };
+
   return (
     <VStack spacing={2} alignItems="flex-start">
       <Text fontSize="sm" fontWeight="medium">
@@ -49,7 +58,7 @@ const Cards = () => {
         borderWidth="thin"
         padding={{ base: 5, xl: 8 }}
         width="full"
-        columns={[2, 4, 4, 5]}
+        columns={[setColumns(2), setColumns(4), setColumns(4), setColumns(5)]}
         spacing={4}
       >
         {stats.length > 0 ? stats : <NoRegisters />}

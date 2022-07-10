@@ -56,8 +56,9 @@ const Control = ({ state, handleChangePeriod }: Props) => {
           }
           backgroundColor="purple.400"
           color="white"
-          maxWidth={isCollapsed ? "100%" : "30%"}
+          maxWidth={isCollapsed ? "100%" : "100%"}
           size="sm"
+          w="full"
         >
           Ver mes actual
         </Button>
