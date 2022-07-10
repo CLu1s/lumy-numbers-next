@@ -68,21 +68,9 @@ const LineChart = ({ transactions }) => {
   const data = useMemo(
     () => ({
       labels,
-      datasets: [
-        {
-          label: "Gastos General",
-          borderColor: "#3e95cd",
-          backgroundColor: "#3e95cd",
-          data: labels.map((label) =>
-            groupedDate[label].reduce((acc, t) => {
-              return acc + t.amount;
-            }, 0)
-          ),
-        },
-        ...datasets,
-      ],
+      datasets,
     }),
-    [datasets, groupedDate, labels]
+    [datasets, labels]
   );
   return (
     <Box w="full" height="30%">

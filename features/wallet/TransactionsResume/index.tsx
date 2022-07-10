@@ -17,7 +17,7 @@ import {
 import Screen from "../../../components/Screen";
 import _groupBy from "lodash/groupBy";
 import _sortBy from "lodash/sortBy";
-import { LoadingStates } from "../../../types";
+import { LoadingStates, Transaction } from "../../../types";
 import Loading from "../../../components/Loading";
 import { money } from "../../../utils";
 import LineChart from "./LineChart";
@@ -27,11 +27,15 @@ import Control from "./Control";
 import { getIsMenuCollapsed } from "../../system/selector";
 type Props = {
   state: DatesHandler;
+  transactions: Transaction[];
   handleChangePeriod: ({ newDate, type }: { newDate: any; type: any }) => void;
 };
 
-const TransactionsResume = ({ state, handleChangePeriod }: Props) => {
-  const transactions = useSelector(getTransactionsFormatted);
+const TransactionsResume = ({
+  state,
+  handleChangePeriod,
+  transactions,
+}: Props) => {
   const balance = useSelector(getBalance);
   const totalSpent = useSelector(getTotalSpent);
   const status = useSelector(getStatus);

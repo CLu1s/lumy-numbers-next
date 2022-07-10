@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { Stack, useDisclosure, Box } from "@chakra-ui/react";
-import _orderBy from "lodash/orderBy";
 import { useSelector, useDispatch } from "react-redux";
-import { getTransactionsFormatted, getStatus } from "./selector";
+import { getStatus } from "./selector";
 import TableCards from "../../components/TableCards";
 import { Transaction } from "../../types";
 import Loading from "../../components/Loading";
@@ -35,36 +34,29 @@ const compareTransactions = (transactions: Transaction[], order: Order) => {
   return t;
 };
 
-export default function TransactionsTableContainer() {
+type Props = {
+  transactions: Transaction[];
+  filter: string[];
+  setOrder: (order: Order) => void;
+  setSort: (sort: string) => void;
+  setFilter: (filter: string[]) => void;
+};
+export default function TransactionsTableContainer({
+  transactions,
+  filter,
+  setOrder,
+  setSort,
+  setFilter,
+}: Props) {
   useGetTransactions();
-  const transactions = useSelector(getTransactionsFormatted);
   const categories = useSelector(getCategories);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [alertDialogIsOpen, setAlertDialogIsOpen] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-  const [sort, setSort] = useState("date");
-  const [filter, setFilter] = useState([]);
-  const [order, setOrder] = useState<Order>(Order.DESC);
   const [elementToEdit, setElementToEdit] = useState<Transaction>(null);
-  const [sortedTransactions, setSortedTransactions] = useState<Transaction[]>(
-    []
-  );
+
   const status = useSelector(getStatus);
   const dispatch = useDispatch();
-  let sortTrans;
-  useEffect(() => {
-    if (sort === "date") {
-      sortTrans = compareTransactions(transactions, order);
-    } else {
-      sortTrans = _orderBy(transactions, [sort], [order]);
-    }
-    if (filter.length > 0) {
-      sortTrans = sortTrans.filter((transaction) => {
-        return filter.includes(transaction.categoryID);
-      });
-    }
-    setSortedTransactions(sortTrans);
-  }, [transactions, sort, order, filter]);
 
   const manageOpen = useCallback(
     (item: any) => {
@@ -122,18 +114,18 @@ export default function TransactionsTableContainer() {
           setFilter={setFilter}
         />
         <TableCards>
-          {sortedTransactions.length > 0 ? (
+          {transactions.length > 0 ? (
             <>
               <Box display={{ base: "none", lg: "block" }} width="full">
                 <DataTable
-                  transactions={sortedTransactions}
+                  transactions={transactions}
                   manageOpen={manageOpen}
                   handleDelete={handleDelete}
                 />
               </Box>
               <Box display={{ base: "block", lg: "none" }}>
                 <TransactionMini
-                  transactions={sortedTransactions}
+                  transactions={transactions}
                   editable
                   onEdit={manageOpen}
                   onDelete={(id) => {
