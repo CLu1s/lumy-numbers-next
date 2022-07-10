@@ -39,14 +39,15 @@ const Layout = ({ children, pageTitle, user, description }: Props) => {
           <Stack spacing={0} direction="row" width="full">
             <CheckBucket userName={username} />
             <Sidebar />
-            <Stack width="full">
+            <Stack width="full" alignItems="center">
               <Topbar />
               <Stack
                 spacing={4}
                 paddingX={[4, 8]}
                 paddingY={[24, 8, 10]}
-                width={{ base: "full" }}
-                maxW={["876px", "960px", "1024px"]}
+                width="full"
+                maxW={["876px", "960px", "1024px", "1440px"]}
+                marginX="auto"
               >
                 <Heading as="h2" size="md" textTransform="capitalize">
                   Hola {username}

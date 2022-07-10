@@ -37,7 +37,6 @@ const Sidebsar = () => {
       borderColor="gray.100"
       backgroundColor={bg}
       display={["none", "block"]}
-      layout
     >
       <VStack
         width={

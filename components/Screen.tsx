@@ -43,7 +43,6 @@ const Screen = ({
       display={display}
       bg={bg ?? defaultbg}
       color={textColor}
-      layout
     >
       <Stack spacing={6}>
         {title && (

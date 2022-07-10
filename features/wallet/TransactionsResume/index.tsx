@@ -47,11 +47,7 @@ const TransactionsResume = ({ state, handleChangePeriod }: Props) => {
           w={isCollapsed ? "auto" : "full"}
           spacing={6}
         >
-          <Stack
-            spacing="10"
-            height="50%"
-            direction={["row", isCollapsed ? "row" : "column"]}
-          >
+          <Stack spacing="10" height="50%" direction={["row", "row", "row"]}>
             <VStack alignItems="flex-start">
               <Control state={state} handleChangePeriod={handleChangePeriod} />
               <Heading as="h2" size="2xl">

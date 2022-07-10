@@ -14,6 +14,7 @@ import {
 import _groupBy from "lodash/groupBy";
 import _sortBy from "lodash/sortBy";
 import { date } from "../../../utils";
+import { transformColor } from "../../../config/colors";
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -45,25 +46,43 @@ const LineChart = ({ transactions }) => {
     [transactions]
   );
   const groupedDate = _groupBy(formatedDate, "date");
+  const groupByCategory = _groupBy(formatedDate, "categoryID");
   const labels = _sortBy([...Object.keys(groupedDate)]);
+  const categories = _sortBy([...Object.keys(groupByCategory)]);
+  const datasets = categories.map((category) => {
+    const _data = groupByCategory[category];
+    const _groupedDate = _groupBy(_data, "date");
+    return {
+      label: _data[0]?.category?.name || "",
+      borderColor: transformColor(_data[0]?.category?.color || ""),
+      backgroundColor: transformColor(_data[0]?.category?.color || ""),
+      data: labels.map(
+        (label) =>
+          _groupedDate[label]?.reduce((acc, t) => {
+            return acc + t.amount;
+          }, 0) || 0
+      ),
+    };
+  });
 
   const data = useMemo(
     () => ({
       labels,
       datasets: [
         {
-          label: "Gastos por día",
-          borderColor: "rgb(53, 162, 235)",
-          backgroundColor: "rgba(53, 162, 235, 0.5)",
+          label: "Gastos General",
+          borderColor: "#3e95cd",
+          backgroundColor: "#3e95cd",
           data: labels.map((label) =>
             groupedDate[label].reduce((acc, t) => {
               return acc + t.amount;
             }, 0)
           ),
         },
+        ...datasets,
       ],
     }),
-    [groupedDate, labels]
+    [datasets, groupedDate, labels]
   );
   return (
     <Box w="full" height="30%">

@@ -54,7 +54,6 @@ export default function Topbar() {
       padding={[6, 2]}
       zIndex={100}
       width="full"
-      layout
     >
       <HStack spacing={4} justifyContent={"space-between"} w="full">
         <Stack isInline spacing={4}>

@@ -71,7 +71,7 @@ function Transacciones() {
         dispatch(changePeriod(initDate));
       }
     };
-  }, [sameMonth]);
+  }, [dispatch]);
 
   const handleChangePeriod = ({ newDate, type }) => {
     dispatchReducer({ type });
