@@ -7,6 +7,7 @@ import {
   useColorMode,
   Icon,
   IconButton,
+  Box,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
@@ -14,7 +15,6 @@ import { FiRefreshCw } from "react-icons/fi";
 import Drawer from "./Drawer";
 import { useAnimation } from "framer-motion";
 import NotificationCenter from "../features/notificationCenter/NotificationCenter";
-import ChakraBox from "./ChakraBox";
 import { useSelector } from "react-redux";
 import { getIsMenuCollapsed } from "../features/system/selector";
 import useRefresh from "../hooks/useRefresh";
@@ -46,7 +46,7 @@ export default function Topbar() {
     controls.stop();
   }
   return (
-    <ChakraBox
+    <Box
       position={["fixed", "static"]}
       borderBottomWidth={["1px", 0]}
       backgroundColor={bg}
@@ -66,32 +66,28 @@ export default function Topbar() {
             icon={<Icon as={HiOutlineMenuAlt4} w={8} h={8} />}
           />
         </Stack>
-        <ChakraBox layout>
-          <Stack isInline spacing={4}>
-            {showRefresh && (
-              <ChakraBox animate={controls}>
-                <IconButton
-                  aria-label="color mode"
-                  onClick={refresh}
-                  variant="ghost"
-                  size="lg"
-                  icon={<FiRefreshCw />}
-                />
-              </ChakraBox>
-            )}
+        <Stack isInline spacing={4}>
+          {showRefresh && (
             <IconButton
               aria-label="color mode"
-              onClick={toggleColorMode}
-              size="lg"
+              onClick={refresh}
               variant="ghost"
-              icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+              size="lg"
+              icon={<FiRefreshCw />}
             />
+          )}
+          <IconButton
+            aria-label="color mode"
+            onClick={toggleColorMode}
+            size="lg"
+            variant="ghost"
+            icon={colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+          />
 
-            <NotificationCenter />
-          </Stack>
-        </ChakraBox>
+          <NotificationCenter />
+        </Stack>
       </HStack>
       <Drawer isOpen={isOpen} onClose={onClose} />
-    </ChakraBox>
+    </Box>
   );
 }

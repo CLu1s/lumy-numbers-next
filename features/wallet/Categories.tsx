@@ -8,7 +8,6 @@ import {
 } from "../../features/wallet/selector";
 import StatCard from "../../components/StatCard";
 import { LoadingStates } from "../../types";
-import ChakraBox from "../../components/ChakraBox";
 
 type Props = {
   showAll?: boolean;
@@ -47,20 +46,18 @@ const Categories = ({ showAll, setShowSwitch }: Props) => {
     </Box>
   ));
   return (
-    <ChakraBox layout w="full">
-      <SimpleGrid columns={[1, 2, 3]} spacing={4} ref={parent}>
-        {status === LoadingStates.IDLE ? (
-          <>
-            <Skeleton borderRadius="md" height="128px" />
-            <Skeleton borderRadius="md" height="128px" />
-            <Skeleton borderRadius="md" height="128px" />
-            <Skeleton borderRadius="md" height="128px" />
-          </>
-        ) : (
-          renderItemsToShow
-        )}
-      </SimpleGrid>
-    </ChakraBox>
+    <SimpleGrid columns={[1, 2, 2, 3]} spacing={4} ref={parent} w="full">
+      {status === LoadingStates.IDLE ? (
+        <>
+          <Skeleton borderRadius="md" height="128px" />
+          <Skeleton borderRadius="md" height="128px" />
+          <Skeleton borderRadius="md" height="128px" />
+          <Skeleton borderRadius="md" height="128px" />
+        </>
+      ) : (
+        renderItemsToShow
+      )}
+    </SimpleGrid>
   );
 };
 

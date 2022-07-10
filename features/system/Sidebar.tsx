@@ -8,6 +8,7 @@ import {
   Icon,
   IconButton,
   useColorModeValue,
+  Box,
 } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
@@ -16,7 +17,6 @@ import MenuItem from "../../components/MenuItem";
 import { getIsMenuCollapsed } from "./selector";
 import { setMenuCollapsed } from "./systemSlice";
 import { useIsTablet } from "../../hooks";
-import ChakraBox from "../../components/ChakraBox";
 
 const Sidebsar = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ const Sidebsar = () => {
   const bg = useColorModeValue("#F7F7FF", "#242731");
 
   return (
-    <ChakraBox
+    <Box
       borderRight="1px solid"
       borderColor="gray.100"
       backgroundColor={bg}
@@ -40,7 +40,11 @@ const Sidebsar = () => {
       layout
     >
       <VStack
-        width={isCollapsed && isTablet ? "96px" : ["220px", "220px", "256px"]}
+        width={
+          isCollapsed && isTablet
+            ? "96px"
+            : ["96px", "96px", "96px", "220px", "256px"]
+        }
       >
         <Center
           height="full"
@@ -49,26 +53,23 @@ const Sidebsar = () => {
         >
           <HStack spacing={6}>
             {!isCollapsed && (
-              <ChakraBox layout>
-                <Heading
-                  as="h2"
-                  size="md"
-                  fontWeight="800"
-                  textTransform="capitalize"
-                >
-                  Luminus
-                </Heading>
-              </ChakraBox>
+              <Heading
+                as="h2"
+                size="md"
+                fontWeight="800"
+                textTransform="capitalize"
+                display={["none", "none", "none", "block"]}
+              >
+                Luminus
+              </Heading>
             )}
-            <ChakraBox layout>
-              <IconButton
-                variant="ghost"
-                aria-label="Menu hamburguesa"
-                onClick={() => dispatch(setMenuCollapsed(!isCollapsed))}
-                display={{ base: "block", xl: "none" }}
-                icon={<Icon as={HiOutlineMenuAlt4} w={8} h={8} />}
-              />
-            </ChakraBox>
+            <IconButton
+              variant="ghost"
+              aria-label="Menu hamburguesa"
+              onClick={() => dispatch(setMenuCollapsed(!isCollapsed))}
+              display={{ base: "none", xl: "none" }}
+              icon={<Icon as={HiOutlineMenuAlt4} w={8} h={8} />}
+            />
           </HStack>
         </Center>
         <VStack
@@ -77,22 +78,13 @@ const Sidebsar = () => {
           paddingX="20px"
           alignItems="flex-start"
         >
-          <ChakraBox layout>
-            <Text color="gray.500" fontSize="12" fontWeight="medium">
-              Menú
-            </Text>
-          </ChakraBox>
+          <Text color="gray.500" fontSize="12" fontWeight="medium">
+            Menú
+          </Text>
 
-          <VStack spacing={5} width={"100%"}>
+          <VStack spacing={5} width={"100%"} alignItems="flex-start">
             {menuList.map((item) => (
-              <ChakraBox
-                key={item.id}
-                layout
-                width={"100%"}
-                initial={{ borderRadius: "0.75rem" }}
-              >
-                <MenuItem {...item} showLabel={!isCollapsed} />
-              </ChakraBox>
+              <MenuItem key={item.id} {...item} showLabel={!isCollapsed} />
             ))}
           </VStack>
         </VStack>
@@ -103,7 +95,7 @@ const Sidebsar = () => {
           </Button>
         </VStack> */}
       </VStack>
-    </ChakraBox>
+    </Box>
   );
 };
 

@@ -1,12 +1,11 @@
 import RecordExpense from "./RecordExpense";
-import { useDisclosure, Button } from "@chakra-ui/react";
+import { useDisclosure, Button, Box } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import HeroStatCard, { HeroStatFooter } from "../../components/HeroStatCard";
 import { date } from "../../utils";
 import { getBalance, getPeriod, getStatus } from "./selector";
 import isSameMonth from "date-fns/isSameMonth";
 import { LoadingStates } from "../../types";
-import ChakraBox from "../../components/ChakraBox";
 import { getIsMenuCollapsed } from "../system/selector";
 
 const BudgetCard = () => {
@@ -19,7 +18,7 @@ const BudgetCard = () => {
 
   const sameMonth = isSameMonth(period, currentDate);
   return (
-    <ChakraBox layout w={isCollapsed ? "auto" : "full"}>
+    <Box w={isCollapsed ? "auto" : "full"}>
       <RecordExpense isOpen={isOpen} onClose={onClose} />
       <HeroStatCard
         title="Plan de gastos del mes"
@@ -43,7 +42,7 @@ const BudgetCard = () => {
           )}
         </HeroStatFooter>
       </HeroStatCard>
-    </ChakraBox>
+    </Box>
   );
 };
 

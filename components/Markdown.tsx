@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import ChakraBox from "./ChakraBox";
 
 const UnorderedListCustom = ({ node, ...props }) => {
   return <UnorderedList {...props} paddingLeft={5} />;
@@ -43,27 +42,25 @@ const ParagraphCustom = ({ node, ...props }) => {
 
 const Markdown = ({ children, color }) => {
   return (
-    <ChakraBox layout>
-      <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        components={{
-          ol: OrderedListCustom,
-          ul: UnorderedListCustom,
-          li: ListItem,
-          a: LinkCustom,
-          table: TableCustom,
-          thead: Thead,
-          tbody: Tbody,
-          tfoot: Tfoot,
-          tr: Tr,
-          th: ThCustom,
-          td: TdCustom,
-          p: ParagraphCustom,
-        }}
-      >
-        {children}
-      </ReactMarkdown>
-    </ChakraBox>
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        ol: OrderedListCustom,
+        ul: UnorderedListCustom,
+        li: ListItem,
+        a: LinkCustom,
+        table: TableCustom,
+        thead: Thead,
+        tbody: Tbody,
+        tfoot: Tfoot,
+        tr: Tr,
+        th: ThCustom,
+        td: TdCustom,
+        p: ParagraphCustom,
+      }}
+    >
+      {children}
+    </ReactMarkdown>
   );
 };
 export default Markdown;

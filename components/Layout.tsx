@@ -14,7 +14,6 @@ import useGetInfo from "../hooks/useGetInfo";
 import CheckBucket from "../features/bucket/CheckBucket";
 import Sidebar from "../features/system/Sidebar";
 import BottomBar from "./BottomBar";
-import ChakraBox from "../components/ChakraBox";
 import { useSelector } from "react-redux";
 import { getIsMenuCollapsed } from "../features/system/selector";
 type Props = {
@@ -42,28 +41,20 @@ const Layout = ({ children, pageTitle, user, description }: Props) => {
             <Sidebar />
             <Stack width="full">
               <Topbar />
-              <ChakraBox layout display="flex" justifyContent="center">
-                <Stack
-                  spacing={4}
-                  paddingX={[4, 8]}
-                  paddingY={[24, 8, 10]}
-                  width={{ base: "full" }}
-                  maxW={["876px", "960px", "1024px"]}
-                >
-                  <ChakraBox layout w="full">
-                    <Heading as="h2" size="md" textTransform="capitalize">
-                      Hola {username}
-                    </Heading>
-                  </ChakraBox>
-                  <ChakraBox layout w="full">
-                    {pageTitle && <Heading as="h2">{pageTitle}</Heading>}
-                  </ChakraBox>
-                  {description && <Text>{description}</Text>}
-                  <ChakraBox layout w="full">
-                    {children}
-                  </ChakraBox>
-                </Stack>
-              </ChakraBox>
+              <Stack
+                spacing={4}
+                paddingX={[4, 8]}
+                paddingY={[24, 8, 10]}
+                width={{ base: "full" }}
+                maxW={["876px", "960px", "1024px"]}
+              >
+                <Heading as="h2" size="md" textTransform="capitalize">
+                  Hola {username}
+                </Heading>
+                {pageTitle && <Heading as="h2">{pageTitle}</Heading>}
+                {description && <Text>{description}</Text>}
+                <Box w="full">{children}</Box>
+              </Stack>
             </Stack>
           </Stack>
         </Box>

@@ -1,6 +1,5 @@
 import { Box, Stack, Heading, useColorModeValue } from "@chakra-ui/react";
 import Markdown from "./Markdown";
-import ChackraBox from "./ChakraBox";
 import { getIsMenuCollapsed } from "../features/system/selector";
 import { useSelector } from "react-redux";
 type props = {
@@ -32,7 +31,7 @@ const Screen = ({
   const isCollapsed = useSelector(getIsMenuCollapsed);
 
   return (
-    <ChackraBox
+    <Box
       w={isCollapsed ? "auto" : "full"}
       height="full"
       maxHeight={maxHeight}
@@ -50,11 +49,9 @@ const Screen = ({
         {title && (
           <Stack spacing="2">
             {typeof title === "string" ? (
-              <ChackraBox layout>
-                <Heading as="h6" size="lg" fontWeight="medium">
-                  {title}
-                </Heading>
-              </ChackraBox>
+              <Heading as="h6" size="lg" fontWeight="medium">
+                {title}
+              </Heading>
             ) : (
               title
             )}
@@ -66,9 +63,9 @@ const Screen = ({
               ))}
           </Stack>
         )}
-        <ChackraBox layout>{children}</ChackraBox>
+        <Box>{children}</Box>
       </Stack>
-    </ChackraBox>
+    </Box>
   );
 };
 
